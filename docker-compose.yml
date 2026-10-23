@@ -39,9 +39,12 @@ services:
       UPLOAD_DIR: "public/uploads"
     volumes:
       - uploaded_media:/app/public/uploads
+      - local_data:/app/data
 
 volumes:
   postgres_data:
     driver: local
   uploaded_media:
+    driver: local
+  local_data:
     driver: local

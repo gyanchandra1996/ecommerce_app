@@ -113,6 +113,110 @@
       "productCount": 0
     }
   ],
+  "categories": [
+    {
+      "id": "cat_root_1",
+      "name": "yatdfya wdyawcd yatwdc aywdcw aywtdca wydtacwd ...",
+      "slug": "yatdfya-root",
+      "level": 0,
+      "isActive": true,
+      "displayOrder": 1,
+      "createdAt": "2026-10-23T17:17:57.591Z",
+      "updatedAt": "2026-10-23T17:17:57.593Z"
+    },
+    {
+      "id": "cat_root_us1",
+      "name": "us1",
+      "slug": "us1",
+      "level": 0,
+      "isActive": true,
+      "displayOrder": 2,
+      "createdAt": "2026-10-23T17:17:57.593Z",
+      "updatedAt": "2026-10-23T17:17:57.593Z"
+    },
+    {
+      "id": "cat_sub_laptops",
+      "name": "laptops",
+      "slug": "us1-laptops",
+      "parentId": "cat_root_us1",
+      "level": 1,
+      "isActive": true,
+      "displayOrder": 1,
+      "createdAt": "2026-10-23T17:17:57.593Z",
+      "updatedAt": "2026-10-23T17:17:57.593Z"
+    },
+    {
+      "id": "cat_sub_gaming_laptops",
+      "name": "gaming-laptops",
+      "slug": "us1-laptops-gaming",
+      "parentId": "cat_sub_laptops",
+      "level": 2,
+      "isActive": true,
+      "displayOrder": 1,
+      "createdAt": "2026-10-23T17:17:57.593Z",
+      "updatedAt": "2026-10-23T17:17:57.593Z"
+    },
+    {
+      "id": "cat_root_uk1",
+      "name": "uk1",
+      "slug": "uk1",
+      "level": 0,
+      "isActive": true,
+      "displayOrder": 3,
+      "createdAt": "2026-10-23T17:17:57.593Z",
+      "updatedAt": "2026-10-23T17:17:57.593Z"
+    },
+    {
+      "id": "cat_root_microsoft",
+      "name": "microsoft",
+      "slug": "microsoft",
+      "level": 0,
+      "isActive": true,
+      "displayOrder": 4,
+      "createdAt": "2026-10-23T17:17:57.593Z",
+      "updatedAt": "2026-10-23T17:17:57.593Z"
+    },
+    {
+      "id": "cat_root_multisite",
+      "name": "multisite",
+      "slug": "multisite",
+      "level": 0,
+      "isActive": true,
+      "displayOrder": 5,
+      "createdAt": "2026-10-23T17:17:57.593Z",
+      "updatedAt": "2026-10-23T17:17:57.593Z"
+    },
+    {
+      "id": "cat_other",
+      "name": "other",
+      "slug": "other",
+      "level": 0,
+      "isActive": true,
+      "displayOrder": 6,
+      "createdAt": "2026-10-23T17:17:57.593Z",
+      "updatedAt": "2026-10-23T17:17:57.593Z"
+    },
+    {
+      "id": "cat_grocery",
+      "name": "grocery",
+      "slug": "grocery",
+      "level": 0,
+      "isActive": true,
+      "displayOrder": 7,
+      "createdAt": "2026-10-23T17:17:57.593Z",
+      "updatedAt": "2026-10-23T17:17:57.593Z"
+    },
+    {
+      "id": "cat_sportshoes",
+      "name": "sportshoes",
+      "slug": "sportshoes",
+      "level": 0,
+      "isActive": true,
+      "displayOrder": 8,
+      "createdAt": "2026-10-23T17:17:57.593Z",
+      "updatedAt": "2026-10-23T17:17:57.593Z"
+    }
+  ],
   "products": [
     {
       "id": "prod_1",
@@ -190,6 +294,7 @@
       "updatedAt": "2026-01-18T00:00:00.000Z"
     }
   ],
+  "productCategories": [],
   "productAssets": [
     {
       "productId": "prod_1",

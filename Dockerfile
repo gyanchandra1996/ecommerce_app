@@ -36,17 +36,24 @@ ENV HOSTNAME="0.0.0.0"
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Create uploads folder and set permissions
-RUN mkdir -p /app/public/uploads && chown -R nextjs:nodejs /app/public/uploads
+# Create uploads and data folders and assign ownership to nextjs
+RUN mkdir -p /app/public/uploads /app/data \
+    && chown -R nextjs:nodejs /app/public/uploads /app/data
 
-COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/data ./data
+COPY --from=builder --chown=nextjs:nodejs /app/scripts ./scripts
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/.next ./.next
 
+# Ensure nextjs owns the runtime folders
+RUN chown -R nextjs:nodejs /app/public/uploads /app/data
+
 USER nextjs
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+# Push PostgreSQL schema on startup if DB is ready, seed initial data, then launch Next.js
+CMD ["sh", "-c", "(npx prisma db push --skip-generate || true) && (node scripts/seed.mjs || true) && npm run start"]

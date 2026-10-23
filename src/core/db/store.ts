@@ -1,5 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
+import os from "os";
 import { prisma } from "./prisma";
 import { AssetType } from "../storage/file-storage";
 
@@ -103,6 +104,11 @@ export class DatabaseStore {
   private static localDbFile = path.join(process.cwd(), "data", "local-db.json");
   private static isPgAvailable: boolean | null = null;
   private static checkedPg = false;
+  private static memoryCache: LocalDatabaseSchema | null = null;
+
+  private static getResolvedDbPath(): string {
+    return this.localDbFile;
+  }
 
   private static async testPostgres(): Promise<boolean> {
     if (this.checkedPg && this.isPgAvailable !== null) {
@@ -119,11 +125,15 @@ export class DatabaseStore {
   }
 
   private static async readLocalDb(): Promise<LocalDatabaseSchema> {
+    if (this.memoryCache) {
+      return this.memoryCache;
+    }
+
+    // Try reading primary data/local-db.json
     try {
-      await fs.mkdir(path.dirname(this.localDbFile), { recursive: true });
       const data = await fs.readFile(this.localDbFile, "utf-8");
       const parsed = JSON.parse(data);
-      return {
+      this.memoryCache = {
         users: parsed.users || [],
         assets: parsed.assets || [],
         categories: parsed.categories || [],
@@ -131,23 +141,56 @@ export class DatabaseStore {
         productCategories: parsed.productCategories || [],
         productAssets: parsed.productAssets || [],
       };
+      return this.memoryCache;
     } catch {
-      const initial: LocalDatabaseSchema = {
-        users: [],
-        assets: [],
-        categories: [],
-        products: [],
-        productCategories: [],
-        productAssets: [],
-      };
-      await this.writeLocalDb(initial);
-      return initial;
+      // Try temp dir fallback if primary failed
+      try {
+        const tmpFile = path.join(os.tmpdir(), "ecommerce-local-db.json");
+        const data = await fs.readFile(tmpFile, "utf-8");
+        const parsed = JSON.parse(data);
+        this.memoryCache = {
+          users: parsed.users || [],
+          assets: parsed.assets || [],
+          categories: parsed.categories || [],
+          products: parsed.products || [],
+          productCategories: parsed.productCategories || [],
+          productAssets: parsed.productAssets || [],
+        };
+        return this.memoryCache;
+      } catch {
+        // Fallback to initial empty or seed state in memory
+        const initial: LocalDatabaseSchema = {
+          users: [],
+          assets: [],
+          categories: [],
+          products: [],
+          productCategories: [],
+          productAssets: [],
+        };
+        this.memoryCache = initial;
+        await this.writeLocalDb(initial);
+        return initial;
+      }
     }
   }
 
   private static async writeLocalDb(data: LocalDatabaseSchema): Promise<void> {
-    await fs.mkdir(path.dirname(this.localDbFile), { recursive: true });
-    await fs.writeFile(this.localDbFile, JSON.stringify(data, null, 2), "utf-8");
+    this.memoryCache = data;
+
+    // 1. Try writing to primary cwd data folder
+    try {
+      await fs.mkdir(path.dirname(this.localDbFile), { recursive: true });
+      await fs.writeFile(this.localDbFile, JSON.stringify(data, null, 2), "utf-8");
+      return;
+    } catch {
+      // If permission denied in Docker container, fallback to /tmp
+      try {
+        const tmpFile = path.join(os.tmpdir(), "ecommerce-local-db.json");
+        await fs.writeFile(tmpFile, JSON.stringify(data, null, 2), "utf-8");
+      } catch {
+        // Kept in memoryCache safely
+      }
+    }
   }
 
   // ================= USERS =================
