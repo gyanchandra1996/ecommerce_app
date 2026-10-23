@@ -75,9 +75,30 @@ model Asset {
   @@map("assets")
 }
 
+model Category {
+  id           String            @id @default(cuid())
+  name         String
+  slug         String            @unique
+  description  String?
+  parentId     String?
+  parent       Category?         @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children     Category[]        @relation("CategoryHierarchy")
+  level        Int               @default(0) // 0: Root category, 1: Subcategory, 2: Sub-subcategory
+  isActive     Boolean           @default(true)
+  displayOrder Int               @default(0)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  productCategories ProductCategory[]
+
+  @@index([parentId])
+  @@map("categories")
+}
+
 model Product {
   id           String         @id @default(cuid())
   sku          String         @unique
+  upc          String?        // Universal Product Code (UPC)
   name         String
   slug         String         @unique
   description  String?
@@ -89,14 +110,40 @@ model Product {
   warehouse    String?        @default("gyanwarehouse")
   status       ProductStatus  @default(ACTIVE)
   isSoldOut    Boolean        @default(false)
+  brand        String?
+
+  // Google Merchant Center Integration
+  googleMerchantSync  Boolean   @default(false)
+  googleCategory      String?   // e.g. Apparel & Accessories > Clothing
+  googleCondition     String?   @default("new") // new, refurbished, used
+  googleBrand         String?
+  googleGtin          String?   // Global Trade Item Number (UPC/EAN/ISBN)
+  googleMpn           String?   // Manufacturer Part Number
+  googleSyncStatus    String?   @default("READY") // READY, SYNCED, FAILED
+  googleLastSyncedAt  DateTime?
+
   createdById  String?
   createdBy    User?          @relation(fields: [createdById], references: [id], onDelete: SetNull)
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
 
   assets       ProductAsset[]
+  categories   ProductCategory[]
 
   @@map("products")
+}
+
+model ProductCategory {
+  id           String     @id @default(cuid())
+  productId    String
+  categoryId   String
+  isMain       Boolean    @default(false)
+
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  category     Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, categoryId])
+  @@map("product_categories")
 }
 
 model ProductAsset {
