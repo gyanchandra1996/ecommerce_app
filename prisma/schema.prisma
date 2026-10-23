@@ -1,0 +1,114 @@
+// Prisma Schema for E-Commerce Modular Platform
+// Configured for PostgreSQL with Docker support
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  STAFF
+}
+
+enum AssetType {
+  IMAGE
+  VIDEO
+  DOCUMENT
+  AUDIO
+  OTHER
+}
+
+enum ProductStatus {
+  ACTIVE
+  DRAFT
+  ARCHIVED
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  password     String
+  role         Role      @default(ADMIN)
+  avatar       String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  assets       Asset[]
+  products     Product[]
+
+  @@map("users")
+}
+
+model Asset {
+  id           String        @id @default(cuid())
+  name         String
+  fileName     String
+  originalName String
+  mimeType     String
+  size         Int
+  url          String
+  thumbnailUrl String?
+  fileType     AssetType     @default(IMAGE)
+  width        Int?
+  height       Int?
+  duration     Float?        // Video duration in seconds
+  altText      String?
+  caption      String?
+  folder       String?       @default("default")
+  tags         String[]      @default([])
+  uploaderId   String?
+  uploader     User?         @relation(fields: [uploaderId], references: [id], onDelete: SetNull)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  productAssets ProductAsset[]
+
+  @@index([fileType])
+  @@index([createdAt])
+  @@map("assets")
+}
+
+model Product {
+  id           String         @id @default(cuid())
+  sku          String         @unique
+  name         String
+  slug         String         @unique
+  description  String?
+  price        Float          @default(0)
+  comparePrice Float?
+  costPrice    Float?
+  currentStock Int            @default(0)
+  minStock     Int            @default(0)
+  warehouse    String?        @default("gyanwarehouse")
+  status       ProductStatus  @default(ACTIVE)
+  isSoldOut    Boolean        @default(false)
+  createdById  String?
+  createdBy    User?          @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  assets       ProductAsset[]
+
+  @@map("products")
+}
+
+model ProductAsset {
+  id           String     @id @default(cuid())
+  productId    String
+  assetId      String
+  isPrimary    Boolean    @default(false)
+  displayOrder Int        @default(0)
+
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  asset        Asset      @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, assetId])
+  @@map("product_assets")
+}

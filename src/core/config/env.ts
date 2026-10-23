@@ -1,0 +1,31 @@
+export const APP_CONFIG = {
+  appName: process.env.NEXT_PUBLIC_APP_NAME || "Tagateway Admin",
+  appUrl: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+  jwtSecret: process.env.JWT_SECRET || "ecommerce_super_secure_jwt_secret_key_2026_!@#",
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN || "7d",
+  cookieName: "auth_token",
+  uploadDir: process.env.UPLOAD_DIR || "public/uploads",
+  maxUploadSizeBytes: (Number(process.env.MAX_UPLOAD_SIZE_MB) || 50) * 1024 * 1024,
+  allowedMimeTypes: [
+    // Images
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "image/gif",
+    "image/svg+xml",
+    "image/avif",
+    // Videos
+    "video/mp4",
+    "video/webm",
+    "video/quicktime",
+    "video/x-msvideo",
+    // Audio
+    "audio/mpeg",
+    "audio/wav",
+    "audio/ogg",
+    // Documents
+    "application/pdf",
+    "text/csv",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  ],
+};

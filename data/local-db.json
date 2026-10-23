@@ -1,0 +1,210 @@
+{
+  "users": [
+    {
+      "id": "usr_admin_default",
+      "name": "Admin admin",
+      "email": "admin@tagateway.com",
+      "password": "$2b$10$MAeY6c9GxQjASCf6H9.CBOZpXaEw0g30zMTeBcQe8HXotaQsesQy2",
+      "role": "ADMIN",
+      "avatar": null,
+      "createdAt": "2026-01-10T10:00:00.000Z",
+      "updatedAt": "2026-01-10T10:00:00.000Z"
+    }
+  ],
+  "assets": [
+    {
+      "id": "ast_1",
+      "name": "tshirtnew.webp",
+      "fileName": "tshirtnew.svg",
+      "originalName": "tshirtnew.webp",
+      "mimeType": "image/webp",
+      "size": 348160,
+      "url": "/uploads/tshirtnew.svg",
+      "fileType": "IMAGE",
+      "altText": "Green unisex premium t-shirt",
+      "caption": "Crew neck dark green summer apparel",
+      "tags": [
+        "apparel",
+        "tshirt",
+        "green"
+      ],
+      "createdAt": "2026-02-18T14:22:00.000Z",
+      "updatedAt": "2026-02-18T14:22:00.000Z",
+      "productCount": 1
+    },
+    {
+      "id": "ast_2",
+      "name": "mouse.webp",
+      "fileName": "mouse.svg",
+      "originalName": "mouse.webp",
+      "mimeType": "image/webp",
+      "size": 512000,
+      "url": "/uploads/mouse.svg",
+      "fileType": "IMAGE",
+      "altText": "RGB Gaming Optical Mouse",
+      "caption": "High precision wireless gaming mouse",
+      "tags": [
+        "gaming",
+        "accessories",
+        "electronics"
+      ],
+      "createdAt": "2026-02-18T15:10:00.000Z",
+      "updatedAt": "2026-02-18T15:10:00.000Z",
+      "productCount": 1
+    },
+    {
+      "id": "ast_3",
+      "name": "iphone.jpeg",
+      "fileName": "iphone.svg",
+      "originalName": "iphone.jpeg",
+      "mimeType": "image/jpeg",
+      "size": 890000,
+      "url": "/uploads/iphone.svg",
+      "fileType": "IMAGE",
+      "altText": "iPhone Pro Dual Camera Blue",
+      "caption": "Flagship blue smartphone back view",
+      "tags": [
+        "smartphone",
+        "apple",
+        "mobile"
+      ],
+      "createdAt": "2026-02-17T11:00:00.000Z",
+      "updatedAt": "2026-02-17T11:00:00.000Z",
+      "productCount": 0
+    },
+    {
+      "id": "ast_4",
+      "name": "smartring.jpeg",
+      "fileName": "smartring.svg",
+      "originalName": "smartring.jpeg",
+      "mimeType": "image/jpeg",
+      "size": 420000,
+      "url": "/uploads/smartring.svg",
+      "fileType": "IMAGE",
+      "altText": "Smart Health Tracking Ring Titanium",
+      "caption": "Fitness and sleep tracking ring",
+      "tags": [
+        "wearable",
+        "health",
+        "smartring"
+      ],
+      "createdAt": "2026-02-17T09:30:00.000Z",
+      "updatedAt": "2026-02-17T09:30:00.000Z",
+      "productCount": 1
+    },
+    {
+      "id": "ast_5",
+      "name": "xiomicable.webp",
+      "fileName": "xiomicable.svg",
+      "originalName": "xiomicable.webp",
+      "mimeType": "image/webp",
+      "size": 198000,
+      "url": "/uploads/xiomicable.svg",
+      "fileType": "IMAGE",
+      "altText": "Type-C Fast Charging Cable 1.5m",
+      "caption": "Durable white USB-C sync and charge cable",
+      "tags": [
+        "accessories",
+        "cables",
+        "fast-charge"
+      ],
+      "createdAt": "2026-02-18T16:05:00.000Z",
+      "updatedAt": "2026-02-18T16:05:00.000Z",
+      "productCount": 0
+    }
+  ],
+  "products": [
+    {
+      "id": "prod_1",
+      "sku": "zolo3",
+      "name": "zoloChip",
+      "slug": "zolochip-pro",
+      "description": "High performance custom controller chip",
+      "price": 29.99,
+      "currentStock": 50,
+      "minStock": 10,
+      "warehouse": "gyanwarehouse",
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "createdAt": "2026-01-15T00:00:00.000Z",
+      "updatedAt": "2026-01-15T00:00:00.000Z"
+    },
+    {
+      "id": "prod_2",
+      "sku": "zolo",
+      "name": "zoloChip",
+      "slug": "zolochip-standard",
+      "description": "Standard revision computing chip",
+      "price": 19.99,
+      "currentStock": 50,
+      "minStock": 11,
+      "warehouse": "gyanwarehouse",
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "createdAt": "2026-01-15T00:00:00.000Z",
+      "updatedAt": "2026-01-15T00:00:00.000Z"
+    },
+    {
+      "id": "prod_3",
+      "sku": "z2216",
+      "name": "wireless-earbuds-z2216",
+      "slug": "wireless-earbuds-z2216",
+      "description": "Noise cancelling bluetooth earbuds",
+      "price": 89.99,
+      "currentStock": 50,
+      "minStock": 200,
+      "warehouse": "gyanwarehouse",
+      "status": "ACTIVE",
+      "isSoldOut": true,
+      "createdAt": "2026-01-18T00:00:00.000Z",
+      "updatedAt": "2026-01-18T00:00:00.000Z"
+    },
+    {
+      "id": "prod_4",
+      "sku": "z221",
+      "name": "wireless-earbuds-z221",
+      "slug": "wireless-earbuds-z221",
+      "description": "Entry-level wireless earbuds",
+      "price": 49.99,
+      "currentStock": 50,
+      "minStock": 200,
+      "warehouse": "gyanwarehouse",
+      "status": "ACTIVE",
+      "isSoldOut": true,
+      "createdAt": "2026-01-18T00:00:00.000Z",
+      "updatedAt": "2026-01-18T00:00:00.000Z"
+    },
+    {
+      "id": "prod_5",
+      "sku": "z2016",
+      "name": "wireless-earbuds-z2016",
+      "slug": "wireless-earbuds-z2016",
+      "description": "Sports edition waterproof earbuds",
+      "price": 69.99,
+      "currentStock": 200,
+      "minStock": 100,
+      "warehouse": "gyanwarehouse",
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "createdAt": "2026-01-18T00:00:00.000Z",
+      "updatedAt": "2026-01-18T00:00:00.000Z"
+    }
+  ],
+  "productAssets": [
+    {
+      "productId": "prod_1",
+      "assetId": "ast_1",
+      "isPrimary": true
+    },
+    {
+      "productId": "prod_2",
+      "assetId": "ast_2",
+      "isPrimary": true
+    },
+    {
+      "productId": "prod_3",
+      "assetId": "ast_4",
+      "isPrimary": true
+    }
+  ]
+}

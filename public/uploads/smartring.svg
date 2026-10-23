@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="100%" height="100%" fill="#f8fafc"/>
+  <!-- Smart ring metallic oval -->
+  <ellipse cx="200" cy="200" rx="90" ry="90" fill="none" stroke="#64748b" stroke-width="28"/>
+  <ellipse cx="200" cy="200" rx="90" ry="90" fill="none" stroke="#e2e8f0" stroke-width="20"/>
+  <!-- Inner sensor glow -->
+  <circle cx="200" cy="115" r="4" fill="#22c55e"/>
+  <circle cx="215" cy="117" r="4" fill="#ef4444"/>
+</svg>
