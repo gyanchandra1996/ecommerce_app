@@ -78,7 +78,17 @@ export class AuthService {
       name: credentials.name.trim(),
       email,
       password: hashedPassword,
-      role: credentials.role || "ADMIN",
+      role: credentials.role || (credentials.accountType === "customer" ? "CUSTOMER" : "ADMIN"),
+      mobileNumber: credentials.mobileNumber,
+      countryCode: credentials.countryCode,
+      phone: credentials.phone || credentials.mobileNumber,
+      country: credentials.country,
+      state: credentials.state,
+      city: credentials.city,
+      postalCode: credentials.postalCode,
+      streetAddress: credentials.streetAddress,
+      apartment: credentials.apartment,
+      accountType: credentials.accountType || ((credentials.role || "").toUpperCase() === "CUSTOMER" ? "customer" : "admin"),
     });
 
     const user = this.mapToAuthUser(created);
@@ -90,7 +100,7 @@ export class AuthService {
     const email = credentials.email.trim().toLowerCase();
     const userRecord = await DatabaseStore.findUserByEmail(email);
 
-    if (!userRecord) {
+    if (!userRecord || !userRecord.password) {
       throw new Error("Invalid email or password.");
     }
 
@@ -104,27 +114,86 @@ export class AuthService {
     return { user, token };
   }
 
-  public static async getCurrentUser(): Promise<AuthUser | null> {
+  public static async getCurrentUser(portal?: "admin" | "customer"): Promise<AuthUser | null> {
     try {
       const cookieStore = await cookies();
-      const token = cookieStore.get(APP_CONFIG.cookieName)?.value;
+      let token: string | undefined;
+
+      if (portal === "admin") {
+        token =
+          cookieStore.get(APP_CONFIG.adminCookieName)?.value ||
+          cookieStore.get(APP_CONFIG.cookieName)?.value;
+      } else if (portal === "customer") {
+        token =
+          cookieStore.get(APP_CONFIG.customerCookieName)?.value ||
+          cookieStore.get(APP_CONFIG.cookieName)?.value;
+      } else {
+        token =
+          cookieStore.get(APP_CONFIG.customerCookieName)?.value ||
+          cookieStore.get(APP_CONFIG.adminCookieName)?.value ||
+          cookieStore.get(APP_CONFIG.cookieName)?.value;
+      }
+
       if (!token) return null;
 
       const verified = await this.verifyToken(token);
       if (!verified) return null;
 
+      if (portal === "admin" && verified.role === "CUSTOMER") {
+        return null;
+      }
+
       const record = await DatabaseStore.findUserById(verified.id);
       if (!record) return null;
 
-      return this.mapToAuthUser(record);
+      const permissions = await DatabaseStore.getUserPermissions(record.id);
+      return {
+        ...this.mapToAuthUser(record),
+        roleId: (record as unknown as { roleId?: string }).roleId,
+        permissions,
+      };
     } catch {
       return null;
     }
   }
 
-  public static async setSessionCookie(token: string, rememberMe = true): Promise<void> {
+  public static async getCurrentAdminUser(): Promise<AuthUser | null> {
+    return this.getCurrentUser("admin");
+  }
+
+  public static async getCurrentCustomerUser(): Promise<AuthUser | null> {
+    return this.getCurrentUser("customer");
+  }
+
+  public static async setSessionCookie(
+    token: string,
+    portalOrRememberMe: "admin" | "customer" | boolean = "customer",
+    rememberMe = true
+  ): Promise<void> {
     const cookieStore = await cookies();
-    const maxAge = rememberMe ? 7 * 24 * 60 * 60 : 24 * 60 * 60;
+    let portal: "admin" | "customer" = "customer";
+    let isRemember = true;
+
+    if (typeof portalOrRememberMe === "boolean") {
+      isRemember = portalOrRememberMe;
+    } else if (typeof portalOrRememberMe === "string") {
+      portal = portalOrRememberMe;
+      isRemember = rememberMe;
+    }
+
+    const maxAge = isRemember ? 7 * 24 * 60 * 60 : 24 * 60 * 60;
+    const cookieName =
+      portal === "admin" ? APP_CONFIG.adminCookieName : APP_CONFIG.customerCookieName;
+
+    cookieStore.set(cookieName, token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge,
+    });
+
+    // Also set legacy cookie for compatibility with any unmodified endpoints
     cookieStore.set(APP_CONFIG.cookieName, token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -134,8 +203,32 @@ export class AuthService {
     });
   }
 
-  public static async clearSessionCookie(): Promise<void> {
+  public static async clearSessionCookie(portal?: "admin" | "customer" | "all"): Promise<void> {
     const cookieStore = await cookies();
-    cookieStore.delete(APP_CONFIG.cookieName);
+    if (portal === "admin") {
+      cookieStore.delete(APP_CONFIG.adminCookieName);
+      // If legacy auth_token holds an admin user, remove it too
+      const legacyToken = cookieStore.get(APP_CONFIG.cookieName)?.value;
+      if (legacyToken) {
+        const verified = await this.verifyToken(legacyToken);
+        if (verified && verified.role !== "CUSTOMER") {
+          cookieStore.delete(APP_CONFIG.cookieName);
+        }
+      }
+    } else if (portal === "customer") {
+      cookieStore.delete(APP_CONFIG.customerCookieName);
+      // If legacy auth_token holds a customer user, remove it too
+      const legacyToken = cookieStore.get(APP_CONFIG.cookieName)?.value;
+      if (legacyToken) {
+        const verified = await this.verifyToken(legacyToken);
+        if (verified && verified.role === "CUSTOMER") {
+          cookieStore.delete(APP_CONFIG.cookieName);
+        }
+      }
+    } else {
+      cookieStore.delete(APP_CONFIG.adminCookieName);
+      cookieStore.delete(APP_CONFIG.customerCookieName);
+      cookieStore.delete(APP_CONFIG.cookieName);
+    }
   }
 }

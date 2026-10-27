@@ -1,9 +1,11 @@
 export const APP_CONFIG = {
-  appName: process.env.NEXT_PUBLIC_APP_NAME || "Tagateway Admin",
+  appName: process.env.NEXT_PUBLIC_APP_NAME || "emox Admin",
   appUrl: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   jwtSecret: process.env.JWT_SECRET || "ecommerce_super_secure_jwt_secret_key_2026_!@#",
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || "7d",
   cookieName: "auth_token",
+  adminCookieName: "admin_token",
+  customerCookieName: "customer_token",
   uploadDir: process.env.UPLOAD_DIR || "public/uploads",
   maxUploadSizeBytes: (Number(process.env.MAX_UPLOAD_SIZE_MB) || 50) * 1024 * 1024,
   allowedMimeTypes: [

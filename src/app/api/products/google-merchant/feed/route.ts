@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
   <channel>
     <title>${escapeXml(feedData.title)}</title>
     <link>${escapeXml(feedData.link)}</link>
-    <description>Google Merchant Center Product Catalog Feed for Tagateway</description>
+    <description>Google Merchant Center Product Catalog Feed for emox</description>
     ${itemsXml}
   </channel>
 </rss>`;

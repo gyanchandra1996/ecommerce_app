@@ -1,10 +1,14 @@
+import { PermissionSet } from "@/modules/roles/types/role.types";
+
 export interface AuthUser {
   id: string;
   name: string;
   email: string;
-  role: "ADMIN" | "MANAGER" | "STAFF";
+  role: "ADMIN" | "MANAGER" | "STAFF" | string;
+  roleId?: string;
   avatar?: string | null;
   createdAt: string;
+  permissions?: Record<string, PermissionSet>;
 }
 
 export interface LoginCredentials {
@@ -18,7 +22,17 @@ export interface RegisterCredentials {
   email: string;
   password: string;
   confirmPassword?: string;
-  role?: "ADMIN" | "MANAGER" | "STAFF";
+  role?: "ADMIN" | "MANAGER" | "STAFF" | "CUSTOMER" | string;
+  mobileNumber?: string;
+  countryCode?: string;
+  phone?: string;
+  country?: string;
+  state?: string;
+  city?: string;
+  postalCode?: string;
+  streetAddress?: string;
+  apartment?: string;
+  accountType?: "admin" | "customer" | "manager" | "staff";
 }
 
 export interface AuthSession {

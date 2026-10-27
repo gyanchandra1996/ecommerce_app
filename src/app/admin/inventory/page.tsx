@@ -9,6 +9,9 @@ import {
   Search,
   AlertTriangle,
   Package,
+  Check,
+  Save,
+  Boxes,
 } from "lucide-react";
 
 interface ProductItem {
@@ -23,41 +26,173 @@ interface ProductItem {
   assetIds?: string[];
 }
 
+interface WarehouseOption {
+  id: string;
+  name: string;
+  accountNumber?: string;
+}
+
 export default function InventoryPage() {
   const [products, setProducts] = useState<ProductItem[]>([]);
+  const [warehouses, setWarehouses] = useState<WarehouseOption[]>([]);
   const [activeTab, setActiveTab] = useState<"all" | "low" | "none" | "soldout">("all");
   const [displaySoldOut, setDisplaySoldOut] = useState(true);
   const [displayInactive, setDisplayInactive] = useState(false);
   const [search, setSearch] = useState("");
-  const [warehouse, setWarehouse] = useState("all");
+  const [selectedWarehouse, setSelectedWarehouse] = useState("all");
+
+  // Stock edit state buffer { [id]: { currentStock: number, warehouse: string, isSoldOut: boolean, modified: boolean } }
+  const [stockEdits, setStockEdits] = useState<
+    Record<string, { currentStock: number; warehouse: string; isSoldOut: boolean; modified: boolean }>
+  >({});
+  const [statusMsg, setStatusMsg] = useState<string | null>(null);
+
+  const fetchInventory = async () => {
+    try {
+      const [prodRes, whRes] = await Promise.all([
+        fetch("/api/products"),
+        fetch("/api/warehouses"),
+      ]);
+      const prodJson = await prodRes.json();
+      const whJson = await whRes.json();
+
+      if (prodJson.data) {
+        setProducts(prodJson.data);
+        const edits: Record<string, { currentStock: number; warehouse: string; isSoldOut: boolean; modified: boolean }> = {};
+        prodJson.data.forEach((p: ProductItem) => {
+          edits[p.id] = {
+            currentStock: p.currentStock,
+            warehouse: p.warehouse || "Default Hub",
+            isSoldOut: p.isSoldOut,
+            modified: false,
+          };
+        });
+        setStockEdits(edits);
+      }
+
+      if (whJson.data) {
+        setWarehouses(whJson.data);
+      }
+    } catch (err) {
+      console.error("Error loading inventory:", err);
+    }
+  };
 
   useEffect(() => {
-    fetch("/api/products")
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.data) setProducts(json.data);
-      })
-      .catch(() => {});
+    fetchInventory();
   }, []);
 
+  const handleStockChange = (id: string, val: number) => {
+    setStockEdits((prev) => {
+      const current = prev[id] || { currentStock: 0, warehouse: "Default Hub", isSoldOut: false };
+      const isSoldOut = val <= 0;
+      return {
+        ...prev,
+        [id]: {
+          ...current,
+          currentStock: Math.max(0, val),
+          isSoldOut: isSoldOut ? true : current.isSoldOut,
+          modified: true,
+        },
+      };
+    });
+  };
+
+  const handleWarehouseChange = (id: string, whName: string) => {
+    setStockEdits((prev) => ({
+      ...prev,
+      [id]: {
+        ...(prev[id] || { currentStock: 0, isSoldOut: false }),
+        warehouse: whName,
+        modified: true,
+      },
+    }));
+  };
+
+  const handleToggleSoldOut = (id: string) => {
+    setStockEdits((prev) => {
+      const current = prev[id] || { currentStock: 0, warehouse: "Default Hub", isSoldOut: false };
+      return {
+        ...prev,
+        [id]: {
+          ...current,
+          isSoldOut: !current.isSoldOut,
+          modified: true,
+        },
+      };
+    });
+  };
+
+  const handleSaveItem = async (id: string) => {
+    const edit = stockEdits[id];
+    if (!edit) return;
+
+    try {
+      const res = await fetch(`/api/products/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          currentStock: Number(edit.currentStock),
+          warehouse: edit.warehouse,
+          isSoldOut: Boolean(edit.isSoldOut),
+        }),
+      });
+
+      if (res.ok) {
+        setStockEdits((prev) => ({
+          ...prev,
+          [id]: { ...prev[id], modified: false },
+        }));
+        setProducts((prev) =>
+          prev.map((p) =>
+            p.id === id
+              ? {
+                  ...p,
+                  currentStock: Number(edit.currentStock),
+                  warehouse: edit.warehouse,
+                  isSoldOut: Boolean(edit.isSoldOut),
+                }
+              : p
+          )
+        );
+        notify("Inventory updated successfully.");
+      }
+    } catch (err) {
+      console.error("Error saving inventory item:", err);
+    }
+  };
+
+  const notify = (msg: string) => {
+    setStatusMsg(msg);
+    setTimeout(() => setStatusMsg(null), 3000);
+  };
+
   const filteredProducts = products.filter((p) => {
-    if (!displaySoldOut && p.isSoldOut) return false;
-    if (warehouse !== "all" && p.warehouse !== warehouse) return false;
-    if (search && !p.name.toLowerCase().includes(search.toLowerCase()) && !p.sku.toLowerCase().includes(search.toLowerCase())) {
+    const edit = stockEdits[p.id] || p;
+    if (!displaySoldOut && edit.isSoldOut) return false;
+    if (selectedWarehouse !== "all" && edit.warehouse !== selectedWarehouse) return false;
+    if (
+      search &&
+      !p.name.toLowerCase().includes(search.toLowerCase()) &&
+      !p.sku.toLowerCase().includes(search.toLowerCase())
+    ) {
       return false;
     }
-    if (activeTab === "low") return p.currentStock <= p.minStock && p.currentStock > 0;
-    if (activeTab === "none") return p.currentStock === 0;
-    if (activeTab === "soldout") return p.isSoldOut;
+    if (activeTab === "low") return edit.currentStock <= p.minStock && edit.currentStock > 0;
+    if (activeTab === "none") return edit.currentStock === 0;
+    if (activeTab === "soldout") return edit.isSoldOut;
     return true;
   });
 
   return (
     <div className="space-y-4">
-      {/* Header and Breadcrumb */}
+      {/* Header and Breadcrumb matching Image 2 */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl font-bold text-slate-800 tracking-tight">Manage Inventory</h1>
+          <h1 className="text-xl font-bold text-slate-800 tracking-tight flex items-center gap-2">
+            <Boxes className="w-5 h-5 text-emerald-600" />
+            <span>Manage Inventory</span>
+          </h1>
           <p className="text-xs text-slate-500 mt-0.5">
             <span className="text-emerald-600 font-medium">Inventory</span> / Manage Inventory
           </p>
@@ -80,38 +215,46 @@ export default function InventoryPage() {
             </div>
           </label>
 
-          <button className="h-8 px-3 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-md flex items-center space-x-1.5 transition">
-            <Upload className="w-3.5 h-3.5" />
-            <span>Upload Inventory</span>
-          </button>
-          <button className="h-8 px-3 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-md flex items-center space-x-1.5 transition">
-            <Download className="w-3.5 h-3.5" />
-            <span>Download Inventory</span>
-          </button>
+          {statusMsg && (
+            <div className="px-3 py-1 rounded-md bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-200 flex items-center space-x-1.5 animate-in fade-in">
+              <Check className="w-3.5 h-3.5 text-emerald-600" />
+              <span>{statusMsg}</span>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Sellbrite Alert Banner matching Image 2 */}
+      {/* Warehouse Mode Alert Banner matching Image 2 */}
       <div className="p-3.5 rounded-lg bg-amber-50 border border-amber-200/80 text-amber-900 text-xs flex items-center space-x-2">
         <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
         <span>
-          Use Sellbrite as primary inventory mode is enabled. Please use Sellbrite for updating inventory or change mode from{" "}
-          <Link href="/admin/settings" className="font-semibold underline text-amber-800">
-            Sellbrite setting
-          </Link>.
+          Inventory synchronizes directly with connected warehouses. Updating stock numbers here reflects immediately on your live storefront product pages.
         </span>
       </div>
 
-      {/* Filter Toolbar */}
-      <div className="bg-white p-3 rounded-xl border border-slate-200 flex flex-wrap items-center justify-between gap-3">
+      {/* Filter Toolbar matching Screenshot */}
+      <div className="bg-white p-3 rounded-xl border border-slate-200/80 shadow-xs flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center space-x-2">
-          <button className="h-8 px-3 text-xs font-medium bg-emerald-600 text-white rounded-md flex items-center space-x-1">
-            <span>Filter by categories</span>
-          </button>
+          {/* Warehouse Selector Populated from /api/warehouses */}
+          <div className="w-60">
+            <select
+              value={selectedWarehouse}
+              onChange={(e) => setSelectedWarehouse(e.target.value)}
+              className="w-full h-8 px-2.5 text-xs border border-slate-300 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500 font-medium"
+            >
+              <option value="all">All Warehouses</option>
+              {warehouses.map((wh) => (
+                <option key={wh.id} value={wh.name}>
+                  {wh.name} {wh.accountNumber ? `(${wh.accountNumber})` : ""}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <button
             onClick={() => {
               setSearch("");
-              setWarehouse("all");
+              setSelectedWarehouse("all");
               setActiveTab("all");
             }}
             title="Reset filters"
@@ -143,27 +286,12 @@ export default function InventoryPage() {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search"
-              className="h-8 pl-3 pr-7 text-xs border border-slate-300 rounded focus:outline-none focus:ring-1 focus:ring-emerald-500 w-44"
+              placeholder="Search by SKU or Name..."
+              className="h-8 pl-3 pr-7 text-xs border border-slate-300 rounded focus:outline-none focus:ring-1 focus:ring-emerald-500 w-52"
             />
             <Search className="w-3.5 h-3.5 absolute right-2 top-2.5 text-slate-400" />
           </div>
         </div>
-      </div>
-
-      {/* Warehouse Selector */}
-      <div className="w-64">
-        <label className="block text-[11px] font-semibold text-slate-500 mb-1 uppercase tracking-wider">
-          Warehouse
-        </label>
-        <select
-          value={warehouse}
-          onChange={(e) => setWarehouse(e.target.value)}
-          className="w-full h-8 px-2.5 text-xs border border-slate-300 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
-        >
-          <option value="all">All Warehouses</option>
-          <option value="gyanwarehouse">gyanwarehouse</option>
-        </select>
       </div>
 
       {/* Tabs matching Image 2 */}
@@ -186,7 +314,7 @@ export default function InventoryPage() {
               : "border-transparent text-slate-500 hover:text-slate-800"
           }`}
         >
-          Low Inventory (0)
+          Low Inventory ({products.filter((p) => p.currentStock <= p.minStock && p.currentStock > 0).length})
         </button>
         <button
           onClick={() => setActiveTab("none")}
@@ -196,7 +324,7 @@ export default function InventoryPage() {
               : "border-transparent text-slate-500 hover:text-slate-800"
           }`}
         >
-          No Inventory (0)
+          No Inventory ({products.filter((p) => p.currentStock === 0).length})
         </button>
         <button
           onClick={() => setActiveTab("soldout")}
@@ -211,7 +339,7 @@ export default function InventoryPage() {
       </div>
 
       {/* Inventory Data Table matching Image 2 */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-2xs">
+      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs">
         <table className="w-full text-left text-xs">
           <thead className="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200">
             <tr>
@@ -221,47 +349,101 @@ export default function InventoryPage() {
               <th className="p-3">Warehouse</th>
               <th className="p-3">Mini stock</th>
               <th className="p-3">Status</th>
-              <th className="p-3 text-right">Current Stock</th>
+              <th className="p-3">Current Stock</th>
+              <th className="p-3 text-center">Action</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {filteredProducts.map((item) => (
-              <tr key={item.id} className="hover:bg-slate-50/80 transition">
-                <td className="p-3 font-mono font-medium text-slate-800">{item.sku}</td>
-                <td className="p-3">
-                  <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-600 text-white">
-                    Active
-                  </span>
-                </td>
-                <td className="p-3 font-medium text-slate-800 flex items-center space-x-1.5">
-                  <span>{item.name}</span>
-                  {Boolean(item.assetIds && item.assetIds.length > 0) && (
-                    <span
-                      title={`${item.assetIds?.length} media asset(s) linked`}
-                      className="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 text-[10px]"
+            {filteredProducts.map((item) => {
+              const edit = stockEdits[item.id] || {
+                currentStock: item.currentStock,
+                warehouse: item.warehouse || "Default Hub",
+                isSoldOut: item.isSoldOut,
+                modified: false,
+              };
+
+              return (
+                <tr
+                  key={item.id}
+                  className={`hover:bg-slate-50/80 transition ${
+                    edit.modified ? "bg-amber-50/40" : ""
+                  }`}
+                >
+                  <td className="p-3 font-mono font-medium text-slate-800">{item.sku}</td>
+                  <td className="p-3">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-600 text-white">
+                      Active
+                    </span>
+                  </td>
+                  <td className="p-3 font-medium text-slate-800">
+                    <span>{item.name}</span>
+                  </td>
+
+                  {/* Warehouse Selector */}
+                  <td className="p-3">
+                    <select
+                      value={edit.warehouse}
+                      onChange={(e) => handleWarehouseChange(item.id, e.target.value)}
+                      className="px-2 py-1 text-xs border border-slate-300 rounded bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
                     >
-                      {item.assetIds?.length} media
-                    </span>
-                  )}
-                </td>
-                <td className="p-3 text-slate-600">{item.warehouse || "gyanwarehouse"}</td>
-                <td className="p-3 text-slate-600">{item.minStock}</td>
-                <td className="p-3">
-                  {item.isSoldOut ? (
-                    <span className="px-2.5 py-0.5 rounded text-[10px] font-semibold bg-amber-500 text-white">
-                      Sold Out
-                    </span>
-                  ) : (
-                    <span className="px-2.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-600 text-white">
-                      Available
-                    </span>
-                  )}
-                </td>
-                <td className="p-3 text-right font-semibold text-slate-800 font-mono">
-                  {item.currentStock}
-                </td>
-              </tr>
-            ))}
+                      {warehouses.map((wh) => (
+                        <option key={wh.id} value={wh.name}>
+                          {wh.name}
+                        </option>
+                      ))}
+                      {!warehouses.some((w) => w.name === edit.warehouse) && (
+                        <option value={edit.warehouse}>{edit.warehouse}</option>
+                      )}
+                    </select>
+                  </td>
+
+                  <td className="p-3 text-slate-600">{item.minStock}</td>
+
+                  {/* Quick Toggle Status Available / Sold Out */}
+                  <td className="p-3">
+                    <button
+                      type="button"
+                      onClick={() => handleToggleSoldOut(item.id)}
+                      className={`px-2.5 py-0.5 rounded text-[10px] font-semibold transition cursor-pointer ${
+                        edit.isSoldOut
+                          ? "bg-amber-500 text-white hover:bg-amber-600"
+                          : "bg-emerald-600 text-white hover:bg-emerald-700"
+                      }`}
+                      title="Click to toggle Available / Sold Out"
+                    >
+                      {edit.isSoldOut ? "Sold Out" : "Available"}
+                    </button>
+                  </td>
+
+                  {/* Editable Stock Input */}
+                  <td className="p-3">
+                    <input
+                      type="number"
+                      min="0"
+                      value={edit.currentStock}
+                      onChange={(e) => handleStockChange(item.id, Number(e.target.value))}
+                      className="w-20 px-2 py-1 text-xs border border-slate-300 rounded font-mono font-semibold focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                    />
+                  </td>
+
+                  {/* Save Button */}
+                  <td className="p-3 text-center">
+                    <button
+                      onClick={() => handleSaveItem(item.id)}
+                      className={`px-3 py-1 text-xs font-semibold rounded shadow-xs transition flex items-center space-x-1 mx-auto ${
+                        edit.modified
+                          ? "bg-emerald-600 text-white hover:bg-emerald-700"
+                          : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      }`}
+                      title="Save Stock Changes"
+                    >
+                      <Check className="w-3.5 h-3.5" />
+                      <span>Save</span>
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

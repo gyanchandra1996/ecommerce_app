@@ -17,7 +17,7 @@ Matches the administrative UI design featuring **Authentication (Login & Registe
 - **Asset Management Module (`src/modules/assets`)**:
   - Upload Images (`.jpg`, `.png`, `.webp`, `.svg`, `.gif`) and Videos (`.mp4`, `.webm`, `.mov`)
   - **Live Upload Progress Indicators**: Real-time progress bar (0% to 100%) showing upload state, speed, and file size
-  - Dual View Modes: Grid Card View (matches tag31 media library) and Detailed Table List View
+  - Dual View Modes: Grid Card View (matches media library) and Detailed Table List View
   - Filter by asset type (*All*, *Images*, *Videos*, *Documents*, *Audio*)
   - Sort by *Recent*, *Oldest*, *Name (A-Z)*, *Name (Z-A)*, *File Size*
   - Multiselect toggle for bulk deletion and batch operations

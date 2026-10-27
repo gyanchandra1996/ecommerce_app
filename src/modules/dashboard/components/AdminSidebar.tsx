@@ -18,13 +18,29 @@ import {
   ChevronRight,
   Circle,
   X,
+  ShieldCheck,
+  Palette,
+  CreditCard,
+  Truck,
 } from "lucide-react";
+import { PermissionSet, PageModuleId } from "@/modules/roles/types/role.types";
 
 interface Props {
   isOpen: boolean;
   onCloseMobile: () => void;
   userName?: string;
   userRole?: string;
+  permissions?: Record<string, PermissionSet>;
+}
+
+interface MenuItem {
+  title: string;
+  href?: string;
+  icon: React.ElementType;
+  moduleId?: PageModuleId;
+  hasChildren?: boolean;
+  subKey?: string;
+  children?: { title: string; href: string; moduleId?: PageModuleId }[];
 }
 
 export function AdminSidebar({
@@ -32,72 +48,152 @@ export function AdminSidebar({
   onCloseMobile,
   userName = "Admin admin",
   userRole = "Admin",
+  permissions,
 }: Props) {
   const pathname = usePathname();
+
+  // Determine which submenus should be open by default based on current route
+  const isProductsRoute =
+    pathname.startsWith("/admin/products") ||
+    pathname.startsWith("/admin/categories") ||
+    pathname.startsWith("/admin/discounts") ||
+    pathname.startsWith("/admin/reviews") ||
+    pathname.startsWith("/admin/qna") ||
+    pathname.startsWith("/admin/wishlist");
+
+  const isOrdersRoute =
+    pathname.startsWith("/admin/orders") ||
+    pathname.startsWith("/admin/shipments");
+
+  const isMarketingRoute =
+    pathname.startsWith("/admin/sliders") ||
+    pathname.startsWith("/admin/menu") ||
+    pathname.startsWith("/admin/coupons");
+
+  const isShippingRoute = pathname.startsWith("/admin/shipping");
+
+  const isAccessRoute = pathname.startsWith("/admin/roles");
+
   const [openSubmenus, setOpenSubmenus] = useState<Record<string, boolean>>({
-    products: false,
-    orders: false,
-    marketing: false,
+    products: isProductsRoute,
+    orders: isOrdersRoute,
+    shipping: isShippingRoute,
+    marketing: isMarketingRoute,
+    accessMgmt: isAccessRoute,
   });
+
+  // Keep submenus synchronized when route changes
+  React.useEffect(() => {
+    setOpenSubmenus((prev) => ({
+      ...prev,
+      products: prev.products || isProductsRoute,
+      orders: prev.orders || isOrdersRoute,
+      shipping: prev.shipping || isShippingRoute,
+      marketing: prev.marketing || isMarketingRoute,
+      accessMgmt: prev.accessMgmt || isAccessRoute,
+    }));
+  }, [pathname, isProductsRoute, isOrdersRoute, isShippingRoute, isMarketingRoute, isAccessRoute]);
 
   const toggleSubmenu = (menu: string) => {
     setOpenSubmenus((prev) => ({ ...prev, [menu]: !prev[menu] }));
   };
 
-  const menuItems = [
+  const rawMenuItems: MenuItem[] = [
     {
       title: "Dashboard",
       href: "/admin/dashboard",
       icon: LayoutDashboard,
+      moduleId: "dashboard",
     },
     {
       title: "Assets",
       href: "/admin/assets",
       icon: ImageIcon,
+      moduleId: "assets",
     },
     {
       title: "Customers",
       href: "/admin/customers",
       icon: Users,
+      moduleId: "customers",
+    },
+    {
+      title: "Access Management",
+      icon: ShieldCheck,
+      hasChildren: true,
+      subKey: "accessMgmt",
+      moduleId: "accessMgmt",
+      children: [
+        { title: "Assign Customer Role", href: "/admin/roles/assign", moduleId: "roles" },
+        { title: "Access Groups", href: "/admin/roles", moduleId: "roles" },
+        { title: "Create Role", href: "/admin/roles/create", moduleId: "roles" },
+      ],
     },
     {
       title: "Manufacturers",
       href: "/admin/manufacturers",
       icon: Factory,
+      moduleId: "manufacturers",
     },
     {
       title: "Products",
       icon: Package,
       hasChildren: true,
       subKey: "products",
+      moduleId: "products",
       children: [
-        { title: "Manage Products", href: "/admin/products" },
-        { title: "Manage Categories", href: "/admin/categories" },
-        { title: "Manage Discount", href: "/admin/discounts" },
-        { title: "Manage Review", href: "/admin/reviews" },
-        { title: "Manage Q&A", href: "/admin/qna" },
-        { title: "Manage Wishlist", href: "/admin/wishlist" },
+        { title: "Products", href: "/admin/products", moduleId: "products" },
+        { title: "Categories", href: "/admin/categories", moduleId: "categories" },
+        { title: "Discounts", href: "/admin/discounts", moduleId: "discounts" },
+        { title: "Reviews", href: "/admin/reviews", moduleId: "reviews" },
+        { title: "Customer Q&A", href: "/admin/qna", moduleId: "qna" },
+        { title: "Wishlists", href: "/admin/wishlist", moduleId: "wishlist" },
       ],
     },
     {
-      title: "Manage Inventory",
+      title: "Inventory",
       href: "/admin/inventory",
       icon: Boxes,
+      moduleId: "inventory",
     },
     {
-      title: "Manage Pricing",
+      title: "Pricing",
       href: "/admin/pricing",
       icon: DollarSign,
+      moduleId: "pricing",
     },
     {
       title: "Orders",
       icon: ShoppingCart,
       hasChildren: true,
       subKey: "orders",
+      moduleId: "orders",
       children: [
-        { title: "All Orders", href: "/admin/orders" },
-        { title: "Pending Orders", href: "/admin/orders/pending" },
-        { title: "Shipments", href: "/admin/orders/shipments" },
+        { title: "All Orders", href: "/admin/orders", moduleId: "orders" },
+        { title: "Add Order", href: "/admin/orders/create", moduleId: "orders" },
+        { title: "Pending Orders", href: "/admin/orders/pending", moduleId: "orders" },
+        { title: "Shipments", href: "/admin/shipments", moduleId: "orders" },
+        { title: "Payment Records", href: "/admin/payments", moduleId: "orders" },
+      ],
+    },
+    {
+      title: "Payments",
+      href: "/admin/payments",
+      icon: CreditCard,
+      moduleId: "payments" as PageModuleId,
+    },
+    {
+      title: "Shipping Management",
+      icon: Truck,
+      hasChildren: true,
+      subKey: "shipping",
+      moduleId: "shipping" as PageModuleId,
+      children: [
+        { title: "Shipping Providers", href: "/admin/shipping/providers" },
+        { title: "Add Shipping Provider", href: "/admin/shipping/providers/create" },
+        { title: "Shipping Settings", href: "/admin/shipping/settings" },
+        { title: "Shipping Zones and Rates", href: "/admin/shipping/zones" },
+        { title: "Shipments and Tracking", href: "/admin/shipping/tracking" },
       ],
     },
     {
@@ -105,17 +201,57 @@ export function AdminSidebar({
       icon: Megaphone,
       hasChildren: true,
       subKey: "marketing",
+      moduleId: "marketing",
       children: [
-        { title: "Coupons", href: "/admin/coupons" },
-        { title: "Email Campaigns", href: "/admin/campaigns" },
+        { title: "Sliders & Banners", href: "/admin/sliders", moduleId: "sliders" },
+        { title: "Navigation Menu", href: "/admin/menu", moduleId: "menu" },
+        { title: "Coupons", href: "/admin/coupons", moduleId: "coupons" },
       ],
+    },
+    {
+      title: "Themes & Layout",
+      href: "/admin/themes",
+      icon: Palette,
+      moduleId: "themes",
+    },
+    {
+      title: "Payment Gateways",
+      href: "/admin/gateways",
+      icon: CreditCard,
+      moduleId: "gateways",
     },
     {
       title: "Settings",
       href: "/admin/settings",
       icon: Settings,
+      moduleId: "settings",
     },
   ];
+
+  // Filter items based on RBAC permissions if provided
+  const menuItems = rawMenuItems
+    .filter((item) => {
+      if (!permissions || Object.keys(permissions).length === 0) return true;
+      if (item.moduleId && permissions[item.moduleId]) {
+        const p = permissions[item.moduleId] as any;
+        return p.view !== false && p.canView !== false;
+      }
+      return true;
+    })
+    .map((item) => {
+      if (item.children && permissions && Object.keys(permissions).length > 0) {
+        const filteredChildren = item.children.filter((child) => {
+          if (child.moduleId && permissions[child.moduleId]) {
+            const cp = permissions[child.moduleId] as any;
+            return cp.view !== false && cp.canView !== false;
+          }
+          return true;
+        });
+        return { ...item, children: filteredChildren };
+      }
+      return item;
+    })
+    .filter((item) => !item.hasChildren || (item.children && item.children.length > 0));
 
   return (
     <>
@@ -159,19 +295,35 @@ export function AdminSidebar({
         <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-0.5 custom-scrollbar text-xs">
           {menuItems.map((item) => {
             const Icon = item.icon;
-            const isActive = item.href && pathname.startsWith(item.href);
+            const isActive =
+              item.href &&
+              (item.href === "/admin/dashboard"
+                ? pathname === "/admin/dashboard"
+                : pathname.startsWith(item.href));
 
             if (item.hasChildren && item.children) {
               const isOpenSub = openSubmenus[item.subKey || ""];
+              const hasActiveChild = item.children.some(
+                (child) => pathname === child.href || pathname.startsWith(child.href)
+              );
+
               return (
                 <div key={item.title}>
                   <button
                     type="button"
                     onClick={() => toggleSubmenu(item.subKey || "")}
-                    className="w-full flex items-center justify-between px-3 py-2.5 rounded text-slate-300 hover:bg-[#222d3d] hover:text-white transition group"
+                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded transition group ${
+                      hasActiveChild
+                        ? "text-emerald-400 bg-[#222d3d]/70 font-medium"
+                        : "text-slate-300 hover:bg-[#222d3d] hover:text-white"
+                    }`}
                   >
                     <div className="flex items-center space-x-3">
-                      <Icon className="w-4 h-4 text-slate-400 group-hover:text-emerald-400" />
+                      <Icon
+                        className={`w-4 h-4 ${
+                          hasActiveChild ? "text-emerald-400" : "text-slate-400 group-hover:text-emerald-400"
+                        }`}
+                      />
                       <span className="font-medium">{item.title}</span>
                     </div>
                     {isOpenSub ? (

@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, description, parentId } = body;
+    const { name, description, parentId, image } = body;
 
     if (!name || !name.trim()) {
       return apiError("Category name is required.", 400);
@@ -34,6 +34,7 @@ export async function POST(req: NextRequest) {
       name: name.trim(),
       description: description?.trim(),
       parentId: parentId || null,
+      image: image?.trim() || null,
     });
 
     return apiSuccess(created, "Category created successfully.", 201);

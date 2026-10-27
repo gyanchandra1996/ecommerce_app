@@ -73,7 +73,7 @@ export default function DashboardPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-xl font-bold text-slate-800 tracking-tight">Dashboard Overview</h1>
-          <p className="text-xs text-slate-500 mt-0.5">Welcome to Tagateway E-Commerce Management</p>
+          <p className="text-xs text-slate-500 mt-0.5">Welcome to emox E-Commerce Management</p>
         </div>
 
         <Link

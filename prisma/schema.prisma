@@ -80,6 +80,7 @@ model Category {
   name         String
   slug         String            @unique
   description  String?
+  image        String?
   parentId     String?
   parent       Category?         @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
   children     Category[]        @relation("CategoryHierarchy")
@@ -111,6 +112,9 @@ model Product {
   status       ProductStatus  @default(ACTIVE)
   isSoldOut    Boolean        @default(false)
   brand        String?
+  rating       Float?         @default(4.5)
+  reviewsCount Int?           @default(0)
+  mainImage    String?
 
   // Google Merchant Center Integration
   googleMerchantSync  Boolean   @default(false)
@@ -129,8 +133,30 @@ model Product {
 
   assets       ProductAsset[]
   categories   ProductCategory[]
+  variants     ProductVariant[]
+  hasVariants  Boolean        @default(false)
+  variantAttributes Json?     // e.g. [{ name: "Color", values: ["Black", "White"] }]
 
   @@map("products")
+}
+
+model ProductVariant {
+  id           String   @id @default(cuid())
+  productId    String
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sku          String   @unique
+  price        Float
+  comparePrice Float?
+  costPrice    Float?
+  currentStock Int      @default(0)
+  isActive     Boolean  @default(true)
+  image        String?
+  attributes   Json     @default("{}") // e.g. {"Color": "Black", "Size": "M"}
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([productId])
+  @@map("product_variants")
 }
 
 model ProductCategory {
@@ -159,3 +185,396 @@ model ProductAsset {
   @@unique([productId, assetId])
   @@map("product_assets")
 }
+
+model Slider {
+  id           String   @id @default(cuid())
+  title        String
+  subtitle     String?
+  description  String?
+  badge        String?
+  tag          String?
+  buttonText   String   @default("Shop Now")
+  buttonLink   String   @default("/#deals")
+  imageUrl     String?
+  bgGradient   String?
+  textColor    String?
+  position     String   @default("main")
+  displayOrder Int      @default(1)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("sliders")
+}
+
+model MenuItem {
+  id           String   @id @default(cuid())
+  label        String
+  url          String
+  icon         String?
+  badge        String?
+  displayOrder Int      @default(1)
+  isActive     Boolean  @default(true)
+  isHighlight  Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("menu_items")
+}
+
+model Manufacturer {
+  id              String      @id @default(cuid())
+  accountNumber   String
+  name            String
+  contactName     String
+  email           String
+  phone           String?
+  fax             String?
+  website         String?
+  addressLine1    String?
+  addressLine2    String?
+  country         String?     @default("United States")
+  state           String?
+  city            String?
+  zipCode         String?
+  isActive        Boolean     @default(true)
+  advancedOptions Json?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  warehouses      Warehouse[]
+
+  @@map("manufacturers")
+}
+
+model Warehouse {
+  id             String        @id @default(cuid())
+  accountNumber  String?
+  name           String
+  contactName    String?
+  email          String?
+  phone          String?
+  address        String?
+  city           String?
+  state          String?
+  country        String?       @default("United States")
+  zipCode        String?
+  isActive       Boolean       @default(true)
+  manufacturerId String?
+  manufacturer   Manufacturer? @relation(fields: [manufacturerId], references: [id], onDelete: Cascade)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@map("warehouses")
+}
+
+model Discount {
+  id            String    @id @default(cuid())
+  itemNo        String
+  productId     String?
+  productName   String
+  discountType  String    @default("PERCENT") // PERCENT or FIXED
+  discountValue Float     @default(0)
+  startDate     DateTime?
+  endDate       DateTime?
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("discounts")
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  orderNumber     String      @unique
+  customerName    String
+  customerEmail   String?
+  customerPhone   String?
+  gateway         String      @default("PayPal")
+  paymentStatus   String      @default("Paid")
+  orderStatus     String      @default("Pending")
+  totalPrice      Float       @default(0)
+  subtotal        Float       @default(0)
+  shippingCost    Float       @default(0)
+  shippingAddress String?
+  orderDate       DateTime    @default(now())
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  items           OrderItem[]
+  payments        Payment[]
+  shipments       Shipment[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id                String   @id @default(cuid())
+  orderId           String
+  order             Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId         String?
+  variantId         String?
+  variantAttributes Json?    // e.g. {"Color": "Black", "Size": "M"}
+  itemNo            String
+  name              String
+  price             Float
+  quantity          Int      @default(1)
+  imageUrl          String?
+
+  @@map("order_items")
+}
+
+model PricingSetting {
+  id                     String   @id @default(cuid())
+  strikeThroughPricing   Boolean  @default(true)
+  priceSync              Boolean  @default(true)
+  priceRounding          Boolean  @default(false)
+  defaultAdjustmentType  String   @default("PERCENT")
+  defaultAdjustmentValue Float    @default(0)
+  updatedAt              DateTime @updatedAt
+
+  @@map("pricing_settings")
+}
+
+model Review {
+  id           String   @id @default(cuid())
+  productId    String?
+  itemNo       String
+  productName  String
+  userName     String
+  userEmail    String
+  rating       Int      @default(5)
+  review       String
+  commentCount Int      @default(0)
+  status       String   @default("Active")
+  postedOn     DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("reviews")
+}
+
+model Qna {
+  id           String      @id @default(cuid())
+  productId    String?
+  itemNo       String
+  productName  String
+  userName     String
+  userEmail    String
+  question     String
+  rating       Int         @default(5)
+  answersCount Int         @default(0)
+  status       String      @default("Active")
+  postedOn     DateTime    @default(now())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  answers      QnaAnswer[]
+
+  @@map("qna")
+}
+
+model QnaAnswer {
+  id         String   @id @default(cuid())
+  qnaId      String
+  qna        Qna      @relation(fields: [qnaId], references: [id], onDelete: Cascade)
+  userName   String
+  userEmail  String
+  answer     String
+  isOfficial Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@map("qna_answers")
+}
+
+model WishlistItem {
+  id            String   @id @default(cuid())
+  productId     String?
+  itemNo        String
+  name          String
+  productImage  String?
+  totalQuantity Int      @default(0)
+  wishlistCount Int      @default(1)
+  userIds       String[] @default([])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("wishlist_items")
+}
+
+model Coupon {
+  id                     String    @id @default(cuid())
+  code                   String    @unique
+  couponType             String
+  discountPercentage     Float     @default(0)
+  discountAmount         Float     @default(0)
+  minAmount              Float     @default(0)
+  expiryDate             DateTime?
+  usageLimit             Int       @default(0)
+  usedCount              Int       @default(0)
+  usageLimitPerCustomer  Int       @default(1)
+  selectedUsers          String[]  @default([])
+  selectedTemplate       String?
+  isActive               Boolean   @default(true)
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  @@map("coupons")
+}
+
+model PaymentGateway {
+  id           String   @id @default(cuid())
+  name         String
+  code         String   @unique
+  cardTypes    String[] @default([])
+  isDefault    Boolean  @default(false)
+  isCreditCard Boolean  @default(false)
+  isActive     Boolean  @default(true)
+  environment  String   @default("sandbox")
+  credentials  Json     @default("{}")
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("payment_gateways")
+}
+
+model Theme {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  version     String   @default("1.0.0")
+  thumbnail   String?
+  description String?
+  author      String?  @default("System")
+  isActive    Boolean  @default(false)
+  isSystem    Boolean  @default(false)
+  zipFileName String?
+  config      Json     @default("{}")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("themes")
+}
+
+model Address {
+  id            String   @id @default(cuid())
+  userId        String?
+  customerEmail String?
+  type          String   @default("billing") // "billing" | "shipping"
+  name          String
+  company       String?
+  addressLine1  String
+  addressLine2  String?
+  country       String
+  state         String
+  city          String
+  postalCode    String
+  phone         String
+  isDefault     Boolean  @default(false)
+  status        String   @default("Active")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("addresses")
+}
+
+model Payment {
+  id              String    @id @default(cuid())
+  orderId         String    @map("order_id")
+  order           Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  userId          String?   @map("user_id")
+  paymentGateway  String    @map("payment_gateway") // Razorpay, Paytm, PayPal, COD, etc.
+  gatewayOrderId  String?   @map("gateway_order_id")
+  transactionId   String?   @map("transaction_id")
+  paymentMethod   String?   @map("payment_method") // Card, UPI, NetBanking, Wallet, etc.
+  amount          Float
+  currency        String    @default("INR")
+  paymentStatus   String    @default("Pending") @map("payment_status") // Pending, Processing, Paid, Failed, Cancelled, Refunded
+  gatewayResponse Json?     @map("gateway_response")
+  failureReason   String?   @map("failure_reason")
+  refundAmount    Float     @default(0) @map("refund_amount")
+  refundReference String?   @map("refund_reference")
+  paidAt          DateTime? @map("paid_at")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  @@index([orderId])
+  @@index([userId])
+  @@index([paymentStatus])
+  @@index([transactionId])
+  @@map("payments")
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  userId    String?    @map("user_id")
+  sessionId String?    @map("session_id")
+  status    String     @default("active") // active, abandoned, merged, ordered
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+
+  items     CartItem[]
+
+  @@index([userId])
+  @@index([sessionId])
+  @@map("carts")
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  cartId    String   @map("cart_id")
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId String   @map("product_id")
+  variantId String?  @map("variant_id")
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([cartId, productId, variantId])
+  @@index([cartId])
+  @@map("cart_items")
+}
+
+model ShippingProvider {
+  id          String     @id @default(cuid())
+  name        String
+  code        String     @unique
+  apiBaseUrl  String     @map("api_base_url")
+  credentials Json       @default("{}")
+  settings    Json       @default("{}")
+  isEnabled   Boolean    @default(true)  @map("is_enabled")
+  isDefault   Boolean    @default(false) @map("is_default")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt      @map("updated_at")
+
+  shipments   Shipment[]
+
+  @@map("shipping_providers")
+}
+
+model Shipment {
+  id                 String            @id @default(cuid())
+  orderId            String            @map("order_id")
+  order              Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  shippingProviderId String?           @map("shipping_provider_id")
+  shippingProvider   ShippingProvider? @relation(fields: [shippingProviderId], references: [id], onDelete: SetNull)
+  providerShipmentId String?           @map("provider_shipment_id")
+  awbNumber          String?           @map("awb_number")
+  trackingUrl        String?           @map("tracking_url")
+  shippingCharge     Float             @default(0) @map("shipping_charge")
+  shipmentStatus     String            @default("Pending") @map("shipment_status") // Pending, Ready to Ship, Shipped, In Transit, Out for Delivery, Delivered, Cancelled, Returned
+  shippingLabelPath  String?           @map("shipping_label_path")
+  shippedAt          DateTime?         @map("shipped_at")
+  deliveredAt        DateTime?         @map("delivered_at")
+  createdAt          DateTime          @default(now()) @map("created_at")
+  updatedAt          DateTime          @updatedAt      @map("updated_at")
+
+  @@index([orderId])
+  @@index([shippingProviderId])
+  @@map("shipments")
+}
+
+
+
+

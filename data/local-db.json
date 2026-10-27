@@ -1,6 +1,125 @@
 {
   "users": [
     {
+      "id": "usr_e906jbw7",
+      "email": "gyanwork@gmail.com",
+      "name": "GyanAdmin",
+      "firstName": "GyanAdmin",
+      "lastName": "",
+      "phone": "",
+      "mobileNumber": "",
+      "country": "India",
+      "countryCode": "IN",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "streetAddress": "",
+      "apartment": "",
+      "password": "gyan@123",
+      "role": "CUSTOMER",
+      "roleId": "role_admin",
+      "assignedRoles": [
+        "role_admin"
+      ],
+      "accountType": "customer",
+      "customerType": "VIP",
+      "address": null,
+      "shippingAddress": null,
+      "lastLogin": "Just now",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "createdAt": "2026-10-25T16:39:08.493Z",
+      "updatedAt": "2026-10-25T16:39:08.493Z"
+    },
+    {
+      "id": "usr_jq39ue49",
+      "email": "test_customer_1792913410194@example.in",
+      "name": "Arjun Mehta",
+      "firstName": "Arjun",
+      "lastName": "Mehta",
+      "phone": "+91 98200 12345",
+      "mobileNumber": "+91 98200 12345",
+      "country": "India",
+      "countryCode": "IN",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "streetAddress": "Flat 402, Sea Green Apartments, Colaba",
+      "apartment": "Opposite Taj Hotel",
+      "password": "",
+      "role": "CUSTOMER",
+      "roleId": "",
+      "assignedRoles": [
+        "Catalog Manager",
+        "VIP Customer"
+      ],
+      "accountType": "customer",
+      "customerType": "VIP",
+      "address": "Flat 402, Sea Green Apartments, Colaba",
+      "shippingAddress": "Flat 402, Sea Green Apartments, Colaba",
+      "lastLogin": "Just now",
+      "credit": 500,
+      "status": "INACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "createdAt": "2026-10-25T07:30:10.284Z",
+      "updatedAt": "2026-10-25T07:30:10.301Z"
+    },
+    {
+      "id": "usr_bbnnjuwa",
+      "email": "test_customer_1792913383786@example.in",
+      "name": "Arjun Mehta",
+      "firstName": "Arjun",
+      "lastName": "Mehta",
+      "phone": "+91 98200 12345",
+      "mobileNumber": "+91 98200 12345",
+      "country": "India",
+      "countryCode": "IN",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "streetAddress": "Flat 402, Sea Green Apartments, Colaba",
+      "apartment": "Opposite Taj Hotel",
+      "password": "",
+      "role": "CUSTOMER",
+      "roleId": "",
+      "assignedRoles": [],
+      "accountType": "customer",
+      "customerType": "VIP",
+      "address": "Flat 402, Sea Green Apartments, Colaba",
+      "shippingAddress": "Flat 402, Sea Green Apartments, Colaba",
+      "lastLogin": "Just now",
+      "credit": 500,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "createdAt": "2026-10-25T07:29:43.894Z",
+      "updatedAt": "2026-10-25T07:29:43.896Z"
+    },
+    {
+      "id": "usr_if6xuynq",
+      "email": "editor@tagateway.com",
+      "name": "Elena Rostova",
+      "firstName": "Elena",
+      "lastName": "Rostova",
+      "password": "EditorPassword123!",
+      "role": "STAFF",
+      "roleId": "role_tgprby1",
+      "accountType": "staff",
+      "customerType": "Wholesale",
+      "address": "45 Rue de Rivoli, Paris, France",
+      "shippingAddress": "45 Rue de Rivoli, Paris, France",
+      "lastLogin": "Just now",
+      "credit": 4499,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "createdAt": "2026-10-23T17:53:05.043Z",
+      "updatedAt": "2026-10-24T15:13:20.451Z"
+    },
+    {
       "id": "usr_admin_default",
       "name": "Admin admin",
       "email": "admin@tagateway.com",
@@ -9,9 +128,903 @@
       "avatar": null,
       "createdAt": "2026-01-10T10:00:00.000Z",
       "updatedAt": "2026-01-10T10:00:00.000Z"
+    },
+    {
+      "id": "usr_simon",
+      "email": "simon@tag.com",
+      "name": "Simon R",
+      "firstName": "Simon",
+      "lastName": "R",
+      "role": "ADMIN",
+      "roleId": "role_admin",
+      "accountType": "admin",
+      "customerType": "Customer",
+      "address": "12 King Street, London, UK",
+      "shippingAddress": "12 King Street, London, UK",
+      "lastLogin": "23 days ago",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 18,
+      "wishlistCount": 2,
+      "createdAt": "2026-10-23T17:49:47.338Z",
+      "updatedAt": "2026-10-23T17:49:47.338Z"
+    },
+    {
+      "id": "usr_trustedsite",
+      "email": "trustedsite@example.com",
+      "name": "John John",
+      "firstName": "John",
+      "lastName": "John",
+      "role": "CUSTOMER",
+      "roleId": "role_customer",
+      "accountType": "customer",
+      "customerType": "Customer",
+      "address": "450 Market St, San Francisco, CA",
+      "shippingAddress": "450 Market St, San Francisco, CA",
+      "lastLogin": "29 days ago",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 9,
+      "wishlistCount": 3,
+      "createdAt": "2026-10-23T17:49:47.338Z",
+      "updatedAt": "2026-10-23T17:49:47.338Z"
+    },
+    {
+      "id": "usr_qa_checkout",
+      "email": "qa-checkout@example.invalid",
+      "name": "Guest",
+      "firstName": "Guest",
+      "lastName": "",
+      "role": "CUSTOMER",
+      "roleId": "role_customer",
+      "accountType": "customer",
+      "customerType": "Customer (Guest)",
+      "address": "98 Tech Way, Austin, TX",
+      "shippingAddress": "98 Tech Way, Austin, TX",
+      "lastLogin": "1 month ago",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 1,
+      "wishlistCount": 0,
+      "createdAt": "2026-10-23T17:49:47.338Z",
+      "updatedAt": "2026-10-23T17:49:47.338Z"
+    },
+    {
+      "id": "usr_test323",
+      "email": "test323@gmail.com",
+      "name": "Guest",
+      "firstName": "Guest",
+      "lastName": "",
+      "role": "CUSTOMER",
+      "roleId": "role_customer",
+      "accountType": "customer",
+      "customerType": "Customer (Guest)",
+      "address": "12 Broadway, New York, NY",
+      "shippingAddress": "12 Broadway, New York, NY",
+      "lastLogin": "3 months ago",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 1,
+      "createdAt": "2026-10-23T17:49:47.338Z",
+      "updatedAt": "2026-10-23T17:49:47.338Z"
+    },
+    {
+      "id": "usr_admin22222",
+      "email": "admin22222@tag.com",
+      "name": "uhaish gupta",
+      "firstName": "uhaish",
+      "lastName": "gupta",
+      "role": "CUSTOMER",
+      "roleId": "role_customer",
+      "accountType": "customer",
+      "customerType": "Customer",
+      "address": "55 Cyber Hub, Gurugram, India",
+      "shippingAddress": "55 Cyber Hub, Gurugram, India",
+      "lastLogin": "3 months ago",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 4,
+      "wishlistCount": 2,
+      "createdAt": "2026-10-23T17:49:47.338Z",
+      "updatedAt": "2026-10-23T17:49:47.338Z"
+    },
+    {
+      "id": "usr_ash",
+      "email": "ash@tagateway.com",
+      "name": "Ash go",
+      "firstName": "Ash",
+      "lastName": "go",
+      "role": "CUSTOMER",
+      "roleId": "role_customer",
+      "accountType": "customer",
+      "customerType": "Customer",
+      "address": "88 Marina Bay, Singapore",
+      "shippingAddress": "88 Marina Bay, Singapore",
+      "lastLogin": "4 months ago",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 7,
+      "wishlistCount": 4,
+      "createdAt": "2026-10-23T17:49:47.338Z",
+      "updatedAt": "2026-10-23T17:49:47.338Z"
+    },
+    {
+      "id": "usr_macocoz",
+      "email": "macocoz@mailinator.com",
+      "name": "Kennan Cleveland",
+      "firstName": "Kennan",
+      "lastName": "Cleveland",
+      "role": "CUSTOMER",
+      "roleId": "role_customer",
+      "accountType": "customer",
+      "customerType": "Customer",
+      "address": "102 Peach Street, Atlanta, GA",
+      "shippingAddress": "102 Peach Street, Atlanta, GA",
+      "lastLogin": "4 months ago",
+      "credit": 10,
+      "status": "ACTIVE",
+      "ordersCount": 12,
+      "wishlistCount": 6,
+      "createdAt": "2026-10-23T17:49:47.338Z",
+      "updatedAt": "2026-10-23T17:49:47.338Z"
+    },
+    {
+      "id": "emp_kamendra",
+      "empId": "EMP001",
+      "name": "Kamendra Singh",
+      "firstName": "Kamendra",
+      "lastName": "Singh",
+      "email": "kamendra@gmail.com",
+      "phone": "06547567887",
+      "department": "HR",
+      "designation": "Manager",
+      "joinedDate": "01 Jun, 2026",
+      "avatarText": "KS",
+      "avatarColor": "bg-blue-100 text-blue-700 border-blue-300",
+      "isAdminBadge": false,
+      "accountType": "staff",
+      "role": "STAFF",
+      "roleId": "role_hr",
+      "status": "ACTIVE",
+      "assignedRoles": [
+        "Editor",
+        "HR",
+        "HR Admin",
+        "new company",
+        "PPC",
+        "Rate Request"
+      ],
+      "createdAt": "2026-06-01T08:00:00.000Z",
+      "updatedAt": "2026-10-24T15:31:19.984Z"
+    },
+    {
+      "id": "emp_nikhil",
+      "empId": "EMP002",
+      "name": "Nikhil",
+      "firstName": "Nikhil",
+      "lastName": "",
+      "email": "nik@gmail.com",
+      "phone": "09876543210",
+      "department": "HR",
+      "designation": "Assistant Manager",
+      "joinedDate": "15 Jan, 2026",
+      "avatarText": "N",
+      "avatarColor": "bg-emerald-100 text-emerald-700 border-emerald-300",
+      "isAdminBadge": false,
+      "accountType": "staff",
+      "role": "STAFF",
+      "roleId": "role_hr_admin",
+      "status": "ACTIVE",
+      "assignedRoles": [
+        "HR Admin"
+      ],
+      "createdAt": "2026-01-15T08:00:00.000Z",
+      "updatedAt": "2026-10-24T15:12:29.874Z"
+    },
+    {
+      "id": "emp_antu",
+      "empId": "A1GH2",
+      "name": "Antu",
+      "firstName": "Antu",
+      "lastName": "",
+      "email": "ankitaindocorp@gmail.com",
+      "phone": "09811223344",
+      "department": "HR",
+      "designation": "Assistant Manager",
+      "joinedDate": "10 Feb, 2026",
+      "avatarText": "A",
+      "avatarColor": "bg-purple-100 text-purple-700 border-purple-300",
+      "isAdminBadge": false,
+      "accountType": "staff",
+      "role": "STAFF",
+      "roleId": "role_new_company",
+      "status": "ACTIVE",
+      "assignedRoles": [
+        "new company"
+      ],
+      "createdAt": "2026-02-10T08:00:00.000Z",
+      "updatedAt": "2026-10-24T15:12:29.874Z"
+    },
+    {
+      "id": "emp_ankita",
+      "empId": "EMP003",
+      "name": "Ankita Kumari",
+      "firstName": "Ankita",
+      "lastName": "Kumari",
+      "email": "ankitaindocorp@gmail.com",
+      "phone": "09822334455",
+      "department": "PPC",
+      "designation": "Software Engineer",
+      "joinedDate": "12 Mar, 2026",
+      "avatarText": "AK",
+      "avatarColor": "bg-rose-100 text-rose-700 border-rose-300",
+      "isAdminBadge": false,
+      "accountType": "staff",
+      "role": "STAFF",
+      "roleId": "role_ppc",
+      "status": "ACTIVE",
+      "assignedRoles": [
+        "PPC"
+      ],
+      "createdAt": "2026-03-12T08:00:00.000Z",
+      "updatedAt": "2026-10-24T15:12:29.874Z"
+    },
+    {
+      "id": "emp_gyan",
+      "empId": "17091996",
+      "name": "Gyanchandra",
+      "firstName": "Gyanchandra",
+      "lastName": "",
+      "email": "gyanwork1996@gmail.com",
+      "phone": "09833445566",
+      "department": "Sales",
+      "designation": "Manager",
+      "joinedDate": "05 Apr, 2026",
+      "avatarText": "G",
+      "avatarColor": "bg-amber-100 text-amber-800 border-amber-300",
+      "isAdminBadge": true,
+      "accountType": "admin",
+      "role": "ADMIN",
+      "roleId": "role_ppc",
+      "status": "ACTIVE",
+      "assignedRoles": [
+        "Super Administrator"
+      ],
+      "createdAt": "2026-04-05T08:00:00.000Z",
+      "updatedAt": "2026-10-25T16:35:08.724Z"
+    },
+    {
+      "id": "emp_rohit",
+      "empId": "65483",
+      "name": "Rohit",
+      "firstName": "Rohit",
+      "lastName": "",
+      "email": "admin@maxcreativepoint.com",
+      "phone": "09844556677",
+      "department": "---",
+      "designation": "---",
+      "joinedDate": "20 May, 2026",
+      "avatarText": "R",
+      "avatarColor": "bg-cyan-100 text-cyan-800 border-cyan-300",
+      "isAdminBadge": true,
+      "accountType": "admin",
+      "role": "ADMIN",
+      "roleId": "role_editor",
+      "status": "ACTIVE",
+      "assignedRoles": [
+        "Rate Request",
+        "Editor",
+        "Sales Team"
+      ],
+      "createdAt": "2026-05-20T08:00:00.000Z",
+      "updatedAt": "2026-10-24T15:12:29.874Z"
+    },
+    {
+      "id": "emp_pooja",
+      "empId": "EMP004",
+      "name": "Pooja Sharma",
+      "firstName": "Pooja",
+      "lastName": "Sharma",
+      "email": "pooja@example.com",
+      "phone": "09855667788",
+      "department": "Marketing",
+      "designation": "Executive",
+      "joinedDate": "01 Jul, 2026",
+      "avatarText": "PS",
+      "avatarColor": "bg-indigo-100 text-indigo-700 border-indigo-300",
+      "isAdminBadge": false,
+      "accountType": "staff",
+      "role": "STAFF",
+      "status": "ACTIVE",
+      "assignedRoles": [],
+      "createdAt": "2026-07-01T08:00:00.000Z",
+      "updatedAt": "2026-10-24T15:12:29.874Z"
+    },
+    {
+      "id": "emp_vikas",
+      "empId": "EMP005",
+      "name": "Vikas Verma",
+      "firstName": "Vikas",
+      "lastName": "Verma",
+      "email": "vikas@example.com",
+      "phone": "09866778899",
+      "department": "Operations",
+      "designation": "Supervisor",
+      "joinedDate": "15 Aug, 2026",
+      "avatarText": "VV",
+      "avatarColor": "bg-slate-100 text-slate-700 border-slate-300",
+      "isAdminBadge": false,
+      "accountType": "staff",
+      "role": "STAFF",
+      "status": "ACTIVE",
+      "assignedRoles": [],
+      "createdAt": "2026-08-15T08:00:00.000Z",
+      "updatedAt": "2026-10-24T15:12:29.874Z"
+    },
+    {
+      "id": "usr_84pb9jcs0",
+      "name": "Ahmad Al Mansoori",
+      "email": "test_customer_1792908983064@example.com",
+      "password": "$2b$10$oC8VaoQ/w3P1xGHN5jcR3OLp3PKHscJxtcOcJq9qq2luaNVs3BKLG",
+      "role": "CUSTOMER",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "+971 55 987 6543",
+      "phone": "+971 55 987 6543",
+      "countryCode": "AE",
+      "country": "United Arab Emirates",
+      "state": "Dubai",
+      "city": "Dubai",
+      "postalCode": "12345",
+      "streetAddress": "Sheikh Zayed Road, Floor 14",
+      "apartment": "Penthouse 1402",
+      "address": "Sheikh Zayed Road, Floor 14, Penthouse 1402, Dubai, Dubai",
+      "shippingAddress": "Sheikh Zayed Road, Floor 14, Penthouse 1402, Dubai, Dubai",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-25T06:16:24.085Z",
+      "updatedAt": "2026-10-25T06:16:24.085Z"
+    },
+    {
+      "id": "usr_b1187i7ym",
+      "name": "Ahmad Al Mansoori",
+      "email": "test_customer_1792908994297@example.com",
+      "password": "$2b$10$akRCc4iSLCO0Lfk1dcX9o.Sepb73I1lks0nGa/DTep0iAItZgQZCi",
+      "role": "CUSTOMER",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "+971 55 987 6543",
+      "phone": "+971 55 987 6543",
+      "countryCode": "AE",
+      "country": "United Arab Emirates",
+      "state": "Dubai",
+      "city": "Dubai",
+      "postalCode": "12345",
+      "streetAddress": "Sheikh Zayed Road, Floor 14",
+      "apartment": "Penthouse 1402",
+      "address": "Sheikh Zayed Road, Floor 14, Penthouse 1402, Dubai, Dubai",
+      "shippingAddress": "Sheikh Zayed Road, Floor 14, Penthouse 1402, Dubai, Dubai",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-25T06:16:34.710Z",
+      "updatedAt": "2026-10-25T06:16:34.710Z"
+    },
+    {
+      "id": "usr_6bzq26x37",
+      "name": "Ahmad Al Mansoori",
+      "email": "test_customer_1792909020137@example.com",
+      "password": "$2b$10$M10nGL.7g1Nv4VPHHVUHGO0vF7rbKiKe9JRJzbzSxMwotA5TbaFKO",
+      "role": "CUSTOMER",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "+971 55 987 6543",
+      "phone": "+971 55 987 6543",
+      "countryCode": "AE",
+      "country": "United Arab Emirates",
+      "state": "Dubai",
+      "city": "Dubai",
+      "postalCode": "12345",
+      "streetAddress": "Sheikh Zayed Road, Floor 14",
+      "apartment": "Penthouse 1402",
+      "address": "Sheikh Zayed Road, Floor 14, Penthouse 1402, Dubai, Dubai",
+      "shippingAddress": "Sheikh Zayed Road, Floor 14, Penthouse 1402, Dubai, Dubai",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-25T06:17:00.453Z",
+      "updatedAt": "2026-10-25T06:17:00.453Z"
+    },
+    {
+      "id": "usr_5h2gzr4tf",
+      "name": "Ahmad Al Mansoori",
+      "email": "test_customer_1792909067664@example.com",
+      "password": "$2b$10$E1bMNLXAvUH97Qv2Sf/W0.RJWcpwFkSAkBzGf3mWW6H9t9aYSlkOW",
+      "role": "CUSTOMER",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "+971 55 987 6543",
+      "phone": "+971 55 987 6543",
+      "countryCode": "AE",
+      "country": "United Arab Emirates",
+      "state": "Dubai",
+      "city": "Dubai",
+      "postalCode": "12345",
+      "streetAddress": "Sheikh Zayed Road, Floor 14",
+      "apartment": "Penthouse 1402",
+      "address": "Sheikh Zayed Road, Floor 14, Penthouse 1402, Dubai, Dubai",
+      "shippingAddress": "Sheikh Zayed Road, Floor 14, Penthouse 1402, Dubai, Dubai",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-25T06:17:48.044Z",
+      "updatedAt": "2026-10-25T06:17:48.044Z"
+    },
+    {
+      "id": "usr_4ek7ecysd",
+      "name": "Vikram Malhotra",
+      "email": "vikram_1792921522065@example.com",
+      "password": "$2b$10$VQ.tibos5uAgB8T8/EXJZ.yaf7Ck5p1b27N/mFlgmDT3kUvhTeUde",
+      "role": "CUSTOMER",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "+91 9876543210",
+      "phone": "+91 9876543210",
+      "countryCode": "IN",
+      "country": "India",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "streetAddress": "Flat 502, Marine Vista, Marine Drive",
+      "apartment": "Opposite Sea Face",
+      "address": "Flat 502, Marine Vista, Marine Drive, Opposite Sea Face, Mumbai, Maharashtra",
+      "shippingAddress": "Flat 502, Marine Vista, Marine Drive, Opposite Sea Face, Mumbai, Maharashtra",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-25T09:45:23.014Z",
+      "updatedAt": "2026-10-25T09:45:23.014Z"
+    },
+    {
+      "id": "usr_mnbpqw19r",
+      "name": "Intruder User",
+      "email": "intruder_1792921522065@example.com",
+      "password": "$2b$10$E0WrXDUMqOSt8aqassscPuhnMxyoqh4nzmmRuAl5iK.q8FKjT/Bgi",
+      "role": "CUSTOMER",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "+91 8888888888",
+      "phone": "+91 8888888888",
+      "countryCode": "+1",
+      "country": "India",
+      "state": "Delhi",
+      "city": "New Delhi",
+      "postalCode": "110001",
+      "streetAddress": "Connaught Place",
+      "apartment": "",
+      "address": "Connaught Place, New Delhi, Delhi",
+      "shippingAddress": "Connaught Place, New Delhi, Delhi",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-25T09:45:34.842Z",
+      "updatedAt": "2026-10-25T09:45:34.842Z"
+    },
+    {
+      "id": "usr_w9wjwdfru",
+      "name": "Vikram Malhotra",
+      "email": "vikram_1792921793968@example.com",
+      "password": "$2b$10$e9Gk6Ll5EiKFEOsPv.I29eyV0HCqN2EvhDXNr6kEVT0fI7jLL46Si",
+      "role": "CUSTOMER",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "+91 9876543210",
+      "phone": "+91 9876543210",
+      "countryCode": "IN",
+      "country": "India",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "streetAddress": "Flat 502, Marine Vista, Marine Drive",
+      "apartment": "Opposite Sea Face",
+      "address": "Flat 502, Marine Vista, Marine Drive, Opposite Sea Face, Mumbai, Maharashtra",
+      "shippingAddress": "Flat 502, Marine Vista, Marine Drive, Opposite Sea Face, Mumbai, Maharashtra",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-25T09:49:54.289Z",
+      "updatedAt": "2026-10-25T09:49:54.289Z"
+    },
+    {
+      "id": "usr_4o2zexxue",
+      "name": "Intruder User",
+      "email": "intruder_1792921793968@example.com",
+      "password": "$2b$10$3OsZdtdeYhN3kQXFzcQQVOuODnneAySQaskM4ym06Ihyq/GEyRfqm",
+      "role": "CUSTOMER",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "+91 8888888888",
+      "phone": "+91 8888888888",
+      "countryCode": "+1",
+      "country": "India",
+      "state": "Delhi",
+      "city": "New Delhi",
+      "postalCode": "110001",
+      "streetAddress": "Connaught Place",
+      "apartment": "",
+      "address": "Connaught Place, New Delhi, Delhi",
+      "shippingAddress": "Connaught Place, New Delhi, Delhi",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-25T09:49:55.522Z",
+      "updatedAt": "2026-10-25T09:49:55.522Z"
+    },
+    {
+      "id": "usr_nye6zxjrd",
+      "name": "Ahmad Al Mansoori",
+      "email": "test_customer_1792921836744@example.com",
+      "password": "$2b$10$ERSPGOBoG35TDxBxZRa33uVxa4ciOX3CefAYaNCwchSsbKWeVpCMu",
+      "role": "CUSTOMER",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "+971 55 987 6543",
+      "phone": "+971 55 987 6543",
+      "countryCode": "AE",
+      "country": "United Arab Emirates",
+      "state": "Dubai",
+      "city": "Dubai",
+      "postalCode": "12345",
+      "streetAddress": "Sheikh Zayed Road, Floor 14",
+      "apartment": "Penthouse 1402",
+      "address": "Sheikh Zayed Road, Floor 14, Penthouse 1402, Dubai, Dubai",
+      "shippingAddress": "Sheikh Zayed Road, Floor 14, Penthouse 1402, Dubai, Dubai",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-25T09:50:42.106Z",
+      "updatedAt": "2026-10-25T09:50:42.106Z"
+    },
+    {
+      "id": "usr_6w24wbq0c",
+      "name": "Vikram Malhotra",
+      "email": "vikram_1792921962250@example.com",
+      "password": "$2b$10$VRgLk9Zuf5Mnc0mQMtbEiOYQUXARnTfj9yds5a5ADjsyMC9yIo8Ka",
+      "role": "CUSTOMER",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "+91 9876543210",
+      "phone": "+91 9876543210",
+      "countryCode": "IN",
+      "country": "India",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "streetAddress": "Flat 502, Marine Vista, Marine Drive",
+      "apartment": "Opposite Sea Face",
+      "address": "Flat 502, Marine Vista, Marine Drive, Opposite Sea Face, Mumbai, Maharashtra",
+      "shippingAddress": "Flat 502, Marine Vista, Marine Drive, Opposite Sea Face, Mumbai, Maharashtra",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-25T09:52:42.400Z",
+      "updatedAt": "2026-10-25T09:52:42.400Z"
+    },
+    {
+      "id": "usr_m2bukc4zg",
+      "name": "Intruder User",
+      "email": "intruder_1792921962250@example.com",
+      "password": "$2b$10$yCM.MGVwFj/3Kzb0qtKrUOir3nMBAA9aT2gpnW9o0V6pxXlsjq7nS",
+      "role": "CUSTOMER",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "+91 8888888888",
+      "phone": "+91 8888888888",
+      "countryCode": "+1",
+      "country": "India",
+      "state": "Delhi",
+      "city": "New Delhi",
+      "postalCode": "110001",
+      "streetAddress": "Connaught Place",
+      "apartment": "",
+      "address": "Connaught Place, New Delhi, Delhi",
+      "shippingAddress": "Connaught Place, New Delhi, Delhi",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-25T09:52:43.314Z",
+      "updatedAt": "2026-10-25T09:52:43.314Z"
+    },
+    {
+      "id": "usr_y6cac9uff",
+      "name": "Test Customer",
+      "email": "test_customer_1792945662620@example.com",
+      "password": "$2b$10$TWzKdRqqWmvdc7JI51B2seocOb/SVeUutz7HjYvhQqkVm6Z5m7BWG",
+      "role": "CUSTOMER",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "",
+      "phone": "",
+      "countryCode": "+1",
+      "country": "",
+      "state": "",
+      "city": "",
+      "postalCode": "",
+      "streetAddress": "",
+      "apartment": "",
+      "address": "",
+      "shippingAddress": "",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-25T16:27:44.444Z",
+      "updatedAt": "2026-10-25T16:27:44.444Z"
+    },
+    {
+      "id": "usr_72x4rqvlm",
+      "name": "Gyanchandra",
+      "email": "gyanchandranist@gmail.com",
+      "password": "$2b$10$4aHhig6EHX4fitlGKzpmcevLiFczSKi2F4.d.AptgLuLO/gqBAo7q",
+      "role": "CUSTOMER",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "+91 8957058666",
+      "phone": "+91 8957058666",
+      "countryCode": "+91",
+      "country": "India",
+      "state": "Uttar Pradesh",
+      "city": "Azamgarh",
+      "postalCode": "276305",
+      "streetAddress": "Village and Post Niyauj House no 44",
+      "apartment": "",
+      "address": "Village and Post Niyauj House no 44, Azamgarh, Uttar Pradesh",
+      "shippingAddress": "Village and Post Niyauj House no 44, Azamgarh, Uttar Pradesh",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-25T16:32:14.974Z",
+      "updatedAt": "2026-10-25T16:34:10.587Z",
+      "assignedRoles": [
+        "Customer"
+      ]
     }
   ],
   "assets": [
+    {
+      "id": "ast_048xx3ip2",
+      "name": "image.webp",
+      "fileName": "image_1792918380103_949hnj.webp",
+      "originalName": "image.webp",
+      "mimeType": "image/webp",
+      "size": 10808,
+      "url": "/uploads/image_1792918380103_949hnj.webp",
+      "thumbnailUrl": null,
+      "fileType": "IMAGE",
+      "altText": null,
+      "caption": null,
+      "folder": "default",
+      "tags": [],
+      "uploaderId": "usr_4gyuc6dk0",
+      "createdAt": "2026-10-25T08:53:00.106Z",
+      "updatedAt": "2026-10-25T08:53:00.106Z",
+      "productCount": 0
+    },
+    {
+      "id": "ast_sotnfcmpv",
+      "name": "image (1).webp",
+      "fileName": "image__1__1792918379910_la39ev.webp",
+      "originalName": "image (1).webp",
+      "mimeType": "image/webp",
+      "size": 18410,
+      "url": "/uploads/image__1__1792918379910_la39ev.webp",
+      "thumbnailUrl": null,
+      "fileType": "IMAGE",
+      "altText": null,
+      "caption": null,
+      "folder": "default",
+      "tags": [],
+      "uploaderId": "usr_4gyuc6dk0",
+      "createdAt": "2026-10-25T08:52:59.914Z",
+      "updatedAt": "2026-10-25T08:52:59.914Z",
+      "productCount": 0
+    },
+    {
+      "id": "ast_rgzjf6z8d",
+      "name": "image (2).webp",
+      "fileName": "image__2__1792918379848_oqmq9e.webp",
+      "originalName": "image (2).webp",
+      "mimeType": "image/webp",
+      "size": 6996,
+      "url": "/uploads/image__2__1792918379848_oqmq9e.webp",
+      "thumbnailUrl": null,
+      "fileType": "IMAGE",
+      "altText": null,
+      "caption": null,
+      "folder": "default",
+      "tags": [],
+      "uploaderId": "usr_4gyuc6dk0",
+      "createdAt": "2026-10-25T08:52:59.852Z",
+      "updatedAt": "2026-10-25T08:52:59.852Z",
+      "productCount": 0
+    },
+    {
+      "id": "ast_levb1t3b1",
+      "name": "image (3).webp",
+      "fileName": "image__3__1792918379783_7v1xuq.webp",
+      "originalName": "image (3).webp",
+      "mimeType": "image/webp",
+      "size": 46220,
+      "url": "/uploads/image__3__1792918379783_7v1xuq.webp",
+      "thumbnailUrl": null,
+      "fileType": "IMAGE",
+      "altText": null,
+      "caption": null,
+      "folder": "default",
+      "tags": [],
+      "uploaderId": "usr_4gyuc6dk0",
+      "createdAt": "2026-10-25T08:52:59.788Z",
+      "updatedAt": "2026-10-25T08:52:59.788Z",
+      "productCount": 0
+    },
+    {
+      "id": "ast_nx0tbux2e",
+      "name": "images.jfif",
+      "fileName": "images_1792904973922_51drvb.jfif",
+      "originalName": "images.jfif",
+      "mimeType": "image/jpeg",
+      "size": 9873,
+      "url": "/uploads/images_1792904973922_51drvb.jfif",
+      "thumbnailUrl": null,
+      "fileType": "IMAGE",
+      "altText": "smartphone",
+      "caption": null,
+      "folder": "default",
+      "tags": [
+        "smartphone"
+      ],
+      "uploaderId": "usr_4gyuc6dk0",
+      "createdAt": "2026-10-25T05:09:33.927Z",
+      "updatedAt": "2026-10-25T05:09:33.927Z",
+      "productCount": 0
+    },
+    {
+      "id": "ast_7derd7jj7",
+      "name": "images (1).jfif",
+      "fileName": "images__1__1792904973865_nhq5nx.jfif",
+      "originalName": "images (1).jfif",
+      "mimeType": "image/jpeg",
+      "size": 11311,
+      "url": "/uploads/images__1__1792904973865_nhq5nx.jfif",
+      "thumbnailUrl": null,
+      "fileType": "IMAGE",
+      "altText": "smartphone",
+      "caption": null,
+      "folder": "default",
+      "tags": [
+        "smartphone"
+      ],
+      "uploaderId": "usr_4gyuc6dk0",
+      "createdAt": "2026-10-25T05:09:33.871Z",
+      "updatedAt": "2026-10-25T05:09:33.871Z",
+      "productCount": 0
+    },
+    {
+      "id": "ast_mdoo47ckt",
+      "name": "images (2).jfif",
+      "fileName": "images__2__1792904973688_1wx636.jfif",
+      "originalName": "images (2).jfif",
+      "mimeType": "image/jpeg",
+      "size": 11773,
+      "url": "/uploads/images__2__1792904973688_1wx636.jfif",
+      "thumbnailUrl": null,
+      "fileType": "IMAGE",
+      "altText": "smartphone",
+      "caption": null,
+      "folder": "default",
+      "tags": [
+        "smartphone"
+      ],
+      "uploaderId": "usr_4gyuc6dk0",
+      "createdAt": "2026-10-25T05:09:33.694Z",
+      "updatedAt": "2026-10-25T05:09:33.694Z",
+      "productCount": 0
+    },
+    {
+      "id": "ast_jt2vtuelz",
+      "name": "images (3).jfif",
+      "fileName": "images__3__1792904973628_850h3r.jfif",
+      "originalName": "images (3).jfif",
+      "mimeType": "image/jpeg",
+      "size": 13849,
+      "url": "/uploads/images__3__1792904973628_850h3r.jfif",
+      "thumbnailUrl": null,
+      "fileType": "IMAGE",
+      "altText": "smartphone",
+      "caption": null,
+      "folder": "default",
+      "tags": [
+        "smartphone"
+      ],
+      "uploaderId": "usr_4gyuc6dk0",
+      "createdAt": "2026-10-25T05:09:33.633Z",
+      "updatedAt": "2026-10-25T05:09:33.633Z",
+      "productCount": 0
+    },
+    {
+      "id": "ast_sg3tt2cs6",
+      "name": "images (4).jfif",
+      "fileName": "images__4__1792904973045_1v61rz.jfif",
+      "originalName": "images (4).jfif",
+      "mimeType": "image/jpeg",
+      "size": 21468,
+      "url": "/uploads/images__4__1792904973045_1v61rz.jfif",
+      "thumbnailUrl": null,
+      "fileType": "IMAGE",
+      "altText": "smartphone",
+      "caption": null,
+      "folder": "default",
+      "tags": [
+        "smartphone"
+      ],
+      "uploaderId": "usr_4gyuc6dk0",
+      "createdAt": "2026-10-25T05:09:33.054Z",
+      "updatedAt": "2026-10-25T05:09:33.054Z",
+      "productCount": 0
+    },
     {
       "id": "ast_1",
       "name": "tshirtnew.webp",
@@ -69,7 +1082,7 @@
         "mobile"
       ],
       "createdAt": "2026-02-17T11:00:00.000Z",
-      "updatedAt": "2026-02-17T11:00:00.000Z",
+      "updatedAt": "2026-10-25T08:02:11.977Z",
       "productCount": 0
     },
     {
@@ -115,78 +1128,6 @@
   ],
   "categories": [
     {
-      "id": "cat_root_1",
-      "name": "yatdfya wdyawcd yatwdc aywdcw aywtdca wydtacwd ...",
-      "slug": "yatdfya-root",
-      "level": 0,
-      "isActive": true,
-      "displayOrder": 1,
-      "createdAt": "2026-10-23T17:17:57.591Z",
-      "updatedAt": "2026-10-23T17:17:57.593Z"
-    },
-    {
-      "id": "cat_root_us1",
-      "name": "us1",
-      "slug": "us1",
-      "level": 0,
-      "isActive": true,
-      "displayOrder": 2,
-      "createdAt": "2026-10-23T17:17:57.593Z",
-      "updatedAt": "2026-10-23T17:17:57.593Z"
-    },
-    {
-      "id": "cat_sub_laptops",
-      "name": "laptops",
-      "slug": "us1-laptops",
-      "parentId": "cat_root_us1",
-      "level": 1,
-      "isActive": true,
-      "displayOrder": 1,
-      "createdAt": "2026-10-23T17:17:57.593Z",
-      "updatedAt": "2026-10-23T17:17:57.593Z"
-    },
-    {
-      "id": "cat_sub_gaming_laptops",
-      "name": "gaming-laptops",
-      "slug": "us1-laptops-gaming",
-      "parentId": "cat_sub_laptops",
-      "level": 2,
-      "isActive": true,
-      "displayOrder": 1,
-      "createdAt": "2026-10-23T17:17:57.593Z",
-      "updatedAt": "2026-10-23T17:17:57.593Z"
-    },
-    {
-      "id": "cat_root_uk1",
-      "name": "uk1",
-      "slug": "uk1",
-      "level": 0,
-      "isActive": true,
-      "displayOrder": 3,
-      "createdAt": "2026-10-23T17:17:57.593Z",
-      "updatedAt": "2026-10-23T17:17:57.593Z"
-    },
-    {
-      "id": "cat_root_microsoft",
-      "name": "microsoft",
-      "slug": "microsoft",
-      "level": 0,
-      "isActive": true,
-      "displayOrder": 4,
-      "createdAt": "2026-10-23T17:17:57.593Z",
-      "updatedAt": "2026-10-23T17:17:57.593Z"
-    },
-    {
-      "id": "cat_root_multisite",
-      "name": "multisite",
-      "slug": "multisite",
-      "level": 0,
-      "isActive": true,
-      "displayOrder": 5,
-      "createdAt": "2026-10-23T17:17:57.593Z",
-      "updatedAt": "2026-10-23T17:17:57.593Z"
-    },
-    {
       "id": "cat_other",
       "name": "other",
       "slug": "other",
@@ -210,28 +1151,271 @@
       "id": "cat_sportshoes",
       "name": "sportshoes",
       "slug": "sportshoes",
-      "level": 0,
+      "level": 1,
       "isActive": true,
       "displayOrder": 8,
       "createdAt": "2026-10-23T17:17:57.593Z",
-      "updatedAt": "2026-10-23T17:17:57.593Z"
+      "updatedAt": "2026-10-23T17:17:57.593Z",
+      "parentId": "cat_fashion"
+    },
+    {
+      "id": "cat_electronics",
+      "name": "Electronics",
+      "slug": "electronics",
+      "description": "Smartphones, Audio, Laptops & Gadgets",
+      "level": 0,
+      "isActive": true,
+      "displayOrder": 1,
+      "productCount": 48,
+      "createdAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-24T15:47:43.103Z",
+      "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "id": "cat_fashion",
+      "name": "Fashion",
+      "slug": "fashion",
+      "description": "Men & Women Designer Apparel",
+      "level": 0,
+      "isActive": true,
+      "displayOrder": 2,
+      "productCount": 112,
+      "createdAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-24T15:47:43.103Z",
+      "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "id": "cat_luxury",
+      "name": "Luxury",
+      "slug": "luxury",
+      "description": "Fine Jewelry, Handbags & Timepieces",
+      "level": 0,
+      "isActive": true,
+      "displayOrder": 3,
+      "productCount": 36,
+      "createdAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-24T15:47:43.103Z",
+      "image": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "id": "cat_homedecor",
+      "name": "Home Decor",
+      "slug": "home-decor",
+      "description": "Living Room, Vases, Sofas & Lighting",
+      "level": 0,
+      "isActive": true,
+      "displayOrder": 4,
+      "productCount": 64,
+      "createdAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-24T15:47:43.103Z",
+      "image": "https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "id": "cat_healthbeauty",
+      "name": "Health & Beauty",
+      "slug": "health-beauty",
+      "description": "Skincare, Fragrances & Wellness",
+      "level": 0,
+      "isActive": true,
+      "displayOrder": 5,
+      "productCount": 89,
+      "createdAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-25T14:13:10.283Z",
+      "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "id": "cat_groceries",
+      "name": "Groceries",
+      "slug": "groceries",
+      "description": "Organic Vegetables, Dairy & Pantry",
+      "level": 0,
+      "isActive": true,
+      "displayOrder": 6,
+      "productCount": 140,
+      "createdAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-24T15:47:43.103Z",
+      "image": "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "id": "cat_sneakers",
+      "name": "Sneakers",
+      "slug": "sneakers",
+      "description": "Athletic Running Shoes & Streetwear",
+      "level": 1,
+      "isActive": true,
+      "displayOrder": 7,
+      "productCount": 52,
+      "createdAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-24T15:47:43.103Z",
+      "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=300&q=80",
+      "parentId": "cat_fashion"
+    },
+    {
+      "id": "cat_6avp2l850",
+      "name": "Smartphone",
+      "slug": "smartphone-mvnih0uu",
+      "description": "THis is smartphone category",
+      "parentId": "cat_electronics",
+      "image": "/uploads/images__3__1792904973628_850h3r.jfif",
+      "level": 1,
+      "isActive": true,
+      "displayOrder": 12,
+      "createdAt": "2026-10-25T07:33:31.926Z",
+      "updatedAt": "2026-10-25T07:33:31.926Z",
+      "productCount": 0,
+      "children": []
     }
   ],
   "products": [
+    {
+      "id": "prod_b0tc2ooe4",
+      "sku": "item-802644",
+      "upc": "UPC:806664532419",
+      "name": "I PHone",
+      "slug": "i-phone-mvnvn85r",
+      "description": null,
+      "price": 49.99,
+      "comparePrice": 69.99,
+      "costPrice": 25,
+      "currentStock": 50,
+      "minStock": 10,
+      "warehouse": "gyanwarehouse",
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": "emox",
+      "googleMerchantSync": true,
+      "googleCategory": "Apparel & Accessories > Clothing",
+      "googleCondition": "new",
+      "googleBrand": "emox",
+      "googleGtin": "UPC:806664532419",
+      "googleMpn": "item-802644",
+      "googleSyncStatus": "SYNCED",
+      "googleLastSyncedAt": "2026-10-27T18:07:50.704Z",
+      "createdAt": "2026-10-25T13:42:16.336Z",
+      "updatedAt": "2026-10-27T18:07:50.705Z"
+    },
+    {
+      "id": "prod_xrxpb0pfz",
+      "sku": "item-822146",
+      "upc": "UPC:117437863327",
+      "name": "T-shirts",
+      "slug": "t-shirts-mvnle0vz",
+      "description": "",
+      "price": 62.99,
+      "comparePrice": 69.99,
+      "costPrice": 25,
+      "currentStock": 48,
+      "minStock": 10,
+      "warehouse": "gyanwarehouse",
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": "Mundo",
+      "hasVariants": true,
+      "variantAttributes": [
+        {
+          "name": "Size",
+          "values": [
+            "S",
+            "M",
+            "L"
+          ]
+        }
+      ],
+      "categoryIds": [
+        "cat_fashion"
+      ],
+      "googleMerchantSync": true,
+      "googleCategory": "Apparel & Accessories > Clothing",
+      "googleCondition": "new",
+      "googleBrand": "emox",
+      "googleGtin": "UPC:117437863327",
+      "googleMpn": "item-822146",
+      "googleSyncStatus": "READY",
+      "googleLastSyncedAt": "2026-10-25T08:55:10.847Z",
+      "createdAt": "2026-10-25T08:55:10.847Z",
+      "updatedAt": "2026-10-25T13:27:54.338Z",
+      "assetIds": [
+        "ast_048xx3ip2",
+        "ast_sotnfcmpv",
+        "ast_rgzjf6z8d",
+        "ast_levb1t3b1"
+      ],
+      "primaryAssetId": "ast_048xx3ip2",
+      "variants": [
+        {
+          "id": "var_lopwa6vxn",
+          "sku": "item-822146-S",
+          "price": 49.99,
+          "comparePrice": 69.99,
+          "costPrice": 25,
+          "currentStock": 50,
+          "isActive": true,
+          "image": "/uploads/image_1792918380103_949hnj.webp",
+          "attributes": {
+            "Size": "S"
+          }
+        },
+        {
+          "id": "var_y7rh0tqph",
+          "sku": "item-822146-M",
+          "price": 49.99,
+          "comparePrice": 69.99,
+          "costPrice": 25,
+          "currentStock": 50,
+          "isActive": true,
+          "image": "/uploads/image_1792918380103_949hnj.webp",
+          "attributes": {
+            "Size": "M"
+          }
+        },
+        {
+          "id": "var_cjkfwnsfa",
+          "sku": "item-822146-L",
+          "price": 49.99,
+          "comparePrice": 69.99,
+          "costPrice": 25,
+          "currentStock": 50,
+          "isActive": true,
+          "image": "/uploads/image_1792918380103_949hnj.webp",
+          "attributes": {
+            "Size": "L"
+          }
+        }
+      ]
+    },
     {
       "id": "prod_1",
       "sku": "zolo3",
       "name": "zoloChip",
       "slug": "zolochip-pro",
       "description": "High performance custom controller chip",
-      "price": 29.99,
+      "price": 27.01,
       "currentStock": 50,
       "minStock": 10,
       "warehouse": "gyanwarehouse",
       "status": "ACTIVE",
       "isSoldOut": false,
       "createdAt": "2026-01-15T00:00:00.000Z",
-      "updatedAt": "2026-01-15T00:00:00.000Z"
+      "updatedAt": "2026-10-25T13:11:32.418Z",
+      "googleSyncStatus": "FAILED",
+      "googleMerchantSync": true,
+      "upc": "",
+      "comparePrice": 30.01,
+      "costPrice": null,
+      "brand": "",
+      "categoryIds": [
+        "cat_electronics",
+        "cat_6avp2l850"
+      ],
+      "assetIds": [
+        "ast_1"
+      ],
+      "primaryAssetId": "ast_1",
+      "googleCategory": "Apparel & Accessories > Clothing",
+      "googleCondition": "new",
+      "googleBrand": "",
+      "googleGtin": "",
+      "googleMpn": "zolo3"
     },
     {
       "id": "prod_2",
@@ -239,14 +1423,18 @@
       "name": "zoloChip",
       "slug": "zolochip-standard",
       "description": "Standard revision computing chip",
-      "price": 19.99,
+      "price": 22.5,
       "currentStock": 50,
       "minStock": 11,
       "warehouse": "gyanwarehouse",
       "status": "ACTIVE",
       "isSoldOut": false,
       "createdAt": "2026-01-15T00:00:00.000Z",
-      "updatedAt": "2026-01-15T00:00:00.000Z"
+      "updatedAt": "2026-10-25T13:11:32.418Z",
+      "comparePrice": 25,
+      "categoryIds": [
+        "cat_electronics"
+      ]
     },
     {
       "id": "prod_3",
@@ -254,29 +1442,56 @@
       "name": "wireless-earbuds-z2216",
       "slug": "wireless-earbuds-z2216",
       "description": "Noise cancelling bluetooth earbuds",
-      "price": 89.99,
+      "price": 80.99,
       "currentStock": 50,
       "minStock": 200,
       "warehouse": "gyanwarehouse",
       "status": "ACTIVE",
-      "isSoldOut": true,
+      "isSoldOut": false,
       "createdAt": "2026-01-18T00:00:00.000Z",
-      "updatedAt": "2026-01-18T00:00:00.000Z"
+      "updatedAt": "2026-10-25T13:11:32.418Z",
+      "comparePrice": 89.99,
+      "reviewsCount": 2,
+      "rating": 5,
+      "categoryIds": [
+        "cat_electronics"
+      ]
     },
     {
       "id": "prod_4",
       "sku": "z221",
-      "name": "wireless-earbuds-z221",
+      "name": "smartphone",
       "slug": "wireless-earbuds-z221",
       "description": "Entry-level wireless earbuds",
-      "price": 49.99,
+      "price": 44.99,
       "currentStock": 50,
       "minStock": 200,
       "warehouse": "gyanwarehouse",
       "status": "ACTIVE",
-      "isSoldOut": true,
+      "isSoldOut": false,
       "createdAt": "2026-01-18T00:00:00.000Z",
-      "updatedAt": "2026-01-18T00:00:00.000Z"
+      "updatedAt": "2026-10-25T13:11:32.418Z",
+      "upc": "",
+      "comparePrice": 49.99,
+      "costPrice": null,
+      "brand": "",
+      "categoryIds": [
+        "cat_electronics",
+        "cat_6avp2l850"
+      ],
+      "assetIds": [
+        "ast_nx0tbux2e",
+        "ast_7derd7jj7"
+      ],
+      "primaryAssetId": "ast_nx0tbux2e",
+      "googleMerchantSync": false,
+      "googleCategory": "Apparel & Accessories > Clothing",
+      "googleCondition": "new",
+      "googleBrand": "",
+      "googleGtin": "",
+      "googleMpn": "z221",
+      "reviewsCount": 1,
+      "rating": 5
     },
     {
       "id": "prod_5",
@@ -284,23 +1499,4042 @@
       "name": "wireless-earbuds-z2016",
       "slug": "wireless-earbuds-z2016",
       "description": "Sports edition waterproof earbuds",
-      "price": 69.99,
+      "price": 62.99,
       "currentStock": 200,
       "minStock": 100,
       "warehouse": "gyanwarehouse",
       "status": "ACTIVE",
       "isSoldOut": false,
       "createdAt": "2026-01-18T00:00:00.000Z",
-      "updatedAt": "2026-01-18T00:00:00.000Z"
+      "updatedAt": "2026-10-25T13:11:32.418Z",
+      "googleSyncStatus": "FAILED",
+      "googleMerchantSync": true,
+      "comparePrice": 69.99,
+      "categoryIds": [
+        "cat_electronics"
+      ]
+    },
+    {
+      "id": "prod_s24_ultra",
+      "sku": "SAM-S24U-TI",
+      "name": "Samsung Galaxy S24 Ultra 12+GB Titanium Gray",
+      "slug": "samsung-galaxy-s24-ultra-titanium",
+      "description": "Galaxy AI with S-Pen, 200MP camera and Snapdragon 8 Gen 3 processor.",
+      "price": 1169.1,
+      "comparePrice": 1299,
+      "costPrice": 850,
+      "currentStock": 44,
+      "minStock": 5,
+      "warehouse": "dubai_hub_1",
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": "Samsung",
+      "googleMerchantSync": true,
+      "googleCondition": "new",
+      "mainImage": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80",
+      "categoryIds": [
+        "cat_electronics",
+        "cat_6avp2l850"
+      ],
+      "categoryNames": [
+        "Electronics"
+      ],
+      "createdAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-25T13:11:32.418Z",
+      "rating": 4.8,
+      "reviewsCount": 1200,
+      "hasVariants": true,
+      "variantAttributes": [
+        {
+          "name": "Storage",
+          "values": [
+            "256 GB",
+            "512 GB",
+            "1 TB"
+          ]
+        },
+        {
+          "name": "Color",
+          "values": [
+            "Titanium Gray",
+            "Titanium Black",
+            "Titanium Violet"
+          ]
+        }
+      ],
+      "upc": "",
+      "assetIds": [
+        "temp",
+        "ast_nx0tbux2e",
+        "ast_7derd7jj7",
+        "ast_mdoo47ckt",
+        "ast_jt2vtuelz",
+        "ast_sg3tt2cs6"
+      ],
+      "primaryAssetId": "temp",
+      "googleCategory": "Apparel & Accessories > Clothing",
+      "googleBrand": "Samsung",
+      "googleGtin": "",
+      "googleMpn": "SAM-S24U-TI"
+    },
+    {
+      "id": "prod_nike_hoodie",
+      "sku": "NIKE-JRDN-BLU",
+      "name": "Nike Jordan Brooklyn Fleece Men's Pullover Hoodie",
+      "slug": "nike-jordan-brooklyn-fleece-hoodie",
+      "description": "Soft mid-weight fleece pullover hoodie with signature Jordan embroidered logo.",
+      "price": 67.5,
+      "comparePrice": 75,
+      "costPrice": 28,
+      "currentStock": 120,
+      "minStock": 15,
+      "warehouse": "dubai_hub_1",
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": "Nike",
+      "googleMerchantSync": true,
+      "googleCondition": "new",
+      "mainImage": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=600&q=80",
+      "categoryIds": [
+        "cat_fashion"
+      ],
+      "categoryNames": [
+        "Fashion"
+      ],
+      "createdAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-25T13:11:32.418Z",
+      "rating": 4.5,
+      "reviewsCount": 569,
+      "googleSyncStatus": "SYNCED",
+      "googleLastSyncedAt": "2026-10-24T16:48:50.359Z",
+      "hasVariants": true,
+      "variantAttributes": [
+        {
+          "name": "Color",
+          "values": [
+            "Black",
+            "Carbon Heather",
+            "Midnight Navy"
+          ]
+        },
+        {
+          "name": "Size",
+          "values": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_beanless_bag",
+      "sku": "HOME-BEAN-GRY",
+      "name": "Beanless Bag Inflatable Lounge Chair Grey",
+      "slug": "beanless-bag-inflatable-lounge-chair-grey",
+      "description": "Comfortable waterproof flocked inflatable armchair ideal for modern living rooms.",
+      "price": 43.2,
+      "comparePrice": 48,
+      "costPrice": 18,
+      "currentStock": 80,
+      "minStock": 10,
+      "warehouse": "dubai_hub_2",
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": "Intex",
+      "googleMerchantSync": true,
+      "googleCondition": "new",
+      "mainImage": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80",
+      "categoryIds": [
+        "cat_homedecor"
+      ],
+      "categoryNames": [
+        "Home Decor"
+      ],
+      "createdAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-25T13:11:32.418Z",
+      "rating": 4,
+      "reviewsCount": 100
+    },
+    {
+      "id": "prod_diamond_earrings",
+      "sku": "LUX-DIAM-14K",
+      "name": "Diamond Stud Earrings (1/3 ct. t.w.) in 14K White Gold",
+      "slug": "diamond-stud-earrings-14k-white-gold",
+      "description": "Brilliant cut natural solitaire diamond studs in a presentation luxury jewelry box.",
+      "price": 405,
+      "comparePrice": 450,
+      "costPrice": 190,
+      "currentStock": 25,
+      "minStock": 3,
+      "warehouse": "dubai_hub_1",
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": "Cartier",
+      "googleMerchantSync": true,
+      "googleCondition": "new",
+      "mainImage": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80",
+      "categoryIds": [
+        "cat_luxury"
+      ],
+      "categoryNames": [
+        "Luxury"
+      ],
+      "createdAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-25T13:11:32.418Z",
+      "rating": 4.7,
+      "reviewsCount": 1100
+    },
+    {
+      "id": "prod_nike_invincible",
+      "sku": "NIKE-INV3-RUN",
+      "name": "Nike Invincible 3 Premium Running Sneaker",
+      "slug": "nike-invincible-3-premium",
+      "description": "Maximum cushioning and ZoomX foam for effortless daily road running miles.",
+      "price": 216,
+      "comparePrice": 240,
+      "costPrice": 120,
+      "currentStock": 65,
+      "minStock": 8,
+      "warehouse": "dubai_hub_1",
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": "Nike",
+      "googleMerchantSync": true,
+      "googleCondition": "new",
+      "mainImage": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80",
+      "categoryIds": [
+        "cat_fashion",
+        "cat_sneakers"
+      ],
+      "categoryNames": [
+        "Sneakers"
+      ],
+      "createdAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-25T13:11:32.418Z",
+      "rating": 4.2,
+      "reviewsCount": 157,
+      "hasVariants": true,
+      "variantAttributes": [
+        {
+          "name": "Color",
+          "values": [
+            "Laser Orange",
+            "White/Obsidian"
+          ]
+        },
+        {
+          "name": "Size",
+          "values": [
+            "8",
+            "9",
+            "10",
+            "11"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_winter_parka",
+      "sku": "WIN-PARK-FUR",
+      "name": "Winter Thermal Parka Jacket with Faux Fur Hood",
+      "slug": "winter-thermal-parka-jacket-faux-fur",
+      "description": "Waterproof windproof duck down insulated winter parka with fleece lined pockets.",
+      "price": 405,
+      "comparePrice": 450,
+      "costPrice": 90,
+      "currentStock": 50,
+      "minStock": 6,
+      "warehouse": "dubai_hub_1",
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": "Canada Goose",
+      "googleMerchantSync": true,
+      "googleCondition": "new",
+      "mainImage": "https://images.unsplash.com/photo-1539533018447-63fcce667823?auto=format&fit=crop&w=600&q=80",
+      "categoryIds": [
+        "cat_fashion"
+      ],
+      "categoryNames": [
+        "Fashion"
+      ],
+      "createdAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-25T15:53:37.295Z",
+      "rating": 5,
+      "reviewsCount": 1,
+      "upc": "",
+      "assetIds": [
+        "temp",
+        "ast_jt2vtuelz"
+      ],
+      "primaryAssetId": "temp",
+      "googleCategory": "Apparel & Accessories > Clothing",
+      "googleBrand": "Canada Goose",
+      "googleGtin": "",
+      "googleMpn": "WIN-PARK-FUR"
+    },
+    {
+      "id": "prod_wool_sweater",
+      "sku": "WIN-WOOL-KNIT",
+      "name": "Wool Knit Cashmere Blend Relaxed Sweater",
+      "slug": "wool-knit-cashmere-blend-relaxed-sweater",
+      "description": "Soft breathable winter sweater in ribbed hemline with lightweight warmth.",
+      "price": 216,
+      "comparePrice": 240,
+      "costPrice": 45,
+      "currentStock": 70,
+      "minStock": 10,
+      "warehouse": "dubai_hub_1",
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": "Zara",
+      "googleMerchantSync": true,
+      "googleCondition": "new",
+      "mainImage": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=600&q=80",
+      "categoryIds": [
+        "cat_fashion"
+      ],
+      "categoryNames": [
+        "Fashion"
+      ],
+      "createdAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-25T13:11:32.418Z",
+      "rating": 4.6,
+      "reviewsCount": 215
+    },
+    {
+      "id": "prod_fleece_sweatpants",
+      "sku": "WIN-FLEECE-PNT",
+      "name": "Heavyweight Winter Fleece Jogger Sweatpants",
+      "slug": "heavyweight-winter-fleece-jogger-sweatpants",
+      "description": "Tapered leg athletic sweatpants with brushed interior fleece for cool weather.",
+      "price": 121.5,
+      "comparePrice": 135,
+      "costPrice": 25,
+      "currentStock": 90,
+      "minStock": 12,
+      "warehouse": "dubai_hub_1",
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": "Champion",
+      "googleMerchantSync": true,
+      "googleCondition": "new",
+      "mainImage": "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=600&q=80",
+      "categoryIds": [
+        "cat_fashion"
+      ],
+      "categoryNames": [
+        "Fashion"
+      ],
+      "createdAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-25T13:11:32.418Z",
+      "rating": 4.4,
+      "reviewsCount": 180
+    },
+    {
+      "id": "prod_winter_puffer",
+      "sku": "WIN-PUFF-VST",
+      "name": "Ultralight Packable Duck Down Puffer Vest",
+      "slug": "ultralight-packable-down-puffer-vest",
+      "description": "Water resistant nylon shell with insulated goose down fill for brisk winter days.",
+      "price": 171,
+      "comparePrice": 190.03,
+      "costPrice": 35,
+      "currentStock": 60,
+      "minStock": 8,
+      "warehouse": "dubai_hub_1",
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": "North Face",
+      "rating": 4.7,
+      "reviewsCount": 95,
+      "googleMerchantSync": true,
+      "googleCondition": "new",
+      "mainImage": "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80",
+      "categoryIds": [
+        "cat_fashion"
+      ],
+      "categoryNames": [
+        "Fashion"
+      ],
+      "createdAt": "2026-10-24T16:47:53.346Z",
+      "updatedAt": "2026-10-25T13:54:20.338Z"
     }
   ],
-  "productCategories": [],
-  "productAssets": [
+  "roles": [
+    {
+      "id": "role_admin",
+      "name": "Super Administrator",
+      "slug": "admin",
+      "description": "Full access to all system features, settings, users, and catalog",
+      "isSystem": true,
+      "permissions": {
+        "dashboard": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": true
+        },
+        "assets": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": true
+        },
+        "customers": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": true
+        },
+        "products": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": true
+        },
+        "categories": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": true
+        },
+        "inventory": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": true
+        },
+        "pricing": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": true
+        },
+        "orders": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": true
+        },
+        "marketing": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": true
+        },
+        "settings": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": true
+        }
+      },
+      "createdAt": "2026-10-25T09:31:13.428Z",
+      "updatedAt": "2026-10-25T09:31:13.428Z"
+    },
+    {
+      "id": "role_customer",
+      "name": "Customer",
+      "slug": "customer",
+      "description": "Storefront buyer account with standard shopping privileges",
+      "isSystem": true,
+      "permissions": {
+        "dashboard": {
+          "canView": false,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "assets": {
+          "canView": false,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "customers": {
+          "canView": false,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "products": {
+          "canView": false,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "categories": {
+          "canView": false,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "inventory": {
+          "canView": false,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "pricing": {
+          "canView": false,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "orders": {
+          "canView": false,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "marketing": {
+          "canView": false,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "settings": {
+          "canView": false,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        }
+      },
+      "createdAt": "2026-10-25T09:31:13.433Z",
+      "updatedAt": "2026-10-25T09:31:13.433Z"
+    },
+    {
+      "id": "role_editor",
+      "name": "Editor",
+      "slug": "editor",
+      "description": "only Dashboard view and master",
+      "screenPrivilegesCount": 3,
+      "status": "Active",
+      "isSystem": false,
+      "permissions": {
+        "dashboard": {
+          "canView": true,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "masters": {
+          "canView": true,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        }
+      },
+      "createdAt": "2026-10-25T09:31:13.433Z",
+      "updatedAt": "2026-10-25T09:31:13.433Z"
+    },
+    {
+      "id": "role_super_admin",
+      "name": "Super Admin",
+      "slug": "super-admin",
+      "description": "Full system access and configurations",
+      "screenPrivilegesCount": 85,
+      "status": "Active",
+      "isSystem": true,
+      "permissions": {
+        "dashboard": {
+          "canView": true,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "masters": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": false
+        }
+      },
+      "createdAt": "2026-10-25T09:31:13.433Z",
+      "updatedAt": "2026-10-25T09:31:13.433Z"
+    },
+    {
+      "id": "role_hr",
+      "name": "HR",
+      "slug": "hr",
+      "description": "HR",
+      "screenPrivilegesCount": 10,
+      "status": "Active",
+      "isSystem": false,
+      "permissions": {
+        "dashboard": {
+          "canView": true,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "masters": {
+          "canView": true,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        }
+      },
+      "createdAt": "2026-10-25T15:30:41.665Z",
+      "updatedAt": "2026-10-25T15:30:41.665Z"
+    },
+    {
+      "id": "role_hr_admin",
+      "name": "HR Admin",
+      "slug": "hr-admin",
+      "description": "HR Admin",
+      "screenPrivilegesCount": 23,
+      "status": "Active",
+      "isSystem": false,
+      "permissions": {
+        "dashboard": {
+          "canView": true,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "masters": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": false
+        }
+      },
+      "createdAt": "2026-10-25T15:30:41.665Z",
+      "updatedAt": "2026-10-25T15:30:41.665Z"
+    },
+    {
+      "id": "role_new_company",
+      "name": "new company",
+      "slug": "new-company",
+      "description": "add new company",
+      "screenPrivilegesCount": 23,
+      "status": "Active",
+      "isSystem": false,
+      "permissions": {
+        "dashboard": {
+          "canView": true,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "masters": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": false
+        }
+      },
+      "createdAt": "2026-10-25T15:30:41.665Z",
+      "updatedAt": "2026-10-25T15:30:41.665Z"
+    },
+    {
+      "id": "role_ppc",
+      "name": "PPC",
+      "slug": "ppc",
+      "description": "only Dashboard view and master",
+      "screenPrivilegesCount": 68,
+      "status": "Active",
+      "isSystem": false,
+      "permissions": {
+        "dashboard": {
+          "canView": true,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "masters": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": false
+        }
+      },
+      "createdAt": "2026-10-25T15:30:41.665Z",
+      "updatedAt": "2026-10-25T15:30:41.665Z"
+    },
+    {
+      "id": "role_rate_request",
+      "name": "Rate Request",
+      "slug": "rate-request",
+      "description": "Rate Request",
+      "screenPrivilegesCount": 4,
+      "status": "Active",
+      "isSystem": false,
+      "permissions": {
+        "dashboard": {
+          "canView": true,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "masters": {
+          "canView": true,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        }
+      },
+      "createdAt": "2026-10-25T15:30:41.665Z",
+      "updatedAt": "2026-10-25T15:30:41.665Z"
+    },
+    {
+      "id": "role_sales_team",
+      "name": "Sales Team",
+      "slug": "sales-team",
+      "description": "Sales management and quotes",
+      "screenPrivilegesCount": 15,
+      "status": "Active",
+      "isSystem": false,
+      "permissions": {
+        "dashboard": {
+          "canView": true,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "masters": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": false
+        }
+      },
+      "createdAt": "2026-10-25T15:30:41.665Z",
+      "updatedAt": "2026-10-25T15:30:41.665Z"
+    },
+    {
+      "id": "role_store_manager",
+      "name": "Store Manager",
+      "slug": "store-manager",
+      "description": "Store operations and inventory",
+      "screenPrivilegesCount": 35,
+      "status": "Active",
+      "isSystem": false,
+      "permissions": {
+        "dashboard": {
+          "canView": true,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "masters": {
+          "canView": true,
+          "canCreate": true,
+          "canEdit": true,
+          "canDelete": false
+        }
+      },
+      "createdAt": "2026-10-25T15:30:41.665Z",
+      "updatedAt": "2026-10-25T15:30:41.665Z"
+    }
+  ],
+  "sliders": [
+    {
+      "id": "slider_hero_1",
+      "title": "iPhone 16 Pro Max",
+      "subtitle": "From $ 50,769*",
+      "description": "A18 chip, Superfast, Supersmart History, Biggest Price Drop",
+      "tag": "*Incl. All Offers",
+      "buttonText": "Shop Now",
+      "buttonLink": "/#deals",
+      "imageUrl": "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=800&q=80",
+      "bgGradient": "from-[#091124] via-[#1a233d] to-[#0c142b]",
+      "textColor": "text-white",
+      "position": "main",
+      "displayOrder": 1,
+      "isActive": true,
+      "createdAt": "2026-10-25T09:31:13.437Z",
+      "updatedAt": "2026-10-25T09:31:13.437Z"
+    },
+    {
+      "id": "slider_promo_1",
+      "badge": "50% SAVE",
+      "tag": "FREE DELIVERY",
+      "title": "FRESH AND HEALTHY VEGETABLE",
+      "subtitle": "Farm-fresh organic greens, crisp carrots & tomatoes delivered daily",
+      "buttonText": "Shop now",
+      "buttonLink": "/#deals",
+      "imageUrl": "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=600&q=80",
+      "bgGradient": "from-[#881337] via-[#9f1239] to-[#be123c]",
+      "textColor": "text-white",
+      "position": "triple_promo",
+      "displayOrder": 1,
+      "isActive": true,
+      "createdAt": "2026-10-25T09:31:13.437Z",
+      "updatedAt": "2026-10-25T09:31:13.437Z"
+    },
+    {
+      "id": "slider_hero_2",
+      "title": "Samsung Galaxy S24 Ultra",
+      "subtitle": "Titanium Evolution with Galaxy AI",
+      "description": "Circle to Search, Live Translate & 100x Space Zoom",
+      "tag": "Free Galaxy Buds 2 Pro Included",
+      "buttonText": "Order Now",
+      "buttonLink": "/#deals",
+      "imageUrl": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=800&q=80",
+      "bgGradient": "from-[#0f172a] via-[#1e1b4b] to-[#1e293b]",
+      "textColor": "text-white",
+      "position": "main",
+      "displayOrder": 2,
+      "isActive": true,
+      "createdAt": "2026-10-25T09:31:13.437Z",
+      "updatedAt": "2026-10-25T09:31:13.437Z"
+    },
+    {
+      "id": "slider_promo_2",
+      "badge": "SAMSUNG",
+      "tag": "GALAXY AI IS HERE",
+      "title": "Galaxy S24 FE",
+      "subtitle": "Flagship cameras, ProVisual Engine & all-day battery life",
+      "buttonText": "Shop now",
+      "buttonLink": "/#deals",
+      "imageUrl": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
+      "bgGradient": "from-[#bfdbfe] via-[#dbeafe] to-[#eff6ff]",
+      "textColor": "text-slate-900",
+      "position": "triple_promo",
+      "displayOrder": 2,
+      "isActive": true,
+      "createdAt": "2026-10-25T09:31:13.437Z",
+      "updatedAt": "2026-10-25T09:31:13.437Z"
+    },
+    {
+      "id": "slider_hero_3",
+      "title": "Sony WH-1000XM5 Headset",
+      "subtitle": "Pure Silence, Immersive Sound",
+      "description": "Industry-leading noise cancellation with auto NC optimizer",
+      "tag": "Special Launch Price 1,199 AED",
+      "buttonText": "Explore Now",
+      "buttonLink": "/#deals",
+      "imageUrl": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80",
+      "bgGradient": "from-[#18181b] via-[#27272a] to-[#09090b]",
+      "textColor": "text-white",
+      "position": "main",
+      "displayOrder": 3,
+      "isActive": true,
+      "createdAt": "2026-10-25T09:31:13.437Z",
+      "updatedAt": "2026-10-25T09:31:13.437Z"
+    },
+    {
+      "id": "slider_promo_3",
+      "badge": "قبل نفاد المخزون",
+      "tag": "EMOX SPECIAL OFFER",
+      "title": "عرض إيموكس المميز",
+      "subtitle": "Organic mountain honey, imported pantry staples, dates & oils",
+      "buttonText": "Shop now",
+      "buttonLink": "/#deals",
+      "imageUrl": "/uploads/image__1__1792918379910_la39ev.webp",
+      "bgGradient": "from-[#b91c1c] via-[#dc2626] to-[#ea580c]",
+      "textColor": "text-white",
+      "position": "triple_promo",
+      "displayOrder": 3,
+      "isActive": true,
+      "createdAt": "2026-10-25T09:31:13.437Z",
+      "updatedAt": "2026-10-25T15:19:01.508Z",
+      "description": ""
+    },
+    {
+      "id": "slider_ytl24wm",
+      "title": "FASHION & FOOTWEAR SALE",
+      "subtitle": "Sneakers, Boots & Streetwear up to 60% off",
+      "description": "",
+      "badge": "TRENDING",
+      "tag": "NEW ARRIVALS",
+      "buttonText": "Explore Deals",
+      "buttonLink": "/#deals",
+      "imageUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80",
+      "bgGradient": "from-[#3b0764] via-[#581c87] to-[#7e22ce]",
+      "textColor": "text-white",
+      "position": "triple_promo",
+      "displayOrder": 4,
+      "isActive": false,
+      "createdAt": "2026-10-25T14:20:07.600Z",
+      "updatedAt": "2026-10-25T15:19:06.700Z"
+    }
+  ],
+  "menuItems": [
+    {
+      "id": "menu_elec",
+      "label": "Electronics",
+      "url": "/#deals",
+      "displayOrder": 1,
+      "isActive": true,
+      "isHighlight": false,
+      "createdAt": "2026-10-25T09:31:13.440Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "menu_fashion",
+      "label": "Fashion",
+      "url": "/#deals",
+      "displayOrder": 2,
+      "isActive": true,
+      "isHighlight": false,
+      "createdAt": "2026-10-25T09:31:13.440Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "menu_women",
+      "label": "Women's",
+      "url": "/#deals",
+      "displayOrder": 3,
+      "isActive": true,
+      "isHighlight": false,
+      "createdAt": "2026-10-25T09:31:13.440Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "menu_kids",
+      "label": "Kids' Fashion",
+      "url": "/#deals",
+      "displayOrder": 4,
+      "isActive": true,
+      "isHighlight": false,
+      "createdAt": "2026-10-25T09:31:13.440Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "menu_beauty",
+      "label": "Health & Beauty",
+      "url": "/#deals",
+      "displayOrder": 5,
+      "isActive": true,
+      "isHighlight": false,
+      "createdAt": "2026-10-25T09:31:13.440Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "menu_pharmacy",
+      "label": "Pharmacy",
+      "url": "/#deals",
+      "displayOrder": 6,
+      "isActive": true,
+      "isHighlight": false,
+      "createdAt": "2026-10-25T09:31:13.440Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "menu_groceries",
+      "label": "Groceries",
+      "url": "/#deals",
+      "displayOrder": 7,
+      "isActive": true,
+      "isHighlight": false,
+      "createdAt": "2026-10-25T09:31:13.440Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "menu_luxury",
+      "label": "Luxury Item",
+      "url": "/#deals",
+      "displayOrder": 8,
+      "isActive": true,
+      "isHighlight": false,
+      "createdAt": "2026-10-25T09:31:13.440Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "menu_deals",
+      "label": "Best Deals",
+      "url": "/#deals",
+      "badge": "Hot",
+      "displayOrder": 9,
+      "isActive": true,
+      "isHighlight": true,
+      "createdAt": "2026-10-25T09:31:13.440Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "menu_live",
+      "label": "emox Live",
+      "url": "/#deals",
+      "badge": "Live",
+      "displayOrder": 10,
+      "isActive": true,
+      "isHighlight": true,
+      "createdAt": "2026-10-25T09:31:13.440Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    }
+  ],
+  "settings": {
+    "id": "site_settings_main",
+    "themeName": "G-store",
+    "siteTitle": "G-store | Online Shopping for Electronics, Fashion, Deals & More in India",
+    "tagline": "Express delivery across India",
+    "uniqueTitle": "emox",
+    "alternateTitle": "EMOX1",
+    "orderPrefix": "tags",
+    "defaultCurrency": "INR",
+    "deliveryLocation": "Delivering to India",
+    "timeZone": "Asia/Kolkata",
+    "supportEmail": "support@emox.in",
+    "supportPhone": "+91 1800 123 EMOX",
+    "footerCopyrightText": "© 2026 emox India Pvt Ltd. All rights reserved.",
+    "footerAboutText": "Your one-stop destination for authentic electronics, top fashion labels, and household essentials across India with 100% buyer protection.",
+    "footerLinks": [
+      {
+        "id": "fl_1",
+        "label": "Today's Best Deals",
+        "url": "/#deals",
+        "displayOrder": 1,
+        "isActive": true,
+        "section": "shop"
+      },
+      {
+        "id": "fl_2",
+        "label": "Electronics Hub",
+        "url": "/#deals",
+        "displayOrder": 2,
+        "isActive": true,
+        "section": "shop"
+      },
+      {
+        "id": "fl_3",
+        "label": "Winter Clearance 60% Off",
+        "url": "/#winter",
+        "displayOrder": 3,
+        "isActive": true,
+        "section": "shop"
+      },
+      {
+        "id": "fl_4",
+        "label": "Trending Collections",
+        "url": "/#deals",
+        "displayOrder": 4,
+        "isActive": true,
+        "section": "shop"
+      },
+      {
+        "id": "fl_5",
+        "label": "Track Your Order",
+        "url": "/#deals",
+        "displayOrder": 1,
+        "isActive": true,
+        "section": "customer_service"
+      },
+      {
+        "id": "fl_6",
+        "label": "Returns & Refund Policy",
+        "url": "/#deals",
+        "displayOrder": 2,
+        "isActive": true,
+        "section": "customer_service"
+      },
+      {
+        "id": "fl_7",
+        "label": "Shipping & Delivery Rates",
+        "url": "/#deals",
+        "displayOrder": 3,
+        "isActive": true,
+        "section": "customer_service"
+      },
+      {
+        "id": "fl_8",
+        "label": "Help Center / FAQs",
+        "url": "/#deals",
+        "displayOrder": 4,
+        "isActive": true,
+        "section": "customer_service"
+      },
+      {
+        "id": "fl_9",
+        "label": "About Our Story",
+        "url": "/#deals",
+        "displayOrder": 1,
+        "isActive": true,
+        "section": "about"
+      },
+      {
+        "id": "fl_10",
+        "label": "Sell on emox",
+        "url": "/#deals",
+        "displayOrder": 2,
+        "isActive": true,
+        "section": "about"
+      },
+      {
+        "id": "fl_11",
+        "label": "Careers",
+        "url": "/#deals",
+        "displayOrder": 3,
+        "isActive": true,
+        "section": "about"
+      },
+      {
+        "id": "fl_12",
+        "label": "Press & Media",
+        "url": "/#deals",
+        "displayOrder": 4,
+        "isActive": true,
+        "section": "about"
+      },
+      {
+        "id": "fl_13",
+        "label": "Privacy Policy",
+        "url": "/#deals",
+        "displayOrder": 1,
+        "isActive": true,
+        "section": "legal"
+      },
+      {
+        "id": "fl_14",
+        "label": "Terms & Conditions",
+        "url": "/#deals",
+        "displayOrder": 2,
+        "isActive": true,
+        "section": "legal"
+      },
+      {
+        "id": "fl_15",
+        "label": "Consumer Rights (India)",
+        "url": "/#deals",
+        "displayOrder": 3,
+        "isActive": true,
+        "section": "legal"
+      },
+      {
+        "id": "fl_16",
+        "label": "Security & Fraud Notice",
+        "url": "/#deals",
+        "displayOrder": 4,
+        "isActive": true,
+        "section": "legal"
+      }
+    ],
+    "socialLinks": {
+      "facebook": "https://facebook.com/emox",
+      "instagram": "https://instagram.com/emox",
+      "twitter": "https://twitter.com/emox",
+      "youtube": "https://youtube.com/@emox",
+      "linkedin": "https://linkedin.com/company/emox"
+    },
+    "numberOfMailsForExecution": 100,
+    "reviewFeedCronDays": 0,
+    "googleMerchantCronDays": 0,
+    "mailPerExecutionFrequency": 0,
+    "unpaidOrderEmailDailyCount": 10,
+    "unpaidOrderEmailTimeLapseMinutes": 40,
+    "numberOfSmsForExecution": 75,
+    "debugModeEnabled": false,
+    "emailVerificationEnabled": true,
+    "autoCancelDays": 7,
+    "handlingCharge": 5,
+    "freeShippingThreshold": 200,
+    "updatedAt": "2026-10-25T15:08:46.994Z"
+  },
+  "manufacturers": [
+    {
+      "id": "mfg_avery",
+      "accountNumber": "ac9638",
+      "name": "Avery Dennison",
+      "contactName": "Avery Dennison",
+      "email": "info@averydennison.com",
+      "phone": "0302-3929000",
+      "fax": "0302-3929001",
+      "website": "https://averydennison.com",
+      "addressLine1": "8080 Norton Pkwy",
+      "country": "United States",
+      "state": "Ohio",
+      "city": "Mentor",
+      "zipCode": "44060",
+      "isActive": true,
+      "createdAt": "2024-03-12T10:00:00Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "mfg_nike",
+      "accountNumber": "ac3814",
+      "name": "Nike Global Operations",
+      "contactName": "Mark Parker",
+      "email": "supplier@nike.com",
+      "phone": "+1 503 671 6453",
+      "website": "https://nike.com",
+      "addressLine1": "One Bowerman Dr",
+      "country": "United States",
+      "state": "Oregon",
+      "city": "Beaverton",
+      "zipCode": "97005",
+      "isActive": true,
+      "createdAt": "2024-04-10T12:00:00Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "mfg_samsung",
+      "accountNumber": "ac7721",
+      "name": "Samsung Electronics",
+      "contactName": "K. H. Lee",
+      "email": "partner@samsung.com",
+      "phone": "+82 2 2255 0114",
+      "website": "https://samsung.com",
+      "addressLine1": "129 Samsung-ro",
+      "country": "South Korea",
+      "state": "Gyeonggi-do",
+      "city": "Suwon-si",
+      "zipCode": "16677",
+      "isActive": true,
+      "createdAt": "2024-05-18T08:30:00Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    }
+  ],
+  "warehouses": [
+    {
+      "id": "wh_avery_1",
+      "accountNumber": "11",
+      "name": "Avery Dennison",
+      "contactName": "Avery Dennison",
+      "email": "info@averydennison.com",
+      "phone": "0302-3929000",
+      "address": "8080 Norton Pkwy",
+      "city": "Mentor",
+      "state": "Ohio",
+      "country": "United States",
+      "zipCode": "44060",
+      "isActive": true,
+      "manufacturerId": "mfg_avery",
+      "createdAt": "2024-03-12T10:15:00Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "wh_nike_1",
+      "accountNumber": "WH-01",
+      "name": "Nike Oregon Hub",
+      "contactName": "John Reynolds",
+      "email": "oregon-hub@nike.com",
+      "phone": "+1 503 555 0192",
+      "address": "1400 Northwest 167th Pl",
+      "city": "Beaverton",
+      "state": "Oregon",
+      "country": "United States",
+      "zipCode": "97006",
+      "isActive": true,
+      "manufacturerId": "mfg_nike",
+      "createdAt": "2024-04-10T14:00:00Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "wh_nike_2",
+      "accountNumber": "WH-02",
+      "name": "Nike Memphis Logistics Depot",
+      "contactName": "Linda Vance",
+      "email": "memphis-wh@nike.com",
+      "phone": "+1 901 555 4321",
+      "address": "3155 Frisco Ave",
+      "city": "Memphis",
+      "state": "Tennessee",
+      "country": "United States",
+      "zipCode": "38118",
+      "isActive": true,
+      "manufacturerId": "mfg_nike",
+      "createdAt": "2024-04-15T09:00:00Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "wh_samsung_1",
+      "accountNumber": "WH-03",
+      "name": "Samsung Silicon Valley Center",
+      "contactName": "David Chen",
+      "email": "sanjose@samsungwh.com",
+      "phone": "+1 408 555 8899",
+      "address": "3655 N First St",
+      "city": "San Jose",
+      "state": "California",
+      "country": "United States",
+      "zipCode": "95134",
+      "isActive": true,
+      "manufacturerId": "mfg_samsung",
+      "createdAt": "2024-05-18T11:00:00Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    }
+  ],
+  "discounts": [
+    {
+      "id": "disc_1",
+      "itemNo": "z2216",
+      "productName": "wireless-earbuds-z2216",
+      "discountType": "%",
+      "discountValue": 15,
+      "startDate": "2026-10-01",
+      "endDate": "2026-12-31",
+      "isActive": true,
+      "createdAt": "2026-10-25T09:31:13.440Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "disc_2",
+      "itemNo": "zolo3",
+      "productName": "zoloChip",
+      "discountType": "$",
+      "discountValue": 5,
+      "startDate": "2026-10-15",
+      "endDate": "2026-11-30",
+      "isActive": true,
+      "createdAt": "2026-10-25T09:31:13.440Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "disc_3",
+      "itemNo": "p_winter_1",
+      "productName": "Winter Down Puffer Jacket",
+      "discountType": "%",
+      "discountValue": 25,
+      "startDate": "2026-10-10",
+      "endDate": "2026-11-20",
+      "isActive": true,
+      "createdAt": "2026-10-25T09:31:13.440Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord_2luo7qn",
+      "orderNumber": "tags6659",
+      "customerName": "Gyanchandra",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "customerPhone": "+91 8957058666",
+      "orderDate": "2026-10-25T16:35:43.581Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Cancelled",
+      "orderStatus": "Cancelled By System",
+      "subtotal": 598.53,
+      "shippingCost": 0,
+      "taxAmount": 107.74,
+      "couponDiscount": 0,
+      "totalPrice": 706.27,
+      "shippingAddress": "Village and Post Niyauj House no 44, Azamgarh, Uttar Pradesh, 276305, India",
+      "billingAddress": "Village and Post Niyauj House no 44, Azamgarh, Uttar Pradesh, 276305, India",
+      "shippingAddressDetail": {
+        "name": "Gyanchandra",
+        "company": "",
+        "country": "India",
+        "countryCode": "IN",
+        "state": "Uttar Pradesh",
+        "city": "Azamgarh",
+        "postalCode": "276305",
+        "streetAddress": "Village and Post Niyauj House no 44",
+        "apartment": "",
+        "phone": "+91 8957058666",
+        "type": "shipping"
+      },
+      "billingAddressDetail": {
+        "name": "Gyanchandra",
+        "company": "",
+        "country": "India",
+        "countryCode": "IN",
+        "state": "Uttar Pradesh",
+        "city": "Azamgarh",
+        "postalCode": "276305",
+        "streetAddress": "Village and Post Niyauj House no 44",
+        "apartment": "",
+        "phone": "+91 8957058666",
+        "type": "billing"
+      },
+      "items": [
+        {
+          "id": "item_yxv4z_0",
+          "orderId": "",
+          "productId": "prod_1",
+          "itemNo": "SKU-PROD_1",
+          "name": "zoloChip",
+          "price": 27.01,
+          "quantity": 4,
+          "imageUrl": "/uploads/tshirtnew.svg"
+        },
+        {
+          "id": "item_lp7et_1",
+          "orderId": "",
+          "productId": "prod_2",
+          "itemNo": "SKU-PROD_2",
+          "name": "zoloChip",
+          "price": 22.5,
+          "quantity": 1,
+          "imageUrl": "/uploads/mouse.svg"
+        },
+        {
+          "id": "item_9f86h_2",
+          "orderId": "",
+          "productId": "prod_winter_parka",
+          "itemNo": "SKU-PROD_W",
+          "name": "Winter Thermal Parka Jacket with Faux Fur Hood",
+          "price": 405,
+          "quantity": 1,
+          "imageUrl": "/uploads/images__3__1792904973628_850h3r.jfif"
+        },
+        {
+          "id": "item_gibph_3",
+          "orderId": "",
+          "productId": "prod_xrxpb0pfz",
+          "itemNo": "SKU-PROD_X",
+          "name": "T-shirts",
+          "price": 62.99,
+          "quantity": 1,
+          "imageUrl": "/uploads/image_1792918380103_949hnj.webp"
+        }
+      ],
+      "gatewayOrderId": "order_TsD1Wee4yVzqaL",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T16:35:43.581Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Gyanchandra",
+          "notes": "Razorpay order created with ID: order_TsD1Wee4yVzqaL. Amount: ₹706.27"
+        },
+        {
+          "timestamp": "2026-10-25T16:35:51.452Z",
+          "action": "PAYMENT_CANCELLED",
+          "performedBy": "Customer",
+          "notes": "Customer cancelled payment checkout on Razorpay. Reason: Payment window was closed before completion."
+        }
+      ],
+      "createdAt": "2026-10-25T16:35:43.582Z",
+      "updatedAt": "2026-10-25T16:35:51.452Z"
+    },
+    {
+      "id": "ord_g7i30qs",
+      "orderNumber": "tags5534",
+      "customerName": "GYANCHANDRA YADAV",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "customerPhone": "+918957058666",
+      "orderDate": "2026-10-25T10:22:32.635Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 27.01,
+      "shippingCost": 49,
+      "taxAmount": 4.86,
+      "couponDiscount": 0,
+      "totalPrice": 80.87,
+      "shippingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
+      "billingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
+      "shippingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "",
+        "phone": "+918957058666",
+        "type": "shipping"
+      },
+      "billingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "",
+        "phone": "+918957058666",
+        "type": "billing"
+      },
+      "items": [
+        {
+          "id": "item_lz0fv_0",
+          "orderId": "",
+          "productId": "prod_1",
+          "itemNo": "zolo3",
+          "name": "zoloChip",
+          "price": 27.01,
+          "quantity": 1,
+          "imageUrl": "/uploads/tshirtnew.svg"
+        }
+      ],
+      "gatewayOrderId": "order_Ts6fKPwozFrmx0",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T10:22:32.635Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "GYANCHANDRA YADAV",
+          "notes": "Razorpay order created with ID: order_Ts6fKPwozFrmx0. Amount: ₹80.87"
+        },
+        {
+          "timestamp": "2026-10-25T10:23:33.970Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_Ts6g3FGNopUJVs"
+        }
+      ],
+      "createdAt": "2026-10-25T10:22:32.635Z",
+      "updatedAt": "2026-10-25T10:23:33.970Z",
+      "paymentTransactionId": "pay_Ts6g3FGNopUJVs",
+      "paymentDetails": {
+        "razorpay_order_id": "order_Ts6fKPwozFrmx0",
+        "razorpay_payment_id": "pay_Ts6g3FGNopUJVs",
+        "razorpay_signature": "cd9baa8ba6312db53d663428bebed04f5eaef782902d089a038ed8761315919f",
+        "verifiedAt": "2026-10-25T10:23:33.969Z"
+      },
+      "paidAt": "2026-10-25T10:23:33.969Z"
+    },
+    {
+      "id": "ord_pfayk9d",
+      "orderNumber": "tags4689",
+      "customerName": "Arjun Mehta",
+      "customerEmail": "test_customer_1792913383786@example.in",
+      "customerPhone": "+91 98200 12345",
+      "orderDate": "2026-10-25T10:12:36.652Z",
+      "gateway": "Cash On Delivery (COD)",
+      "gatewayCode": "cod",
+      "paymentStatus": "Paid",
+      "orderStatus": "Shipped",
+      "subtotal": 1000,
+      "shippingCost": 10,
+      "handlingCharge": 15,
+      "adjustmentPrice": 0,
+      "taxAmount": 6,
+      "couponDiscount": 0,
+      "totalPrice": 1031,
+      "shippingAddress": "Gyanchandra, Bandra West, Hill Road, Suite 402, Mumbai, India",
+      "billingAddress": "Gyanchandra, Bandra West, Hill Road, Suite 402, Mumbai, India",
+      "shippingAddressDetail": {
+        "name": "Gyanchandra",
+        "company": "Emox Retail India Pvt Ltd",
+        "addressLine1": "Bandra West, Hill Road, Suite 402",
+        "addressLine2": "Near Mehboob Studio",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400050",
+        "phone": "+91 98765 43210",
+        "status": "Active",
+        "isDefault": true
+      },
+      "billingAddressDetail": {
+        "name": "Gyanchandra",
+        "company": "Emox Retail India Pvt Ltd",
+        "addressLine1": "Bandra West, Hill Road, Suite 402",
+        "addressLine2": "Near Mehboob Studio",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400050",
+        "phone": "+91 98765 43210",
+        "status": "Active",
+        "isDefault": true
+      },
+      "items": [
+        {
+          "id": "item_c2oqd_0",
+          "orderId": "",
+          "itemNo": "l2150",
+          "name": "laptop-l2150",
+          "price": 379,
+          "quantity": 1,
+          "imageUrl": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=100"
+        },
+        {
+          "id": "item_mw07k_1",
+          "orderId": "",
+          "productId": "prod_nike_invincible",
+          "itemNo": "NIKE-INV3-RUN",
+          "name": "Nike Invincible 3 Premium Running Sneaker",
+          "price": 216,
+          "quantity": 1,
+          "imageUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "id": "item_7xxvx_2",
+          "orderId": "",
+          "productId": "prod_winter_parka",
+          "itemNo": "WIN-PARK-FUR",
+          "name": "Winter Thermal Parka Jacket with Faux Fur Hood",
+          "price": 405,
+          "quantity": 1,
+          "imageUrl": "/uploads/images__3__1792904973628_850h3r.jfif"
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T10:12:41.997Z",
+          "action": "CREATE",
+          "performedBy": "GYANCHANDRA YADAV",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Shipped",
+      "createdAt": "2026-10-25T10:12:41.998Z",
+      "updatedAt": "2026-10-25T10:12:41.998Z"
+    },
+    {
+      "id": "ord_q9iu8h4",
+      "orderNumber": "tags37444",
+      "customerName": "Vikram Malhotra",
+      "customerEmail": "vikram_1792921962250@example.com",
+      "customerPhone": "",
+      "orderDate": "2026-10-25T09:52:45.372Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Cancelled",
+      "orderStatus": "Shipped",
+      "subtotal": 100,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 100,
+      "shippingAddress": "",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_55sik_0",
+          "orderId": "",
+          "itemNo": "SKU-0",
+          "name": "Item",
+          "price": 100,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T09:52:45.372Z",
+          "action": "CREATE",
+          "performedBy": "Vikram Malhotra",
+          "notes": "Order created"
+        },
+        {
+          "timestamp": "2026-10-25T09:52:45.740Z",
+          "action": "PAYMENT_CANCELLED",
+          "performedBy": "Customer",
+          "notes": "Customer cancelled payment checkout on Razorpay. Reason: User closed modal window"
+        },
+        {
+          "timestamp": "2026-10-25T10:15:37.195Z",
+          "action": "UPDATE",
+          "performedBy": "Admin",
+          "notes": "Status changed: Cancelled By System -> Shipped"
+        }
+      ],
+      "createdAt": "2026-10-25T09:52:45.372Z",
+      "updatedAt": "2026-10-25T10:15:37.195Z",
+      "carrier": "DHL Express",
+      "trackingNumber": "",
+      "shipmentStatus": "Shipped",
+      "estimatedDelivery": "2026-10-28T00:00:00.000Z",
+      "shippedAt": "2026-10-25T10:15:36.874Z",
+      "notes": "Shipment marked as Shipped",
+      "performedBy": "Admin"
+    },
+    {
+      "id": "ord_710bclu",
+      "orderNumber": "tags75218",
+      "customerName": "Vikram Malhotra",
+      "customerEmail": "vikram_1792921962250@example.com",
+      "customerPhone": "+91 9876543210",
+      "orderDate": "2026-10-25T09:52:44.950Z",
+      "gateway": "Paytm Payments",
+      "gatewayCode": "paytm",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 500,
+      "shippingCost": 49,
+      "taxAmount": 90,
+      "couponDiscount": 0,
+      "totalPrice": 639,
+      "shippingAddress": "Tower B, Level 14, BKC, Mumbai, Maharashtra 400051, India",
+      "billingAddress": "Tower B, Level 14, BKC, Mumbai, Maharashtra 400051, India",
+      "items": [
+        {
+          "id": "item_2iwz5_0",
+          "orderId": "",
+          "productId": "prod_2",
+          "itemNo": "SKU-TEST-02",
+          "name": "Wireless Ergonomic Mouse",
+          "price": 500,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "tags75218",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T09:52:44.950Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Vikram Malhotra",
+          "notes": "Paytm transaction initiated. Token: PTM_SANDBOX_TOKE... Mode: sandbox_modal"
+        },
+        {
+          "timestamp": "2026-10-25T09:52:45.164Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Paytm payment verified successfully. Transaction ID: PTM_TXN_TEST_1792921964968"
+        }
+      ],
+      "createdAt": "2026-10-25T09:52:44.950Z",
+      "updatedAt": "2026-10-25T09:52:45.164Z",
+      "paymentTransactionId": "PTM_TXN_TEST_1792921964968",
+      "paymentDetails": {
+        "txnId": "PTM_TXN_TEST_1792921964968",
+        "txnToken": "PTM_SANDBOX_TOKEN_tags75218_1792921964950",
+        "status": "TXN_SUCCESS",
+        "verifiedAt": "2026-10-25T09:52:45.164Z"
+      },
+      "paidAt": "2026-10-25T09:52:45.164Z"
+    },
+    {
+      "id": "ord_q46i5ze",
+      "orderNumber": "tags50105",
+      "customerName": "Vikram Malhotra",
+      "customerEmail": "vikram_1792921962250@example.com",
+      "customerPhone": "+91 9876543210",
+      "orderDate": "2026-10-25T09:52:43.986Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 999,
+      "shippingCost": 0,
+      "taxAmount": 179.82,
+      "couponDiscount": 0,
+      "totalPrice": 1178.82,
+      "shippingAddress": "Flat 502, Marine Vista, Marine Drive, Mumbai, Maharashtra 400001, India",
+      "billingAddress": "Flat 502, Marine Vista, Marine Drive, Mumbai, Maharashtra 400001, India",
+      "items": [
+        {
+          "id": "item_y1l6t_0",
+          "orderId": "",
+          "productId": "prod_1",
+          "itemNo": "SKU-TEST-01",
+          "name": "Test Smart ANC Headphones",
+          "price": 999,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_Ts69q79YxnCEwN",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T09:52:43.986Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Vikram Malhotra",
+          "notes": "Razorpay order created with ID: order_Ts69q79YxnCEwN. Amount: ₹1178.82"
+        },
+        {
+          "timestamp": "2026-10-25T09:52:44.261Z",
+          "action": "PAYMENT_FAILED",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay signature verification failed. Details: Razorpay payment signature mismatch. Payment verification failed."
+        },
+        {
+          "timestamp": "2026-10-25T09:52:44.315Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_test_1792921964215"
+        }
+      ],
+      "createdAt": "2026-10-25T09:52:43.986Z",
+      "updatedAt": "2026-10-25T09:52:44.315Z",
+      "paymentTransactionId": "pay_test_1792921964215",
+      "paymentDetails": {
+        "razorpay_order_id": "order_Ts69q79YxnCEwN",
+        "razorpay_payment_id": "pay_test_1792921964215",
+        "razorpay_signature": "56572f422768fb72ffa3a0c747ef58fc0e21bead4e147f59b00624815a575864",
+        "verifiedAt": "2026-10-25T09:52:44.315Z"
+      },
+      "paidAt": "2026-10-25T09:52:44.315Z"
+    },
+    {
+      "id": "ord_wvaw4d1",
+      "orderNumber": "tags5777",
+      "customerName": "GYANCHANDRA YADAV",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "customerPhone": "+918957058666",
+      "orderDate": "2026-10-25T09:51:54.335Z",
+      "gateway": "Cash On Delivery (COD)",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 27.01,
+      "shippingCost": 49,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 4.86,
+      "couponDiscount": 0,
+      "totalPrice": 80.87,
+      "shippingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
+      "billingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
+      "shippingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "",
+        "phone": "+918957058666",
+        "type": "shipping"
+      },
+      "billingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "",
+        "phone": "+918957058666",
+        "type": "billing"
+      },
+      "items": [
+        {
+          "id": "item_5xvu1_0",
+          "orderId": "",
+          "productId": "prod_1",
+          "itemNo": "SKU-PROD_1",
+          "name": "zoloChip",
+          "price": 27.01,
+          "quantity": 1,
+          "imageUrl": "/uploads/tshirtnew.svg"
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T09:51:54.335Z",
+          "action": "CREATE",
+          "performedBy": "GYANCHANDRA YADAV",
+          "notes": "Order created"
+        }
+      ],
+      "createdAt": "2026-10-25T09:51:54.336Z",
+      "updatedAt": "2026-10-25T09:51:54.336Z"
+    },
+    {
+      "id": "ord_iyu1oi3",
+      "orderNumber": "tags3104",
+      "customerName": "Ahmad Al Mansoori",
+      "customerEmail": "test_customer_1792921836744@example.com",
+      "customerPhone": "+971 55 987 6543",
+      "orderDate": "2026-10-25T09:50:43.144Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 500,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 22.5,
+      "couponCode": "WELCOME10",
+      "couponDiscount": 50,
+      "totalPrice": 472.5,
+      "shippingAddress": "Sheikh Zayed Road, Floor 14, Penthouse 1402, Dubai, Dubai, United Arab Emirates",
+      "billingAddress": "Sheikh Zayed Road, Floor 14, Penthouse 1402, Dubai, Dubai, United Arab Emirates",
+      "shippingAddressDetail": {
+        "name": "Ahmad Al Mansoori",
+        "country": "United Arab Emirates",
+        "countryCode": "AE",
+        "state": "Dubai",
+        "city": "Dubai",
+        "postalCode": "12345",
+        "streetAddress": "Sheikh Zayed Road, Floor 14",
+        "apartment": "Penthouse 1402",
+        "phone": "+971 55 987 6543",
+        "type": "shipping"
+      },
+      "billingAddressDetail": {
+        "name": "Ahmad Al Mansoori",
+        "country": "United Arab Emirates",
+        "countryCode": "AE",
+        "state": "Dubai",
+        "city": "Dubai",
+        "postalCode": "12345",
+        "streetAddress": "Sheikh Zayed Road, Floor 14",
+        "apartment": "Penthouse 1402",
+        "phone": "+971 55 987 6543",
+        "type": "billing"
+      },
+      "items": [
+        {
+          "id": "item_muram_0",
+          "orderId": "",
+          "productId": "prod_1",
+          "itemNo": "SKU-SNY-01",
+          "name": "Sony WH-1000XM5 Wireless Headphones",
+          "price": 500,
+          "quantity": 1,
+          "imageUrl": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400"
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T09:50:43.144Z",
+          "action": "CREATE",
+          "performedBy": "Ahmad Al Mansoori",
+          "notes": "Order created"
+        }
+      ],
+      "createdAt": "2026-10-25T09:50:43.145Z",
+      "updatedAt": "2026-10-25T09:50:43.145Z"
+    },
+    {
+      "id": "ord_orcylnu",
+      "orderNumber": "tags31054",
+      "customerName": "Vikram Malhotra",
+      "customerEmail": "vikram_1792921793968@example.com",
+      "customerPhone": "",
+      "orderDate": "2026-10-25T09:49:57.733Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Cancelled",
+      "orderStatus": "Cancelled By System",
+      "subtotal": 100,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 100,
+      "shippingAddress": "",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_g8yhg_0",
+          "orderId": "",
+          "itemNo": "SKU-0",
+          "name": "Item",
+          "price": 100,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T09:49:57.733Z",
+          "action": "CREATE",
+          "performedBy": "Vikram Malhotra",
+          "notes": "Order created"
+        },
+        {
+          "timestamp": "2026-10-25T09:49:59.162Z",
+          "action": "PAYMENT_CANCELLED",
+          "performedBy": "Customer",
+          "notes": "Customer cancelled payment checkout on Razorpay. Reason: User closed modal window"
+        }
+      ],
+      "createdAt": "2026-10-25T09:49:57.733Z",
+      "updatedAt": "2026-10-25T09:49:59.162Z"
+    },
+    {
+      "id": "ord_mxclis8",
+      "orderNumber": "tags43924",
+      "customerName": "Vikram Malhotra",
+      "customerEmail": "vikram_1792921793968@example.com",
+      "customerPhone": "+91 9876543210",
+      "orderDate": "2026-10-25T09:49:57.143Z",
+      "gateway": "Paytm Payments",
+      "gatewayCode": "paytm",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 500,
+      "shippingCost": 49,
+      "taxAmount": 90,
+      "couponDiscount": 0,
+      "totalPrice": 639,
+      "shippingAddress": "Tower B, Level 14, BKC, Mumbai, Maharashtra 400051, India",
+      "billingAddress": "Tower B, Level 14, BKC, Mumbai, Maharashtra 400051, India",
+      "items": [
+        {
+          "id": "item_ruxgv_0",
+          "orderId": "",
+          "productId": "prod_2",
+          "itemNo": "SKU-TEST-02",
+          "name": "Wireless Ergonomic Mouse",
+          "price": 500,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "tags43924",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T09:49:57.144Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Vikram Malhotra",
+          "notes": "Paytm transaction initiated. Token: PTM_SANDBOX_TOKE... Mode: sandbox_modal"
+        },
+        {
+          "timestamp": "2026-10-25T09:49:57.345Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Paytm payment verified successfully. Transaction ID: PTM_TXN_TEST_1792921797160"
+        }
+      ],
+      "createdAt": "2026-10-25T09:49:57.144Z",
+      "updatedAt": "2026-10-25T09:49:57.345Z",
+      "paymentTransactionId": "PTM_TXN_TEST_1792921797160",
+      "paymentDetails": {
+        "txnId": "PTM_TXN_TEST_1792921797160",
+        "txnToken": "PTM_SANDBOX_TOKEN_tags43924_1792921797143",
+        "status": "TXN_SUCCESS",
+        "verifiedAt": "2026-10-25T09:49:57.345Z"
+      },
+      "paidAt": "2026-10-25T09:49:57.345Z"
+    },
+    {
+      "id": "ord_23jxi5b",
+      "orderNumber": "tags45727",
+      "customerName": "Vikram Malhotra",
+      "customerEmail": "vikram_1792921793968@example.com",
+      "customerPhone": "+91 9876543210",
+      "orderDate": "2026-10-25T09:49:56.113Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 999,
+      "shippingCost": 0,
+      "taxAmount": 179.82,
+      "couponDiscount": 0,
+      "totalPrice": 1178.82,
+      "shippingAddress": "Flat 502, Marine Vista, Marine Drive, Mumbai, Maharashtra 400001, India",
+      "billingAddress": "Flat 502, Marine Vista, Marine Drive, Mumbai, Maharashtra 400001, India",
+      "items": [
+        {
+          "id": "item_k9ftq_0",
+          "orderId": "",
+          "productId": "prod_1",
+          "itemNo": "SKU-TEST-01",
+          "name": "Test Smart ANC Headphones",
+          "price": 999,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_Ts66ssU75uBjJr",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T09:49:56.113Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Vikram Malhotra",
+          "notes": "Razorpay order created with ID: order_Ts66ssU75uBjJr. Amount: ₹1178.82"
+        },
+        {
+          "timestamp": "2026-10-25T09:49:56.435Z",
+          "action": "PAYMENT_FAILED",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay signature verification failed. Details: Razorpay payment signature mismatch. Payment verification failed."
+        },
+        {
+          "timestamp": "2026-10-25T09:49:56.488Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_test_1792921796348"
+        }
+      ],
+      "createdAt": "2026-10-25T09:49:56.113Z",
+      "updatedAt": "2026-10-25T09:49:56.488Z",
+      "paymentTransactionId": "pay_test_1792921796348",
+      "paymentDetails": {
+        "razorpay_order_id": "order_Ts66ssU75uBjJr",
+        "razorpay_payment_id": "pay_test_1792921796348",
+        "razorpay_signature": "2fb21c80adc3e09c02f01b8f716fd372029e7d610e6a60f947309e566388b1ac",
+        "verifiedAt": "2026-10-25T09:49:56.488Z"
+      },
+      "paidAt": "2026-10-25T09:49:56.488Z"
+    },
+    {
+      "id": "ord_9n6i3gc",
+      "orderNumber": "tags1234_1792921786203",
+      "customerName": "Test",
+      "customerEmail": "test@example.com",
+      "customerPhone": "9876543210",
+      "orderDate": "2026-10-25T09:49:46.824Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 100,
+      "shippingCost": 0,
+      "taxAmount": 18,
+      "couponDiscount": 0,
+      "totalPrice": 118,
+      "shippingAddress": "",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_6arcs_0",
+          "orderId": "",
+          "itemNo": "SKU-1",
+          "name": "Item",
+          "price": 100,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_Ts66ijbOxa4ZOM",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T09:49:46.824Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Test",
+          "notes": "Razorpay order created with ID: order_Ts66ijbOxa4ZOM. Amount: ₹118.00"
+        }
+      ],
+      "createdAt": "2026-10-25T09:49:46.824Z",
+      "updatedAt": "2026-10-25T09:49:46.824Z"
+    },
+    {
+      "id": "ord_i7s8ddf",
+      "orderNumber": "tags8830",
+      "customerName": "GYANCHANDRA YADAV",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "customerPhone": "+918957058666",
+      "orderDate": "2026-10-25T09:47:34.435Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 27.01,
+      "shippingCost": 49,
+      "taxAmount": 4.86,
+      "couponDiscount": 0,
+      "totalPrice": 80.87,
+      "shippingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
+      "billingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
+      "shippingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "",
+        "phone": "+918957058666",
+        "type": "shipping"
+      },
+      "billingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "",
+        "phone": "+918957058666",
+        "type": "billing"
+      },
+      "items": [
+        {
+          "id": "item_02sw9_0",
+          "orderId": "",
+          "productId": "prod_1",
+          "itemNo": "SKU-PROD_1",
+          "name": "zoloChip",
+          "price": 27.01,
+          "quantity": 1,
+          "imageUrl": "/uploads/tshirtnew.svg"
+        }
+      ],
+      "gatewayOrderId": "order_Ts64ODVfo4Pawo",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T09:47:34.435Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "GYANCHANDRA YADAV",
+          "notes": "Razorpay order created with ID: order_Ts64ODVfo4Pawo. Amount: ₹80.87"
+        },
+        {
+          "timestamp": "2026-10-25T09:48:53.569Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_Ts65OyX5Q70kbq"
+        }
+      ],
+      "createdAt": "2026-10-25T09:47:34.436Z",
+      "updatedAt": "2026-10-25T09:48:53.570Z",
+      "paymentTransactionId": "pay_Ts65OyX5Q70kbq",
+      "paymentDetails": {
+        "razorpay_order_id": "order_Ts64ODVfo4Pawo",
+        "razorpay_payment_id": "pay_Ts65OyX5Q70kbq",
+        "razorpay_signature": "d66c279abe47901583eb40fcdc69334117ed76a40b948005d7d69b82a24917ad",
+        "verifiedAt": "2026-10-25T09:48:53.569Z"
+      },
+      "paidAt": "2026-10-25T09:48:53.569Z"
+    },
+    {
+      "id": "ord_hlq1cfc",
+      "orderNumber": "tags7411",
+      "customerName": "GYANCHANDRA YADAV",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "customerPhone": "+918957058666",
+      "orderDate": "2026-10-25T09:44:15.771Z",
+      "gateway": "Stripe",
+      "gatewayCode": "stripe",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 1169.1,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 210.44,
+      "couponDiscount": 0,
+      "totalPrice": 1379.54,
+      "shippingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
+      "billingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
+      "shippingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "",
+        "phone": "+918957058666",
+        "type": "shipping"
+      },
+      "billingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "",
+        "phone": "+918957058666",
+        "type": "billing"
+      },
+      "items": [
+        {
+          "id": "item_h6agf_0",
+          "orderId": "",
+          "productId": "prod_s24_ultra",
+          "itemNo": "SKU-PROD_S",
+          "name": "Samsung Galaxy S24 Ultra 12+GB Titanium Gray",
+          "price": 1169.1,
+          "quantity": 1,
+          "imageUrl": "/uploads/images_1792904973922_51drvb.jfif"
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T09:44:15.771Z",
+          "action": "CREATE",
+          "performedBy": "GYANCHANDRA YADAV",
+          "notes": "Order created"
+        }
+      ],
+      "createdAt": "2026-10-25T09:44:15.771Z",
+      "updatedAt": "2026-10-25T09:44:15.771Z"
+    },
+    {
+      "id": "ord_g84d53e",
+      "orderNumber": "tags3417",
+      "customerName": "GYANCHANDRA YADAV",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "customerPhone": "+918957058666",
+      "orderDate": "2026-10-25T09:43:43.405Z",
+      "gateway": "Authorize.Net",
+      "gatewayCode": "authorizenet",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 27.01,
+      "shippingCost": 49,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 4.86,
+      "couponDiscount": 0,
+      "totalPrice": 80.87,
+      "shippingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
+      "billingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
+      "shippingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "",
+        "phone": "+918957058666",
+        "type": "shipping"
+      },
+      "billingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "",
+        "phone": "+918957058666",
+        "type": "billing"
+      },
+      "items": [
+        {
+          "id": "item_ssndc_0",
+          "orderId": "",
+          "productId": "prod_1",
+          "itemNo": "SKU-PROD_1",
+          "name": "zoloChip",
+          "price": 27.01,
+          "quantity": 1,
+          "imageUrl": "/uploads/tshirtnew.svg"
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T09:43:43.405Z",
+          "action": "CREATE",
+          "performedBy": "GYANCHANDRA YADAV",
+          "notes": "Order created"
+        }
+      ],
+      "createdAt": "2026-10-25T09:43:43.405Z",
+      "updatedAt": "2026-10-25T09:43:43.405Z"
+    },
+    {
+      "id": "ord_mirdkit",
+      "orderNumber": "tags1068",
+      "customerName": "GYANCHANDRA YADAV",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "customerPhone": "+918957058666",
+      "orderDate": "2026-10-25T09:42:05.239Z",
+      "gateway": "Paytm Payments",
+      "gatewayCode": "paytm",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 27.01,
+      "shippingCost": 49,
+      "taxAmount": 4.86,
+      "couponDiscount": 0,
+      "totalPrice": 80.87,
+      "shippingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
+      "billingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
+      "shippingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "",
+        "phone": "+918957058666",
+        "type": "shipping"
+      },
+      "billingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "",
+        "phone": "+918957058666",
+        "type": "billing"
+      },
+      "items": [
+        {
+          "id": "item_lr6zs_0",
+          "orderId": "",
+          "productId": "prod_1",
+          "itemNo": "SKU-PROD_1",
+          "name": "zoloChip",
+          "price": 27.01,
+          "quantity": 1,
+          "imageUrl": "/uploads/tshirtnew.svg"
+        }
+      ],
+      "gatewayOrderId": "tags1068",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T09:42:05.239Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "GYANCHANDRA YADAV",
+          "notes": "Paytm transaction initiated. Token: PTM_SANDBOX_TOKE... Mode: sandbox_modal"
+        },
+        {
+          "timestamp": "2026-10-25T09:42:36.243Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Paytm payment verified successfully. Transaction ID: PTM_SANDBOX_1792921356145_2649"
+        }
+      ],
+      "createdAt": "2026-10-25T09:42:05.240Z",
+      "updatedAt": "2026-10-25T09:42:36.243Z",
+      "paymentTransactionId": "PTM_SANDBOX_1792921356145_2649",
+      "paymentDetails": {
+        "txnId": "PTM_SANDBOX_1792921356145_2649",
+        "txnToken": "PTM_SANDBOX_TOKEN_tags1068_1792921325239",
+        "status": "TXN_SUCCESS",
+        "verifiedAt": "2026-10-25T09:42:36.243Z"
+      },
+      "paidAt": "2026-10-25T09:42:36.243Z"
+    },
+    {
+      "id": "ord_kwu81zd",
+      "orderNumber": "tags2022",
+      "customerName": "GYANCHANDRA YADAV",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "customerPhone": "+918957058666",
+      "orderDate": "2026-10-25T09:41:02.888Z",
+      "gateway": "Paytm Payments",
+      "gatewayCode": "paytm",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 49.99,
+      "shippingCost": 49,
+      "taxAmount": 9,
+      "couponDiscount": 0,
+      "totalPrice": 107.99,
+      "shippingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
+      "billingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
+      "shippingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "",
+        "phone": "+918957058666",
+        "type": "shipping"
+      },
+      "billingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "",
+        "country": "India",
+        "state": "Maharashtra",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "",
+        "phone": "+918957058666",
+        "type": "billing"
+      },
+      "items": [
+        {
+          "id": "item_rryg9_0",
+          "orderId": "",
+          "productId": "prod_xrxpb0pfz",
+          "itemNo": "SKU-PROD_X",
+          "name": "T-shirts",
+          "price": 49.99,
+          "quantity": 1,
+          "imageUrl": "/uploads/image_1792918380103_949hnj.webp"
+        }
+      ],
+      "gatewayOrderId": "tags2022",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T09:41:02.888Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "GYANCHANDRA YADAV",
+          "notes": "Paytm transaction initiated. Token: PTM_SANDBOX_TOKE... Mode: sandbox_modal"
+        },
+        {
+          "timestamp": "2026-10-25T09:41:14.656Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Paytm payment verified successfully. Transaction ID: PTM_SANDBOX_1792921273499_2029"
+        }
+      ],
+      "createdAt": "2026-10-25T09:41:02.890Z",
+      "updatedAt": "2026-10-25T09:41:14.656Z",
+      "paymentTransactionId": "PTM_SANDBOX_1792921273499_2029",
+      "paymentDetails": {
+        "txnId": "PTM_SANDBOX_1792921273499_2029",
+        "txnToken": "PTM_SANDBOX_TOKEN_tags2022_1792921262888",
+        "status": "TXN_SUCCESS",
+        "verifiedAt": "2026-10-25T09:41:14.655Z"
+      },
+      "paidAt": "2026-10-25T09:41:14.655Z"
+    },
+    {
+      "id": "ord_3lomif9",
+      "orderNumber": "tags7136",
+      "customerName": "GYANCHANDRA YADAV",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "customerPhone": "+918957058666",
+      "orderDate": "2026-10-25T09:38:19.018Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 27.01,
+      "shippingCost": 49,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 4.86,
+      "couponDiscount": 0,
+      "totalPrice": 80.87,
+      "shippingAddress": "Village and post niyauj, No, Mumbai, Uttar Pradesh, 400001, India",
+      "billingAddress": "Village and post niyauj, No, Mumbai, Uttar Pradesh, 400001, India",
+      "shippingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "gtech",
+        "country": "India",
+        "countryCode": "IN",
+        "state": "Uttar Pradesh",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "No",
+        "phone": "8957058666",
+        "type": "shipping"
+      },
+      "billingAddressDetail": {
+        "name": "GYANCHANDRA YADAV",
+        "company": "gtech",
+        "country": "India",
+        "countryCode": "IN",
+        "state": "Uttar Pradesh",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village and post niyauj",
+        "apartment": "No",
+        "phone": "8957058666",
+        "type": "billing"
+      },
+      "items": [
+        {
+          "id": "item_73m0v_0",
+          "orderId": "",
+          "productId": "prod_1",
+          "itemNo": "SKU-PROD_1",
+          "name": "zoloChip",
+          "price": 27.01,
+          "quantity": 1,
+          "imageUrl": "/uploads/tshirtnew.svg"
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T09:38:19.018Z",
+          "action": "CREATE",
+          "performedBy": "GYANCHANDRA YADAV",
+          "notes": "Order created"
+        }
+      ],
+      "createdAt": "2026-10-25T09:38:19.020Z",
+      "updatedAt": "2026-10-25T09:38:19.020Z"
+    },
+    {
+      "id": "ord_546",
+      "orderNumber": "tags546",
+      "customerName": "Johnathan Smith",
+      "customerEmail": "john.smith@gmail.com",
+      "customerPhone": "+1 (555) 234-5678",
+      "orderDate": "2026-10-24T18:30:00Z",
+      "gateway": "PayPal",
+      "paymentStatus": "Paid",
+      "orderStatus": "Delivered",
+      "totalPrice": 149.99,
+      "subtotal": 139.99,
+      "shippingCost": 10,
+      "shippingAddress": "742 Evergreen Terrace, Springfield, OR 97477",
+      "items": [
+        {
+          "id": "item_546_1",
+          "orderId": "ord_546",
+          "itemNo": "z2216",
+          "name": "wireless-earbuds-z2216",
+          "price": 76.49,
+          "quantity": 1,
+          "imageUrl": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=200"
+        },
+        {
+          "id": "item_546_2",
+          "orderId": "ord_546",
+          "itemNo": "zolo",
+          "name": "zoloChip Fast Microprocessor",
+          "price": 19.99,
+          "quantity": 2,
+          "imageUrl": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=200"
+        }
+      ],
+      "createdAt": "2026-10-24T18:30:00Z",
+      "updatedAt": "2026-10-25T16:27:45.601Z",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-25T16:25:26.187Z",
+          "action": "PAYMENT_REFUND",
+          "performedBy": "Admin",
+          "notes": "Refunded INR 20.00. Reason: Customer return item. Ref: REF_G6Y1PRT"
+        },
+        {
+          "timestamp": "2026-10-25T16:27:45.601Z",
+          "action": "PAYMENT_REFUND",
+          "performedBy": "Admin",
+          "notes": "Refunded INR 20.00. Reason: Customer return item. Ref: REF_ZE95DZO"
+        }
+      ]
+    },
+    {
+      "id": "ord_545",
+      "orderNumber": "tags545",
+      "customerName": "Sophia Garcia",
+      "customerEmail": "sophia.g@yahoo.com",
+      "customerPhone": "+1 (555) 987-6543",
+      "orderDate": "2026-10-23T14:15:00Z",
+      "gateway": "Stripe",
+      "paymentStatus": "Paid",
+      "orderStatus": "Paid",
+      "totalPrice": 89.99,
+      "subtotal": 89.99,
+      "shippingCost": 0,
+      "shippingAddress": "123 Ocean Blvd, Miami, FL 33139",
+      "items": [
+        {
+          "id": "item_545_1",
+          "orderId": "ord_545",
+          "itemNo": "p_winter_1",
+          "name": "Winter Down Puffer Jacket",
+          "price": 89.99,
+          "quantity": 1,
+          "imageUrl": "https://images.unsplash.com/photo-1544923246-77307dd654cb?w=200"
+        }
+      ],
+      "createdAt": "2026-10-23T14:15:00Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "ord_544",
+      "orderNumber": "tags544",
+      "customerName": "David Miller",
+      "customerEmail": "dmiller@outlook.com",
+      "customerPhone": "+1 (555) 456-7890",
+      "orderDate": "2026-10-21T09:45:00Z",
+      "gateway": "Credit Card",
+      "paymentStatus": "Pending",
+      "orderStatus": "Pending",
+      "totalPrice": 34.99,
+      "subtotal": 29.99,
+      "shippingCost": 5,
+      "shippingAddress": "456 Oak Street, Denver, CO 80203",
+      "items": [
+        {
+          "id": "item_544_1",
+          "orderId": "ord_544",
+          "itemNo": "zolo3",
+          "name": "zoloChip Extreme edition",
+          "price": 29.99,
+          "quantity": 1,
+          "imageUrl": "https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=200"
+        }
+      ],
+      "createdAt": "2026-10-21T09:45:00Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "ord_543",
+      "orderNumber": "tags543",
+      "customerName": "Emma Watson",
+      "customerEmail": "emma.w@gmail.com",
+      "customerPhone": "+1 (555) 321-0987",
+      "orderDate": "2026-10-18T11:20:00Z",
+      "gateway": "PayPal",
+      "paymentStatus": "Cancelled",
+      "orderStatus": "Cancelled By System",
+      "totalPrice": 129.5,
+      "subtotal": 129.5,
+      "shippingCost": 0,
+      "shippingAddress": "89 King St, Boston, MA 02110",
+      "items": [
+        {
+          "id": "item_543_1",
+          "orderId": "ord_543",
+          "itemNo": "p_winter_2",
+          "name": "Cashmere Wool Knit Sweater",
+          "price": 129.5,
+          "quantity": 1,
+          "imageUrl": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=200"
+        }
+      ],
+      "createdAt": "2026-10-18T11:20:00Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    }
+  ],
+  "pricingSettings": {
+    "strikeThroughPricing": true,
+    "priceSync": true,
+    "priceRounding": false,
+    "defaultAdjustmentType": "%",
+    "defaultAdjustmentValue": 10,
+    "updatedAt": "2026-10-25T09:31:13.440Z"
+  },
+  "reviews": [
+    {
+      "id": "rev_eq36x7s",
+      "productId": "prod_winter_parka",
+      "itemNo": "WIN-PARK-FUR",
+      "productName": "Winter Thermal Parka Jacket with Faux Fur Hood",
+      "userName": "nice product",
+      "userEmail": "gyanchandranist@gmail.com",
+      "rating": 5,
+      "review": "nice product",
+      "commentCount": 0,
+      "status": "Active",
+      "postedOn": "2026-10-25",
+      "createdAt": "2026-10-25T15:53:37.295Z",
+      "updatedAt": "2026-10-25T15:53:37.295Z"
+    },
+    {
+      "id": "rev_1",
+      "itemNo": "z2216",
+      "productName": "wireless-earbuds-z2216",
+      "userName": "Johnathan Smith",
+      "userEmail": "john.smith@gmail.com",
+      "rating": 5,
+      "review": "Outstanding sound quality, crisp highs and deep bass. Battery easily lasts 8+ hours on single charge!",
+      "commentCount": 1,
+      "status": "Active",
+      "postedOn": "2026-10-22",
+      "createdAt": "2026-10-22T14:20:00Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "rev_2",
+      "itemNo": "polo",
+      "productName": "men-s-polo-t-shirts",
+      "userName": "Sarah Connor",
+      "userEmail": "sarah.c@yahoo.com",
+      "rating": 4,
+      "review": "Very comfortable combed cotton fabric. Fits nicely around the shoulders and breathable in hot weather.",
+      "commentCount": 2,
+      "status": "Active",
+      "postedOn": "2026-10-20",
+      "createdAt": "2026-10-20T11:00:00Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "rev_3",
+      "itemNo": "s23",
+      "productName": "samsung-galaxy-s23-ultra-5g-green-12gb-256gb-storage",
+      "userName": "David Miller",
+      "userEmail": "dmiller@outlook.com",
+      "rating": 5,
+      "review": "Superb 200MP camera and ultra-fast Snapdragon processor. Night photography is world class.",
+      "commentCount": 0,
+      "status": "Active",
+      "postedOn": "2026-10-18",
+      "createdAt": "2026-10-18T09:30:00Z",
+      "updatedAt": "2026-10-25T09:31:13.440Z"
+    },
+    {
+      "id": "rev_4",
+      "itemNo": "p_winter_1",
+      "productName": "Winter Down Puffer Jacket",
+      "userName": "Emma Watson",
+      "userEmail": "emma.w@gmail.com",
+      "rating": 5,
+      "review": "Keeps warm in sub-zero winter winds. Premium fleece lining and waterproof outer shell.",
+      "commentCount": 3,
+      "status": "Active",
+      "postedOn": "2026-10-15",
+      "createdAt": "2026-10-15T16:45:00Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    }
+  ],
+  "qna": [
+    {
+      "id": "qna_5",
+      "itemNo": "realme",
+      "productName": "realme Buds Wireless 3 In Ear Bluetooth",
+      "userName": "Tag Customer",
+      "userEmail": "admin@tag.com",
+      "question": "Does it support active noise cancellation (ANC)?",
+      "postedOn": "07-23-25",
+      "rating": 5,
+      "answersCount": 1,
+      "answers": [
+        {
+          "id": "ans_5_1",
+          "qnaId": "qna_5",
+          "userName": "Realme Tech Care",
+          "userEmail": "tech@emox.ae",
+          "answer": "Yes, it features 30dB Active Noise Cancellation with dual mics.",
+          "isOfficial": true,
+          "createdAt": "2025-07-23T11:00:00Z"
+        }
+      ],
+      "status": "Active",
+      "createdAt": "2025-07-23T09:00:00Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    },
+    {
+      "id": "qna_4",
+      "itemNo": "s23",
+      "productName": "samsung-galaxy-s23-ultra-5g-green-12gb-256gb-storage",
+      "userName": "Tag Customer",
+      "userEmail": "admin@tag.com",
+      "question": "Does this include official Samsung Gulf warranty?",
+      "postedOn": "03-26-25",
+      "rating": 5,
+      "answersCount": 1,
+      "answers": [
+        {
+          "id": "ans_4_1",
+          "qnaId": "qna_4",
+          "userName": "Samsung Authorized Partner",
+          "userEmail": "samsung@emox.ae",
+          "answer": "Yes, covered by 1-year official Samsung Gulf warranty.",
+          "isOfficial": true,
+          "createdAt": "2025-03-26T18:00:00Z"
+        }
+      ],
+      "status": "Inactive",
+      "createdAt": "2025-03-26T15:00:00Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    },
+    {
+      "id": "qna_3",
+      "itemNo": "coconut",
+      "productName": "coconut-water-organic",
+      "userName": "Tag Customer",
+      "userEmail": "admin@tag.com",
+      "question": "Is there any added sugar or artificial preservatives?",
+      "postedOn": "09-27-24",
+      "rating": 5,
+      "answersCount": 1,
+      "answers": [
+        {
+          "id": "ans_3_1",
+          "qnaId": "qna_3",
+          "userName": "NutriStore Specialist",
+          "userEmail": "nutrition@emox.ae",
+          "answer": "100% pure tender coconut water with zero added sugars or preservatives.",
+          "isOfficial": true,
+          "createdAt": "2024-09-27T16:00:00Z"
+        }
+      ],
+      "status": "Active",
+      "createdAt": "2024-09-27T13:00:00Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    },
+    {
+      "id": "qna_2",
+      "itemNo": "puma",
+      "productName": "puma-shoes",
+      "userName": "Tag Customer",
+      "userEmail": "admin@tag.com",
+      "question": "Are these true to size for jogging and running?",
+      "postedOn": "08-02-24",
+      "rating": 5,
+      "answersCount": 1,
+      "answers": [
+        {
+          "id": "ans_2_1",
+          "qnaId": "qna_2",
+          "userName": "emox Footwear Team",
+          "userEmail": "support@emox.ae",
+          "answer": "Yes, choose your regular standard EU/UK athletic shoe size.",
+          "isOfficial": true,
+          "createdAt": "2024-08-02T14:00:00Z"
+        }
+      ],
+      "status": "Active",
+      "createdAt": "2024-08-02T11:00:00Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    },
+    {
+      "id": "qna_1",
+      "itemNo": "polo",
+      "productName": "men-s-polo-t-shirts",
+      "userName": "Tag Customer",
+      "userEmail": "admin@tag.com",
+      "question": "Is this 100% pre-shrunk cotton fabric?",
+      "postedOn": "08-02-24",
+      "rating": 5,
+      "answersCount": 2,
+      "answers": [
+        {
+          "id": "ans_1_1",
+          "qnaId": "qna_1",
+          "userName": "emox Official Support",
+          "userEmail": "support@emox.ae",
+          "answer": "Yes, it is manufactured with 100% combed pre-shrunk cotton.",
+          "isOfficial": true,
+          "createdAt": "2024-08-02T12:00:00Z"
+        },
+        {
+          "id": "ans_1_2",
+          "qnaId": "qna_1",
+          "userName": "Verified Buyer",
+          "userEmail": "customer@gmail.com",
+          "answer": "Doesn't shrink even after machine wash in cold water.",
+          "isOfficial": false,
+          "createdAt": "2024-08-03T15:30:00Z"
+        }
+      ],
+      "status": "Active",
+      "createdAt": "2024-08-02T10:00:00Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    }
+  ],
+  "wishlist": [
+    {
+      "id": "wl_1",
+      "itemNo": "boat",
+      "name": "boat Rockerz 450 Wireless Headphone",
+      "productImage": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200",
+      "totalQuantity": 302,
+      "wishlistCount": 1,
+      "userIds": [
+        "user_guest_1"
+      ],
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    },
+    {
+      "id": "wl_2",
+      "itemNo": "coconut",
+      "name": "Organic Raw Tender Coconut Drink 500ml",
+      "productImage": "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=200",
+      "totalQuantity": 300,
+      "wishlistCount": 1,
+      "userIds": [
+        "user_guest_2"
+      ],
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    },
+    {
+      "id": "wl_3",
+      "itemNo": "guqawd358awe",
+      "name": "drt498fyt Wireless Gaming Controller",
+      "totalQuantity": 50,
+      "wishlistCount": 1,
+      "userIds": [
+        "user_guest_3"
+      ],
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    },
+    {
+      "id": "wl_4",
+      "itemNo": "s23",
+      "name": "samsung-galaxy-s23-ultra-5g-green-12gb-256gb-storage",
+      "productImage": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=200",
+      "totalQuantity": 24,
+      "wishlistCount": 1,
+      "userIds": [
+        "user_guest_4"
+      ],
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    }
+  ],
+  "coupons": [
+    {
+      "id": "cpn_welcome10",
+      "code": "WELCOME10",
+      "couponType": "%Off Total Order",
+      "discountPercentage": 10,
+      "discountAmount": 0,
+      "minAmount": 50,
+      "expiryDate": "2026-12-31",
+      "usageLimit": 500,
+      "usedCount": 42,
+      "usageLimitPerCustomer": 1,
+      "selectedTemplate": "Welcome New Customers",
+      "isActive": true,
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    },
+    {
+      "id": "cpn_emox20",
+      "code": "EMOX20",
+      "couponType": "%Off Total Order > Amount specified",
+      "discountPercentage": 20,
+      "discountAmount": 0,
+      "minAmount": 150,
+      "expiryDate": "2026-11-30",
+      "usageLimit": 200,
+      "usedCount": 18,
+      "usageLimitPerCustomer": 1,
+      "selectedTemplate": "VIP Mega Discount",
+      "isActive": true,
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    },
+    {
+      "id": "cpn_freeship",
+      "code": "FREESHIP",
+      "couponType": "Free shipping for the order",
+      "discountPercentage": 0,
+      "discountAmount": 0,
+      "minAmount": 30,
+      "expiryDate": "2026-12-31",
+      "usageLimit": 1000,
+      "usedCount": 88,
+      "usageLimitPerCustomer": 3,
+      "selectedTemplate": "Free Shipping Banner",
+      "isActive": true,
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    },
+    {
+      "id": "cpn_flat15",
+      "code": "SUPER15",
+      "couponType": "$Discount on Total Order",
+      "discountPercentage": 0,
+      "discountAmount": 15,
+      "minAmount": 80,
+      "expiryDate": "2026-12-31",
+      "usageLimit": 150,
+      "usedCount": 29,
+      "usageLimitPerCustomer": 1,
+      "selectedTemplate": "Flash Sale Voucher",
+      "isActive": true,
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    }
+  ],
+  "gateways": [
+    {
+      "id": "gw_razorpay",
+      "name": "Razorpay",
+      "code": "razorpay",
+      "cardTypes": [
+        "VISA",
+        "Mastercard",
+        "UPI",
+        "NetBanking",
+        "RuPay"
+      ],
+      "isDefault": true,
+      "isCreditCard": true,
+      "isActive": true,
+      "environment": "sandbox",
+      "credentials": {
+        "keyId": "rzp_test_NLu5aZN42kk6pl",
+        "keySecret": "DE937YVS3AcBIQ16zjKi6qBX"
+      },
+      "description": "Seamless instant UPI, QR code, debit cards, and Indian banking rails",
+      "displayOrder": 4,
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T09:50:27.378Z"
+    },
+    {
+      "id": "gw_paytm",
+      "name": "Paytm Payments",
+      "code": "paytm",
+      "cardTypes": [
+        "Paytm Wallet",
+        "UPI",
+        "Cards",
+        "Postpaid"
+      ],
+      "isDefault": false,
+      "isCreditCard": true,
+      "isActive": false,
+      "environment": "sandbox",
+      "credentials": {
+        "merchantId": "DIY12386817555501617",
+        "merchantKey": "bKMfNxPPf_QdZppa",
+        "website": "WEBSTAGING"
+      },
+      "description": "India's favorite digital wallet and QR payments ecosystem",
+      "displayOrder": 5,
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T13:50:44.686Z"
+    },
+    {
+      "id": "gw_stripe",
+      "name": "Stripe",
+      "code": "stripe",
+      "cardTypes": [
+        "VISA",
+        "Mastercard",
+        "AMEX",
+        "Apple Pay",
+        "Google Pay"
+      ],
+      "isDefault": false,
+      "isCreditCard": true,
+      "isActive": false,
+      "environment": "sandbox",
+      "credentials": {
+        "publishableKey": "pk_test_TYooMQauvdEDq54NiTphI7jx",
+        "secretKey": "sk_test_4eC39HqLyjWDarjtT1zdp7dc"
+      },
+      "description": "Modern global payments with Apple Pay, Google Pay and card 3DS security",
+      "displayOrder": 6,
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T13:50:45.790Z"
+    },
+    {
+      "id": "gw_cod",
+      "name": "Cash On Delivery (COD)",
+      "code": "cod",
+      "cardTypes": [
+        "Cash"
+      ],
+      "isDefault": false,
+      "isCreditCard": false,
+      "isActive": false,
+      "environment": "live",
+      "credentials": {
+        "instructions": "Pay upon delivery with cash or mobile card terminal"
+      },
+      "description": "Pay in cash directly to courier at the time of delivery",
+      "displayOrder": 7,
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T13:50:47.079Z"
+    }
+  ],
+  "shippingProviders": [
+    {
+      "id": "sp_shiprocket",
+      "name": "Shiprocket",
+      "code": "shiprocket",
+      "apiBaseUrl": "https://apiv2.shiprocket.in/v1/external",
+      "credentials": {
+        "email": "merchant@ecommerce.com",
+        "password": "demo_shiprocket_secret",
+        "apiKey": "sr_live_api_token_7721"
+      },
+      "settings": {
+        "pickupLocation": "Primary Warehouse Mumbai (Hub 1)",
+        "defaultCourier": "BlueDart Express Air",
+        "autoLabelGenerate": true
+      },
+      "isEnabled": true,
+      "isDefault": true,
+      "pickupLocation": "Primary Warehouse Mumbai",
+      "createdAt": "2026-10-27T18:01:44.856Z",
+      "updatedAt": "2026-10-27T18:01:44.856Z"
+    },
+    {
+      "id": "sp_nimbuspost",
+      "name": "NimbusPost",
+      "code": "nimbuspost",
+      "apiBaseUrl": "https://api.nimbuspost.com/v1",
+      "credentials": {
+        "email": "logistics@ecommerce.com",
+        "apiKey": "np_live_token_884920"
+      },
+      "settings": {
+        "pickupLocation": "Bandra Warehouse Hub",
+        "defaultCourier": "NimbusPost Priority Network",
+        "autoLabelGenerate": false
+      },
+      "isEnabled": true,
+      "isDefault": false,
+      "pickupLocation": "Bandra Warehouse Hub",
+      "createdAt": "2026-10-27T18:01:44.856Z",
+      "updatedAt": "2026-10-27T18:01:44.856Z"
+    },
+    {
+      "id": "sp_delhivery",
+      "name": "Delhivery",
+      "code": "delhivery",
+      "apiBaseUrl": "https://track.delhivery.com/api/",
+      "credentials": {
+        "apiToken": "delhivery_api_token_live_992",
+        "clientId": "DELHIVERY_MERCHANT_101"
+      },
+      "settings": {
+        "pickupLocation": "Delhivery Central Hub Mumbai",
+        "expressDelivery": true,
+        "autoLabelGenerate": true
+      },
+      "isEnabled": true,
+      "isDefault": false,
+      "pickupLocation": "Delhivery Central Hub Mumbai",
+      "createdAt": "2026-10-27T18:01:44.856Z",
+      "updatedAt": "2026-10-27T18:01:44.856Z"
+    }
+  ],
+  "shipments": [
+    {
+      "id": "shp_ord_2luo7qn",
+      "orderId": "ord_2luo7qn",
+      "orderNumber": "tags6659",
+      "shippingProviderId": "sp_shiprocket",
+      "shippingProviderName": "Shiprocket",
+      "shippingProviderCode": "shiprocket",
+      "providerShipmentId": "PRV-SHP-1000",
+      "awbNumber": "SR-889210",
+      "trackingUrl": "https://shiprocket.co/tracking/SR-889210",
+      "shippingCharge": 45,
+      "shipmentStatus": "Shipped",
+      "recipientName": "Gyanchandra",
+      "shippingAddress": "Village and Post Niyauj House no 44, Azamgarh, Uttar Pradesh, 276305, India",
+      "carrier": "BlueDart Express",
+      "shippedAt": "2026-10-27T18:01:44.856Z",
+      "createdAt": "2026-10-27T18:01:44.856Z",
+      "updatedAt": "2026-10-27T18:01:44.856Z"
+    },
+    {
+      "id": "shp_ord_g7i30qs",
+      "orderId": "ord_g7i30qs",
+      "orderNumber": "tags5534",
+      "shippingProviderId": "sp_delhivery",
+      "shippingProviderName": "Delhivery",
+      "shippingProviderCode": "delhivery",
+      "providerShipmentId": "PRV-SHP-1001",
+      "awbNumber": "DEL-772911",
+      "trackingUrl": "https://www.delhivery.com/track/package/DEL-772911",
+      "shippingCharge": 49,
+      "shipmentStatus": "Shipped",
+      "recipientName": "GYANCHANDRA YADAV",
+      "shippingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
+      "carrier": "Delhivery Surface",
+      "shippedAt": "2026-10-27T18:01:44.856Z",
+      "createdAt": "2026-10-27T18:01:44.856Z",
+      "updatedAt": "2026-10-27T18:01:44.856Z"
+    },
+    {
+      "id": "shp_ord_pfayk9d",
+      "orderId": "ord_pfayk9d",
+      "orderNumber": "tags4689",
+      "shippingProviderId": "sp_shiprocket",
+      "shippingProviderName": "Shiprocket",
+      "shippingProviderCode": "shiprocket",
+      "providerShipmentId": "PRV-SHP-1002",
+      "awbNumber": "SR-889212",
+      "trackingUrl": "https://shiprocket.co/tracking/SR-889212",
+      "shippingCharge": 10,
+      "shipmentStatus": "Shipped",
+      "recipientName": "Arjun Mehta",
+      "shippingAddress": "Gyanchandra, Bandra West, Hill Road, Suite 402, Mumbai, India",
+      "carrier": "BlueDart Express",
+      "shippedAt": "2026-10-27T18:01:44.856Z",
+      "createdAt": "2026-10-27T18:01:44.856Z",
+      "updatedAt": "2026-10-27T18:01:44.856Z"
+    },
+    {
+      "id": "shp_ord_q9iu8h4",
+      "orderId": "ord_q9iu8h4",
+      "orderNumber": "tags37444",
+      "shippingProviderId": "sp_delhivery",
+      "shippingProviderName": "Delhivery",
+      "shippingProviderCode": "delhivery",
+      "providerShipmentId": "PRV-SHP-1003",
+      "awbNumber": "DEL-772913",
+      "trackingUrl": "https://www.delhivery.com/track/package/DEL-772913",
+      "shippingCharge": 45,
+      "shipmentStatus": "Shipped",
+      "recipientName": "Vikram Malhotra",
+      "shippingAddress": "",
+      "carrier": "DHL Express",
+      "shippedAt": "2026-10-25T10:15:36.874Z",
+      "createdAt": "2026-10-27T18:01:44.857Z",
+      "updatedAt": "2026-10-27T18:01:44.857Z"
+    },
+    {
+      "id": "shp_ord_710bclu",
+      "orderId": "ord_710bclu",
+      "orderNumber": "tags75218",
+      "shippingProviderId": "sp_shiprocket",
+      "shippingProviderName": "Shiprocket",
+      "shippingProviderCode": "shiprocket",
+      "providerShipmentId": "PRV-SHP-1004",
+      "awbNumber": "SR-889214",
+      "trackingUrl": "https://shiprocket.co/tracking/SR-889214",
+      "shippingCharge": 49,
+      "shipmentStatus": "Shipped",
+      "recipientName": "Vikram Malhotra",
+      "shippingAddress": "Tower B, Level 14, BKC, Mumbai, Maharashtra 400051, India",
+      "carrier": "BlueDart Express",
+      "shippedAt": "2026-10-27T18:01:44.857Z",
+      "createdAt": "2026-10-27T18:01:44.857Z",
+      "updatedAt": "2026-10-27T18:01:44.857Z"
+    }
+  ],
+  "shippingSettings": {
+    "defaultProviderCode": "shiprocket",
+    "autoDispatch": false,
+    "allowManualDispatch": true,
+    "freeShippingThreshold": 500,
+    "defaultWeightKg": 0.5,
+    "senderAddress": {
+      "contactName": "Logistics Manager",
+      "companyName": "emox Store Logistics",
+      "addressLine": "Unit 14, Prime Industrial Area, Bandra West",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "postalCode": "400050",
+      "country": "India",
+      "phone": "+91 98200 12345",
+      "email": "dispatch@store.com"
+    },
+    "trackingNotificationEmail": true,
+    "trackingNotificationSms": true,
+    "codAvailability": true,
+    "codExtraCharge": 40,
+    "updatedAt": "2026-10-27T18:01:44.856Z"
+  },
+  "shippingZones": [
+    {
+      "id": "zone_local",
+      "name": "Intra-City Local (Mumbai MMR)",
+      "zoneType": "local",
+      "pincodePrefixes": [
+        "400",
+        "401"
+      ],
+      "baseRate": 35,
+      "additionalPerKg": 15,
+      "estimatedDeliveryDays": 1,
+      "isActive": true,
+      "createdAt": "2026-10-27T18:01:44.856Z",
+      "updatedAt": "2026-10-27T18:01:44.856Z"
+    },
+    {
+      "id": "zone_regional",
+      "name": "Regional (Maharashtra & Goa)",
+      "zoneType": "regional",
+      "pincodePrefixes": [
+        "41",
+        "42",
+        "43",
+        "44",
+        "403"
+      ],
+      "baseRate": 48,
+      "additionalPerKg": 20,
+      "estimatedDeliveryDays": 2,
+      "isActive": true,
+      "createdAt": "2026-10-27T18:01:44.856Z",
+      "updatedAt": "2026-10-27T18:01:44.856Z"
+    },
+    {
+      "id": "zone_metro",
+      "name": "Metro to Metro (Delhi, BLR, HYD, MAA, CCU)",
+      "zoneType": "national",
+      "pincodePrefixes": [
+        "110",
+        "560",
+        "500",
+        "600",
+        "700"
+      ],
+      "baseRate": 65,
+      "additionalPerKg": 25,
+      "estimatedDeliveryDays": 3,
+      "isActive": true,
+      "createdAt": "2026-10-27T18:01:44.856Z",
+      "updatedAt": "2026-10-27T18:01:44.856Z"
+    },
+    {
+      "id": "zone_roi",
+      "name": "Rest of India (Tier 2/3 Cities)",
+      "zoneType": "national",
+      "pincodePrefixes": [],
+      "baseRate": 85,
+      "additionalPerKg": 35,
+      "estimatedDeliveryDays": 4,
+      "isActive": true,
+      "createdAt": "2026-10-27T18:01:44.856Z",
+      "updatedAt": "2026-10-27T18:01:44.856Z"
+    }
+  ],
+  "themes": [
+    {
+      "id": "thm_flone",
+      "name": "Flone",
+      "slug": "flone",
+      "version": "2.4.0",
+      "thumbnail": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=500&q=80",
+      "description": "Clean, ultra-responsive modern e-commerce storefront with multi-section layout and high-conversion product showcases.",
+      "author": "ThemeCraft",
+      "isActive": true,
+      "isSystem": true,
+      "config": {
+        "design": {
+          "primaryColor": "#2563eb",
+          "secondaryColor": "#1e293b",
+          "accentColor": "#f59e0b",
+          "backgroundColor": "#ffffff",
+          "textColor": "#0f172a",
+          "fontFamily": "Inter, sans-serif",
+          "headingFont": "Inter, sans-serif",
+          "headerStyle": "modern",
+          "footerStyle": "standard",
+          "announcementBar": {
+            "enabled": true,
+            "text": "Note: Limited time offer - Get free express delivery on all orders over $50!",
+            "link": "/#deals",
+            "bgColor": "#1e293b",
+            "textColor": "#ffffff"
+          },
+          "storeName": "G-store",
+          "storeTagline": "Express delivery across India"
+        },
+        "sections": {
+          "heroSlider": true,
+          "popularCategories": true,
+          "todaysDeals": true,
+          "promoBanners": true,
+          "winterWear": true,
+          "recentlyViewed": true,
+          "order": [
+            "heroSlider",
+            "popularCategories",
+            "todaysDeals",
+            "promoBanners",
+            "winterWear",
+            "recentlyViewed"
+          ]
+        },
+        "integrations": {
+          "captchaEnabled": false,
+          "microsoftUetTag": "TAG-98234-MS",
+          "metaPixelId": "PIXEL-4492019",
+          "maintenanceMode": false,
+          "maintenanceMessage": "We are currently performing scheduled maintenance. Please check back shortly."
+        },
+        "customCss": ""
+      },
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T15:08:46.724Z"
+    },
+    {
+      "id": "thm_unishop1",
+      "name": "Unishop1",
+      "slug": "unishop1",
+      "version": "1.8.2",
+      "thumbnail": "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=500&q=80",
+      "description": "Feature-rich electronics and multi-vendor tech mega store theme with high-density grids and dark-accented UI.",
+      "author": "Rokaux Studio",
+      "isActive": false,
+      "isSystem": true,
+      "config": {
+        "design": {
+          "primaryColor": "#0284c7",
+          "secondaryColor": "#0f172a",
+          "accentColor": "#ef4444",
+          "backgroundColor": "#f8fafc",
+          "textColor": "#1e293b",
+          "fontFamily": "Roboto, sans-serif",
+          "headingFont": "Roboto, sans-serif",
+          "headerStyle": "classic",
+          "footerStyle": "detailed",
+          "announcementBar": {
+            "enabled": true,
+            "text": "Unishop Mega Electronics Sale — Up to 50% Off Smart Gadgets!",
+            "link": "/#deals",
+            "bgColor": "#0284c7",
+            "textColor": "#ffffff"
+          }
+        },
+        "sections": {
+          "heroSlider": true,
+          "popularCategories": true,
+          "todaysDeals": true,
+          "promoBanners": true,
+          "winterWear": true,
+          "recentlyViewed": true,
+          "order": [
+            "heroSlider",
+            "todaysDeals",
+            "popularCategories",
+            "promoBanners",
+            "winterWear",
+            "recentlyViewed"
+          ]
+        },
+        "integrations": {
+          "captchaEnabled": false,
+          "microsoftUetTag": "TAG-UNISHOP-UET",
+          "metaPixelId": "PIXEL-UNISHOP-88",
+          "maintenanceMode": false,
+          "maintenanceMessage": "Store undergoing updates."
+        },
+        "customCss": ""
+      },
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    },
+    {
+      "id": "thm_bootstrap0",
+      "name": "Bootstrap0",
+      "slug": "bootstrap0",
+      "version": "3.1.0",
+      "thumbnail": "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=500&q=80",
+      "description": "Lightweight, blazing-fast minimalist retail theme engineered for high conversion rates and simple typography.",
+      "author": "FrontendHub",
+      "isActive": false,
+      "isSystem": true,
+      "config": {
+        "design": {
+          "primaryColor": "#10b981",
+          "secondaryColor": "#18181b",
+          "accentColor": "#6366f1",
+          "backgroundColor": "#ffffff",
+          "textColor": "#27272a",
+          "fontFamily": "Inter, sans-serif",
+          "headingFont": "Inter, sans-serif",
+          "headerStyle": "minimal",
+          "footerStyle": "compact",
+          "announcementBar": {
+            "enabled": true,
+            "text": "Welcome to our store! Free shipping on all international orders over $100.",
+            "link": "/#deals",
+            "bgColor": "#10b981",
+            "textColor": "#ffffff"
+          }
+        },
+        "sections": {
+          "heroSlider": true,
+          "popularCategories": true,
+          "todaysDeals": true,
+          "promoBanners": false,
+          "winterWear": true,
+          "recentlyViewed": true,
+          "order": [
+            "heroSlider",
+            "popularCategories",
+            "todaysDeals",
+            "winterWear",
+            "recentlyViewed"
+          ]
+        },
+        "integrations": {
+          "captchaEnabled": false,
+          "microsoftUetTag": "",
+          "metaPixelId": "",
+          "maintenanceMode": false,
+          "maintenanceMessage": "Store is currently in maintenance mode."
+        },
+        "customCss": ""
+      },
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    }
+  ],
+  "addresses": [
+    {
+      "id": "addr_e02xuy0",
+      "userId": "usr_4ek7ecysd",
+      "customerEmail": "vikram_1792921522065@example.com",
+      "type": "shipping",
+      "name": "Vikram Malhotra (Updated BKC Office)",
+      "company": "Malhotra Enterprises",
+      "addressLine1": "Tower B, Level 14 (Updated Floor), BKC",
+      "addressLine2": "G Block, BKC",
+      "country": "India",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400051",
+      "phone": "+91 9988776655",
+      "isDefault": false,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:45:30.444Z",
+      "updatedAt": "2026-10-25T09:45:34.241Z"
+    },
+    {
+      "id": "addr_gyan_bill_1",
+      "userId": "emp_gyan",
+      "customerEmail": "gyanwork1996@gmail.com",
+      "type": "billing",
+      "name": "Gyanchandra",
+      "company": "Emox Technologies LLC",
+      "addressLine1": "Al Barsha 1, Suite 402, Golden Tower",
+      "addressLine2": "Opposite Mall of the Emirates",
+      "country": "United Arab Emirates",
+      "state": "Dubai",
+      "city": "Dubai",
+      "postalCode": "12345",
+      "phone": "+971 50 123 4567",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    },
+    {
+      "id": "addr_gyan_ship_1",
+      "userId": "emp_gyan",
+      "customerEmail": "gyanwork1996@gmail.com",
+      "type": "shipping",
+      "name": "Gyanchandra",
+      "company": "Emox Technologies LLC",
+      "addressLine1": "Villa 14B, Street 22A, Al Safa 2",
+      "addressLine2": "Near Safa Park Gate 3",
+      "country": "United Arab Emirates",
+      "state": "Dubai",
+      "city": "Dubai",
+      "postalCode": "12345",
+      "phone": "+971 50 123 4567",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    },
+    {
+      "id": "addr_john_bill_1",
+      "customerEmail": "john@example.com",
+      "type": "billing",
+      "name": "John Doe",
+      "company": "Acme Corp",
+      "addressLine1": "742 Evergreen Terrace",
+      "addressLine2": "Apt 4B",
+      "country": "United States",
+      "state": "California",
+      "city": "San Francisco",
+      "postalCode": "94103",
+      "phone": "+1 415 555 0192",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    },
+    {
+      "id": "addr_john_ship_1",
+      "customerEmail": "john@example.com",
+      "type": "shipping",
+      "name": "John Doe",
+      "company": "Acme Corp",
+      "addressLine1": "742 Evergreen Terrace",
+      "addressLine2": "Apt 4B",
+      "country": "United States",
+      "state": "California",
+      "city": "San Francisco",
+      "postalCode": "94103",
+      "phone": "+1 415 555 0192",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:31:13.441Z",
+      "updatedAt": "2026-10-25T09:31:13.441Z"
+    },
+    {
+      "id": "addr_w0loa5v",
+      "userId": "usr_4gyuc6dk0",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "type": "billing",
+      "name": "GYANCHANDRA YADAV",
+      "addressLine1": "Village and post niyauj",
+      "addressLine2": "",
+      "country": "India",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "phone": "+918957058666",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:35:51.912Z",
+      "updatedAt": "2026-10-25T09:35:51.912Z"
+    },
+    {
+      "id": "addr_kzlqtbw",
+      "userId": "usr_4gyuc6dk0",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "type": "shipping",
+      "name": "GYANCHANDRA YADAV",
+      "addressLine1": "Village and post niyauj",
+      "addressLine2": "",
+      "country": "India",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "phone": "+918957058666",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:35:51.912Z",
+      "updatedAt": "2026-10-25T09:35:51.912Z"
+    },
+    {
+      "id": "addr_7eib2hq",
+      "userId": "usr_4ek7ecysd",
+      "customerEmail": "vikram_1792921522065@example.com",
+      "type": "shipping",
+      "name": "Vikram Malhotra",
+      "addressLine1": "Flat 502, Marine Vista, Marine Drive",
+      "addressLine2": "Opposite Sea Face",
+      "country": "India",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "phone": "+91 9876543210",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:45:23.014Z",
+      "updatedAt": "2026-10-25T09:45:23.014Z"
+    },
+    {
+      "id": "addr_g1frbsd",
+      "userId": "usr_4ek7ecysd",
+      "customerEmail": "vikram_1792921522065@example.com",
+      "type": "billing",
+      "name": "Vikram Malhotra",
+      "addressLine1": "Flat 502, Marine Vista, Marine Drive",
+      "addressLine2": "Opposite Sea Face",
+      "country": "India",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "phone": "+91 9876543210",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:45:23.014Z",
+      "updatedAt": "2026-10-25T09:45:23.014Z"
+    },
+    {
+      "id": "addr_s8umbvu",
+      "userId": "usr_mnbpqw19r",
+      "customerEmail": "intruder_1792921522065@example.com",
+      "type": "shipping",
+      "name": "Intruder User",
+      "addressLine1": "Connaught Place",
+      "addressLine2": "",
+      "country": "India",
+      "state": "Delhi",
+      "city": "New Delhi",
+      "postalCode": "110001",
+      "phone": "+91 8888888888",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:45:34.842Z",
+      "updatedAt": "2026-10-25T09:45:34.842Z"
+    },
+    {
+      "id": "addr_uqf7117",
+      "userId": "usr_mnbpqw19r",
+      "customerEmail": "intruder_1792921522065@example.com",
+      "type": "billing",
+      "name": "Intruder User",
+      "addressLine1": "Connaught Place",
+      "addressLine2": "",
+      "country": "India",
+      "state": "Delhi",
+      "city": "New Delhi",
+      "postalCode": "110001",
+      "phone": "+91 8888888888",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:45:34.842Z",
+      "updatedAt": "2026-10-25T09:45:34.842Z"
+    },
+    {
+      "id": "addr_jak7hou",
+      "userId": "usr_w9wjwdfru",
+      "customerEmail": "vikram_1792921793968@example.com",
+      "type": "shipping",
+      "name": "Vikram Malhotra",
+      "addressLine1": "Flat 502, Marine Vista, Marine Drive",
+      "addressLine2": "Opposite Sea Face",
+      "country": "India",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "phone": "+91 9876543210",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:49:54.289Z",
+      "updatedAt": "2026-10-25T09:49:54.289Z"
+    },
+    {
+      "id": "addr_4skpipd",
+      "userId": "usr_w9wjwdfru",
+      "customerEmail": "vikram_1792921793968@example.com",
+      "type": "billing",
+      "name": "Vikram Malhotra",
+      "addressLine1": "Flat 502, Marine Vista, Marine Drive",
+      "addressLine2": "Opposite Sea Face",
+      "country": "India",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "phone": "+91 9876543210",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:49:54.289Z",
+      "updatedAt": "2026-10-25T09:49:54.289Z"
+    },
+    {
+      "id": "addr_62l4ms1",
+      "userId": "usr_4o2zexxue",
+      "customerEmail": "intruder_1792921793968@example.com",
+      "type": "shipping",
+      "name": "Intruder User",
+      "addressLine1": "Connaught Place",
+      "addressLine2": "",
+      "country": "India",
+      "state": "Delhi",
+      "city": "New Delhi",
+      "postalCode": "110001",
+      "phone": "+91 8888888888",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:49:55.522Z",
+      "updatedAt": "2026-10-25T09:49:55.522Z"
+    },
+    {
+      "id": "addr_swfpzpf",
+      "userId": "usr_4o2zexxue",
+      "customerEmail": "intruder_1792921793968@example.com",
+      "type": "billing",
+      "name": "Intruder User",
+      "addressLine1": "Connaught Place",
+      "addressLine2": "",
+      "country": "India",
+      "state": "Delhi",
+      "city": "New Delhi",
+      "postalCode": "110001",
+      "phone": "+91 8888888888",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:49:55.522Z",
+      "updatedAt": "2026-10-25T09:49:55.522Z"
+    },
+    {
+      "id": "addr_utip4os",
+      "userId": "usr_nye6zxjrd",
+      "customerEmail": "test_customer_1792921836744@example.com",
+      "type": "shipping",
+      "name": "Ahmad Al Mansoori",
+      "addressLine1": "Sheikh Zayed Road, Floor 14",
+      "addressLine2": "Penthouse 1402",
+      "country": "United Arab Emirates",
+      "state": "Dubai",
+      "city": "Dubai",
+      "postalCode": "12345",
+      "phone": "+971 55 987 6543",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:50:42.106Z",
+      "updatedAt": "2026-10-25T09:50:42.106Z"
+    },
+    {
+      "id": "addr_swn3olf",
+      "userId": "usr_nye6zxjrd",
+      "customerEmail": "test_customer_1792921836744@example.com",
+      "type": "billing",
+      "name": "Ahmad Al Mansoori",
+      "addressLine1": "Sheikh Zayed Road, Floor 14",
+      "addressLine2": "Penthouse 1402",
+      "country": "United Arab Emirates",
+      "state": "Dubai",
+      "city": "Dubai",
+      "postalCode": "12345",
+      "phone": "+971 55 987 6543",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:50:42.106Z",
+      "updatedAt": "2026-10-25T09:50:42.106Z"
+    },
+    {
+      "id": "addr_kgfy5vc",
+      "userId": "usr_6w24wbq0c",
+      "customerEmail": "vikram_1792921962250@example.com",
+      "type": "shipping",
+      "name": "Vikram Malhotra",
+      "addressLine1": "Flat 502, Marine Vista, Marine Drive",
+      "addressLine2": "Opposite Sea Face",
+      "country": "India",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "phone": "+91 9876543210",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:52:42.400Z",
+      "updatedAt": "2026-10-25T09:52:42.400Z"
+    },
+    {
+      "id": "addr_f78egti",
+      "userId": "usr_6w24wbq0c",
+      "customerEmail": "vikram_1792921962250@example.com",
+      "type": "billing",
+      "name": "Vikram Malhotra",
+      "addressLine1": "Flat 502, Marine Vista, Marine Drive",
+      "addressLine2": "Opposite Sea Face",
+      "country": "India",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "phone": "+91 9876543210",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:52:42.400Z",
+      "updatedAt": "2026-10-25T09:52:42.400Z"
+    },
+    {
+      "id": "addr_45fxh7a",
+      "userId": "usr_m2bukc4zg",
+      "customerEmail": "intruder_1792921962250@example.com",
+      "type": "shipping",
+      "name": "Intruder User",
+      "addressLine1": "Connaught Place",
+      "addressLine2": "",
+      "country": "India",
+      "state": "Delhi",
+      "city": "New Delhi",
+      "postalCode": "110001",
+      "phone": "+91 8888888888",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:52:43.314Z",
+      "updatedAt": "2026-10-25T09:52:43.314Z"
+    },
+    {
+      "id": "addr_5q4bf9j",
+      "userId": "usr_m2bukc4zg",
+      "customerEmail": "intruder_1792921962250@example.com",
+      "type": "billing",
+      "name": "Intruder User",
+      "addressLine1": "Connaught Place",
+      "addressLine2": "",
+      "country": "India",
+      "state": "Delhi",
+      "city": "New Delhi",
+      "postalCode": "110001",
+      "phone": "+91 8888888888",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T09:52:43.314Z",
+      "updatedAt": "2026-10-25T09:52:43.314Z"
+    },
+    {
+      "id": "addr_bjp8bfa",
+      "userId": "usr_72x4rqvlm",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "type": "shipping",
+      "name": "Gyanchandra",
+      "addressLine1": "Village and Post Niyauj House no 44",
+      "addressLine2": "",
+      "country": "India",
+      "state": "Uttar Pradesh",
+      "city": "Azamgarh",
+      "postalCode": "276305",
+      "phone": "+91 8957058666",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T16:32:14.974Z",
+      "updatedAt": "2026-10-25T16:32:14.974Z"
+    },
+    {
+      "id": "addr_gd8zxt3",
+      "userId": "usr_72x4rqvlm",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "type": "billing",
+      "name": "Gyanchandra",
+      "addressLine1": "Village and Post Niyauj House no 44",
+      "addressLine2": "",
+      "country": "India",
+      "state": "Uttar Pradesh",
+      "city": "Azamgarh",
+      "postalCode": "276305",
+      "phone": "+91 8957058666",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-25T16:32:14.974Z",
+      "updatedAt": "2026-10-25T16:32:14.974Z"
+    }
+  ],
+  "reviewAutoApprove": true,
+  "qnaAutoApprove": true,
+  "productCategories": [
     {
       "productId": "prod_1",
-      "assetId": "ast_1",
-      "isPrimary": true
+      "categoryId": "cat_6avp2l850",
+      "isMain": true
     },
+    {
+      "productId": "prod_1",
+      "categoryId": "cat_electronics",
+      "isMain": true
+    },
+    {
+      "productId": "prod_2",
+      "categoryId": "cat_electronics",
+      "isMain": true
+    },
+    {
+      "productId": "prod_3",
+      "categoryId": "cat_electronics",
+      "isMain": true
+    },
+    {
+      "productId": "prod_4",
+      "categoryId": "cat_electronics",
+      "isMain": true
+    },
+    {
+      "productId": "prod_4",
+      "categoryId": "cat_6avp2l850",
+      "isMain": false
+    },
+    {
+      "productId": "prod_5",
+      "categoryId": "cat_electronics",
+      "isMain": true
+    },
+    {
+      "productId": "prod_nike_hoodie",
+      "categoryId": "cat_fashion",
+      "isMain": true
+    },
+    {
+      "productId": "prod_beanless_bag",
+      "categoryId": "cat_homedecor",
+      "isMain": true
+    },
+    {
+      "productId": "prod_diamond_earrings",
+      "categoryId": "cat_luxury",
+      "isMain": true
+    },
+    {
+      "productId": "prod_nike_invincible",
+      "categoryId": "cat_fashion",
+      "isMain": true
+    },
+    {
+      "productId": "prod_nike_invincible",
+      "categoryId": "cat_sneakers",
+      "isMain": false
+    },
+    {
+      "productId": "prod_winter_parka",
+      "categoryId": "cat_fashion",
+      "isMain": true
+    },
+    {
+      "productId": "prod_wool_sweater",
+      "categoryId": "cat_fashion",
+      "isMain": true
+    },
+    {
+      "productId": "prod_fleece_sweatpants",
+      "categoryId": "cat_fashion",
+      "isMain": true
+    },
+    {
+      "productId": "prod_winter_puffer",
+      "categoryId": "cat_fashion",
+      "isMain": true
+    },
+    {
+      "productId": "prod_s24_ultra",
+      "categoryId": "cat_electronics",
+      "isMain": true
+    },
+    {
+      "productId": "prod_s24_ultra",
+      "categoryId": "cat_6avp2l850",
+      "isMain": false
+    },
+    {
+      "productId": "prod_xrxpb0pfz",
+      "categoryId": "cat_fashion",
+      "isMain": true
+    },
+    {
+      "productId": "prod_b0tc2ooe4",
+      "categoryId": "cat_electronics",
+      "isMain": true
+    }
+  ],
+  "productAssets": [
     {
       "productId": "prod_2",
       "assetId": "ast_2",
@@ -310,6 +5544,96 @@
       "productId": "prod_3",
       "assetId": "ast_4",
       "isPrimary": true
+    },
+    {
+      "productId": "prod_4",
+      "assetId": "ast_nx0tbux2e",
+      "isPrimary": true
+    },
+    {
+      "productId": "prod_4",
+      "assetId": "ast_7derd7jj7",
+      "isPrimary": false
+    },
+    {
+      "productId": "prod_winter_parka",
+      "assetId": "temp",
+      "isPrimary": true
+    },
+    {
+      "productId": "prod_winter_parka",
+      "assetId": "ast_jt2vtuelz",
+      "isPrimary": false
+    },
+    {
+      "productId": "prod_1",
+      "assetId": "ast_1",
+      "isPrimary": true
+    },
+    {
+      "productId": "prod_s24_ultra",
+      "assetId": "temp",
+      "isPrimary": true
+    },
+    {
+      "productId": "prod_s24_ultra",
+      "assetId": "ast_nx0tbux2e",
+      "isPrimary": false
+    },
+    {
+      "productId": "prod_s24_ultra",
+      "assetId": "ast_7derd7jj7",
+      "isPrimary": false
+    },
+    {
+      "productId": "prod_s24_ultra",
+      "assetId": "ast_mdoo47ckt",
+      "isPrimary": false
+    },
+    {
+      "productId": "prod_s24_ultra",
+      "assetId": "ast_jt2vtuelz",
+      "isPrimary": false
+    },
+    {
+      "productId": "prod_s24_ultra",
+      "assetId": "ast_sg3tt2cs6",
+      "isPrimary": false
+    },
+    {
+      "productId": "prod_xrxpb0pfz",
+      "assetId": "ast_048xx3ip2",
+      "isPrimary": true
+    },
+    {
+      "productId": "prod_xrxpb0pfz",
+      "assetId": "ast_sotnfcmpv",
+      "isPrimary": false
+    },
+    {
+      "productId": "prod_xrxpb0pfz",
+      "assetId": "ast_rgzjf6z8d",
+      "isPrimary": false
+    },
+    {
+      "productId": "prod_xrxpb0pfz",
+      "assetId": "ast_levb1t3b1",
+      "isPrimary": false
+    },
+    {
+      "productId": "prod_b0tc2ooe4",
+      "assetId": "ast_nx0tbux2e",
+      "isPrimary": true
+    },
+    {
+      "productId": "prod_b0tc2ooe4",
+      "assetId": "ast_jt2vtuelz",
+      "isPrimary": false
+    },
+    {
+      "productId": "prod_b0tc2ooe4",
+      "assetId": "ast_sg3tt2cs6",
+      "isPrimary": false
     }
   ]
 }

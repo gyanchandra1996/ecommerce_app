@@ -3,8 +3,8 @@ import { LoginForm } from "@/modules/auth/components/LoginForm";
 import { Loader2 } from "lucide-react";
 
 export const metadata = {
-  title: "Admin Login | Tagateway E-Commerce",
-  description: "Sign in to your e-commerce management console",
+  title: "Customer Sign In | emox Online Shopping",
+  description: "Sign in to your customer account on emox to track orders and manage addresses.",
 };
 
 export default function LoginPage() {

@@ -5,21 +5,59 @@ import { apiError, apiSuccess } from "@/core/utils/api-response";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, email, password, confirmPassword, role } = body;
-
-    if (!name || !email || !password) {
-      return apiError("Name, email, and password are required.", 400);
-    }
-
-    const { user, token } = await AuthService.register({
+    const {
       name,
       email,
       password,
       confirmPassword,
-      role: role || "ADMIN",
+      role,
+      mobileNumber,
+      countryCode,
+      country,
+      state,
+      city,
+      postalCode,
+      streetAddress,
+      apartment,
+      accountType,
+    } = body;
+
+    // Server-side validation for required registration fields
+    if (!name || !name.trim()) {
+      return apiError("Full name is required.", 400);
+    }
+    if (!email || !email.trim() || !email.includes("@")) {
+      return apiError("A valid email address is required.", 400);
+    }
+    if (!password || password.length < 6) {
+      return apiError("Password must be at least 6 characters long.", 400);
+    }
+    if (confirmPassword && password !== confirmPassword) {
+      return apiError("Passwords do not match.", 400);
+    }
+
+    const assignedRole = role || (accountType === "admin" ? "ADMIN" : "CUSTOMER");
+    const assignedAccountType = accountType || (assignedRole === "ADMIN" ? "admin" : "customer");
+
+    const { user, token } = await AuthService.register({
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      password,
+      confirmPassword,
+      role: assignedRole,
+      mobileNumber: mobileNumber?.trim(),
+      countryCode: countryCode?.trim() || "+1",
+      phone: mobileNumber?.trim(),
+      country: country?.trim(),
+      state: state?.trim(),
+      city: city?.trim(),
+      postalCode: postalCode?.trim(),
+      streetAddress: streetAddress?.trim(),
+      apartment: apartment?.trim(),
+      accountType: assignedAccountType,
     });
 
-    await AuthService.setSessionCookie(token, true);
+    await AuthService.setSessionCookie(token, assignedRole === "ADMIN" ? "admin" : "customer", true);
 
     return apiSuccess({ user }, "Registration successful!", 201);
   } catch (error: unknown) {

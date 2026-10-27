@@ -31,11 +31,11 @@ export function AdminHeader({
 
   const handleLogout = async () => {
     try {
-      await fetch("/api/auth/logout", { method: "POST" });
-      router.push("/login");
+      await fetch("/api/auth/logout?portal=admin", { method: "POST" });
+      router.push("/admin/login");
       router.refresh();
     } catch {
-      router.push("/login");
+      router.push("/admin/login");
     }
   };
 
