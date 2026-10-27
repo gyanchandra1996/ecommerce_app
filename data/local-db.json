@@ -841,6 +841,35 @@
       "assignedRoles": [
         "Customer"
       ]
+    },
+    {
+      "id": "usr_48kx9myz9",
+      "name": "Test Customer",
+      "email": "test_customer_1793126792219@example.com",
+      "password": "$2b$10$0aZ6WtD8LX50glwVjIClKem4mnaEw85vil7f5RqyKHA7BArjaxvj6",
+      "role": "CUSTOMER",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "",
+      "phone": "",
+      "countryCode": "+1",
+      "country": "",
+      "state": "",
+      "city": "",
+      "postalCode": "",
+      "streetAddress": "",
+      "apartment": "",
+      "address": "",
+      "shippingAddress": "",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-27T18:46:32.990Z",
+      "updatedAt": "2026-10-27T18:46:32.990Z"
     }
   ],
   "assets": [
@@ -2796,8 +2825,8 @@
       "orderDate": "2026-10-25T16:35:43.581Z",
       "gateway": "Razorpay",
       "gatewayCode": "razorpay",
-      "paymentStatus": "Cancelled",
-      "orderStatus": "Cancelled By System",
+      "paymentStatus": "Paid",
+      "orderStatus": "Shipped",
       "subtotal": 598.53,
       "shippingCost": 0,
       "taxAmount": 107.74,
@@ -2886,10 +2915,26 @@
           "action": "PAYMENT_CANCELLED",
           "performedBy": "Customer",
           "notes": "Customer cancelled payment checkout on Razorpay. Reason: Payment window was closed before completion."
+        },
+        {
+          "timestamp": "2026-10-27T18:46:19.219Z",
+          "action": "UPDATE",
+          "performedBy": "Admin",
+          "notes": "Payment status: Cancelled -> Paid"
+        },
+        {
+          "timestamp": "2026-10-27T18:46:19.237Z",
+          "action": "UPDATE",
+          "performedBy": "Admin",
+          "notes": "Status changed: Cancelled By System -> Shipped"
         }
       ],
       "createdAt": "2026-10-25T16:35:43.582Z",
-      "updatedAt": "2026-10-25T16:35:51.452Z"
+      "updatedAt": "2026-10-27T18:46:19.237Z",
+      "shipmentStatus": "Ready to Ship",
+      "trackingNumber": "DEL6338088127",
+      "carrier": "Delhivery Express",
+      "shippedAt": "2026-10-27T18:46:19.237Z"
     },
     {
       "id": "ord_g7i30qs",
@@ -4059,7 +4104,7 @@
         }
       ],
       "createdAt": "2026-10-24T18:30:00Z",
-      "updatedAt": "2026-10-25T16:27:45.601Z",
+      "updatedAt": "2026-10-27T18:46:38.667Z",
       "orderHistory": [
         {
           "timestamp": "2026-10-25T16:25:26.187Z",
@@ -4072,6 +4117,12 @@
           "action": "PAYMENT_REFUND",
           "performedBy": "Admin",
           "notes": "Refunded INR 20.00. Reason: Customer return item. Ref: REF_ZE95DZO"
+        },
+        {
+          "timestamp": "2026-10-27T18:46:38.667Z",
+          "action": "PAYMENT_REFUND",
+          "performedBy": "Admin",
+          "notes": "Refunded INR 20.00. Reason: Customer return item. Ref: REF_Y9YHER6"
         }
       ]
     },
@@ -4158,6 +4209,128 @@
       ],
       "createdAt": "2026-10-18T11:20:00Z",
       "updatedAt": "2026-10-25T09:31:13.440Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": "pay_kvpxsz8",
+      "orderId": "ord_546",
+      "amount": 50,
+      "currency": "INR",
+      "paymentGateway": "Razorpay",
+      "transactionId": "pay_test_1793126794258",
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "orderNumber": "tags546",
+      "customerName": "Johnathan Smith",
+      "customerEmail": "john.smith@gmail.com",
+      "createdAt": "2026-10-27T18:46:34.300Z",
+      "updatedAt": "2026-10-27T18:46:38.667Z",
+      "refundAmount": 20,
+      "refundReason": "Customer return item",
+      "refundReference": "REF_Y9YHER6",
+      "refundedAt": "2026-10-27T18:46:38.667Z"
+    },
+    {
+      "id": "pay_546_1",
+      "orderId": "ord_546",
+      "orderNumber": "tags546",
+      "customerName": "Johnathan Smith",
+      "customerEmail": "john.smith@gmail.com",
+      "paymentGateway": "PayPal",
+      "gatewayOrderId": "PAYID-MN7643A",
+      "transactionId": "TXN_PAYPAL_9812401",
+      "paymentMethod": "PayPal Wallet",
+      "amount": 149.99,
+      "currency": "USD",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-24T18:31:00Z",
+      "createdAt": "2026-10-24T18:30:00Z",
+      "updatedAt": "2026-10-24T18:31:00Z"
+    },
+    {
+      "id": "pay_545_1",
+      "orderId": "ord_545",
+      "orderNumber": "tags545",
+      "customerName": "Sophia Garcia",
+      "customerEmail": "sophia.g@yahoo.com",
+      "paymentGateway": "Stripe",
+      "gatewayOrderId": "pi_3MtwBwLkdIwHu7ix28q31KzL",
+      "transactionId": "ch_3MtwBwLkdIwHu7ix28q31KzL",
+      "paymentMethod": "Visa Card (ending 4242)",
+      "amount": 89.99,
+      "currency": "USD",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-23T14:16:00Z",
+      "createdAt": "2026-10-23T14:15:00Z",
+      "updatedAt": "2026-10-23T14:16:00Z"
+    },
+    {
+      "id": "pay_544_1",
+      "orderId": "ord_544",
+      "orderNumber": "tags544",
+      "customerName": "David Miller",
+      "customerEmail": "dmiller@outlook.com",
+      "paymentGateway": "Authorize.Net",
+      "gatewayOrderId": "AUTH-ORDER-88231",
+      "transactionId": "TRANS-600214890",
+      "paymentMethod": "Mastercard",
+      "amount": 34.99,
+      "currency": "USD",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-21T09:45:00Z",
+      "updatedAt": "2026-10-21T09:45:00Z"
+    },
+    {
+      "id": "pay_543_1",
+      "orderId": "ord_543",
+      "orderNumber": "tags543",
+      "customerName": "Emma Watson",
+      "customerEmail": "emma.w@gmail.com",
+      "paymentGateway": "PayPal",
+      "gatewayOrderId": "PAYID-CANCELLED-991",
+      "transactionId": "TXN_FAILED_091",
+      "paymentMethod": "PayPal",
+      "amount": 129.5,
+      "currency": "USD",
+      "paymentStatus": "Cancelled",
+      "failureReason": "Payment cancelled by customer at gateway",
+      "createdAt": "2026-10-18T11:20:00Z",
+      "updatedAt": "2026-10-18T11:25:00Z"
+    }
+  ],
+  "carts": [
+    {
+      "id": "cart_kmab6k7",
+      "userId": "usr_4gyuc6dk0",
+      "sessionId": "gst_df4hn37c1l",
+      "status": "active",
+      "createdAt": "2026-10-27T18:28:08.591Z",
+      "updatedAt": "2026-10-27T18:28:08.591Z"
+    },
+    {
+      "id": "cart_p4pvroa",
+      "sessionId": "gst_test_1793126798674",
+      "status": "merged",
+      "createdAt": "2026-10-27T18:46:38.879Z",
+      "updatedAt": "2026-10-27T18:46:39.490Z"
+    },
+    {
+      "id": "cart_cdkksdp",
+      "userId": "usr_48kx9myz9",
+      "status": "active",
+      "createdAt": "2026-10-27T18:46:39.484Z",
+      "updatedAt": "2026-10-27T18:46:39.484Z"
+    }
+  ],
+  "cartItems": [
+    {
+      "id": "ci_mxzb1i1",
+      "cartId": "cart_cdkksdp",
+      "productId": "prod_1",
+      "quantity": 2,
+      "createdAt": "2026-10-27T18:46:39.490Z",
+      "updatedAt": "2026-10-27T18:46:39.490Z"
     }
   ],
   "pricingSettings": {
@@ -4608,8 +4781,8 @@
       "isEnabled": true,
       "isDefault": true,
       "pickupLocation": "Primary Warehouse Mumbai",
-      "createdAt": "2026-10-27T18:01:44.856Z",
-      "updatedAt": "2026-10-27T18:01:44.856Z"
+      "createdAt": "2026-10-27T18:36:49.665Z",
+      "updatedAt": "2026-10-27T18:46:19.190Z"
     },
     {
       "id": "sp_nimbuspost",
@@ -4628,8 +4801,8 @@
       "isEnabled": true,
       "isDefault": false,
       "pickupLocation": "Bandra Warehouse Hub",
-      "createdAt": "2026-10-27T18:01:44.856Z",
-      "updatedAt": "2026-10-27T18:01:44.856Z"
+      "createdAt": "2026-10-27T18:36:49.665Z",
+      "updatedAt": "2026-10-27T18:46:19.204Z"
     },
     {
       "id": "sp_delhivery",
@@ -4648,30 +4821,11 @@
       "isEnabled": true,
       "isDefault": false,
       "pickupLocation": "Delhivery Central Hub Mumbai",
-      "createdAt": "2026-10-27T18:01:44.856Z",
-      "updatedAt": "2026-10-27T18:01:44.856Z"
+      "createdAt": "2026-10-27T18:36:49.666Z",
+      "updatedAt": "2026-10-27T18:46:19.261Z"
     }
   ],
   "shipments": [
-    {
-      "id": "shp_ord_2luo7qn",
-      "orderId": "ord_2luo7qn",
-      "orderNumber": "tags6659",
-      "shippingProviderId": "sp_shiprocket",
-      "shippingProviderName": "Shiprocket",
-      "shippingProviderCode": "shiprocket",
-      "providerShipmentId": "PRV-SHP-1000",
-      "awbNumber": "SR-889210",
-      "trackingUrl": "https://shiprocket.co/tracking/SR-889210",
-      "shippingCharge": 45,
-      "shipmentStatus": "Shipped",
-      "recipientName": "Gyanchandra",
-      "shippingAddress": "Village and Post Niyauj House no 44, Azamgarh, Uttar Pradesh, 276305, India",
-      "carrier": "BlueDart Express",
-      "shippedAt": "2026-10-27T18:01:44.856Z",
-      "createdAt": "2026-10-27T18:01:44.856Z",
-      "updatedAt": "2026-10-27T18:01:44.856Z"
-    },
     {
       "id": "shp_ord_g7i30qs",
       "orderId": "ord_g7i30qs",
@@ -4683,13 +4837,13 @@
       "awbNumber": "DEL-772911",
       "trackingUrl": "https://www.delhivery.com/track/package/DEL-772911",
       "shippingCharge": 49,
-      "shipmentStatus": "Shipped",
+      "shipmentStatus": "In Transit",
       "recipientName": "GYANCHANDRA YADAV",
       "shippingAddress": "Village and post niyauj, Mumbai, Maharashtra, 400001, India",
       "carrier": "Delhivery Surface",
-      "shippedAt": "2026-10-27T18:01:44.856Z",
-      "createdAt": "2026-10-27T18:01:44.856Z",
-      "updatedAt": "2026-10-27T18:01:44.856Z"
+      "shippedAt": "2026-10-27T18:36:49.675Z",
+      "createdAt": "2026-10-27T18:36:49.675Z",
+      "updatedAt": "2026-10-27T18:40:06.330Z"
     },
     {
       "id": "shp_ord_pfayk9d",
@@ -4702,13 +4856,13 @@
       "awbNumber": "SR-889212",
       "trackingUrl": "https://shiprocket.co/tracking/SR-889212",
       "shippingCharge": 10,
-      "shipmentStatus": "Shipped",
+      "shipmentStatus": "In Transit",
       "recipientName": "Arjun Mehta",
       "shippingAddress": "Gyanchandra, Bandra West, Hill Road, Suite 402, Mumbai, India",
       "carrier": "BlueDart Express",
-      "shippedAt": "2026-10-27T18:01:44.856Z",
-      "createdAt": "2026-10-27T18:01:44.856Z",
-      "updatedAt": "2026-10-27T18:01:44.856Z"
+      "shippedAt": "2026-10-27T18:36:49.675Z",
+      "createdAt": "2026-10-27T18:36:49.675Z",
+      "updatedAt": "2026-10-27T18:40:20.281Z"
     },
     {
       "id": "shp_ord_q9iu8h4",
@@ -4726,8 +4880,8 @@
       "shippingAddress": "",
       "carrier": "DHL Express",
       "shippedAt": "2026-10-25T10:15:36.874Z",
-      "createdAt": "2026-10-27T18:01:44.857Z",
-      "updatedAt": "2026-10-27T18:01:44.857Z"
+      "createdAt": "2026-10-27T18:36:49.675Z",
+      "updatedAt": "2026-10-27T18:36:49.675Z"
     },
     {
       "id": "shp_ord_710bclu",
@@ -4744,9 +4898,49 @@
       "recipientName": "Vikram Malhotra",
       "shippingAddress": "Tower B, Level 14, BKC, Mumbai, Maharashtra 400051, India",
       "carrier": "BlueDart Express",
-      "shippedAt": "2026-10-27T18:01:44.857Z",
-      "createdAt": "2026-10-27T18:01:44.857Z",
-      "updatedAt": "2026-10-27T18:01:44.857Z"
+      "shippedAt": "2026-10-27T18:36:49.675Z",
+      "createdAt": "2026-10-27T18:36:49.675Z",
+      "updatedAt": "2026-10-27T18:36:49.675Z"
+    },
+    {
+      "id": "shp_ord_2luo7qn",
+      "orderId": "ord_2luo7qn",
+      "orderNumber": "tags6659",
+      "shippingProviderId": "sp_shiprocket",
+      "shippingProviderName": "Shiprocket",
+      "shippingProviderCode": "shiprocket",
+      "providerShipmentId": "PRV-SHP-1000",
+      "awbNumber": "SR-889210",
+      "trackingUrl": "https://shiprocket.co/tracking/SR-889210",
+      "shippingCharge": 45,
+      "shipmentStatus": "Cancelled",
+      "recipientName": "Gyanchandra",
+      "shippingAddress": "Village and Post Niyauj House no 44, Azamgarh, Uttar Pradesh, 276305, India",
+      "carrier": "BlueDart Express",
+      "shippedAt": "2026-10-27T18:36:49.674Z",
+      "createdAt": "2026-10-27T18:36:49.674Z",
+      "updatedAt": "2026-10-27T18:46:19.225Z"
+    },
+    {
+      "id": "shp_olavfpy",
+      "orderId": "ord_2luo7qn",
+      "orderNumber": "tags6659",
+      "shippingProviderId": "sp_delhivery",
+      "shippingProviderName": "Delhivery",
+      "shippingProviderCode": "delhivery",
+      "providerShipmentId": "DEL-CMU-tags6659",
+      "awbNumber": "DEL6338088127",
+      "trackingUrl": "https://www.delhivery.com/track/package/DEL6338088127",
+      "shippingCharge": 125,
+      "shipmentStatus": "In Transit",
+      "shippingLabelPath": "/api/shipping/shipments/DEL-CMU-tags6659/label",
+      "recipientName": "Gyanchandra",
+      "recipientPhone": "+91 8957058666",
+      "shippingAddress": "Village and Post Niyauj House no 44, Azamgarh, Uttar Pradesh, 276305, India",
+      "carrier": "Delhivery Express",
+      "shippedAt": "2026-10-27T18:46:19.232Z",
+      "createdAt": "2026-10-27T18:46:19.232Z",
+      "updatedAt": "2026-10-27T18:46:19.245Z"
     }
   ],
   "shippingSettings": {
@@ -4770,7 +4964,7 @@
     "trackingNotificationSms": true,
     "codAvailability": true,
     "codExtraCharge": 40,
-    "updatedAt": "2026-10-27T18:01:44.856Z"
+    "updatedAt": "2026-10-27T18:36:49.668Z"
   },
   "shippingZones": [
     {
@@ -4785,8 +4979,8 @@
       "additionalPerKg": 15,
       "estimatedDeliveryDays": 1,
       "isActive": true,
-      "createdAt": "2026-10-27T18:01:44.856Z",
-      "updatedAt": "2026-10-27T18:01:44.856Z"
+      "createdAt": "2026-10-27T18:36:49.668Z",
+      "updatedAt": "2026-10-27T18:36:49.668Z"
     },
     {
       "id": "zone_regional",
@@ -4803,8 +4997,8 @@
       "additionalPerKg": 20,
       "estimatedDeliveryDays": 2,
       "isActive": true,
-      "createdAt": "2026-10-27T18:01:44.856Z",
-      "updatedAt": "2026-10-27T18:01:44.856Z"
+      "createdAt": "2026-10-27T18:36:49.668Z",
+      "updatedAt": "2026-10-27T18:36:49.668Z"
     },
     {
       "id": "zone_metro",
@@ -4821,8 +5015,8 @@
       "additionalPerKg": 25,
       "estimatedDeliveryDays": 3,
       "isActive": true,
-      "createdAt": "2026-10-27T18:01:44.856Z",
-      "updatedAt": "2026-10-27T18:01:44.856Z"
+      "createdAt": "2026-10-27T18:36:49.668Z",
+      "updatedAt": "2026-10-27T18:36:49.668Z"
     },
     {
       "id": "zone_roi",
@@ -4833,8 +5027,8 @@
       "additionalPerKg": 35,
       "estimatedDeliveryDays": 4,
       "isActive": true,
-      "createdAt": "2026-10-27T18:01:44.856Z",
-      "updatedAt": "2026-10-27T18:01:44.856Z"
+      "createdAt": "2026-10-27T18:36:49.668Z",
+      "updatedAt": "2026-10-27T18:36:49.668Z"
     }
   ],
   "themes": [

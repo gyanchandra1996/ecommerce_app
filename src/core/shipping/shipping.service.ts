@@ -54,8 +54,9 @@ export class ShippingService {
     const name = provider ? provider.name : providerIdOrCode;
     const baseUrl = overrideBaseUrl || provider?.apiBaseUrl;
 
-    const creds = overrideCredentials || (provider ? decryptCredentials(provider.credentials) : {});
-    const settings = overrideSettings || provider?.settings || {};
+    const creds: Record<string, any> =
+      overrideCredentials || (provider ? decryptCredentials(provider.credentials) : {}) || {};
+    const settings: Record<string, any> = overrideSettings || provider?.settings || {};
 
     const adapter = this.getAdapter(code, name);
     return adapter.testConnection(creds, settings, baseUrl);

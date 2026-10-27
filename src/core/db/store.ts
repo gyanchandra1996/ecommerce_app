@@ -393,6 +393,11 @@ export interface OrderRecord {
   gatewayOrderId?: string;
   paidAt?: string;
   paymentDetails?: any;
+  trackingNumber?: string;
+  carrier?: string;
+  shipmentStatus?: "Pending" | "Ready to Ship" | "Shipped" | "In Transit" | "Out for Delivery" | "Delivered" | "Cancelled" | "Returned";
+  shippedAt?: string;
+  estimatedDelivery?: string;
 }
 
 export interface PaymentGatewayRecord {
@@ -639,6 +644,51 @@ export interface CouponRecord {
   updatedAt: string;
 }
 
+export interface PaymentRecord {
+  id: string;
+  orderId: string;
+  orderNumber?: string;
+  userId?: string;
+  customerName?: string;
+  customerEmail?: string;
+  paymentGateway: string; // Razorpay, Paytm, PayPal, COD, etc.
+  gatewayOrderId?: string;
+  transactionId?: string;
+  paymentMethod?: string; // Card, UPI, NetBanking, Wallet, COD, etc.
+  amount: number;
+  currency: string;
+  paymentStatus: "Pending" | "Processing" | "Paid" | "Failed" | "Cancelled" | "Refunded";
+  gatewayResponse?: Record<string, any>;
+  failureReason?: string;
+  refundAmount?: number;
+  refundReference?: string;
+  refundReason?: string;
+  refundedAt?: string;
+  paidAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CartRecord {
+  id: string;
+  userId?: string;
+  sessionId?: string;
+  status: "active" | "merged" | "ordered" | "abandoned";
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CartItemRecord {
+  id: string;
+  cartId: string;
+  productId: string;
+  variantId?: string;
+  quantity: number;
+  selectedAttributes?: Record<string, string>;
+  createdAt: string;
+  updatedAt: string;
+}
+
 interface LocalDatabaseSchema {
   users: UserRecord[];
   assets: AssetRecord[];
@@ -652,6 +702,9 @@ interface LocalDatabaseSchema {
   warehouses?: WarehouseRecord[];
   discounts?: DiscountRecord[];
   orders?: OrderRecord[];
+  payments?: PaymentRecord[];
+  carts?: CartRecord[];
+  cartItems?: CartItemRecord[];
   pricingSettings?: PricingSettingsRecord;
   reviews?: ReviewRecord[];
   qna?: QnaRecord[];
@@ -712,6 +765,9 @@ export class DatabaseStore {
         warehouses: parsed.warehouses || [],
         discounts: parsed.discounts || [],
         orders: parsed.orders || [],
+        payments: parsed.payments || [],
+        carts: parsed.carts || [],
+        cartItems: parsed.cartItems || [],
         pricingSettings: parsed.pricingSettings || undefined,
         reviews: parsed.reviews || [],
         qna: parsed.qna || [],
@@ -748,6 +804,9 @@ export class DatabaseStore {
           warehouses: parsed.warehouses || [],
           discounts: parsed.discounts || [],
           orders: parsed.orders || [],
+          payments: parsed.payments || [],
+          carts: parsed.carts || [],
+          cartItems: parsed.cartItems || [],
           pricingSettings: parsed.pricingSettings || undefined,
           reviews: parsed.reviews || [],
           qna: parsed.qna || [],
@@ -780,6 +839,9 @@ export class DatabaseStore {
           warehouses: [],
           discounts: [],
           orders: [],
+          payments: [],
+          carts: [],
+          cartItems: [],
           reviews: [],
           qna: [],
           wishlist: [],
@@ -1538,18 +1600,18 @@ export class DatabaseStore {
     const syncable = products.filter((p) => p.googleMerchantSync);
 
     return {
-      title: "Tagateway Google Merchant Product Feed",
-      link: "https://tag31.tagateway.com",
+      title: "emox Google Merchant Product Feed",
+      link: "https://emox.in",
       items: syncable.map((p) => ({
         id: p.sku,
         title: p.name,
         description: p.description || p.name,
-        link: `https://tag31.tagateway.com/product/${p.slug}`,
-        image_link: p.mainImage || "https://tag31.tagateway.com/uploads/photo.jpeg",
+        link: `https://emox.in/products/${p.slug}`,
+        image_link: p.mainImage || "https://emox.in/placeholder-product.png",
         availability: p.currentStock > 0 && !p.isSoldOut ? "in_stock" : "out_of_stock",
         price: `${p.price.toFixed(2)} USD`,
         google_product_category: p.googleCategory || "Apparel & Accessories > Clothing",
-        brand: p.googleBrand || p.brand || "Tagateway",
+        brand: p.googleBrand || p.brand || "emox",
         gtin: p.googleGtin || p.upc || "",
         mpn: p.googleMpn || p.sku,
         condition: p.googleCondition || "new",
@@ -2237,8 +2299,8 @@ export class DatabaseStore {
       themeName: "emox",
       siteTitle: "emox | Online Shopping for Electronics, Fashion, Deals & More in India",
       tagline: "Express delivery across India",
-      uniqueTitle: "Tagateway",
-      alternateTitle: "TAGATEWAY1",
+      uniqueTitle: "emox",
+      alternateTitle: "EMOX1",
       orderPrefix: "tags",
       defaultCurrency: "INR",
       deliveryLocation: "Delivering to India",
@@ -2558,6 +2620,8 @@ export class DatabaseStore {
     fromDate?: string;
     toDate?: string;
     gateway?: string;
+    shipmentStatus?: string;
+    carrier?: string;
   }): Promise<OrderRecord[]> {
     await this.seedInitialData();
     const db = await this.readLocalDb();
@@ -2635,6 +2699,27 @@ export class DatabaseStore {
     };
 
     db.orders.unshift(newOrder);
+
+    // Automatically create linked payment record in dedicated payments table
+    if (!db.payments) db.payments = [];
+    const paymentRecord: PaymentRecord = {
+      id: "pay_" + Math.random().toString(36).substring(2, 9),
+      orderId: newOrder.id,
+      orderNumber: newOrder.orderNumber,
+      customerName: newOrder.customerName,
+      customerEmail: newOrder.customerEmail,
+      paymentGateway: newOrder.gateway || "COD",
+      gatewayOrderId: newOrder.gatewayOrderId,
+      transactionId: newOrder.paymentTransactionId,
+      amount: newOrder.totalPrice,
+      currency: "INR",
+      paymentStatus: newOrder.paymentStatus === "Paid" ? "Paid" : "Pending",
+      paidAt: newOrder.paymentStatus === "Paid" ? (newOrder.paidAt || newOrder.createdAt) : undefined,
+      createdAt: newOrder.createdAt,
+      updatedAt: newOrder.updatedAt,
+    };
+    db.payments.unshift(paymentRecord);
+
     await this.writeLocalDb(db);
     return newOrder;
   }
@@ -2677,6 +2762,43 @@ export class DatabaseStore {
       orderHistory: history,
       updatedAt: new Date().toISOString(),
     };
+
+    // Also synchronize the dedicated payments table
+    if (!db.payments) db.payments = [];
+    const paymentIndex = db.payments.findIndex(
+      (p) => p.orderId === existing.id || p.orderNumber === existing.orderNumber
+    );
+    if (paymentIndex > -1) {
+      db.payments[paymentIndex] = {
+        ...db.payments[paymentIndex],
+        paymentStatus: data.paymentStatus,
+        transactionId: data.paymentTransactionId || db.payments[paymentIndex].transactionId,
+        gatewayOrderId: data.gatewayOrderId || db.payments[paymentIndex].gatewayOrderId,
+        gatewayResponse: data.paymentDetails || db.payments[paymentIndex].gatewayResponse,
+        paidAt:
+          data.paidAt ||
+          (data.paymentStatus === "Paid" ? new Date().toISOString() : db.payments[paymentIndex].paidAt),
+        updatedAt: new Date().toISOString(),
+      };
+    } else {
+      db.payments.unshift({
+        id: "pay_" + Math.random().toString(36).substring(2, 9),
+        orderId: existing.id,
+        orderNumber: existing.orderNumber,
+        customerName: existing.customerName,
+        customerEmail: existing.customerEmail,
+        paymentGateway: existing.gateway || "Online",
+        gatewayOrderId: data.gatewayOrderId,
+        transactionId: data.paymentTransactionId,
+        amount: existing.totalPrice,
+        currency: "INR",
+        paymentStatus: data.paymentStatus,
+        gatewayResponse: data.paymentDetails,
+        paidAt: data.paidAt || (data.paymentStatus === "Paid" ? new Date().toISOString() : undefined),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      });
+    }
 
     await this.writeLocalDb(db);
     return db.orders[index];
@@ -2744,6 +2866,437 @@ export class DatabaseStore {
     db.orders = db.orders.filter((o) => o.id !== id && o.orderNumber !== id);
     await this.writeLocalDb(db);
     return true;
+  }
+
+  // ================= PAYMENTS =================
+  public static async createPayment(
+    data: Omit<PaymentRecord, "id" | "createdAt" | "updatedAt">
+  ): Promise<PaymentRecord> {
+    await this.seedInitialData();
+    const db = await this.readLocalDb();
+    if (!db.payments) db.payments = [];
+
+    const order = (db.orders || []).find((o) => o.id === data.orderId || o.orderNumber === data.orderId);
+
+    const newPayment: PaymentRecord = {
+      id: "pay_" + Math.random().toString(36).substring(2, 9),
+      ...data,
+      orderNumber: data.orderNumber || order?.orderNumber,
+      customerName: data.customerName || order?.customerName,
+      customerEmail: data.customerEmail || order?.customerEmail,
+      currency: data.currency || "INR",
+      paymentStatus: data.paymentStatus || "Pending",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    db.payments.unshift(newPayment);
+    await this.writeLocalDb(db);
+    return newPayment;
+  }
+
+  public static async findPayments(filter?: {
+    orderId?: string;
+    userId?: string;
+    status?: string;
+    gateway?: string;
+    search?: string;
+    fromDate?: string;
+    toDate?: string;
+  }): Promise<PaymentRecord[]> {
+    await this.seedInitialData();
+    const db = await this.readLocalDb();
+    let payments = db.payments || [];
+
+    if (filter) {
+      if (filter.orderId) {
+        payments = payments.filter(
+          (p) => p.orderId === filter.orderId || p.orderNumber === filter.orderId
+        );
+      }
+      if (filter.userId) {
+        payments = payments.filter((p) => p.userId === filter.userId);
+      }
+      if (filter.status && filter.status !== "all") {
+        payments = payments.filter(
+          (p) => p.paymentStatus.toLowerCase() === filter.status!.toLowerCase()
+        );
+      }
+      if (filter.gateway && filter.gateway !== "all") {
+        payments = payments.filter(
+          (p) => p.paymentGateway.toLowerCase() === filter.gateway!.toLowerCase()
+        );
+      }
+      if (filter.fromDate) {
+        const from = new Date(filter.fromDate).getTime();
+        payments = payments.filter((p) => new Date(p.createdAt).getTime() >= from);
+      }
+      if (filter.toDate) {
+        const to = new Date(filter.toDate).getTime();
+        payments = payments.filter((p) => new Date(p.createdAt).getTime() <= to);
+      }
+      if (filter.search) {
+        const q = filter.search.toLowerCase();
+        payments = payments.filter(
+          (p) =>
+            p.id.toLowerCase().includes(q) ||
+            (p.orderNumber && p.orderNumber.toLowerCase().includes(q)) ||
+            (p.orderId && p.orderId.toLowerCase().includes(q)) ||
+            (p.transactionId && p.transactionId.toLowerCase().includes(q)) ||
+            (p.gatewayOrderId && p.gatewayOrderId.toLowerCase().includes(q)) ||
+            (p.customerName && p.customerName.toLowerCase().includes(q)) ||
+            (p.customerEmail && p.customerEmail.toLowerCase().includes(q)) ||
+            p.paymentGateway.toLowerCase().includes(q)
+        );
+      }
+    }
+
+    return payments;
+  }
+
+  public static async findPaymentById(id: string): Promise<PaymentRecord | null> {
+    await this.seedInitialData();
+    const db = await this.readLocalDb();
+    return (
+      (db.payments || []).find(
+        (p) => p.id === id || p.transactionId === id || p.gatewayOrderId === id
+      ) || null
+    );
+  }
+
+  public static async findPaymentsByOrderId(orderId: string): Promise<PaymentRecord[]> {
+    await this.seedInitialData();
+    const db = await this.readLocalDb();
+    return (db.payments || []).filter((p) => p.orderId === orderId || p.orderNumber === orderId);
+  }
+
+  public static async updatePayment(
+    idOrTransactionId: string,
+    updates: Partial<PaymentRecord>
+  ): Promise<PaymentRecord | null> {
+    await this.seedInitialData();
+    const db = await this.readLocalDb();
+    if (!db.payments) return null;
+
+    const index = db.payments.findIndex(
+      (p) =>
+        p.id === idOrTransactionId ||
+        p.transactionId === idOrTransactionId ||
+        p.gatewayOrderId === idOrTransactionId
+    );
+    if (index === -1) return null;
+
+    db.payments[index] = {
+      ...db.payments[index],
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
+
+    if (updates.paymentStatus === "Paid") {
+      const orderId = db.payments[index].orderId;
+      await this.updateOrderPayment(orderId, {
+        paymentStatus: "Paid",
+        orderStatus: "Paid",
+        paymentTransactionId: db.payments[index].transactionId,
+        gatewayOrderId: db.payments[index].gatewayOrderId,
+        paidAt: db.payments[index].paidAt || new Date().toISOString(),
+      });
+    }
+
+    await this.writeLocalDb(db);
+    return db.payments[index];
+  }
+
+  public static async recordPaymentRefund(
+    id: string,
+    refundAmount: number,
+    refundReason?: string,
+    refundReference?: string
+  ): Promise<PaymentRecord | null> {
+    await this.seedInitialData();
+    const db = await this.readLocalDb();
+    if (!db.payments) return null;
+
+    const index = db.payments.findIndex((p) => p.id === id || p.transactionId === id);
+    if (index === -1) return null;
+
+    const existing = db.payments[index];
+    const totalRefunded = (existing.refundAmount || 0) + refundAmount;
+    const isFullRefund = totalRefunded >= existing.amount;
+
+    db.payments[index] = {
+      ...existing,
+      refundAmount: totalRefunded,
+      refundReason: refundReason || existing.refundReason,
+      refundReference:
+        refundReference || "REF_" + Math.random().toString(36).substring(2, 9).toUpperCase(),
+      refundedAt: new Date().toISOString(),
+      paymentStatus: isFullRefund ? "Refunded" : existing.paymentStatus,
+      updatedAt: new Date().toISOString(),
+    };
+
+    const orderIndex = (db.orders || []).findIndex(
+      (o) => o.id === existing.orderId || o.orderNumber === existing.orderNumber
+    );
+    if (orderIndex > -1) {
+      const order = db.orders![orderIndex];
+      const history = order.orderHistory || [];
+      history.push({
+        timestamp: new Date().toISOString(),
+        action: "PAYMENT_REFUND",
+        performedBy: "Admin",
+        notes: `Refunded ${existing.currency} ${refundAmount.toFixed(2)}. Reason: ${
+          refundReason || "N/A"
+        }. Ref: ${db.payments[index].refundReference}`,
+      });
+      db.orders![orderIndex] = {
+        ...order,
+        orderHistory: history,
+        orderStatus: isFullRefund ? "Cancelled By System" : order.orderStatus,
+        updatedAt: new Date().toISOString(),
+      };
+    }
+
+    await this.writeLocalDb(db);
+    return db.payments[index];
+  }
+
+  // ================= CARTS & CART ITEMS =================
+  public static async getOrCreateCart(
+    userId?: string,
+    sessionId?: string
+  ): Promise<{ cart: CartRecord; items: (CartItemRecord & { product: any; variant?: any })[] }> {
+    await this.seedInitialData();
+    const db = await this.readLocalDb();
+    if (!db.carts) db.carts = [];
+    if (!db.cartItems) db.cartItems = [];
+
+    let cart: CartRecord | undefined;
+
+    if (userId) {
+      cart = db.carts.find((c) => c.userId === userId && c.status === "active");
+    } else if (sessionId) {
+      cart = db.carts.find((c) => c.sessionId === sessionId && c.status === "active");
+    }
+
+    if (!cart) {
+      cart = {
+        id: "cart_" + Math.random().toString(36).substring(2, 9),
+        userId,
+        sessionId,
+        status: "active",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      db.carts.push(cart);
+      await this.writeLocalDb(db);
+    }
+
+    const rawItems = db.cartItems.filter((i) => i.cartId === cart!.id);
+    const products = db.products || [];
+
+    const enrichedItems: (CartItemRecord & { product: any; variant?: any })[] = [];
+    for (const item of rawItems) {
+      const product = products.find((p) => p.id === item.productId || p.slug === item.productId);
+      if (product) {
+        let variant = null;
+        if (item.variantId && Array.isArray(product.variants)) {
+          variant = product.variants.find((v) => v.id === item.variantId);
+        }
+        enrichedItems.push({
+          ...item,
+          product: {
+            id: product.id,
+            name: product.name,
+            slug: product.slug,
+            price: variant?.price ?? product.price,
+            comparePrice: variant?.comparePrice ?? product.comparePrice,
+            mainImage: variant?.image || product.mainImage || "/placeholder-product.png",
+            currentStock: variant?.currentStock ?? product.currentStock,
+            sku: variant?.sku || product.sku,
+            brand: product.brand,
+          },
+          variant,
+        });
+      }
+    }
+
+    return { cart, items: enrichedItems };
+  }
+
+  public static async saveCartItem(
+    cartId: string,
+    itemData: {
+      productId: string;
+      variantId?: string;
+      quantity: number;
+      selectedAttributes?: Record<string, string>;
+    }
+  ): Promise<CartItemRecord> {
+    await this.seedInitialData();
+    const db = await this.readLocalDb();
+    if (!db.cartItems) db.cartItems = [];
+
+    const product = (db.products || []).find(
+      (p) => p.id === itemData.productId || p.slug === itemData.productId
+    );
+    const maxStock = product?.currentStock ?? 999;
+    const clampedQuantity = Math.max(1, Math.min(itemData.quantity, maxStock > 0 ? maxStock : 1));
+
+    const existingIdx = db.cartItems.findIndex(
+      (i) =>
+        i.cartId === cartId &&
+        i.productId === (product?.id || itemData.productId) &&
+        (i.variantId || null) === (itemData.variantId || null)
+    );
+
+    if (existingIdx > -1) {
+      db.cartItems[existingIdx].quantity = clampedQuantity;
+      if (itemData.selectedAttributes) {
+        db.cartItems[existingIdx].selectedAttributes = itemData.selectedAttributes;
+      }
+      db.cartItems[existingIdx].updatedAt = new Date().toISOString();
+      await this.writeLocalDb(db);
+      return db.cartItems[existingIdx];
+    } else {
+      const newItem: CartItemRecord = {
+        id: "ci_" + Math.random().toString(36).substring(2, 9),
+        cartId,
+        productId: product?.id || itemData.productId,
+        variantId: itemData.variantId,
+        quantity: clampedQuantity,
+        selectedAttributes: itemData.selectedAttributes,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      db.cartItems.push(newItem);
+      await this.writeLocalDb(db);
+      return newItem;
+    }
+  }
+
+  public static async updateCartItemQuantity(
+    cartId: string,
+    itemIdOrProductId: string,
+    quantity: number,
+    variantId?: string
+  ): Promise<boolean> {
+    await this.seedInitialData();
+    const db = await this.readLocalDb();
+    if (!db.cartItems) return false;
+
+    const index = db.cartItems.findIndex(
+      (i) =>
+        i.cartId === cartId &&
+        (i.id === itemIdOrProductId ||
+          (i.productId === itemIdOrProductId && (!variantId || i.variantId === variantId)))
+    );
+
+    if (index === -1) return false;
+
+    if (quantity <= 0) {
+      db.cartItems.splice(index, 1);
+    } else {
+      db.cartItems[index].quantity = quantity;
+      db.cartItems[index].updatedAt = new Date().toISOString();
+    }
+
+    await this.writeLocalDb(db);
+    return true;
+  }
+
+  public static async removeCartItem(
+    cartId: string,
+    itemIdOrProductId: string,
+    variantId?: string
+  ): Promise<boolean> {
+    await this.seedInitialData();
+    const db = await this.readLocalDb();
+    if (!db.cartItems) return false;
+
+    const initialLen = db.cartItems.length;
+    db.cartItems = db.cartItems.filter(
+      (i) =>
+        !(
+          i.cartId === cartId &&
+          (i.id === itemIdOrProductId ||
+            (i.productId === itemIdOrProductId && (!variantId || i.variantId === variantId)))
+        )
+    );
+
+    await this.writeLocalDb(db);
+    return db.cartItems.length < initialLen;
+  }
+
+  public static async clearCart(cartId: string): Promise<boolean> {
+    await this.seedInitialData();
+    const db = await this.readLocalDb();
+    if (!db.cartItems) return false;
+
+    db.cartItems = db.cartItems.filter((i) => i.cartId !== cartId);
+
+    if (db.carts) {
+      const cart = db.carts.find((c) => c.id === cartId);
+      if (cart) {
+        cart.updatedAt = new Date().toISOString();
+      }
+    }
+
+    await this.writeLocalDb(db);
+    return true;
+  }
+
+  public static async mergeGuestCartIntoUserCart(
+    guestSessionId: string,
+    userId: string
+  ): Promise<{ cart: CartRecord; items: (CartItemRecord & { product: any; variant?: any })[] }> {
+    await this.seedInitialData();
+    const db = await this.readLocalDb();
+    if (!db.carts) db.carts = [];
+    if (!db.cartItems) db.cartItems = [];
+
+    const guestCart = db.carts.find((c) => c.sessionId === guestSessionId && c.status === "active");
+    const userCartResult = await this.getOrCreateCart(userId);
+    const userCart = userCartResult.cart;
+
+    if (guestCart && guestCart.id !== userCart.id) {
+      const guestItems = db.cartItems.filter((i) => i.cartId === guestCart.id);
+
+      for (const gItem of guestItems) {
+        const existingIdx = db.cartItems.findIndex(
+          (u) =>
+            u.cartId === userCart.id &&
+            u.productId === gItem.productId &&
+            (u.variantId || null) === (gItem.variantId || null)
+        );
+
+        if (existingIdx > -1) {
+          const prod = (db.products || []).find((p) => p.id === gItem.productId);
+          const maxStock = prod?.currentStock ?? 999;
+          const mergedQty = Math.min(db.cartItems[existingIdx].quantity + gItem.quantity, maxStock);
+          db.cartItems[existingIdx].quantity = mergedQty;
+          db.cartItems[existingIdx].updatedAt = new Date().toISOString();
+        } else {
+          db.cartItems.push({
+            id: "ci_" + Math.random().toString(36).substring(2, 9),
+            cartId: userCart.id,
+            productId: gItem.productId,
+            variantId: gItem.variantId,
+            quantity: gItem.quantity,
+            selectedAttributes: gItem.selectedAttributes,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          });
+        }
+      }
+
+      guestCart.status = "merged";
+      guestCart.updatedAt = new Date().toISOString();
+      db.cartItems = db.cartItems.filter((i) => i.cartId !== guestCart.id);
+      await this.writeLocalDb(db);
+    }
+
+    return await this.getOrCreateCart(userId);
   }
 
   // ================= PRICING =================
@@ -3441,7 +3994,9 @@ export class DatabaseStore {
   ): Promise<ShippingProviderRecord | null> {
     const db = await this.readLocalDb();
     if (!db.shippingProviders) db.shippingProviders = [];
-    const index = db.shippingProviders.findIndex((p) => p.id === id || p.code.toLowerCase() === id.toLowerCase());
+    const index = db.shippingProviders.findIndex(
+      (p) => p.id === id || p.code.toLowerCase() === id.toLowerCase()
+    );
     if (index === -1) return null;
 
     if (data.isDefault) {
@@ -3463,7 +4018,9 @@ export class DatabaseStore {
   public static async setDefaultShippingProvider(id: string): Promise<ShippingProviderRecord | null> {
     const db = await this.readLocalDb();
     if (!db.shippingProviders) return null;
-    const target = db.shippingProviders.find((p) => p.id === id || p.code.toLowerCase() === id.toLowerCase());
+    const target = db.shippingProviders.find(
+      (p) => p.id === id || p.code.toLowerCase() === id.toLowerCase()
+    );
     if (!target) return null;
 
     db.shippingProviders.forEach((p) => {
@@ -3475,14 +4032,14 @@ export class DatabaseStore {
     return target;
   }
 
-  public static async deleteShippingProvider(id: string): Promise<{ success: boolean; message?: string }> {
+  public static async deleteShippingProvider(
+    id: string
+  ): Promise<{ success: boolean; message?: string }> {
     const db = await this.readLocalDb();
     if (!db.shippingProviders) return { success: false, message: "No shipping providers found" };
-    
-    // Check if shipments exist for this provider
+
     const hasShipments = (db.shipments || []).some((s) => s.shippingProviderId === id);
     if (hasShipments) {
-      // Disabling instead of deleting preserves existing shipment history and tracking!
       const target = db.shippingProviders.find((p) => p.id === id);
       if (target) {
         target.isEnabled = false;
@@ -3490,7 +4047,8 @@ export class DatabaseStore {
         await this.writeLocalDb(db);
         return {
           success: true,
-          message: "Provider has linked shipment records. It has been disabled to preserve historical tracking records.",
+          message:
+            "Provider has linked shipment records. It has been disabled to preserve historical tracking records.",
         };
       }
     }
@@ -3647,7 +4205,9 @@ export class DatabaseStore {
     return db.shippingZones || [];
   }
 
-  public static async saveShippingZone(data: Partial<ShippingZoneRecord>): Promise<ShippingZoneRecord> {
+  public static async saveShippingZone(
+    data: Partial<ShippingZoneRecord>
+  ): Promise<ShippingZoneRecord> {
     const db = await this.readLocalDb();
     if (!db.shippingZones) db.shippingZones = [];
 
@@ -4157,11 +4717,11 @@ export class DatabaseStore {
           warehouse: "gyanwarehouse",
           status: "ACTIVE",
           isSoldOut: false,
-          brand: "Tagateway Tech",
+          brand: "emox Tech",
           googleMerchantSync: true,
           googleCategory: "Electronics > Computers > Tablets",
           googleCondition: "new",
-          googleBrand: "Tagateway",
+          googleBrand: "emox",
           googleGtin: "854632148711",
           googleMpn: "T210-TAB",
           googleSyncStatus: "READY",
@@ -4184,11 +4744,11 @@ export class DatabaseStore {
           warehouse: "gyanwarehouse",
           status: "ACTIVE",
           isSoldOut: false,
-          brand: "Tagateway Tech",
+          brand: "emox Tech",
           googleMerchantSync: true,
           googleCategory: "Electronics > Computers > Laptops",
           googleCondition: "new",
-          googleBrand: "Tagateway",
+          googleBrand: "emox",
           googleGtin: "854632148716",
           googleMpn: "L2150-PRO",
           googleSyncStatus: "SYNCED",
@@ -4415,7 +4975,7 @@ export class DatabaseStore {
         },
         {
           id: "usr_ash",
-          email: "ash@tagateway.com",
+          email: "ash@emox.internal",
           name: "Ash go",
           firstName: "Ash",
           lastName: "go",
@@ -6159,6 +6719,80 @@ export class DatabaseStore {
           status: "Active",
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
+        },
+      ];
+      hasChanges = true;
+    }
+
+    // 22. Seed Payments matching existing orders if empty
+    if (!db.payments || db.payments.length === 0) {
+      db.payments = [
+        {
+          id: "pay_546_1",
+          orderId: "ord_546",
+          orderNumber: "tags546",
+          customerName: "Johnathan Smith",
+          customerEmail: "john.smith@gmail.com",
+          paymentGateway: "PayPal",
+          gatewayOrderId: "PAYID-MN7643A",
+          transactionId: "TXN_PAYPAL_9812401",
+          paymentMethod: "PayPal Wallet",
+          amount: 149.99,
+          currency: "USD",
+          paymentStatus: "Paid",
+          paidAt: "2026-10-24T18:31:00Z",
+          createdAt: "2026-10-24T18:30:00Z",
+          updatedAt: "2026-10-24T18:31:00Z",
+        },
+        {
+          id: "pay_545_1",
+          orderId: "ord_545",
+          orderNumber: "tags545",
+          customerName: "Sophia Garcia",
+          customerEmail: "sophia.g@yahoo.com",
+          paymentGateway: "Stripe",
+          gatewayOrderId: "pi_3MtwBwLkdIwHu7ix28q31KzL",
+          transactionId: "ch_3MtwBwLkdIwHu7ix28q31KzL",
+          paymentMethod: "Visa Card (ending 4242)",
+          amount: 89.99,
+          currency: "USD",
+          paymentStatus: "Paid",
+          paidAt: "2026-10-23T14:16:00Z",
+          createdAt: "2026-10-23T14:15:00Z",
+          updatedAt: "2026-10-23T14:16:00Z",
+        },
+        {
+          id: "pay_544_1",
+          orderId: "ord_544",
+          orderNumber: "tags544",
+          customerName: "David Miller",
+          customerEmail: "dmiller@outlook.com",
+          paymentGateway: "Authorize.Net",
+          gatewayOrderId: "AUTH-ORDER-88231",
+          transactionId: "TRANS-600214890",
+          paymentMethod: "Mastercard",
+          amount: 34.99,
+          currency: "USD",
+          paymentStatus: "Pending",
+          createdAt: "2026-10-21T09:45:00Z",
+          updatedAt: "2026-10-21T09:45:00Z",
+        },
+        {
+          id: "pay_543_1",
+          orderId: "ord_543",
+          orderNumber: "tags543",
+          customerName: "Emma Watson",
+          customerEmail: "emma.w@gmail.com",
+          paymentGateway: "PayPal",
+          gatewayOrderId: "PAYID-CANCELLED-991",
+          transactionId: "TXN_FAILED_091",
+          paymentMethod: "PayPal",
+          amount: 129.5,
+          currency: "USD",
+          paymentStatus: "Cancelled",
+          failureReason: "Payment cancelled by customer at gateway",
+          createdAt: "2026-10-18T11:20:00Z",
+          updatedAt: "2026-10-18T11:25:00Z",
         },
       ];
       hasChanges = true;

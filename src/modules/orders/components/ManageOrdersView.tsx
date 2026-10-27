@@ -24,6 +24,7 @@ import {
   Printer,
   ExternalLink,
   Activity,
+  AlertCircle,
 } from "lucide-react";
 
 interface OrderItem {
