@@ -2602,6 +2602,240 @@
       "createdAt": "2026-02-18T16:05:00.000Z",
       "updatedAt": "2026-02-18T16:05:00.000Z",
       "productCount": 0
+    },
+    {
+      "id": "ast_cat_electronics_theme",
+      "name": "Electronics - Studio Category Icon",
+      "originalName": "category_electronics.webp",
+      "fileUrl": "/uploads/category_electronics.webp",
+      "fileType": "image",
+      "mimeType": "image/webp",
+      "fileSize": 386773,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "storageProvider": "local",
+      "storageKey": "uploads/category_electronics.webp",
+      "createdAt": "2026-10-28T19:02:43.116Z",
+      "updatedAt": "2026-10-28T19:02:43.138Z",
+      "url": "/uploads/category_electronics.webp"
+    },
+    {
+      "id": "ast_cat_fashion_theme",
+      "name": "Fashion - Studio Category Icon",
+      "originalName": "category_fashion.webp",
+      "fileUrl": "/uploads/category_fashion.webp",
+      "fileType": "image",
+      "mimeType": "image/webp",
+      "fileSize": 605894,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "storageProvider": "local",
+      "storageKey": "uploads/category_fashion.webp",
+      "createdAt": "2026-10-28T19:02:43.146Z",
+      "updatedAt": "2026-10-28T19:02:43.146Z",
+      "url": "/uploads/category_fashion.webp"
+    },
+    {
+      "id": "ast_cat_womens_theme",
+      "name": "Women's - Studio Category Icon",
+      "originalName": "category_womens.webp",
+      "fileUrl": "/uploads/category_womens.webp",
+      "fileType": "image",
+      "mimeType": "image/webp",
+      "fileSize": 420130,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "storageProvider": "local",
+      "storageKey": "uploads/category_womens.webp",
+      "createdAt": "2026-10-28T19:02:43.156Z",
+      "updatedAt": "2026-10-28T19:02:43.156Z",
+      "url": "/uploads/category_womens.webp"
+    },
+    {
+      "id": "ast_cat_kids_fashion_theme",
+      "name": "Kids' Fashion - Studio Category Icon",
+      "originalName": "category_kids_fashion.webp",
+      "fileUrl": "/uploads/category_kids_fashion.webp",
+      "fileType": "image",
+      "mimeType": "image/webp",
+      "fileSize": 567326,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "storageProvider": "local",
+      "storageKey": "uploads/category_kids_fashion.webp",
+      "createdAt": "2026-10-28T19:02:43.162Z",
+      "updatedAt": "2026-10-28T19:02:43.162Z",
+      "url": "/uploads/category_kids_fashion.webp"
+    },
+    {
+      "id": "ast_cat_health_beauty_theme",
+      "name": "Health & Beauty - Studio Category Icon",
+      "originalName": "category_health_beauty.webp",
+      "fileUrl": "/uploads/category_health_beauty.webp",
+      "fileType": "image",
+      "mimeType": "image/webp",
+      "fileSize": 418893,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "storageProvider": "local",
+      "storageKey": "uploads/category_health_beauty.webp",
+      "createdAt": "2026-10-28T19:02:43.170Z",
+      "updatedAt": "2026-10-28T19:02:43.170Z",
+      "url": "/uploads/category_health_beauty.webp"
+    },
+    {
+      "id": "ast_cat_pharmacy_theme",
+      "name": "Pharmacy - Studio Category Icon",
+      "originalName": "category_pharmacy.webp",
+      "fileUrl": "/uploads/category_pharmacy.webp",
+      "fileType": "image",
+      "mimeType": "image/webp",
+      "fileSize": 508570,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "storageProvider": "local",
+      "storageKey": "uploads/category_pharmacy.webp",
+      "createdAt": "2026-10-28T19:02:43.184Z",
+      "updatedAt": "2026-10-28T19:02:43.184Z",
+      "url": "/uploads/category_pharmacy.webp"
+    },
+    {
+      "id": "ast_cat_groceries_theme",
+      "name": "Groceries - Studio Category Icon",
+      "originalName": "category_groceries.webp",
+      "fileUrl": "/uploads/category_groceries.webp",
+      "fileType": "image",
+      "mimeType": "image/webp",
+      "fileSize": 64907,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "storageProvider": "local",
+      "storageKey": "uploads/category_groceries.webp",
+      "createdAt": "2026-10-28T19:02:43.903Z",
+      "updatedAt": "2026-10-28T19:02:43.903Z",
+      "url": "/uploads/category_groceries.webp"
+    },
+    {
+      "id": "ast_cat_luxury_item_theme",
+      "name": "Luxury Item - Studio Category Icon",
+      "originalName": "category_luxury_item.webp",
+      "fileUrl": "/uploads/category_luxury_item.webp",
+      "fileType": "image",
+      "mimeType": "image/webp",
+      "fileSize": 46725,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "storageProvider": "local",
+      "storageKey": "uploads/category_luxury_item.webp",
+      "createdAt": "2026-10-28T19:02:44.199Z",
+      "updatedAt": "2026-10-28T19:02:44.199Z",
+      "url": "/uploads/category_luxury_item.webp"
+    },
+    {
+      "id": "ast_prod_s24_ultra_deal_theme",
+      "name": "Samsung Galaxy S24 Ultra 12+GB Titanium Gray - Deal Studio Shot",
+      "originalName": "prod_s24_ultra_deal.webp",
+      "fileUrl": "/uploads/prod_s24_ultra_deal.webp",
+      "fileType": "image",
+      "mimeType": "image/webp",
+      "fileSize": 397456,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "storageProvider": "local",
+      "storageKey": "uploads/prod_s24_ultra_deal.webp",
+      "createdAt": "2026-10-28T19:02:44.209Z",
+      "updatedAt": "2026-10-28T19:02:44.209Z",
+      "url": "/uploads/prod_s24_ultra_deal.webp"
+    },
+    {
+      "id": "ast_prod_nike_jordan_hoodie_deal_theme",
+      "name": "Nike Jordan Brooklyn Fleece Men's Pullover Hoodie - Deal Studio Shot",
+      "originalName": "prod_blue_hoodie_deal.webp",
+      "fileUrl": "/uploads/prod_blue_hoodie_deal.webp",
+      "fileType": "image",
+      "mimeType": "image/webp",
+      "fileSize": 428482,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "storageProvider": "local",
+      "storageKey": "uploads/prod_blue_hoodie_deal.webp",
+      "createdAt": "2026-10-28T19:02:44.218Z",
+      "updatedAt": "2026-10-28T19:02:44.218Z",
+      "url": "/uploads/prod_blue_hoodie_deal.webp"
+    },
+    {
+      "id": "ast_prod_nike_af1_deal_theme",
+      "name": "Nike Invincible 3 Premium Running Sneaker - Deal Studio Shot",
+      "originalName": "prod_running_shoe_deal.webp",
+      "fileUrl": "/uploads/prod_running_shoe_deal.webp",
+      "fileType": "image",
+      "mimeType": "image/webp",
+      "fileSize": 32527,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "storageProvider": "local",
+      "storageKey": "uploads/prod_running_shoe_deal.webp",
+      "createdAt": "2026-10-28T19:02:44.298Z",
+      "updatedAt": "2026-10-28T19:02:44.298Z",
+      "url": "/uploads/prod_running_shoe_deal.webp"
+    },
+    {
+      "id": "ast_prod_18k_gold_necklace_deal_theme",
+      "name": "Diamond Stud Earrings (1/3 ct. t.w.) in 14K White Gold - Deal Studio Shot",
+      "originalName": "prod_diamond_jewelry_deal.webp",
+      "fileUrl": "/uploads/prod_diamond_jewelry_deal.webp",
+      "fileType": "image",
+      "mimeType": "image/webp",
+      "fileSize": 556417,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "storageProvider": "local",
+      "storageKey": "uploads/prod_diamond_jewelry_deal.webp",
+      "createdAt": "2026-10-28T19:02:44.306Z",
+      "updatedAt": "2026-10-28T19:02:44.306Z",
+      "url": "/uploads/prod_diamond_jewelry_deal.webp"
+    },
+    {
+      "id": "ast_prod_leather_crossbody_bag_deal_theme",
+      "name": "Italian Calfskin Leather Crossbody Saddle Bag - Deal Studio Shot",
+      "originalName": "prod_blush_handbag_deal.webp",
+      "fileUrl": "/uploads/prod_blush_handbag_deal.webp",
+      "fileType": "image",
+      "mimeType": "image/webp",
+      "fileSize": 420130,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "storageProvider": "local",
+      "storageKey": "uploads/prod_blush_handbag_deal.webp",
+      "createdAt": "2026-10-28T19:02:44.309Z",
+      "updatedAt": "2026-10-28T19:02:44.309Z",
+      "url": "/uploads/prod_blush_handbag_deal.webp"
     }
   ],
   "categories": [
@@ -2729,7 +2963,7 @@
       "name": "Samsung Galaxy S24 Ultra 12+GB Titanium Gray",
       "slug": "samsung-galaxy-s24-ultra-titanium",
       "description": "Samsung Galaxy S24 Ultra 12+GB Titanium Gray with premium build, authentic warranty, and express fulfillment.",
-      "price": 1169.1,
+      "price": 999.99,
       "comparePrice": 1299,
       "costPrice": 850,
       "currentStock": 44,
@@ -2740,7 +2974,7 @@
       "brand": "Samsung",
       "googleMerchantSync": true,
       "googleCondition": "new",
-      "mainImage": "/uploads/prod_s24_1.webp",
+      "mainImage": "/uploads/prod_s24_ultra_deal.webp",
       "categoryIds": [
         "cat_electronics"
       ],
@@ -2750,7 +2984,7 @@
       "createdAt": "2026-10-28T18:49:56.318Z",
       "updatedAt": "2026-10-28T18:49:56.318Z",
       "rating": 4.8,
-      "reviewsCount": 120,
+      "reviewsCount": 1200,
       "hasVariants": true,
       "variantAttributes": [
         {
@@ -2772,6 +3006,7 @@
       ],
       "upc": "",
       "assetIds": [
+        "ast_prod_s24_ultra_deal_theme",
         "ast_prod_s24_ultra_1",
         "ast_prod_s24_ultra_2",
         "ast_prod_s24_ultra_3"
@@ -2784,6 +3019,146 @@
       "manufacturerId": "mfg_samsung",
       "warehouseId": "wh_samsung_1",
       "manufacturerName": "Samsung Electronics"
+    },
+    {
+      "id": "prod_nike_jordan_hoodie",
+      "name": "Nike Jordan Brooklyn Fleece Men's Pullover Hoodie",
+      "slug": "nike-jordan-brooklyn-fleece-hoodie",
+      "sku": "NKE-JRD-HOOD-BLK",
+      "description": "Nike Jordan Brooklyn Fleece Men's Pullover Hoodie with premium build, authentic warranty, and express fulfillment.",
+      "price": 45,
+      "comparePrice": 75,
+      "costPrice": 42,
+      "currentStock": 65,
+      "minStock": 5,
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": "Nike",
+      "warehouseId": "wh_nike_1",
+      "warehouse": "Nike Oregon Hub",
+      "manufacturerId": "mfg_nike",
+      "manufacturerName": "Nike Global Operations",
+      "categoryIds": [
+        "cat_fashion"
+      ],
+      "categoryNames": [
+        "Fashion"
+      ],
+      "assetIds": [
+        "ast_prod_nike_jordan_hoodie_deal_theme",
+        "ast_prod_nike_jordan_hoodie_1",
+        "ast_prod_nike_jordan_hoodie_2"
+      ],
+      "mainImage": "/uploads/prod_blue_hoodie_deal.webp",
+      "rating": 4.5,
+      "reviewsCount": 569,
+      "createdAt": "2026-10-28T18:49:57.067Z",
+      "updatedAt": "2026-10-28T18:49:57.067Z"
+    },
+    {
+      "id": "prod_nike_af1",
+      "name": "Nike Invincible 3 Premium Running Sneaker",
+      "slug": "nike-air-force-1-07-white",
+      "sku": "NKE-AF1-07-WHT",
+      "description": "Nike Air Force 1 '07 Leather Sneakers White with premium build, authentic warranty, and express fulfillment.",
+      "price": 190,
+      "comparePrice": 240,
+      "costPrice": 70,
+      "currentStock": 80,
+      "minStock": 5,
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": "Nike",
+      "warehouseId": "wh_nike_1",
+      "warehouse": "Nike Oregon Hub",
+      "manufacturerId": "mfg_nike",
+      "manufacturerName": "Nike Global Operations",
+      "categoryIds": [
+        "cat_fashion"
+      ],
+      "categoryNames": [
+        "Fashion"
+      ],
+      "assetIds": [
+        "ast_prod_nike_af1_deal_theme",
+        "ast_prod_nike_af1_1",
+        "ast_prod_nike_af1_2"
+      ],
+      "mainImage": "/uploads/prod_running_shoe_deal.webp",
+      "rating": 4.2,
+      "reviewsCount": 157,
+      "createdAt": "2026-10-28T18:49:57.362Z",
+      "updatedAt": "2026-10-28T18:49:57.362Z"
+    },
+    {
+      "id": "prod_18k_gold_necklace",
+      "name": "Diamond Stud Earrings (1/3 ct. t.w.) in 14K White Gold",
+      "slug": "18k-solid-gold-beveled-cable-chain-necklace",
+      "sku": "LUX-18KG-GOLD-CHAI",
+      "description": "18K Solid Yellow Gold Beveled Cable Chain Necklace (5mm) with premium build, authentic warranty, and express fulfillment.",
+      "price": 299,
+      "comparePrice": 450,
+      "costPrice": 950,
+      "currentStock": 12,
+      "minStock": 5,
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": "Tiffany & Co.",
+      "warehouseId": "wh_samsung_1",
+      "warehouse": "Samsung Silicon Valley Center",
+      "manufacturerId": "mfg_samsung",
+      "manufacturerName": "Samsung Electronics",
+      "categoryIds": [
+        "cat_luxury_item"
+      ],
+      "categoryNames": [
+        "Luxury Item"
+      ],
+      "assetIds": [
+        "ast_prod_18k_gold_necklace_deal_theme",
+        "ast_prod_18k_gold_necklace_1",
+        "ast_prod_18k_gold_necklace_2"
+      ],
+      "mainImage": "/uploads/prod_diamond_jewelry_deal.webp",
+      "rating": 4.7,
+      "reviewsCount": 1100,
+      "createdAt": "2026-10-28T18:50:07.633Z",
+      "updatedAt": "2026-10-28T18:50:07.633Z"
+    },
+    {
+      "id": "prod_leather_crossbody_bag",
+      "name": "Italian Calfskin Leather Crossbody Saddle Bag",
+      "slug": "italian-leather-crossbody-saddle-bag",
+      "sku": "WMN-LTHR-BAG-BRN",
+      "description": "Italian Grain Leather Crossbody Saddle Handbag with premium build, authentic warranty, and express fulfillment.",
+      "price": 245,
+      "comparePrice": 380,
+      "costPrice": 95,
+      "currentStock": 30,
+      "minStock": 5,
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": "Coach",
+      "warehouseId": "wh_nike_2",
+      "warehouse": "Avery Dennison",
+      "manufacturerId": "mfg_nike",
+      "manufacturerName": "Nike Global Operations",
+      "categoryIds": [
+        "cat_womens"
+      ],
+      "categoryNames": [
+        "Women's"
+      ],
+      "assetIds": [
+        "ast_prod_leather_crossbody_bag_deal_theme",
+        "ast_prod_leather_crossbody_bag_1",
+        "ast_prod_leather_crossbody_bag_2"
+      ],
+      "mainImage": "/uploads/prod_blush_handbag_deal.webp",
+      "rating": 4.9,
+      "reviewsCount": 230,
+      "createdAt": "2026-10-28T18:49:59.032Z",
+      "updatedAt": "2026-10-28T18:49:59.032Z"
     },
     {
       "id": "prod_iphone_15_pro",
@@ -2923,40 +3298,6 @@
       "updatedAt": "2026-10-28T18:49:56.912Z"
     },
     {
-      "id": "prod_nike_jordan_hoodie",
-      "name": "Nike Jordan Brooklyn Fleece Men's Pullover Hoodie",
-      "slug": "nike-jordan-brooklyn-fleece-hoodie",
-      "sku": "NKE-JRD-HOOD-BLK",
-      "description": "Nike Jordan Brooklyn Fleece Men's Pullover Hoodie with premium build, authentic warranty, and express fulfillment.",
-      "price": 75,
-      "comparePrice": 90,
-      "costPrice": 42,
-      "currentStock": 65,
-      "minStock": 5,
-      "status": "ACTIVE",
-      "isSoldOut": false,
-      "brand": "Nike",
-      "warehouseId": "wh_nike_1",
-      "warehouse": "Nike Oregon Hub",
-      "manufacturerId": "mfg_nike",
-      "manufacturerName": "Nike Global Operations",
-      "categoryIds": [
-        "cat_fashion"
-      ],
-      "categoryNames": [
-        "Fashion"
-      ],
-      "assetIds": [
-        "ast_prod_nike_jordan_hoodie_1",
-        "ast_prod_nike_jordan_hoodie_2"
-      ],
-      "mainImage": "/uploads/prod_jordan_1.webp",
-      "rating": 4.8,
-      "reviewsCount": 120,
-      "createdAt": "2026-10-28T18:49:57.067Z",
-      "updatedAt": "2026-10-28T18:49:57.067Z"
-    },
-    {
       "id": "prod_denim_jacket",
       "name": "Classic Denim Trucker Jacket in Vintage Washed Blue",
       "slug": "classic-denim-trucker-jacket",
@@ -2989,40 +3330,6 @@
       "reviewsCount": 120,
       "createdAt": "2026-10-28T18:49:57.225Z",
       "updatedAt": "2026-10-28T18:49:57.225Z"
-    },
-    {
-      "id": "prod_nike_af1",
-      "name": "Nike Air Force 1 '07 Leather Sneakers White",
-      "slug": "nike-air-force-1-07-white",
-      "sku": "NKE-AF1-07-WHT",
-      "description": "Nike Air Force 1 '07 Leather Sneakers White with premium build, authentic warranty, and express fulfillment.",
-      "price": 115,
-      "comparePrice": 130,
-      "costPrice": 70,
-      "currentStock": 80,
-      "minStock": 5,
-      "status": "ACTIVE",
-      "isSoldOut": false,
-      "brand": "Nike",
-      "warehouseId": "wh_nike_1",
-      "warehouse": "Nike Oregon Hub",
-      "manufacturerId": "mfg_nike",
-      "manufacturerName": "Nike Global Operations",
-      "categoryIds": [
-        "cat_fashion"
-      ],
-      "categoryNames": [
-        "Fashion"
-      ],
-      "assetIds": [
-        "ast_prod_nike_af1_1",
-        "ast_prod_nike_af1_2"
-      ],
-      "mainImage": "/uploads/prod_af1_1.webp",
-      "rating": 4.8,
-      "reviewsCount": 120,
-      "createdAt": "2026-10-28T18:49:57.362Z",
-      "updatedAt": "2026-10-28T18:49:57.362Z"
     },
     {
       "id": "prod_oxford_shirt",
@@ -3193,40 +3500,6 @@
       "reviewsCount": 120,
       "createdAt": "2026-10-28T18:49:58.863Z",
       "updatedAt": "2026-10-28T18:49:58.863Z"
-    },
-    {
-      "id": "prod_leather_crossbody_bag",
-      "name": "Italian Grain Leather Crossbody Saddle Handbag",
-      "slug": "italian-leather-crossbody-saddle-bag",
-      "sku": "WMN-LTHR-BAG-BRN",
-      "description": "Italian Grain Leather Crossbody Saddle Handbag with premium build, authentic warranty, and express fulfillment.",
-      "price": 185,
-      "comparePrice": 225,
-      "costPrice": 95,
-      "currentStock": 30,
-      "minStock": 5,
-      "status": "ACTIVE",
-      "isSoldOut": false,
-      "brand": "Coach",
-      "warehouseId": "wh_nike_2",
-      "warehouse": "Avery Dennison",
-      "manufacturerId": "mfg_nike",
-      "manufacturerName": "Nike Global Operations",
-      "categoryIds": [
-        "cat_womens"
-      ],
-      "categoryNames": [
-        "Women's"
-      ],
-      "assetIds": [
-        "ast_prod_leather_crossbody_bag_1",
-        "ast_prod_leather_crossbody_bag_2"
-      ],
-      "mainImage": "/uploads/prod_saddlebag_1.webp",
-      "rating": 4.8,
-      "reviewsCount": 120,
-      "createdAt": "2026-10-28T18:49:59.032Z",
-      "updatedAt": "2026-10-28T18:49:59.032Z"
     },
     {
       "id": "prod_mulberry_silk_blouse",
@@ -4011,40 +4284,6 @@
       "updatedAt": "2026-10-28T18:50:07.472Z"
     },
     {
-      "id": "prod_18k_gold_necklace",
-      "name": "18K Solid Yellow Gold Beveled Cable Chain Necklace (5mm)",
-      "slug": "18k-solid-gold-beveled-cable-chain-necklace",
-      "sku": "LUX-18KG-GOLD-CHAI",
-      "description": "18K Solid Yellow Gold Beveled Cable Chain Necklace (5mm) with premium build, authentic warranty, and express fulfillment.",
-      "price": 1250,
-      "comparePrice": 1450,
-      "costPrice": 950,
-      "currentStock": 12,
-      "minStock": 5,
-      "status": "ACTIVE",
-      "isSoldOut": false,
-      "brand": "Tiffany & Co.",
-      "warehouseId": "wh_samsung_1",
-      "warehouse": "Samsung Silicon Valley Center",
-      "manufacturerId": "mfg_samsung",
-      "manufacturerName": "Samsung Electronics",
-      "categoryIds": [
-        "cat_luxury_item"
-      ],
-      "categoryNames": [
-        "Luxury Item"
-      ],
-      "assetIds": [
-        "ast_prod_18k_gold_necklace_1",
-        "ast_prod_18k_gold_necklace_2"
-      ],
-      "mainImage": "/uploads/prod_goldchain_1.webp",
-      "rating": 4.8,
-      "reviewsCount": 120,
-      "createdAt": "2026-10-28T18:50:07.633Z",
-      "updatedAt": "2026-10-28T18:50:07.633Z"
-    },
-    {
       "id": "prod_titanium_sunglasses",
       "name": "Handcrafted Polarized Titanium Aviator Sunglasses in Gold",
       "slug": "handcrafted-polarized-titanium-aviator-sunglasses",
@@ -4326,14 +4565,14 @@
       "tag": "*Incl. All Offers",
       "buttonText": "Shop Now",
       "buttonLink": "/#deals",
-      "imageUrl": "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=800&q=80",
+      "imageUrl": "/uploads/hero_iphone16_banner.webp",
       "bgGradient": "from-[#091124] via-[#1a233d] to-[#0c142b]",
       "textColor": "text-white",
       "position": "main",
       "displayOrder": 1,
       "isActive": true,
       "createdAt": "2026-10-25T09:31:13.437Z",
-      "updatedAt": "2026-10-25T09:31:13.437Z"
+      "updatedAt": "2026-10-28T19:02:44.318Z"
     },
     {
       "id": "slider_promo_1",
@@ -4343,14 +4582,14 @@
       "subtitle": "Farm-fresh organic greens, crisp carrots & tomatoes delivered daily",
       "buttonText": "Shop now",
       "buttonLink": "/#deals",
-      "imageUrl": "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=600&q=80",
+      "imageUrl": "/uploads/promo_fresh_vegetables.webp",
       "bgGradient": "from-[#881337] via-[#9f1239] to-[#be123c]",
       "textColor": "text-white",
       "position": "triple_promo",
       "displayOrder": 1,
       "isActive": true,
       "createdAt": "2026-10-25T09:31:13.437Z",
-      "updatedAt": "2026-10-25T09:31:13.437Z"
+      "updatedAt": "2026-10-28T19:02:44.327Z"
     },
     {
       "id": "slider_hero_2",
@@ -4374,17 +4613,17 @@
       "badge": "SAMSUNG",
       "tag": "GALAXY AI IS HERE",
       "title": "Galaxy S24 FE",
-      "subtitle": "Flagship cameras, ProVisual Engine & all-day battery life",
+      "subtitle": "Galaxy AI ✨ is here",
       "buttonText": "Shop now",
       "buttonLink": "/#deals",
-      "imageUrl": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
+      "imageUrl": "/uploads/promo_s24fe.webp",
       "bgGradient": "from-[#bfdbfe] via-[#dbeafe] to-[#eff6ff]",
       "textColor": "text-slate-900",
       "position": "triple_promo",
       "displayOrder": 2,
       "isActive": true,
       "createdAt": "2026-10-25T09:31:13.437Z",
-      "updatedAt": "2026-10-25T09:31:13.437Z"
+      "updatedAt": "2026-10-28T19:02:44.418Z"
     },
     {
       "id": "slider_hero_3",
@@ -4407,18 +4646,18 @@
       "id": "slider_promo_3",
       "badge": "Limited Stock",
       "tag": "SPECIAL OFFER",
-      "title": "Super Value Deals",
-      "subtitle": "Organic mountain honey, imported pantry staples, dates & oils",
+      "title": "Organic Mountain Delights",
+      "subtitle": "Organic mountain honey, pantry spices & dates sets",
       "buttonText": "Shop now",
       "buttonLink": "/#deals",
-      "imageUrl": "/uploads/image__1__1792918379910_la39ev.webp",
+      "imageUrl": "/uploads/promo_gourmet_pantry.webp",
       "bgGradient": "from-[#b91c1c] via-[#dc2626] to-[#ea580c]",
       "textColor": "text-white",
       "position": "triple_promo",
       "displayOrder": 3,
       "isActive": true,
       "createdAt": "2026-10-25T09:31:13.437Z",
-      "updatedAt": "2026-10-25T15:19:01.508Z",
+      "updatedAt": "2026-10-28T19:02:44.549Z",
       "description": ""
     },
     {
@@ -4438,6 +4677,20 @@
       "isActive": false,
       "createdAt": "2026-10-25T14:20:07.600Z",
       "updatedAt": "2026-10-25T15:19:06.700Z"
+    },
+    {
+      "id": "sl_hero_running_sale_banner",
+      "title": "SALE UP TO 50% OFF",
+      "subtitle": "Puma Nitro Pro Velocity",
+      "description": "High-cushion responsive running gear",
+      "imageUrl": "/uploads/hero_running_sale_banner.webp",
+      "position": "side",
+      "buttonText": "Shop now",
+      "buttonLink": "#deals",
+      "isActive": true,
+      "displayOrder": 1,
+      "createdAt": "2026-10-28T19:00:43.579Z",
+      "updatedAt": "2026-10-28T19:02:44.323Z"
     }
   ],
   "menuItems": [
@@ -9370,6 +9623,31 @@
     }
   ],
   "productAssets": [
+    {
+      "productId": "prod_leather_crossbody_bag",
+      "assetId": "ast_prod_leather_crossbody_bag_deal_theme",
+      "isPrimary": true
+    },
+    {
+      "productId": "prod_18k_gold_necklace",
+      "assetId": "ast_prod_18k_gold_necklace_deal_theme",
+      "isPrimary": true
+    },
+    {
+      "productId": "prod_nike_af1",
+      "assetId": "ast_prod_nike_af1_deal_theme",
+      "isPrimary": true
+    },
+    {
+      "productId": "prod_nike_jordan_hoodie",
+      "assetId": "ast_prod_nike_jordan_hoodie_deal_theme",
+      "isPrimary": true
+    },
+    {
+      "productId": "prod_s24_ultra",
+      "assetId": "ast_prod_s24_ultra_deal_theme",
+      "isPrimary": true
+    },
     {
       "productId": "prod_s24_ultra",
       "assetId": "ast_prod_s24_ultra_1",

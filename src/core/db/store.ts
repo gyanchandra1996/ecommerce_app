@@ -81,6 +81,7 @@ export interface AssetRecord {
   mimeType: string;
   size: number;
   url: string;
+  fileUrl?: string;
   thumbnailUrl?: string | null;
   fileType: AssetType;
   width?: number | null;
@@ -1689,7 +1690,7 @@ export class DatabaseStore {
           if (!a) return null;
           return {
             id: a.id,
-            url: a.url,
+            url: a.url || a.fileUrl || "",
             name: a.name,
             isPrimary: Boolean(pa.isPrimary),
           };
