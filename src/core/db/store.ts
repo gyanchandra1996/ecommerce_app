@@ -14,9 +14,9 @@ export interface UserRecord {
   role: string;
   roleId?: string;
   avatar?: string | null;
-  type?: "admin" | "customer";
-  accountType?: "admin" | "customer" | "manager" | "staff";
-  customerType?: "Customer" | "Customer (Guest)" | "Wholesale" | "VIP";
+  type?: "admin" | "customer" | "both";
+  accountType?: "admin" | "customer" | "both" | "manager" | "staff";
+  customerType?: "Customer" | "Admin" | "Both" | "Customer (Guest)" | "Wholesale" | "VIP" | string;
   address?: string | null;
   shippingAddress?: string | null;
   lastLogin?: string | null;
@@ -1004,14 +1004,21 @@ export class DatabaseStore {
 
   public static async findUserByEmail(email: string): Promise<UserRecord | null> {
     await this.seedInitialData();
+    const db = await this.readLocalDb();
+    const localUser = (db.users || []).find((u) => u.email.toLowerCase() === email.toLowerCase());
+
     const usePg = await this.testPostgres();
     if (usePg) {
       try {
         const u = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
         if (u) {
           return {
+            ...(localUser || {}),
             ...u,
-            role: typeof u.role === "string" ? u.role : "ADMIN",
+            role: localUser?.role || (typeof u.role === "string" ? u.role : "ADMIN"),
+            type: localUser?.type || (u.role === "ADMIN" ? "admin" : "customer"),
+            accountType: localUser?.accountType || (u.role === "ADMIN" ? "admin" : "customer"),
+            customerType: localUser?.customerType || (u.role === "ADMIN" ? "Admin" : "Customer"),
             createdAt: u.createdAt.toISOString(),
             updatedAt: u.updatedAt.toISOString(),
           };
@@ -1020,19 +1027,25 @@ export class DatabaseStore {
         // Fall back
       }
     }
-    const db = await this.readLocalDb();
-    return db.users.find((u) => u.email.toLowerCase() === email.toLowerCase()) || null;
+    return localUser || null;
   }
 
   public static async findUserById(id: string): Promise<UserRecord | null> {
+    const db = await this.readLocalDb();
+    const localUser = (db.users || []).find((u) => u.id === id || u.email.toLowerCase() === id.toLowerCase());
+
     const usePg = await this.testPostgres();
     if (usePg) {
       try {
         const u = await prisma.user.findUnique({ where: { id } });
         if (u) {
           return {
+            ...(localUser || {}),
             ...u,
-            role: typeof u.role === "string" ? u.role : "ADMIN",
+            role: localUser?.role || (typeof u.role === "string" ? u.role : "ADMIN"),
+            type: localUser?.type || (u.role === "ADMIN" ? "admin" : "customer"),
+            accountType: localUser?.accountType || (u.role === "ADMIN" ? "admin" : "customer"),
+            customerType: localUser?.customerType || (u.role === "ADMIN" ? "Admin" : "Customer"),
             createdAt: u.createdAt.toISOString(),
             updatedAt: u.updatedAt.toISOString(),
           };
@@ -1041,8 +1054,7 @@ export class DatabaseStore {
         // Fall back
       }
     }
-    const db = await this.readLocalDb();
-    return db.users.find((u) => u.id === id) || null;
+    return localUser || null;
   }
 
   public static async createUser(data: {
@@ -1059,21 +1071,23 @@ export class DatabaseStore {
     postalCode?: string;
     streetAddress?: string;
     apartment?: string;
-    accountType?: "admin" | "customer" | "manager" | "staff";
-    customerType?: "Customer" | "Customer (Guest)" | "Wholesale" | "VIP";
+    accountType?: "admin" | "customer" | "both" | "manager" | "staff";
+    customerType?: "Customer" | "Admin" | "Both" | "Customer (Guest)" | "Wholesale" | "VIP";
+    type?: "admin" | "customer" | "both";
   }): Promise<UserRecord> {
     const db = await this.readLocalDb();
-    const isCustomer = (data.role || "").toUpperCase() === "CUSTOMER" || data.accountType === "customer";
+    const isBoth = (data as any).type === "both" || data.accountType === "both" || data.customerType === "Both";
+    const isCustomer = !isBoth && ((data.role || "").toUpperCase() === "CUSTOMER" || data.accountType === "customer" || (data as any).type === "customer");
     const newUser: UserRecord = {
       id: "usr_" + Math.random().toString(36).substring(2, 11),
       name: data.name,
       email: data.email.toLowerCase(),
       password: data.password,
-      role: data.role || (isCustomer ? "CUSTOMER" : "ADMIN"),
-      type: isCustomer ? "customer" : "admin",
+      role: data.role || (isBoth ? "ADMIN" : isCustomer ? "CUSTOMER" : "ADMIN"),
+      type: isBoth ? "both" : isCustomer ? "customer" : "admin",
       avatar: null,
-      accountType: data.accountType || (isCustomer ? "customer" : "admin"),
-      customerType: data.customerType || "Customer",
+      accountType: data.accountType || (isBoth ? "both" : isCustomer ? "customer" : "admin"),
+      customerType: data.customerType || (isBoth ? "Both" : isCustomer ? "Customer" : "Admin"),
       mobileNumber: data.mobileNumber || data.phone || "",
       phone: data.phone || data.mobileNumber || "",
       countryCode: data.countryCode || "+1",
@@ -2037,8 +2051,9 @@ export class DatabaseStore {
     phone?: string;
     mobileNumber?: string;
     password?: string;
-    accountType?: "admin" | "customer" | "manager" | "staff";
-    customerType?: "Customer" | "Customer (Guest)" | "Wholesale" | "VIP";
+    accountType?: "admin" | "customer" | "both" | "manager" | "staff";
+    customerType?: "Customer" | "Admin" | "Both" | "Customer (Guest)" | "Wholesale" | "VIP";
+    type?: "admin" | "customer" | "both";
     country?: string;
     countryCode?: string;
     state?: string;
@@ -2059,6 +2074,33 @@ export class DatabaseStore {
     const fullName = data.name || `${data.firstName} ${data.lastName || ""}`.trim();
     const phone = data.mobileNumber || data.phone || "";
 
+    const rawType = ((data as any).type || data.accountType || data.customerType || "customer").toString().toLowerCase();
+    let computedType: "admin" | "customer" | "both" = "customer";
+    let computedAccountType: "admin" | "customer" | "both" = "customer";
+    let computedCustomerType = data.customerType || "Customer";
+    let computedRole = "CUSTOMER";
+    let computedRoleId = data.roleId || "";
+    let computedAssignedRoles = data.assignedRoles || (data.roleId ? [data.roleId] : []);
+
+    if (rawType === "both" || data.customerType === "Both") {
+      computedType = "both";
+      computedAccountType = "both";
+      computedCustomerType = "Both";
+      computedRole = "ADMIN";
+    } else if (rawType === "admin" || data.customerType === "Admin" || data.accountType === "admin") {
+      computedType = "admin";
+      computedAccountType = "admin";
+      computedCustomerType = "Admin";
+      computedRole = "ADMIN";
+    } else {
+      computedType = "customer";
+      computedAccountType = "customer";
+      computedCustomerType = "Customer";
+      computedRole = "CUSTOMER";
+      computedRoleId = "";
+      computedAssignedRoles = [];
+    }
+
     const newCustomer: UserRecord = {
       id: "usr_" + Math.random().toString(36).substring(2, 10),
       email: data.email.toLowerCase().trim(),
@@ -2075,12 +2117,12 @@ export class DatabaseStore {
       streetAddress: data.streetAddress || "",
       apartment: data.apartment || "",
       password: data.password || "",
-      role: data.accountType === "admin" ? "ADMIN" : data.accountType?.toUpperCase() || "CUSTOMER",
-      roleId: data.roleId || "",
-      assignedRoles: data.assignedRoles || (data.roleId ? [data.roleId] : []),
-      accountType: data.accountType || "customer",
-      type: (data.accountType === "admin" || (data as any).type === "admin") ? "admin" : "customer",
-      customerType: data.customerType || "Customer",
+      role: computedRole,
+      roleId: computedRoleId,
+      assignedRoles: computedAssignedRoles,
+      accountType: computedAccountType,
+      type: computedType,
+      customerType: computedCustomerType,
       address: data.address || data.streetAddress || null,
       shippingAddress: data.shippingAddress || data.streetAddress || null,
       lastLogin: "Just now",
@@ -2169,10 +2211,24 @@ export class DatabaseStore {
       mobileNumber: data.mobileNumber || data.phone || existingUser.mobileNumber || existingUser.phone,
       updatedAt: new Date().toISOString(),
     };
-    if (updatedUser.accountType === "admin" || updatedUser.role === "ADMIN") {
+    const rawType = ((data as any).type || data.accountType || data.customerType || existingUser.type || existingUser.accountType || existingUser.customerType || "customer").toString().toLowerCase();
+    if (rawType === "both" || data.customerType === "Both") {
+      updatedUser.type = "both";
+      updatedUser.accountType = "both";
+      updatedUser.customerType = "Both";
+      updatedUser.role = "ADMIN";
+    } else if (rawType === "admin" || data.customerType === "Admin" || data.accountType === "admin") {
       updatedUser.type = "admin";
-    } else if (updatedUser.accountType === "customer" || updatedUser.role === "CUSTOMER") {
+      updatedUser.accountType = "admin";
+      updatedUser.customerType = "Admin";
+      updatedUser.role = "ADMIN";
+    } else if (rawType === "customer" || data.customerType === "Customer" || data.accountType === "customer") {
       updatedUser.type = "customer";
+      updatedUser.accountType = "customer";
+      updatedUser.customerType = "Customer";
+      updatedUser.role = "CUSTOMER";
+      updatedUser.roleId = "";
+      updatedUser.assignedRoles = [];
     }
     db.users[index] = updatedUser;
 
@@ -4966,490 +5022,210 @@ export class DatabaseStore {
       });
     }
 
-    // 3. Seed Roles & Permissions if empty
+    // 3. Seed Clean Standard Roles if empty
     if (!db.roles || db.roles.length === 0) {
-      const allPages = ["dashboard", "assets", "customers", "products", "categories", "inventory", "pricing", "orders", "marketing", "settings"];
-      const fullPermissions: Record<string, PermissionSet> = {};
-      allPages.forEach((p) => {
-        fullPermissions[p] = { canView: true, canCreate: true, canEdit: true, canDelete: true };
-      });
-
-      const managerPermissions: Record<string, PermissionSet> = {};
-      allPages.forEach((p) => {
-        const canManage = ["dashboard", "assets", "products", "categories", "inventory", "orders"].includes(p);
-        managerPermissions[p] = {
-          canView: true,
-          canCreate: canManage,
-          canEdit: canManage,
-          canDelete: ["assets", "products", "categories"].includes(p),
-        };
-      });
-
-      const staffPermissions: Record<string, PermissionSet> = {};
-      allPages.forEach((p) => {
-        const isInv = ["dashboard", "inventory", "products"].includes(p);
-        staffPermissions[p] = {
-          canView: isInv,
-          canCreate: false,
-          canEdit: isInv,
-          canDelete: false,
-        };
-      });
-
-      const customerPermissions: Record<string, PermissionSet> = {};
-      allPages.forEach((p) => {
-        customerPermissions[p] = { canView: false, canCreate: false, canEdit: false, canDelete: false };
-      });
-
       db.roles = [
         {
           id: "role_admin",
           name: "Super Administrator",
-          slug: "admin",
-          description: "Full access to all system features, settings, users, and catalog",
+          slug: "super-admin",
+          description: "Full system access to entire eCommerce platform, configurations, and operations",
+          screenPrivilegesCount: 85,
+          status: "Active",
           isSystem: true,
-          permissions: fullPermissions,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        {
-          id: "role_manager",
-          name: "Store Manager",
-          slug: "manager",
-          description: "Manage products, categories, assets, orders, and review inventory",
-          isSystem: false,
-          permissions: managerPermissions,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        {
-          id: "role_staff",
-          name: "Warehouse Staff",
-          slug: "staff",
-          description: "Manage and update inventory stock counts and warehouse supplies",
-          isSystem: false,
-          permissions: staffPermissions,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        {
-          id: "role_customer",
-          name: "Customer",
-          slug: "customer",
-          description: "Storefront buyer account with standard shopping privileges",
-          isSystem: true,
-          permissions: customerPermissions,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-      ];
-    }
-
-    // 4. Seed Customers matching Image 4
-    if (!db.users) db.users = [];
-    const hasSampleCustomers = db.users.some((u) => u.email === "simon@tag.com");
-    if (!hasSampleCustomers) {
-      const sampleCustomers: UserRecord[] = [
-        {
-          id: "usr_admin_1",
-          email: "admin@tag.com",
-          name: "admin admin",
-          firstName: "admin",
-          lastName: "admin",
-          role: "ADMIN",
-          roleId: "role_admin",
-          accountType: "admin",
-          customerType: "Customer",
-          address: "742 Evergreen Terrace, Springfield, OR",
-          shippingAddress: "742 Evergreen Terrace, Springfield, OR",
-          lastLogin: "33 minutes ago",
-          credit: 19914.54,
-          status: "ACTIVE",
-          ordersCount: 42,
-          wishlistCount: 5,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        {
-          id: "usr_simon",
-          email: "simon@tag.com",
-          name: "Simon R",
-          firstName: "Simon",
-          lastName: "R",
-          role: "ADMIN",
-          roleId: "role_admin",
-          accountType: "admin",
-          customerType: "Customer",
-          address: "12 King Street, London, UK",
-          shippingAddress: "12 King Street, London, UK",
-          lastLogin: "23 days ago",
-          credit: 0.0,
-          status: "ACTIVE",
-          ordersCount: 18,
-          wishlistCount: 2,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        {
-          id: "usr_trustedsite",
-          email: "trustedsite@example.com",
-          name: "John John",
-          firstName: "John",
-          lastName: "John",
-          role: "CUSTOMER",
-          roleId: "role_customer",
-          accountType: "customer",
-          customerType: "Customer",
-          address: "450 Market St, San Francisco, CA",
-          shippingAddress: "450 Market St, San Francisco, CA",
-          lastLogin: "29 days ago",
-          credit: 0.0,
-          status: "ACTIVE",
-          ordersCount: 9,
-          wishlistCount: 3,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        {
-          id: "usr_qa_checkout",
-          email: "qa-checkout@example.invalid",
-          name: "Guest",
-          firstName: "Guest",
-          lastName: "",
-          role: "CUSTOMER",
-          roleId: "role_customer",
-          accountType: "customer",
-          customerType: "Customer (Guest)",
-          address: "98 Tech Way, Austin, TX",
-          shippingAddress: "98 Tech Way, Austin, TX",
-          lastLogin: "1 month ago",
-          credit: 0.0,
-          status: "ACTIVE",
-          ordersCount: 1,
-          wishlistCount: 0,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        {
-          id: "usr_test323",
-          email: "test323@gmail.com",
-          name: "Guest",
-          firstName: "Guest",
-          lastName: "",
-          role: "CUSTOMER",
-          roleId: "role_customer",
-          accountType: "customer",
-          customerType: "Customer (Guest)",
-          address: "12 Broadway, New York, NY",
-          shippingAddress: "12 Broadway, New York, NY",
-          lastLogin: "3 months ago",
-          credit: 0.0,
-          status: "ACTIVE",
-          ordersCount: 0,
-          wishlistCount: 1,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        {
-          id: "usr_admin22222",
-          email: "admin22222@tag.com",
-          name: "uhaish gupta",
-          firstName: "uhaish",
-          lastName: "gupta",
-          role: "CUSTOMER",
-          roleId: "role_customer",
-          accountType: "customer",
-          customerType: "Customer",
-          address: "55 Cyber Hub, Gurugram, India",
-          shippingAddress: "55 Cyber Hub, Gurugram, India",
-          lastLogin: "3 months ago",
-          credit: 0.0,
-          status: "ACTIVE",
-          ordersCount: 4,
-          wishlistCount: 2,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        {
-          id: "usr_ash",
-          email: "ash@emox.internal",
-          name: "Ash go",
-          firstName: "Ash",
-          lastName: "go",
-          role: "CUSTOMER",
-          roleId: "role_customer",
-          accountType: "customer",
-          customerType: "Customer",
-          address: "88 Marina Bay, Singapore",
-          shippingAddress: "88 Marina Bay, Singapore",
-          lastLogin: "4 months ago",
-          credit: 0.0,
-          status: "ACTIVE",
-          ordersCount: 7,
-          wishlistCount: 4,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        {
-          id: "usr_macocoz",
-          email: "macocoz@mailinator.com",
-          name: "Kennan Cleveland",
-          firstName: "Kennan",
-          lastName: "Cleveland",
-          role: "CUSTOMER",
-          roleId: "role_customer",
-          accountType: "customer",
-          customerType: "Customer",
-          address: "102 Peach Street, Atlanta, GA",
-          shippingAddress: "102 Peach Street, Atlanta, GA",
-          lastLogin: "4 months ago",
-          credit: 10.0,
-          status: "ACTIVE",
-          ordersCount: 12,
-          wishlistCount: 6,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-      ];
-      db.users.push(...sampleCustomers);
-    }
-
-    // 5. Seed Access Roles matching Image 1, 2 & 4
-    if (!db.roles) db.roles = [];
-    const expectedRoles = [
-      { id: "role_editor", name: "Editor", slug: "editor", description: "only Dashboard view and master", screenPrivilegesCount: 3, status: "Active" as const, isSystem: false },
-      { id: "role_hr", name: "HR", slug: "hr", description: "HR", screenPrivilegesCount: 10, status: "Active" as const, isSystem: false },
-      { id: "role_hr_admin", name: "HR Admin", slug: "hr-admin", description: "HR Admin", screenPrivilegesCount: 23, status: "Active" as const, isSystem: false },
-      { id: "role_new_company", name: "new company", slug: "new-company", description: "add new company", screenPrivilegesCount: 23, status: "Active" as const, isSystem: false },
-      { id: "role_ppc", name: "PPC", slug: "ppc", description: "only Dashboard view and master", screenPrivilegesCount: 68, status: "Active" as const, isSystem: false },
-      { id: "role_rate_request", name: "Rate Request", slug: "rate-request", description: "Rate Request", screenPrivilegesCount: 4, status: "Active" as const, isSystem: false },
-      { id: "role_sales_team", name: "Sales Team", slug: "sales-team", description: "Sales management and quotes", screenPrivilegesCount: 15, status: "Active" as const, isSystem: false },
-      { id: "role_store_manager", name: "Store Manager", slug: "store-manager", description: "Store operations and inventory", screenPrivilegesCount: 35, status: "Active" as const, isSystem: false },
-      { id: "role_super_admin", name: "Super Admin", slug: "super-admin", description: "Full system access and configurations", screenPrivilegesCount: 85, status: "Active" as const, isSystem: true },
-    ];
-
-    expectedRoles.forEach((er) => {
-      const existing = db.roles.find((r) => r.slug === er.slug || r.name.toLowerCase() === er.name.toLowerCase());
-      if (!existing) {
-        db.roles.push({
-          id: er.id,
-          name: er.name,
-          slug: er.slug,
-          description: er.description,
-          screenPrivilegesCount: er.screenPrivilegesCount,
-          status: er.status,
-          isSystem: er.isSystem,
           permissions: {
-            dashboard: { canView: true, canCreate: false, canEdit: false, canDelete: false },
-            masters: { canView: true, canCreate: er.screenPrivilegesCount > 10, canEdit: er.screenPrivilegesCount > 10, canDelete: false },
+            dashboard: { canView: true, canCreate: true, canEdit: true, canDelete: true },
+            assets: { canView: true, canCreate: true, canEdit: true, canDelete: true },
+            customers: { canView: true, canCreate: true, canEdit: true, canDelete: true },
+            roles: { canView: true, canCreate: true, canEdit: true, canDelete: true },
+            manufacturers: { canView: true, canCreate: true, canEdit: true, canDelete: true },
+            products: { canView: true, canCreate: true, canEdit: true, canDelete: true },
+            inventory: { canView: true, canCreate: true, canEdit: true, canDelete: true },
+            pricing: { canView: true, canCreate: true, canEdit: true, canDelete: true },
+            orders: { canView: true, canCreate: true, canEdit: true, canDelete: true },
+            shipping: { canView: true, canCreate: true, canEdit: true, canDelete: true },
+            settings: { canView: true, canCreate: true, canEdit: true, canDelete: true },
+            marketing: { canView: true, canCreate: true, canEdit: true, canDelete: true },
           },
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-        });
-      } else {
-        if (!existing.screenPrivilegesCount) existing.screenPrivilegesCount = er.screenPrivilegesCount;
-        if (!existing.status) existing.status = er.status;
-      }
-    });
+        },
+        {
+          id: "role_store_manager",
+          name: "Store Manager",
+          slug: "store-manager",
+          description: "Catalog, inventory management, shipments, and customer order processing",
+          screenPrivilegesCount: 45,
+          status: "Active",
+          isSystem: false,
+          permissions: {
+            dashboard: { canView: true, canCreate: false, canEdit: false, canDelete: false },
+            products: { canView: true, canCreate: true, canEdit: true, canDelete: false },
+            inventory: { canView: true, canCreate: true, canEdit: true, canDelete: false },
+            orders: { canView: true, canCreate: true, canEdit: true, canDelete: false },
+            shipping: { canView: true, canCreate: true, canEdit: true, canDelete: false },
+            customers: { canView: true, canCreate: false, canEdit: false, canDelete: false },
+          },
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "role_editor",
+          name: "Content Editor",
+          slug: "content-editor",
+          description: "Product descriptions, media assets, marketing sliders, and promotional banners",
+          screenPrivilegesCount: 25,
+          status: "Active",
+          isSystem: false,
+          permissions: {
+            dashboard: { canView: true, canCreate: false, canEdit: false, canDelete: false },
+            assets: { canView: true, canCreate: true, canEdit: true, canDelete: false },
+            products: { canView: true, canCreate: true, canEdit: true, canDelete: false },
+            marketing: { canView: true, canCreate: true, canEdit: true, canDelete: false },
+          },
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "role_support",
+          name: "Customer Support",
+          slug: "customer-support",
+          description: "Order status inquiries, customer address updates, and product reviews/Q&A",
+          screenPrivilegesCount: 20,
+          status: "Active",
+          isSystem: false,
+          permissions: {
+            dashboard: { canView: true, canCreate: false, canEdit: false, canDelete: false },
+            customers: { canView: true, canCreate: false, canEdit: true, canDelete: false },
+            orders: { canView: true, canCreate: false, canEdit: true, canDelete: false },
+          },
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ];
+    }
 
-    // 6. Seed Employees matching Image 1 & 4
-    const sampleEmployees: UserRecord[] = [
-      {
-        id: "emp_kamendra",
-        empId: "EMP001",
-        name: "Kamendra Singh",
-        firstName: "Kamendra",
-        lastName: "Singh",
-        email: "kamendra@gmail.com",
-        phone: "06547567887",
-        department: "HR",
-        designation: "Manager",
-        joinedDate: "01 Jun, 2026",
-        avatarText: "KS",
-        avatarColor: "bg-blue-100 text-blue-700 border-blue-300",
-        isAdminBadge: false,
-        accountType: "staff",
-        role: "STAFF",
-        roleId: "role_hr",
-        status: "ACTIVE",
-        assignedRoles: ["PPC", "Editor", "HR", "HR Admin", "new company", "Rate Request"],
-        createdAt: "2026-06-01T08:00:00.000Z",
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: "emp_nikhil",
-        empId: "EMP002",
-        name: "Nikhil",
-        firstName: "Nikhil",
-        lastName: "",
-        email: "nik@gmail.com",
-        phone: "09876543210",
-        department: "HR",
-        designation: "Assistant Manager",
-        joinedDate: "15 Jan, 2026",
-        avatarText: "N",
-        avatarColor: "bg-emerald-100 text-emerald-700 border-emerald-300",
-        isAdminBadge: false,
-        accountType: "staff",
-        role: "STAFF",
-        roleId: "role_hr_admin",
-        status: "ACTIVE",
-        assignedRoles: ["HR Admin"],
-        createdAt: "2026-01-15T08:00:00.000Z",
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: "emp_antu",
-        empId: "A1GH2",
-        name: "Antu",
-        firstName: "Antu",
-        lastName: "",
-        email: "ankitaindocorp@gmail.com",
-        phone: "09811223344",
-        department: "HR",
-        designation: "Assistant Manager",
-        joinedDate: "10 Feb, 2026",
-        avatarText: "A",
-        avatarColor: "bg-purple-100 text-purple-700 border-purple-300",
-        isAdminBadge: false,
-        accountType: "staff",
-        role: "STAFF",
-        roleId: "role_new_company",
-        status: "ACTIVE",
-        assignedRoles: ["new company"],
-        createdAt: "2026-02-10T08:00:00.000Z",
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: "emp_ankita",
-        empId: "EMP003",
-        name: "Ankita Kumari",
-        firstName: "Ankita",
-        lastName: "Kumari",
-        email: "ankitaindocorp@gmail.com",
-        phone: "09822334455",
-        department: "PPC",
-        designation: "Software Engineer",
-        joinedDate: "12 Mar, 2026",
-        avatarText: "AK",
-        avatarColor: "bg-rose-100 text-rose-700 border-rose-300",
-        isAdminBadge: false,
-        accountType: "staff",
-        role: "STAFF",
-        roleId: "role_ppc",
-        status: "ACTIVE",
-        assignedRoles: ["PPC"],
-        createdAt: "2026-03-12T08:00:00.000Z",
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: "emp_gyan",
-        empId: "17091996",
-        name: "Gyanchandra",
-        firstName: "Gyanchandra",
-        lastName: "",
-        email: "gyanwork1996@gmail.com",
-        phone: "09833445566",
-        department: "Sales",
-        designation: "Manager",
-        joinedDate: "05 Apr, 2026",
-        avatarText: "G",
-        avatarColor: "bg-amber-100 text-amber-800 border-amber-300",
-        isAdminBadge: true,
-        accountType: "admin",
-        role: "ADMIN",
-        roleId: "role_ppc",
-        status: "ACTIVE",
-        assignedRoles: ["PPC"],
-        createdAt: "2026-04-05T08:00:00.000Z",
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: "emp_rohit",
-        empId: "65483",
-        name: "Rohit",
-        firstName: "Rohit",
-        lastName: "",
-        email: "admin@maxcreativepoint.com",
-        phone: "09844556677",
-        department: "---",
-        designation: "---",
-        joinedDate: "20 May, 2026",
-        avatarText: "R",
-        avatarColor: "bg-cyan-100 text-cyan-800 border-cyan-300",
-        isAdminBadge: true,
-        accountType: "admin",
-        role: "ADMIN",
-        roleId: "role_editor",
-        status: "ACTIVE",
-        assignedRoles: ["Rate Request", "Editor", "Sales Team"],
-        createdAt: "2026-05-20T08:00:00.000Z",
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: "emp_pooja",
-        empId: "EMP004",
-        name: "Pooja Sharma",
-        firstName: "Pooja",
-        lastName: "Sharma",
-        email: "pooja@example.com",
-        phone: "09855667788",
-        department: "Marketing",
-        designation: "Executive",
-        joinedDate: "01 Jul, 2026",
-        avatarText: "PS",
-        avatarColor: "bg-indigo-100 text-indigo-700 border-indigo-300",
-        isAdminBadge: false,
-        accountType: "staff",
-        role: "STAFF",
-        status: "ACTIVE",
-        assignedRoles: [],
-        createdAt: "2026-07-01T08:00:00.000Z",
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: "emp_vikas",
-        empId: "EMP005",
-        name: "Vikas Verma",
-        firstName: "Vikas",
-        lastName: "Verma",
-        email: "vikas@example.com",
-        phone: "09866778899",
-        department: "Operations",
-        designation: "Supervisor",
-        joinedDate: "15 Aug, 2026",
-        avatarText: "VV",
-        avatarColor: "bg-slate-100 text-slate-700 border-slate-300",
-        isAdminBadge: false,
-        accountType: "staff",
-        role: "STAFF",
-        status: "ACTIVE",
-        assignedRoles: [],
-        createdAt: "2026-08-15T08:00:00.000Z",
-        updatedAt: new Date().toISOString(),
-      },
-    ];
-
-    sampleEmployees.forEach((se) => {
-      const idx = db.users.findIndex((u) => u.empId === se.empId || (u.email === se.email && u.name === se.name));
-      if (idx === -1) {
-        db.users.push(se);
-      } else {
-        // Upgrade existing with employee fields
-        db.users[idx] = {
-          ...db.users[idx],
-          empId: se.empId,
-          department: db.users[idx].department || se.department,
-          designation: db.users[idx].designation || se.designation,
-          phone: db.users[idx].phone || se.phone,
-          joinedDate: db.users[idx].joinedDate || se.joinedDate,
-          avatarText: db.users[idx].avatarText || se.avatarText,
-          avatarColor: db.users[idx].avatarColor || se.avatarColor,
-          isAdminBadge: db.users[idx].isAdminBadge ?? se.isAdminBadge,
-          assignedRoles: db.users[idx].assignedRoles || se.assignedRoles,
-        };
-      }
-    });
+    // 4. Seed Clean Users if empty
+    if (!db.users || db.users.length === 0) {
+      db.users = [
+        {
+          id: "usr_admin_gyan",
+          name: "Gyan Admin",
+          firstName: "Gyan",
+          lastName: "Admin",
+          email: "gyan@gmail.com",
+          password: "$2b$10$ZcPqhhBeLxemam7v/EATFOFjAztyjOp917S7gDQQmYpcJG.080cli", // gyan@123
+          role: "ADMIN",
+          roleId: "role_admin",
+          assignedRoles: ["role_admin"],
+          accountType: "admin",
+          type: "admin",
+          customerType: "Admin",
+          country: "India",
+          countryCode: "IN",
+          state: "Haryana",
+          city: "Gurugram",
+          postalCode: "122015",
+          phone: "+91 9876543210",
+          mobileNumber: "+91 9876543210",
+          status: "ACTIVE",
+          credit: 0,
+          ordersCount: 0,
+          wishlistCount: 0,
+          lastLogin: "Just now",
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "usr_cust_gyanchandra",
+          name: "Gyan Chandra",
+          firstName: "Gyan",
+          lastName: "Chandra",
+          email: "gyanchandranist@gmail.com",
+          password: "$2b$10$ZcPqhhBeLxemam7v/EATFOFjAztyjOp917S7gDQQmYpcJG.080cli", // gyan@123
+          role: "CUSTOMER",
+          roleId: "",
+          assignedRoles: [],
+          accountType: "customer",
+          type: "customer",
+          customerType: "Customer",
+          country: "India",
+          countryCode: "IN",
+          state: "Haryana",
+          city: "Gurugram",
+          postalCode: "122015",
+          address: "DLF Phase 3, Cyber City",
+          shippingAddress: "DLF Phase 3, Cyber City",
+          phone: "+91 9876543211",
+          mobileNumber: "+91 9876543211",
+          status: "ACTIVE",
+          credit: 500.0,
+          ordersCount: 3,
+          wishlistCount: 2,
+          lastLogin: "Just now",
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "usr_admin_default",
+          name: "Admin Administrator",
+          firstName: "Admin",
+          lastName: "Administrator",
+          email: "admin@tagateway.com",
+          password: "$2b$10$eE99Q4e4K0B1N03B2zZ.7eLkW2lK5wN3z2tNl/lM61gP4vT/Vb4b2", // AdminPassword123!
+          role: "ADMIN",
+          roleId: "role_admin",
+          assignedRoles: ["role_admin"],
+          accountType: "admin",
+          type: "admin",
+          customerType: "Admin",
+          country: "India",
+          countryCode: "IN",
+          state: "Delhi",
+          city: "New Delhi",
+          postalCode: "110001",
+          phone: "+91 9876543200",
+          mobileNumber: "+91 9876543200",
+          status: "ACTIVE",
+          credit: 0,
+          ordersCount: 0,
+          wishlistCount: 0,
+          lastLogin: "Just now",
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "usr_both_gyan",
+          name: "Gyan Dual Account",
+          firstName: "Gyan",
+          lastName: "Dual",
+          email: "gyanboth@gmail.com",
+          password: "$2b$10$ZcPqhhBeLxemam7v/EATFOFjAztyjOp917S7gDQQmYpcJG.080cli", // gyan@123
+          role: "ADMIN",
+          roleId: "role_admin",
+          assignedRoles: ["role_admin"],
+          accountType: "both",
+          type: "both",
+          customerType: "Both",
+          country: "India",
+          countryCode: "IN",
+          state: "Haryana",
+          city: "Gurugram",
+          postalCode: "122015",
+          address: "Golf Course Road",
+          shippingAddress: "Golf Course Road",
+          phone: "+91 9876543212",
+          mobileNumber: "+91 9876543212",
+          status: "ACTIVE",
+          credit: 1000.0,
+          ordersCount: 5,
+          wishlistCount: 4,
+          lastLogin: "Just now",
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ];
+    }
 
     // 7. Seed Sliders matching Frontend Design
     if (!db.sliders || db.sliders.length === 0) {

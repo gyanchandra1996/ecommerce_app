@@ -44,13 +44,19 @@ export async function requireAdminAuth(): Promise<AdminAuthResult> {
     };
   }
 
+  const isBoth =
+    dbUser.type === "both" ||
+    dbUser.accountType === "both" ||
+    dbUser.customerType === "Both";
+
   const isAdmin =
+    isBoth ||
     dbUser.type === "admin" ||
     dbUser.accountType === "admin" ||
     dbUser.role === "ADMIN" ||
     (dbUser.role !== "CUSTOMER" && dbUser.type !== "customer");
 
-  if (!isAdmin || dbUser.role === "CUSTOMER") {
+  if (!isAdmin || (dbUser.role === "CUSTOMER" && !isBoth)) {
     return {
       authorized: false,
       response: NextResponse.json(

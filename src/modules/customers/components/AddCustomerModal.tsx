@@ -86,14 +86,18 @@ export function AddCustomerModal({ isOpen, onClose, customer, onCustomerSaved }:
   // Populate form when editing or resetting
   useEffect(() => {
     if (customer) {
+      const isDual = customer.type === "both" || customer.accountType === "both" || customer.customerType === "Both";
+      const isAdminOnly = customer.type === "admin" || customer.accountType === "admin" || customer.customerType === "Admin";
+      const resolvedType: CustomerType = isDual ? "Both" : isAdminOnly ? "Admin" : "Customer";
+
       setFullName(customer.name || `${customer.firstName || ""} ${customer.lastName || ""}`.trim());
       setEmail(customer.email || "");
       setMobileNumber(customer.mobileNumber || customer.phone || "");
-      setAccountType(customer.accountType || "customer");
-      setCustomerType(customer.customerType || "Customer");
+      setAccountType(isDual ? "both" : isAdminOnly ? "admin" : "customer");
+      setCustomerType(resolvedType);
       setStatus(customer.status || "ACTIVE");
       setCredit(customer.credit ? customer.credit.toString() : "0");
-      setRoleId(customer.roleId || (customer.assignedRoles && customer.assignedRoles[0]) || "");
+      setRoleId(resolvedType === "Customer" ? "" : customer.roleId || (customer.assignedRoles && customer.assignedRoles[0]) || "");
       setPassword("");
 
       // Populate addresses if present
@@ -267,6 +271,9 @@ export function AddCustomerModal({ isOpen, onClose, customer, onCustomerSaved }:
           isDefault: true,
         };
 
+    const effectiveType = customerType === "Both" ? "both" : customerType === "Admin" ? "admin" : "customer";
+    const effectiveRoleId = effectiveType === "customer" ? "" : roleId;
+
     const payload = {
       name: fullName.trim(),
       firstName,
@@ -275,11 +282,13 @@ export function AddCustomerModal({ isOpen, onClose, customer, onCustomerSaved }:
       mobileNumber: mobileNumber.trim(),
       phone: mobileNumber.trim(),
       password,
-      accountType,
+      type: effectiveType,
+      accountType: effectiveType,
       customerType,
       status,
       credit: parseFloat(credit) || 0,
-      roleId,
+      roleId: effectiveRoleId,
+      assignedRoles: effectiveRoleId ? [effectiveRoleId] : [],
       country: effectiveShippingCountry,
       countryCode: shippingCountryCode,
       state: shippingState.trim(),
@@ -437,36 +446,77 @@ export function AddCustomerModal({ isOpen, onClose, customer, onCustomerSaved }:
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
                 <label className="block text-[11px] font-semibold text-slate-600 mb-1">
-                  Assign Custom Role
+                  Customer / Account Type *
                 </label>
                 <select
-                  value={roleId}
-                  onChange={(e) => setRoleId(e.target.value)}
-                  className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                  value={customerType}
+                  onChange={(e) => {
+                    const newType = e.target.value as CustomerType;
+                    setCustomerType(newType);
+                    if (newType === "Customer" || newType === "VIP" || newType === "Wholesale" || newType === "Customer (Guest)") {
+                      setAccountType("customer");
+                      setRoleId("");
+                    } else if (newType === "Admin") {
+                      setAccountType("admin");
+                      if (!roleId && roles.length > 0) setRoleId(roles[0].id);
+                    } else if (newType === "Both") {
+                      setAccountType("both");
+                      if (!roleId && roles.length > 0) setRoleId(roles[0].id);
+                    }
+                  }}
+                  className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-slate-300 bg-white font-medium focus:outline-none focus:ring-1 focus:ring-emerald-500"
                 >
-                  <option value="">No role assigned (Standard)</option>
-                  {roles.map((r) => (
-                    <option key={r.id} value={r.id}>
-                      {r.name}
-                    </option>
-                  ))}
+                  <option value="Customer">Customer (Frontend Store Only)</option>
+                  <option value="Admin">Admin (Administrator Portal Only)</option>
+                  <option value="Both">Both (Customer & Administrator)</option>
+                  <option value="VIP">Customer - VIP Tier</option>
+                  <option value="Wholesale">Customer - Wholesale Tier</option>
                 </select>
+                <p className="text-[10px] text-slate-500 mt-1">
+                  {customerType === "Customer" || customerType === "VIP" || customerType === "Wholesale"
+                    ? "Frontend store buyer access only."
+                    : customerType === "Admin"
+                    ? "Backend Administrator panel access only."
+                    : "Full dual access to Storefront & Admin panel."}
+                </p>
               </div>
 
               <div>
                 <label className="block text-[11px] font-semibold text-slate-600 mb-1">
-                  Customer Type
+                  Assign Custom Role
                 </label>
-                <select
-                  value={customerType}
-                  onChange={(e) => setCustomerType(e.target.value as CustomerType)}
-                  className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                >
-                  <option value="Customer">Customer</option>
-                  <option value="VIP">VIP</option>
-                  <option value="Wholesale">Wholesale</option>
-                  <option value="Customer (Guest)">Customer (Guest)</option>
-                </select>
+                {customerType === "Customer" || customerType === "VIP" || customerType === "Wholesale" || customerType === "Customer (Guest)" ? (
+                  <>
+                    <select
+                      disabled
+                      value=""
+                      className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-slate-200 bg-slate-100 text-slate-400 cursor-not-allowed"
+                    >
+                      <option value="">Not Applicable (Customer Only)</option>
+                    </select>
+                    <p className="text-[10px] text-slate-400 mt-1">
+                      Roles only apply to Admin / Dual accounts.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <select
+                      value={roleId}
+                      onChange={(e) => setRoleId(e.target.value)}
+                      className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-emerald-300 bg-white font-medium focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                    >
+                      <option value="">Select custom security role...</option>
+                      {roles.map((r) => (
+                        <option key={r.id} value={r.id}>
+                          {r.name}
+                        </option>
+                      ))}
+                    </select>
+                    <p className="text-[10px] text-emerald-600 font-medium mt-1">
+                      Defines privileges in Admin Console.
+                    </p>
+                  </>
+                )}
               </div>
 
               <div>
@@ -480,6 +530,7 @@ export function AddCustomerModal({ isOpen, onClose, customer, onCustomerSaved }:
                   onChange={(e) => setCredit(e.target.value)}
                   className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-slate-300 bg-white font-mono focus:outline-none focus:ring-1 focus:ring-emerald-500"
                 />
+                <p className="text-[10px] text-slate-400 mt-1">Wallet balance for purchases.</p>
               </div>
             </div>
           </div>

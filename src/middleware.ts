@@ -45,12 +45,13 @@ export async function middleware(request: NextRequest) {
   const isAdminSession = (session: TokenPayload) =>
     session.isValid &&
     (session.type === "admin" ||
+      session.type === "both" ||
       session.role === "ADMIN" ||
       (session.role && session.role !== "CUSTOMER" && session.type !== "customer"));
 
   const isCustomerSession = (session: TokenPayload) =>
     session.isValid &&
-    (session.type === "customer" || session.role === "CUSTOMER");
+    (session.type === "customer" || session.type === "both" || session.role === "CUSTOMER");
 
   const effectiveAdmin = isAdminSession(adminSession) || isAdminSession(legacySession);
   const effectiveCustomer = isCustomerSession(customerSession) || isCustomerSession(legacySession);

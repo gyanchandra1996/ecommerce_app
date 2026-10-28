@@ -38,7 +38,7 @@ export class AuthService {
       const { payload } = await jwtVerify(token, secretKey);
       if (!payload.sub) return null;
       const role = (payload.role as "ADMIN" | "MANAGER" | "STAFF" | "CUSTOMER") || "CUSTOMER";
-      const type = (payload.type as "admin" | "customer") || (role === "ADMIN" ? "admin" : "customer");
+      const type = (payload.type as "admin" | "customer" | "both") || (role === "ADMIN" ? "admin" : "customer");
       return {
         id: payload.sub as string,
         email: (payload.email as string) || "",
@@ -53,18 +53,20 @@ export class AuthService {
   }
 
   public static mapToAuthUser(record: UserRecord): AuthUser {
+    const isBoth = record.type === "both" || record.accountType === "both" || record.customerType === "Both";
     const isAdmin =
-      record.type === "admin" ||
-      record.accountType === "admin" ||
-      record.role === "ADMIN" ||
-      (record.role !== "CUSTOMER" && record.accountType !== "customer");
+      !isBoth &&
+      (record.type === "admin" ||
+        record.accountType === "admin" ||
+        record.role === "ADMIN" ||
+        (record.role !== "CUSTOMER" && record.accountType !== "customer"));
     return {
       id: record.id,
       name: record.name,
       email: record.email,
-      role: record.role || (isAdmin ? "ADMIN" : "CUSTOMER"),
-      type: isAdmin ? "admin" : "customer",
-      accountType: record.accountType || (isAdmin ? "admin" : "customer"),
+      role: record.role || (isBoth || isAdmin ? "ADMIN" : "CUSTOMER"),
+      type: isBoth ? "both" : isAdmin ? "admin" : "customer",
+      accountType: isBoth ? "both" : isAdmin ? "admin" : "customer",
       avatar: record.avatar,
       createdAt: record.createdAt,
     };
@@ -137,11 +139,11 @@ export class AuthService {
       if (portal === "admin") {
         token = cookieStore.get(APP_CONFIG.adminCookieName)?.value;
         if (!token) {
-          // Check legacy cookie only if it holds an admin
+          // Check legacy cookie only if it holds an admin or both
           const leg = cookieStore.get(APP_CONFIG.cookieName)?.value;
           if (leg) {
             const v = await this.verifyToken(leg);
-            if (v && v.role !== "CUSTOMER" && v.type === "admin") {
+            if (v && (v.type === "admin" || v.type === "both" || v.role === "ADMIN")) {
               token = leg;
             }
           }
@@ -149,11 +151,11 @@ export class AuthService {
       } else if (portal === "customer") {
         token = cookieStore.get(APP_CONFIG.customerCookieName)?.value;
         if (!token) {
-          // Check legacy cookie only if it holds a customer
+          // Check legacy cookie only if it holds a customer or both
           const leg = cookieStore.get(APP_CONFIG.cookieName)?.value;
           if (leg) {
             const v = await this.verifyToken(leg);
-            if (v && v.role === "CUSTOMER") {
+            if (v && (v.type === "customer" || v.type === "both" || v.role === "CUSTOMER")) {
               token = leg;
             }
           }
@@ -173,13 +175,19 @@ export class AuthService {
       const record = await DatabaseStore.findUserById(verified.id);
       if (!record) return null;
 
+      const isBoth = record.type === "both" || record.accountType === "both" || record.customerType === "Both";
       const isDbAdmin =
+        isBoth ||
         record.type === "admin" ||
         record.accountType === "admin" ||
         record.role === "ADMIN" ||
         (record.role !== "CUSTOMER" && record.accountType !== "customer");
 
-      if (portal === "admin" && (!isDbAdmin || record.role === "CUSTOMER")) {
+      if (portal === "admin" && (!isDbAdmin || (record.role === "CUSTOMER" && !isBoth))) {
+        return null;
+      }
+
+      if (portal === "customer" && !isBoth && (record.type === "admin" || record.accountType === "admin")) {
         return null;
       }
 

@@ -56,8 +56,8 @@ export function AdminLoginForm() {
   };
 
   const handleFillDemo = () => {
-    setEmail("admin@emox.com");
-    setPassword("Admin123!");
+    setEmail("gyan@gmail.com");
+    setPassword("gyan@123");
   };
 
   return (

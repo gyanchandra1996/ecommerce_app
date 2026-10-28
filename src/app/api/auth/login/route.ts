@@ -17,17 +17,37 @@ export async function POST(req: NextRequest) {
       rememberMe: Boolean(rememberMe),
     });
 
-    // Enforce role separation for admin portal logins
+    // Enforce role separation for admin and customer portal logins
+    const isBoth =
+      user.type === "both" ||
+      user.accountType === "both" ||
+      (user as any).customerType === "Both";
+
     if (portal === "admin") {
       const isAdmin =
+        isBoth ||
         user.type === "admin" ||
         user.accountType === "admin" ||
         user.role === "ADMIN" ||
         (user.role !== "CUSTOMER" && user.type !== "customer");
 
-      if (!isAdmin || user.role === "CUSTOMER" || user.type === "customer") {
+      if (!isAdmin || (user.type === "customer" && !isBoth)) {
         return apiError(
           "Access Denied: Customer accounts cannot access the Administrator Console. Please use the customer login.",
+          403
+        );
+      }
+    } else {
+      // Customer Portal Login (or public customer storefront)
+      const isPureAdmin =
+        !isBoth &&
+        (user.type === "admin" || user.accountType === "admin" || user.role === "ADMIN") &&
+        user.type !== "customer" &&
+        user.role !== "CUSTOMER";
+
+      if (isPureAdmin) {
+        return apiError(
+          "Access Denied: Administrator accounts cannot access the Customer Storefront. Please use the Administrator Console (/admin/login).",
           403
         );
       }

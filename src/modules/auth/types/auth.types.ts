@@ -5,8 +5,8 @@ export interface AuthUser {
   name: string;
   email: string;
   role: "ADMIN" | "MANAGER" | "STAFF" | string;
-  type?: "admin" | "customer";
-  accountType?: "admin" | "customer" | "manager" | "staff";
+  type?: "admin" | "customer" | "both";
+  accountType?: "admin" | "customer" | "both" | "manager" | "staff";
   roleId?: string;
   avatar?: string | null;
   createdAt: string;
@@ -34,7 +34,7 @@ export interface RegisterCredentials {
   postalCode?: string;
   streetAddress?: string;
   apartment?: string;
-  accountType?: "admin" | "customer" | "manager" | "staff";
+  accountType?: "admin" | "customer" | "both" | "manager" | "staff";
 }
 
 export interface AuthSession {

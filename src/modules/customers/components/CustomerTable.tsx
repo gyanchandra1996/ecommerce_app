@@ -151,10 +151,34 @@ export function CustomerTable({
 
                 {/* Role / Account Type */}
                 <td className="p-3">
-                  <span className="font-semibold text-slate-700 block">
-                    {c.roleName || (c.assignedRoles && c.assignedRoles[0]) || c.accountType || "customer"}
-                  </span>
-                  <span className="text-[10px] text-slate-500">{c.customerType || "Customer"}</span>
+                  <div className="flex flex-col gap-1 items-start">
+                    {c.type === "both" || c.accountType === "both" || c.customerType === "Both" ? (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800 border border-purple-200">
+                        Both (Customer & Admin)
+                      </span>
+                    ) : c.type === "admin" || c.accountType === "admin" || c.customerType === "Admin" ? (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-800 border border-indigo-200">
+                        Admin Only
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                        Customer (Frontend Only)
+                      </span>
+                    )}
+
+                    {(c.type === "admin" || c.type === "both" || c.accountType === "admin" || c.accountType === "both" || c.customerType === "Admin" || c.customerType === "Both") ? (
+                      <span className="text-[11px] font-medium text-slate-600 flex items-center gap-1">
+                        <Shield className="w-3 h-3 text-emerald-600 shrink-0 inline" />
+                        <span className="truncate max-w-[140px]">
+                          {c.roleName || (c.assignedRoles && c.assignedRoles[0]) || "Super Administrator"}
+                        </span>
+                      </span>
+                    ) : (
+                      <span className="text-[10px] text-slate-400 font-normal">
+                        {c.customerType || "Customer"} Tier
+                      </span>
+                    )}
+                  </div>
                 </td>
 
                 {/* Orders Count */}

@@ -49,8 +49,8 @@ export function LoginForm() {
   };
 
   const handleFillDemo = () => {
-    setEmail("customer@example.com");
-    setPassword("Customer123!");
+    setEmail("gyanchandranist@gmail.com");
+    setPassword("gyan@123");
   };
 
   return (

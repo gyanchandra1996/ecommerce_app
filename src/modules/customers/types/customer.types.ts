@@ -1,7 +1,7 @@
 import { AddressRecord } from "@/core/db/store";
 
-export type AccountType = "admin" | "customer" | "manager" | "staff";
-export type CustomerType = "Customer" | "Customer (Guest)" | "Wholesale" | "VIP";
+export type AccountType = "admin" | "customer" | "both" | "manager" | "staff";
+export type CustomerType = "Customer" | "Admin" | "Both" | "Customer (Guest)" | "Wholesale" | "VIP";
 export type CustomerStatus = "ACTIVE" | "INACTIVE" | "PENDING_APPROVAL";
 
 export interface Customer {
@@ -22,6 +22,7 @@ export interface Customer {
   address?: string | null;
   shippingAddress?: string | null;
   addresses?: AddressRecord[];
+  type?: "admin" | "customer" | "both";
   accountType: AccountType;
   customerType: CustomerType;
   lastLogin: string;
