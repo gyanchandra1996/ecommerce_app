@@ -68,17 +68,26 @@ export function AdminSidebar({
   const isMarketingRoute =
     pathname.startsWith("/admin/sliders") ||
     pathname.startsWith("/admin/menu") ||
-    pathname.startsWith("/admin/coupons");
+    pathname.startsWith("/admin/coupons") ||
+    pathname.startsWith("/admin/marketing");
 
   const isShippingRoute = pathname.startsWith("/admin/shipping");
 
   const isAccessRoute = pathname.startsWith("/admin/roles");
 
+  const isInventoryRoute =
+    pathname.startsWith("/admin/inventory") ||
+    pathname.startsWith("/admin/warehouses");
+
+  const isSettingsRoute = pathname.startsWith("/admin/settings");
+
   const [openSubmenus, setOpenSubmenus] = useState<Record<string, boolean>>({
     products: isProductsRoute,
+    inventory: isInventoryRoute,
     orders: isOrdersRoute,
     shipping: isShippingRoute,
     marketing: isMarketingRoute,
+    settings: isSettingsRoute,
     accessMgmt: isAccessRoute,
   });
 
@@ -87,12 +96,14 @@ export function AdminSidebar({
     setOpenSubmenus((prev) => ({
       ...prev,
       products: prev.products || isProductsRoute,
+      inventory: prev.inventory || isInventoryRoute,
       orders: prev.orders || isOrdersRoute,
       shipping: prev.shipping || isShippingRoute,
       marketing: prev.marketing || isMarketingRoute,
+      settings: prev.settings || isSettingsRoute,
       accessMgmt: prev.accessMgmt || isAccessRoute,
     }));
-  }, [pathname, isProductsRoute, isOrdersRoute, isShippingRoute, isMarketingRoute, isAccessRoute]);
+  }, [pathname, isProductsRoute, isInventoryRoute, isOrdersRoute, isShippingRoute, isMarketingRoute, isSettingsRoute, isAccessRoute]);
 
   const toggleSubmenu = (menu: string) => {
     setOpenSubmenus((prev) => ({ ...prev, [menu]: !prev[menu] }));
@@ -152,9 +163,14 @@ export function AdminSidebar({
     },
     {
       title: "Inventory",
-      href: "/admin/inventory",
       icon: Boxes,
+      hasChildren: true,
+      subKey: "inventory",
       moduleId: "inventory",
+      children: [
+        { title: "Warehouses", href: "/admin/warehouses", moduleId: "inventory" },
+        { title: "Warehouse Stock", href: "/admin/inventory", moduleId: "inventory" },
+      ],
     },
     {
       title: "Pricing",
@@ -206,6 +222,7 @@ export function AdminSidebar({
         { title: "Sliders & Banners", href: "/admin/sliders", moduleId: "sliders" },
         { title: "Navigation Menu", href: "/admin/menu", moduleId: "menu" },
         { title: "Coupons", href: "/admin/coupons", moduleId: "coupons" },
+        { title: "Manage Emails", href: "/admin/marketing/emails", moduleId: "marketing" },
       ],
     },
     {
@@ -222,9 +239,16 @@ export function AdminSidebar({
     },
     {
       title: "Settings",
-      href: "/admin/settings",
       icon: Settings,
+      hasChildren: true,
+      subKey: "settings",
       moduleId: "settings",
+      children: [
+        { title: "Store Settings", href: "/admin/settings", moduleId: "settings" },
+        { title: "Asset Storage Settings", href: "/admin/settings/storage", moduleId: "settings" },
+        { title: "Mail Configuration", href: "/admin/settings/mail", moduleId: "settings" },
+        { title: "Email Templates", href: "/admin/marketing/emails", moduleId: "settings" },
+      ],
     },
   ];
 

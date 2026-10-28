@@ -1,5 +1,6 @@
 import { DatabaseStore, ShippingProviderRecord, ShipmentRecord } from "../db/store";
 import { decryptCredentials } from "./encryption";
+import { EmailService } from "../mail/email.service";
 import {
   ShippingAdapter,
   ShippingRateEstimate,
@@ -230,10 +231,23 @@ export class ShippingService {
 
     const finalAwb = params.customAwb?.trim() || dispatchResult.awbNumber;
 
+    // Resolve assigned fulfillment warehouse
+    const warehouses = await DatabaseStore.findWarehouses();
+    const assignedWarehouse = order.warehouseId
+      ? warehouses.find((w) => w.id === order.warehouseId)
+      : warehouses[0] || null;
+
+    const pickupAddress = assignedWarehouse
+      ? `${assignedWarehouse.name}, ${assignedWarehouse.address || assignedWarehouse.addressLine1 || ""}, ${assignedWarehouse.city || ""}, ${assignedWarehouse.state || ""} ${assignedWarehouse.zipCode || ""}`.replace(/,\s*,/g, ",").trim()
+      : "Main Warehouse Hub";
+
     // 5. Save shipment record in database
     const newShipment = await DatabaseStore.createShipment({
       orderId: order.id,
       orderNumber: order.orderNumber,
+      warehouseId: assignedWarehouse?.id,
+      pickupAddress,
+      deliveryAddress: order.shippingAddress,
       shippingProviderId: provider.id,
       shippingProviderName: provider.name,
       shippingProviderCode: provider.code,
@@ -258,6 +272,41 @@ export class ShippingService {
       carrier: dispatchResult.carrier || provider.name,
       shippedAt: new Date().toISOString(),
     });
+
+    // 7. Deduct/dispatch reserved stock in Warehouse Inventory
+    if (order.items && order.items.length > 0) {
+      const dispatchItems = order.items
+        .filter((it: any) => Boolean(it.productId))
+        .map((it: any) => ({
+          productId: it.productId!,
+          quantity: it.quantity,
+          warehouseId: assignedWarehouse?.id,
+        }));
+      if (dispatchItems.length > 0) {
+        await DatabaseStore.dispatchStock(newShipment.id, order.id, dispatchItems);
+      }
+    }
+
+    // 8. Trigger Order Dispatched Email
+    if (order.customerEmail) {
+      EmailService.sendOrderDispatchedEmail(
+        {
+          id: order.id,
+          orderNumber: order.orderNumber,
+          customerName: order.customerName,
+          customerEmail: order.customerEmail,
+        },
+        {
+          trackingNumber: finalAwb,
+          shippingProviderName: dispatchResult.carrier || provider.name,
+          trackingUrl: dispatchResult.trackingUrl || `https://track.example.com/${finalAwb}`,
+        },
+        {
+          name: assignedWarehouse?.name || "Main Fulfillment Hub",
+          city: assignedWarehouse?.city,
+        }
+      ).catch((e: any) => console.error("Failed to trigger order dispatched email:", e));
+    }
 
     return {
       shipment: newShipment,

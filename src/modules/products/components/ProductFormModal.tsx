@@ -41,7 +41,11 @@ export function ProductFormModal({ isOpen, onClose, product, onProductSaved }: P
   const [costPrice, setCostPrice] = useState("");
   const [currentStock, setCurrentStock] = useState("50");
   const [minStock, setMinStock] = useState("10");
-  const [warehouse, setWarehouse] = useState("gyanwarehouse");
+  const [warehouse, setWarehouse] = useState("");
+  const [warehouseId, setWarehouseId] = useState("");
+  const [manufacturerId, setManufacturerId] = useState("");
+  const [activeWarehouses, setActiveWarehouses] = useState<Array<{ id: string; name: string }>>([]);
+  const [activeManufacturers, setActiveManufacturers] = useState<Array<{ id: string; name: string }>>([]);
   const [status, setStatus] = useState<"ACTIVE" | "DRAFT" | "ARCHIVED">("ACTIVE");
   const [brand, setBrand] = useState("");
   const [description, setDescription] = useState("");
@@ -82,7 +86,7 @@ export function ProductFormModal({ isOpen, onClose, product, onProductSaved }: P
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Load Categories
+  // Load Categories, Warehouses, and Manufacturers
   useEffect(() => {
     if (isOpen) {
       fetch("/api/categories?format=flat")
@@ -91,8 +95,34 @@ export function ProductFormModal({ isOpen, onClose, product, onProductSaved }: P
           if (json.data) setAllCategories(json.data);
         })
         .catch(() => {});
+
+      // Fetch active warehouses for mandatory selection
+      fetch("/api/warehouses")
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.data && Array.isArray(json.data)) {
+            const activeList = json.data.filter((w: any) => w.isActive !== false);
+            setActiveWarehouses(activeList);
+            if (!product && activeList.length > 0) {
+              setWarehouseId(activeList[0].id);
+              setWarehouse(activeList[0].name);
+            }
+          }
+        })
+        .catch(() => {});
+
+      // Fetch active manufacturers
+      fetch("/api/manufacturers")
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.data && Array.isArray(json.data)) {
+            const activeList = json.data.filter((m: any) => m.isActive !== false);
+            setActiveManufacturers(activeList);
+          }
+        })
+        .catch(() => {});
     }
-  }, [isOpen]);
+  }, [isOpen, product]);
 
   // Populate Form if Editing
   useEffect(() => {
@@ -105,7 +135,9 @@ export function ProductFormModal({ isOpen, onClose, product, onProductSaved }: P
       setCostPrice(product.costPrice ? product.costPrice.toString() : "");
       setCurrentStock(product.currentStock !== undefined ? product.currentStock.toString() : "50");
       setMinStock(product.minStock !== undefined ? product.minStock.toString() : "10");
-      setWarehouse(product.warehouse || "gyanwarehouse");
+      setWarehouse(product.warehouse || "");
+      setWarehouseId(product.warehouseId || "");
+      setManufacturerId((product as any).manufacturerId || "");
       setStatus(product.status || "ACTIVE");
       setBrand(product.brand || "");
       setDescription(product.description || "");
@@ -153,7 +185,9 @@ export function ProductFormModal({ isOpen, onClose, product, onProductSaved }: P
       setCostPrice("25.00");
       setCurrentStock("50");
       setMinStock("10");
-      setWarehouse("gyanwarehouse");
+      setWarehouse(activeWarehouses[0]?.name || "gyanwarehouse");
+      setWarehouseId(activeWarehouses[0]?.id || "");
+      setManufacturerId("");
       setStatus("ACTIVE");
       setBrand("emox");
       setDescription("");
@@ -409,7 +443,18 @@ export function ProductFormModal({ isOpen, onClose, product, onProductSaved }: P
       }
     }
 
+    // Mandatory Warehouse Check
+    if (!warehouseId && !warehouse) {
+      setError("Fulfillment Warehouse is mandatory. Please select an active warehouse.");
+      setActiveTab("general");
+      setSaving(false);
+      return;
+    }
+
     const primaryAsset = selectedAssets.find((a) => a.isPrimary) || selectedAssets[0];
+
+    const selectedWh = activeWarehouses.find((w) => w.id === warehouseId);
+    const finalWarehouseName = selectedWh ? selectedWh.name : warehouse || "gyanwarehouse";
 
     const payload = {
       sku: sku.trim(),
@@ -421,7 +466,9 @@ export function ProductFormModal({ isOpen, onClose, product, onProductSaved }: P
       costPrice: costPrice ? parseFloat(costPrice) : null,
       currentStock: parseInt(currentStock, 10) || 0,
       minStock: parseInt(minStock, 10) || 0,
-      warehouse,
+      warehouse: finalWarehouseName,
+      warehouseId: warehouseId || activeWarehouses[0]?.id,
+      manufacturerId: manufacturerId || undefined,
       status,
       brand,
       categoryIds: selectedCategoryIds,
@@ -619,7 +666,7 @@ export function ProductFormModal({ isOpen, onClose, product, onProductSaved }: P
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
                       UPC / Barcode (GTIN)
@@ -646,15 +693,41 @@ export function ProductFormModal({ isOpen, onClose, product, onProductSaved }: P
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Warehouse
+                      Manufacturer
                     </label>
                     <select
-                      value={warehouse}
-                      onChange={(e) => setWarehouse(e.target.value)}
+                      value={manufacturerId}
+                      onChange={(e) => setManufacturerId(e.target.value)}
                       className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-emerald-500 bg-white"
                     >
-                      <option value="gyanwarehouse">gyanwarehouse</option>
-                      <option value="main-distribution">main-distribution</option>
+                      <option value="">-- None / Select Manufacturer --</option>
+                      {activeManufacturers.map((m) => (
+                        <option key={m.id} value={m.id}>
+                          {m.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Fulfillment Warehouse <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      required
+                      value={warehouseId}
+                      onChange={(e) => {
+                        setWarehouseId(e.target.value);
+                        const match = activeWarehouses.find((w) => w.id === e.target.value);
+                        if (match) setWarehouse(match.name);
+                      }}
+                      className="w-full px-3 py-2 text-xs rounded-lg border border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white font-medium text-slate-800"
+                    >
+                      <option value="">-- Select Active Warehouse * --</option>
+                      {activeWarehouses.map((w) => (
+                        <option key={w.id} value={w.id}>
+                          {w.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>

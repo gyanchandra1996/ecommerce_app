@@ -13,7 +13,8 @@ export async function GET(
     }
     return NextResponse.json({ success: true, data: wh });
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    const status = error.message?.includes("Cannot delete warehouse") ? 400 : 500;
+    return NextResponse.json({ success: false, error: error.message }, { status });
   }
 }
 
@@ -30,7 +31,8 @@ export async function PUT(
     }
     return NextResponse.json({ success: true, data: updated });
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    const status = error.message?.includes("Cannot delete warehouse") ? 400 : 500;
+    return NextResponse.json({ success: false, error: error.message }, { status });
   }
 }
 
@@ -46,6 +48,7 @@ export async function DELETE(
     }
     return NextResponse.json({ success: true, message: "Warehouse deleted successfully" });
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    const status = error.message?.includes("Cannot delete warehouse") ? 400 : 500;
+    return NextResponse.json({ success: false, error: error.message }, { status });
   }
 }

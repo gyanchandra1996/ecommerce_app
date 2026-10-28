@@ -1,8 +1,6 @@
-import fs from "fs/promises";
-import path from "path";
-import { APP_CONFIG } from "../config/env";
+import { StorageService, StoredAssetResult, AssetType } from "./storage.service";
 
-export type AssetType = "IMAGE" | "VIDEO" | "DOCUMENT" | "AUDIO" | "OTHER";
+export type { AssetType };
 
 export interface StoredFileInfo {
   fileName: string;
@@ -12,80 +10,35 @@ export interface StoredFileInfo {
   url: string;
   fileType: AssetType;
   extension: string;
+  storageProvider?: "local" | "s3";
+  storageKey?: string;
 }
 
 export class FileStorageEngine {
-  private static uploadRoot = path.join(process.cwd(), "public", "uploads");
-
   public static async ensureUploadDir(): Promise<void> {
-    try {
-      await fs.mkdir(this.uploadRoot, { recursive: true });
-    } catch {
-      // directory already exists or created
-    }
+    await StorageService.ensureLocalUploadDir();
   }
 
   public static detectFileType(mimeType: string, extension: string): AssetType {
-    if (mimeType.startsWith("image/") || ["jpg", "jpeg", "png", "webp", "gif", "svg", "avif"].includes(extension)) {
-      return "IMAGE";
-    }
-    if (mimeType.startsWith("video/") || ["mp4", "webm", "mov", "avi", "mkv"].includes(extension)) {
-      return "VIDEO";
-    }
-    if (mimeType.startsWith("audio/") || ["mp3", "wav", "ogg", "aac"].includes(extension)) {
-      return "AUDIO";
-    }
-    if (
-      mimeType.includes("pdf") ||
-      mimeType.includes("document") ||
-      mimeType.includes("sheet") ||
-      ["pdf", "doc", "docx", "xls", "xlsx", "csv", "txt"].includes(extension)
-    ) {
-      return "DOCUMENT";
-    }
-    return "OTHER";
+    return StorageService.detectFileType(mimeType, extension);
   }
 
-  public static async saveFile(file: File): Promise<StoredFileInfo> {
-    await this.ensureUploadDir();
-
-    const originalName = file.name;
-    const extension = path.extname(originalName).replace(".", "").toLowerCase();
-    const cleanBaseName = path
-      .basename(originalName, path.extname(originalName))
-      .replace(/[^a-zA-Z0-9_-]/g, "_")
-      .toLowerCase();
-
-    const uniqueSuffix = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
-    const finalFileName = `${cleanBaseName}_${uniqueSuffix}.${extension || "bin"}`;
-    const destinationPath = path.join(this.uploadRoot, finalFileName);
-
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-
-    await fs.writeFile(destinationPath, buffer);
-
-    const mimeType = file.type || "application/octet-stream";
-    const fileType = this.detectFileType(mimeType, extension);
-
+  public static async saveFile(file: File, folder = "assets"): Promise<StoredFileInfo> {
+    const result = await StorageService.uploadFile(file, folder);
     return {
-      fileName: finalFileName,
-      originalName,
-      mimeType,
-      size: file.size,
-      url: `/uploads/${finalFileName}`,
-      fileType,
-      extension,
+      fileName: result.fileName,
+      originalName: result.originalName,
+      mimeType: result.mimeType,
+      size: result.size,
+      url: result.url,
+      fileType: result.fileType,
+      extension: result.extension,
+      storageProvider: result.storageProvider,
+      storageKey: result.storageKey,
     };
   }
 
-  public static async deleteFile(fileName: string): Promise<boolean> {
-    try {
-      const filePath = path.join(this.uploadRoot, fileName);
-      await fs.unlink(filePath);
-      return true;
-    } catch {
-      return false;
-    }
+  public static async deleteFile(fileName: string, provider: "local" | "s3" = "local"): Promise<boolean> {
+    return StorageService.deleteFile(fileName, provider);
   }
 }

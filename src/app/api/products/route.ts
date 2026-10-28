@@ -62,6 +62,25 @@ export async function POST(req: NextRequest) {
       return apiError("Product Name is required.", 400);
     }
 
+    // 4. Mandatory active warehouse validation on server
+    const selectedWhId = body.warehouseId || body.warehouse;
+    if (!selectedWhId || !selectedWhId.trim()) {
+      return apiError("Warehouse is mandatory. Please select an active warehouse.", 400);
+    }
+
+    const allWarehouses = await DatabaseStore.findWarehouses();
+    const activeWh = allWarehouses.find(
+      (w) =>
+        (w.id === selectedWhId || w.name.toLowerCase() === selectedWhId.toLowerCase()) &&
+        w.isActive !== false
+    );
+    if (!activeWh) {
+      return apiError(
+        "The selected warehouse is inactive or invalid. Please select an active warehouse.",
+        400
+      );
+    }
+
     const created = await DatabaseStore.createProduct({
       sku: sku.trim(),
       upc: upc ? upc.trim() : undefined,
@@ -72,7 +91,9 @@ export async function POST(req: NextRequest) {
       costPrice: costPrice ? Number(costPrice) : undefined,
       currentStock: currentStock !== undefined ? Number(currentStock) : 10,
       minStock: minStock !== undefined ? Number(minStock) : 5,
-      warehouse: warehouse || "gyanwarehouse",
+      warehouse: activeWh.name,
+      warehouseId: activeWh.id,
+      manufacturerId: body.manufacturerId || undefined,
       status: status || "ACTIVE",
       brand,
       categoryIds: Array.isArray(categoryIds) ? categoryIds : [],
@@ -88,6 +109,19 @@ export async function POST(req: NextRequest) {
       googleGtin: googleGtin || upc,
       googleMpn: googleMpn || sku,
     });
+
+    // Dedicated Warehouse Inventory record & initial movement
+    try {
+      await DatabaseStore.adjustStock({
+        productId: created.id,
+        warehouseId: activeWh.id,
+        quantity: created.currentStock,
+        notes: "Initial inventory allocation upon product creation",
+        referenceId: "PRODUCT_CREATION",
+      });
+    } catch (invErr) {
+      console.error("Failed to seed initial warehouse inventory for product:", invErr);
+    }
 
     return apiSuccess(created, "Product created successfully.", 201);
   } catch (error: unknown) {

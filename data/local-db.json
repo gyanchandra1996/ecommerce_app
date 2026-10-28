@@ -1,6 +1,41 @@
 {
   "users": [
     {
+      "id": "usr_pwhq6yht",
+      "email": "gyanu@gmail.com",
+      "name": "Gyanu",
+      "firstName": "Gyanu",
+      "lastName": "",
+      "phone": "+918957058666",
+      "mobileNumber": "+918957058666",
+      "country": "India",
+      "countryCode": "IN",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "streetAddress": "Village and post niyauj",
+      "apartment": "",
+      "password": "gyan@123",
+      "role": "CUSTOMER",
+      "roleId": "role_admin",
+      "assignedRoles": [
+        "role_admin",
+        "Super Administrator"
+      ],
+      "accountType": "customer",
+      "type": "customer",
+      "customerType": "Customer",
+      "address": "Village and post niyauj",
+      "shippingAddress": "Village and post niyauj",
+      "lastLogin": "Just now",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "createdAt": "2026-10-28T16:43:06.116Z",
+      "updatedAt": "2026-10-28T16:43:43.915Z"
+    },
+    {
       "id": "usr_e906jbw7",
       "email": "gyanwork@gmail.com",
       "name": "GyanAdmin",
@@ -1362,6 +1397,62 @@
   ],
   "products": [
     {
+      "id": "prod_bvbqhjg6k",
+      "sku": "TEST-SKU-1793207549330",
+      "upc": null,
+      "name": "Warehouse Test Product",
+      "slug": "warehouse-test-product-mvsdh4gt",
+      "description": null,
+      "price": 99.99,
+      "comparePrice": null,
+      "costPrice": null,
+      "currentStock": 125,
+      "minStock": 15,
+      "warehouse": "Avery Dennison",
+      "warehouseId": "wh_avery_1",
+      "manufacturerId": null,
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": null,
+      "googleMerchantSync": false,
+      "googleCategory": null,
+      "googleCondition": "new",
+      "googleBrand": null,
+      "googleGtin": null,
+      "googleMpn": "TEST-SKU-1793207549330",
+      "googleLastSyncedAt": null,
+      "createdAt": "2026-10-28T17:12:29.405Z",
+      "updatedAt": "2026-10-28T17:12:29.405Z"
+    },
+    {
+      "id": "prod_x36jefdcu",
+      "sku": "TEST-SKU-1793207452449",
+      "upc": null,
+      "name": "Warehouse Test Product",
+      "slug": "warehouse-test-product-mvsdf1ov",
+      "description": null,
+      "price": 99.99,
+      "comparePrice": null,
+      "costPrice": null,
+      "currentStock": 125,
+      "minStock": 15,
+      "warehouse": "Avery Dennison",
+      "warehouseId": "wh_avery_1",
+      "manufacturerId": null,
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": null,
+      "googleMerchantSync": false,
+      "googleCategory": null,
+      "googleCondition": "new",
+      "googleBrand": null,
+      "googleGtin": null,
+      "googleMpn": "TEST-SKU-1793207452449",
+      "googleLastSyncedAt": null,
+      "createdAt": "2026-10-28T17:10:52.495Z",
+      "updatedAt": "2026-10-28T17:10:52.495Z"
+    },
+    {
       "id": "prod_b0tc2ooe4",
       "sku": "item-802644",
       "upc": "UPC:806664532419",
@@ -1373,7 +1464,7 @@
       "costPrice": 25,
       "currentStock": 50,
       "minStock": 10,
-      "warehouse": "gyanwarehouse",
+      "warehouse": "Nike Oregon Hub",
       "status": "ACTIVE",
       "isSoldOut": false,
       "brand": "emox",
@@ -1386,7 +1477,7 @@
       "googleSyncStatus": "SYNCED",
       "googleLastSyncedAt": "2026-10-27T18:07:50.704Z",
       "createdAt": "2026-10-25T13:42:16.336Z",
-      "updatedAt": "2026-10-27T18:07:50.705Z"
+      "updatedAt": "2026-10-28T16:52:21.779Z"
     },
     {
       "id": "prod_xrxpb0pfz",
@@ -1543,7 +1634,7 @@
       "status": "ACTIVE",
       "isSoldOut": false,
       "createdAt": "2026-01-18T00:00:00.000Z",
-      "updatedAt": "2026-10-25T13:11:32.418Z",
+      "updatedAt": "2026-10-28T16:52:37.702Z",
       "comparePrice": 89.99,
       "reviewsCount": 2,
       "rating": 5,
@@ -1965,68 +2056,322 @@
       "isSystem": true,
       "permissions": {
         "dashboard": {
-          "canView": true,
-          "canCreate": true,
-          "canEdit": true,
-          "canDelete": true
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "assets": {
-          "canView": true,
-          "canCreate": true,
-          "canEdit": true,
-          "canDelete": true
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "customers": {
-          "canView": true,
-          "canCreate": true,
-          "canEdit": true,
-          "canDelete": true
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "roles_assign": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "roles_groups": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "roles_create": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "manufacturers": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "products": {
-          "canView": true,
-          "canCreate": true,
-          "canEdit": true,
-          "canDelete": true
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "categories": {
-          "canView": true,
-          "canCreate": true,
-          "canEdit": true,
-          "canDelete": true
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "discounts": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "reviews": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "qna": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "wishlist": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "inventory": {
-          "canView": true,
-          "canCreate": true,
-          "canEdit": true,
-          "canDelete": true
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "pricing": {
-          "canView": true,
-          "canCreate": true,
-          "canEdit": true,
-          "canDelete": true
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "orders": {
-          "canView": true,
-          "canCreate": true,
-          "canEdit": true,
-          "canDelete": true
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
-        "marketing": {
-          "canView": true,
-          "canCreate": true,
-          "canEdit": true,
-          "canDelete": true
+        "orders_create": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "orders_pending": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "orders_shipments": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "sliders": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "menu": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "coupons": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "campaigns": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "themes": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "gateways": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "settings": {
-          "canView": true,
-          "canCreate": true,
-          "canEdit": true,
-          "canDelete": true
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         }
       },
       "createdAt": "2026-10-25T09:31:13.428Z",
-      "updatedAt": "2026-10-25T09:31:13.428Z"
+      "updatedAt": "2026-10-28T16:47:00.994Z",
+      "status": "Active",
+      "screenPrivilegesCount": 26
     },
     {
       "id": "role_customer",
@@ -2036,93 +2381,322 @@
       "isSystem": true,
       "permissions": {
         "dashboard": {
-          "canView": false,
-          "canCreate": false,
-          "canEdit": false,
-          "canDelete": false
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "assets": {
-          "canView": false,
-          "canCreate": false,
-          "canEdit": false,
-          "canDelete": false
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "customers": {
-          "canView": false,
-          "canCreate": false,
-          "canEdit": false,
-          "canDelete": false
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "roles_assign": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "roles_groups": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "roles_create": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "manufacturers": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "products": {
-          "canView": false,
-          "canCreate": false,
-          "canEdit": false,
-          "canDelete": false
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "categories": {
-          "canView": false,
-          "canCreate": false,
-          "canEdit": false,
-          "canDelete": false
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "discounts": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "reviews": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "qna": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "wishlist": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "inventory": {
-          "canView": false,
-          "canCreate": false,
-          "canEdit": false,
-          "canDelete": false
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "pricing": {
-          "canView": false,
-          "canCreate": false,
-          "canEdit": false,
-          "canDelete": false
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "orders": {
-          "canView": false,
-          "canCreate": false,
-          "canEdit": false,
-          "canDelete": false
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
-        "marketing": {
-          "canView": false,
-          "canCreate": false,
-          "canEdit": false,
-          "canDelete": false
+        "orders_create": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "orders_pending": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "orders_shipments": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "sliders": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "menu": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "coupons": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "campaigns": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "themes": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
+        },
+        "gateways": {
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         },
         "settings": {
-          "canView": false,
-          "canCreate": false,
-          "canEdit": false,
-          "canDelete": false
+          "view": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "approve": true,
+          "export": true,
+          "manage_settings": true,
+          "add": true,
+          "report": true,
+          "openScreen": true
         }
       },
       "createdAt": "2026-10-25T09:31:13.433Z",
-      "updatedAt": "2026-10-25T09:31:13.433Z"
-    },
-    {
-      "id": "role_editor",
-      "name": "Editor",
-      "slug": "editor",
-      "description": "only Dashboard view and master",
-      "screenPrivilegesCount": 3,
+      "updatedAt": "2026-10-28T16:48:05.583Z",
       "status": "Active",
-      "isSystem": false,
-      "permissions": {
-        "dashboard": {
-          "canView": true,
-          "canCreate": false,
-          "canEdit": false,
-          "canDelete": false
-        },
-        "masters": {
-          "canView": true,
-          "canCreate": false,
-          "canEdit": false,
-          "canDelete": false
-        }
-      },
-      "createdAt": "2026-10-25T09:31:13.433Z",
-      "updatedAt": "2026-10-25T09:31:13.433Z"
+      "screenPrivilegesCount": 26
     },
     {
       "id": "role_super_admin",
@@ -2150,31 +2724,6 @@
       "updatedAt": "2026-10-25T09:31:13.433Z"
     },
     {
-      "id": "role_hr",
-      "name": "HR",
-      "slug": "hr",
-      "description": "HR",
-      "screenPrivilegesCount": 10,
-      "status": "Active",
-      "isSystem": false,
-      "permissions": {
-        "dashboard": {
-          "canView": true,
-          "canCreate": false,
-          "canEdit": false,
-          "canDelete": false
-        },
-        "masters": {
-          "canView": true,
-          "canCreate": false,
-          "canEdit": false,
-          "canDelete": false
-        }
-      },
-      "createdAt": "2026-10-25T15:30:41.665Z",
-      "updatedAt": "2026-10-25T15:30:41.665Z"
-    },
-    {
       "id": "role_hr_admin",
       "name": "HR Admin",
       "slug": "hr-admin",
@@ -2196,8 +2745,70 @@
           "canDelete": false
         }
       },
-      "createdAt": "2026-10-25T15:30:41.665Z",
-      "updatedAt": "2026-10-25T15:30:41.665Z"
+      "createdAt": "2026-10-28T16:42:52.583Z",
+      "updatedAt": "2026-10-28T16:42:52.583Z"
+    },
+    {
+      "id": "role_editor",
+      "name": "Editor",
+      "slug": "editor",
+      "description": "only Dashboard view and master",
+      "screenPrivilegesCount": 3,
+      "status": "Active",
+      "isSystem": false,
+      "permissions": {
+        "dashboard": {
+          "view": false,
+          "create": false,
+          "edit": false,
+          "delete": false,
+          "approve": false,
+          "export": false,
+          "manage_settings": false,
+          "add": false,
+          "report": false,
+          "openScreen": false
+        },
+        "masters": {
+          "view": true,
+          "create": false,
+          "edit": false,
+          "delete": false,
+          "approve": false,
+          "export": false,
+          "manage_settings": false,
+          "add": false,
+          "report": false,
+          "openScreen": false
+        }
+      },
+      "createdAt": "2026-10-28T16:49:27.884Z",
+      "updatedAt": "2026-10-28T16:49:34.764Z"
+    },
+    {
+      "id": "role_hr",
+      "name": "HR",
+      "slug": "hr",
+      "description": "HR",
+      "screenPrivilegesCount": 10,
+      "status": "Active",
+      "isSystem": false,
+      "permissions": {
+        "dashboard": {
+          "canView": true,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        },
+        "masters": {
+          "canView": true,
+          "canCreate": false,
+          "canEdit": false,
+          "canDelete": false
+        }
+      },
+      "createdAt": "2026-10-28T16:49:27.884Z",
+      "updatedAt": "2026-10-28T16:49:27.884Z"
     },
     {
       "id": "role_new_company",
@@ -2221,8 +2832,8 @@
           "canDelete": false
         }
       },
-      "createdAt": "2026-10-25T15:30:41.665Z",
-      "updatedAt": "2026-10-25T15:30:41.665Z"
+      "createdAt": "2026-10-28T16:49:27.884Z",
+      "updatedAt": "2026-10-28T16:49:27.884Z"
     },
     {
       "id": "role_ppc",
@@ -2246,8 +2857,8 @@
           "canDelete": false
         }
       },
-      "createdAt": "2026-10-25T15:30:41.665Z",
-      "updatedAt": "2026-10-25T15:30:41.665Z"
+      "createdAt": "2026-10-28T16:49:27.884Z",
+      "updatedAt": "2026-10-28T16:49:27.884Z"
     },
     {
       "id": "role_rate_request",
@@ -2271,8 +2882,8 @@
           "canDelete": false
         }
       },
-      "createdAt": "2026-10-25T15:30:41.665Z",
-      "updatedAt": "2026-10-25T15:30:41.665Z"
+      "createdAt": "2026-10-28T16:49:27.884Z",
+      "updatedAt": "2026-10-28T16:49:27.884Z"
     },
     {
       "id": "role_sales_team",
@@ -2296,8 +2907,8 @@
           "canDelete": false
         }
       },
-      "createdAt": "2026-10-25T15:30:41.665Z",
-      "updatedAt": "2026-10-25T15:30:41.665Z"
+      "createdAt": "2026-10-28T16:49:27.884Z",
+      "updatedAt": "2026-10-28T16:49:27.884Z"
     },
     {
       "id": "role_store_manager",
@@ -2321,8 +2932,8 @@
           "canDelete": false
         }
       },
-      "createdAt": "2026-10-25T15:30:41.665Z",
-      "updatedAt": "2026-10-25T15:30:41.665Z"
+      "createdAt": "2026-10-28T16:49:27.884Z",
+      "updatedAt": "2026-10-28T16:49:27.884Z"
     }
   ],
   "sliders": [
@@ -2557,7 +3168,7 @@
     "themeName": "G-store",
     "siteTitle": "G-store | Online Shopping for Electronics, Fashion, Deals & More in India",
     "tagline": "Express delivery across India",
-    "uniqueTitle": "emox",
+    "uniqueTitle": "G-STORE",
     "alternateTitle": "EMOX1",
     "orderPrefix": "tags",
     "defaultCurrency": "INR",
@@ -2716,7 +3327,7 @@
     "autoCancelDays": 7,
     "handlingCharge": 5,
     "freeShippingThreshold": 200,
-    "updatedAt": "2026-10-25T15:08:46.994Z"
+    "updatedAt": "2026-10-28T17:09:46.672Z"
   },
   "manufacturers": [
     {
@@ -2881,6 +3492,112 @@
     }
   ],
   "orders": [
+    {
+      "id": "ord_52srbnu",
+      "orderNumber": "tags895",
+      "customerName": "Jane Doe Customer",
+      "customerEmail": "janedoe@example.com",
+      "customerPhone": "+1 555-019-9999",
+      "orderDate": "2026-10-28T17:12:30.780Z",
+      "gateway": "COD",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Shipped",
+      "subtotal": 499.95,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 499.95,
+      "shippingAddress": "456 Market St, Austin, TX 78701",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_d7qtp_0",
+          "orderId": "",
+          "productId": "prod_bvbqhjg6k",
+          "itemNo": "TEST-SKU-1793207549330",
+          "name": "Warehouse Test Product",
+          "price": 99.99,
+          "quantity": 5,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-28T17:12:30.780Z",
+          "action": "CREATE",
+          "performedBy": "Admin admin",
+          "notes": "Order created"
+        },
+        {
+          "timestamp": "2026-10-28T17:12:31.158Z",
+          "action": "UPDATE",
+          "performedBy": "Admin",
+          "notes": "Status changed: Processing -> Shipped"
+        }
+      ],
+      "trackingNumber": "AWB-1793207550896",
+      "carrier": "BlueDart Express Air",
+      "shipmentStatus": "Ready to Ship",
+      "shippedAt": "2026-10-28T17:12:31.156Z",
+      "createdAt": "2026-10-28T17:12:30.781Z",
+      "updatedAt": "2026-10-28T17:12:31.158Z"
+    },
+    {
+      "id": "ord_8qkdls4",
+      "orderNumber": "tags796",
+      "customerName": "Jane Doe Customer",
+      "customerEmail": "janedoe@example.com",
+      "customerPhone": "+1 555-019-9999",
+      "orderDate": "2026-10-28T17:10:56.729Z",
+      "gateway": "COD",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Shipped",
+      "subtotal": 499.95,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 499.95,
+      "shippingAddress": "456 Market St, Austin, TX 78701",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_07dyn_0",
+          "orderId": "",
+          "productId": "prod_x36jefdcu",
+          "itemNo": "TEST-SKU-1793207452449",
+          "name": "Warehouse Test Product",
+          "price": 99.99,
+          "quantity": 5,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-28T17:10:56.729Z",
+          "action": "CREATE",
+          "performedBy": "Admin admin",
+          "notes": "Order created"
+        },
+        {
+          "timestamp": "2026-10-28T17:10:58.217Z",
+          "action": "UPDATE",
+          "performedBy": "Admin",
+          "notes": "Status changed: Processing -> Shipped"
+        }
+      ],
+      "trackingNumber": "AWB-1793207457086",
+      "carrier": "BlueDart Express Air",
+      "shipmentStatus": "Ready to Ship",
+      "shippedAt": "2026-10-28T17:10:58.215Z",
+      "createdAt": "2026-10-28T17:10:56.731Z",
+      "updatedAt": "2026-10-28T17:10:58.217Z"
+    },
     {
       "id": "ord_2luo7qn",
       "orderNumber": "tags6659",
@@ -4278,6 +4995,32 @@
   ],
   "payments": [
     {
+      "id": "pay_5xnlrsm",
+      "orderId": "ord_52srbnu",
+      "orderNumber": "tags895",
+      "customerName": "Jane Doe Customer",
+      "customerEmail": "janedoe@example.com",
+      "paymentGateway": "COD",
+      "amount": 499.95,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-28T17:12:30.781Z",
+      "updatedAt": "2026-10-28T17:12:30.781Z"
+    },
+    {
+      "id": "pay_efuiqvk",
+      "orderId": "ord_8qkdls4",
+      "orderNumber": "tags796",
+      "customerName": "Jane Doe Customer",
+      "customerEmail": "janedoe@example.com",
+      "paymentGateway": "COD",
+      "amount": 499.95,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-28T17:10:56.731Z",
+      "updatedAt": "2026-10-28T17:10:56.731Z"
+    },
+    {
       "id": "pay_kvpxsz8",
       "orderId": "ord_546",
       "amount": 50,
@@ -4369,9 +5112,9 @@
       "id": "cart_kmab6k7",
       "userId": "usr_4gyuc6dk0",
       "sessionId": "gst_df4hn37c1l",
-      "status": "active",
+      "status": "merged",
       "createdAt": "2026-10-27T18:28:08.591Z",
-      "updatedAt": "2026-10-27T18:28:08.591Z"
+      "updatedAt": "2026-10-28T16:28:33.374Z"
     },
     {
       "id": "cart_p4pvroa",
@@ -4386,6 +5129,20 @@
       "status": "active",
       "createdAt": "2026-10-27T18:46:39.484Z",
       "updatedAt": "2026-10-27T18:46:39.484Z"
+    },
+    {
+      "id": "cart_vocp1mn",
+      "userId": "usr_72x4rqvlm",
+      "status": "active",
+      "createdAt": "2026-10-28T16:28:33.368Z",
+      "updatedAt": "2026-10-28T16:28:33.368Z"
+    },
+    {
+      "id": "cart_hu5pz2z",
+      "userId": "usr_4gyuc6dk0",
+      "status": "active",
+      "createdAt": "2026-10-28T16:29:00.141Z",
+      "updatedAt": "2026-10-28T16:29:00.141Z"
     }
   ],
   "cartItems": [
@@ -5006,6 +5763,54 @@
       "shippedAt": "2026-10-27T18:46:19.232Z",
       "createdAt": "2026-10-27T18:46:19.232Z",
       "updatedAt": "2026-10-27T18:46:19.245Z"
+    },
+    {
+      "id": "shp_e81nuom",
+      "orderId": "ord_8qkdls4",
+      "orderNumber": "tags796",
+      "warehouseId": "wh_avery_1",
+      "pickupAddress": "Avery Dennison, 8080 Norton Pkwy, Mentor, Ohio 44060",
+      "deliveryAddress": "456 Market St, Austin, TX 78701",
+      "shippingProviderId": "sp_shiprocket",
+      "shippingProviderName": "Shiprocket",
+      "shippingProviderCode": "shiprocket",
+      "providerShipmentId": "SR-SHP-14533122",
+      "awbNumber": "AWB-1793207457086",
+      "trackingUrl": "https://shiprocket.co/tracking/SR604572334",
+      "shippingCharge": 187,
+      "shipmentStatus": "Ready to Ship",
+      "shippingLabelPath": "/api/shipping/shipments/SR-SHP-14533122/label",
+      "recipientName": "Jane Doe Customer",
+      "recipientPhone": "+1 555-019-9999",
+      "shippingAddress": "456 Market St, Austin, TX 78701",
+      "carrier": "BlueDart Express Air",
+      "shippedAt": "2026-10-28T17:10:58.197Z",
+      "createdAt": "2026-10-28T17:10:58.198Z",
+      "updatedAt": "2026-10-28T17:10:58.198Z"
+    },
+    {
+      "id": "shp_6y75w5q",
+      "orderId": "ord_52srbnu",
+      "orderNumber": "tags895",
+      "warehouseId": "wh_avery_1",
+      "pickupAddress": "Avery Dennison, 8080 Norton Pkwy, Mentor, Ohio 44060",
+      "deliveryAddress": "456 Market St, Austin, TX 78701",
+      "shippingProviderId": "sp_shiprocket",
+      "shippingProviderName": "Shiprocket",
+      "shippingProviderCode": "shiprocket",
+      "providerShipmentId": "SR-SHP-77234979",
+      "awbNumber": "AWB-1793207550896",
+      "trackingUrl": "https://shiprocket.co/tracking/SR396573115",
+      "shippingCharge": 187,
+      "shipmentStatus": "Ready to Ship",
+      "shippingLabelPath": "/api/shipping/shipments/SR-SHP-77234979/label",
+      "recipientName": "Jane Doe Customer",
+      "recipientPhone": "+1 555-019-9999",
+      "shippingAddress": "456 Market St, Austin, TX 78701",
+      "carrier": "BlueDart Express Air",
+      "shippedAt": "2026-10-28T17:12:31.141Z",
+      "createdAt": "2026-10-28T17:12:31.142Z",
+      "updatedAt": "2026-10-28T17:12:31.143Z"
     }
   ],
   "shippingSettings": {
@@ -5094,6 +5899,662 @@
       "isActive": true,
       "createdAt": "2026-10-27T18:36:49.668Z",
       "updatedAt": "2026-10-27T18:36:49.668Z"
+    }
+  ],
+  "warehouseInventory": [
+    {
+      "id": "winv_prod_b0tc2ooe4_wh_avery_1",
+      "productId": "prod_b0tc2ooe4",
+      "warehouseId": "wh_avery_1",
+      "productName": "I PHone",
+      "productSku": "item-802644",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 50,
+      "reservedQuantity": 0,
+      "reorderLevel": 10,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_prod_xrxpb0pfz_wh_avery_1",
+      "productId": "prod_xrxpb0pfz",
+      "warehouseId": "wh_avery_1",
+      "productName": "T-shirts",
+      "productSku": "item-822146",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 48,
+      "reservedQuantity": 0,
+      "reorderLevel": 10,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_prod_1_wh_avery_1",
+      "productId": "prod_1",
+      "warehouseId": "wh_avery_1",
+      "productName": "zoloChip",
+      "productSku": "zolo3",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 50,
+      "reservedQuantity": 0,
+      "reorderLevel": 10,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_prod_2_wh_avery_1",
+      "productId": "prod_2",
+      "warehouseId": "wh_avery_1",
+      "productName": "zoloChip",
+      "productSku": "zolo",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 50,
+      "reservedQuantity": 0,
+      "reorderLevel": 11,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_prod_3_wh_avery_1",
+      "productId": "prod_3",
+      "warehouseId": "wh_avery_1",
+      "productName": "wireless-earbuds-z2216",
+      "productSku": "z2216",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 50,
+      "reservedQuantity": 0,
+      "reorderLevel": 200,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_prod_4_wh_avery_1",
+      "productId": "prod_4",
+      "warehouseId": "wh_avery_1",
+      "productName": "smartphone",
+      "productSku": "z221",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 50,
+      "reservedQuantity": 0,
+      "reorderLevel": 200,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_prod_5_wh_avery_1",
+      "productId": "prod_5",
+      "warehouseId": "wh_avery_1",
+      "productName": "wireless-earbuds-z2016",
+      "productSku": "z2016",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 200,
+      "reservedQuantity": 0,
+      "reorderLevel": 100,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_prod_s24_ultra_wh_avery_1",
+      "productId": "prod_s24_ultra",
+      "warehouseId": "wh_avery_1",
+      "productName": "Samsung Galaxy S24 Ultra 12+GB Titanium Gray",
+      "productSku": "SAM-S24U-TI",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 44,
+      "reservedQuantity": 0,
+      "reorderLevel": 5,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_prod_nike_hoodie_wh_avery_1",
+      "productId": "prod_nike_hoodie",
+      "warehouseId": "wh_avery_1",
+      "productName": "Nike Jordan Brooklyn Fleece Men's Pullover Hoodie",
+      "productSku": "NIKE-JRDN-BLU",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 120,
+      "reservedQuantity": 0,
+      "reorderLevel": 15,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_prod_beanless_bag_wh_avery_1",
+      "productId": "prod_beanless_bag",
+      "warehouseId": "wh_avery_1",
+      "productName": "Beanless Bag Inflatable Lounge Chair Grey",
+      "productSku": "HOME-BEAN-GRY",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 80,
+      "reservedQuantity": 0,
+      "reorderLevel": 10,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_prod_diamond_earrings_wh_avery_1",
+      "productId": "prod_diamond_earrings",
+      "warehouseId": "wh_avery_1",
+      "productName": "Diamond Stud Earrings (1/3 ct. t.w.) in 14K White Gold",
+      "productSku": "LUX-DIAM-14K",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 25,
+      "reservedQuantity": 0,
+      "reorderLevel": 3,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_prod_nike_invincible_wh_avery_1",
+      "productId": "prod_nike_invincible",
+      "warehouseId": "wh_avery_1",
+      "productName": "Nike Invincible 3 Premium Running Sneaker",
+      "productSku": "NIKE-INV3-RUN",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 65,
+      "reservedQuantity": 0,
+      "reorderLevel": 8,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_prod_winter_parka_wh_avery_1",
+      "productId": "prod_winter_parka",
+      "warehouseId": "wh_avery_1",
+      "productName": "Winter Thermal Parka Jacket with Faux Fur Hood",
+      "productSku": "WIN-PARK-FUR",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 50,
+      "reservedQuantity": 0,
+      "reorderLevel": 6,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_prod_wool_sweater_wh_avery_1",
+      "productId": "prod_wool_sweater",
+      "warehouseId": "wh_avery_1",
+      "productName": "Wool Knit Cashmere Blend Relaxed Sweater",
+      "productSku": "WIN-WOOL-KNIT",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 70,
+      "reservedQuantity": 0,
+      "reorderLevel": 10,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_prod_fleece_sweatpants_wh_avery_1",
+      "productId": "prod_fleece_sweatpants",
+      "warehouseId": "wh_avery_1",
+      "productName": "Heavyweight Winter Fleece Jogger Sweatpants",
+      "productSku": "WIN-FLEECE-PNT",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 90,
+      "reservedQuantity": 0,
+      "reorderLevel": 12,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_prod_winter_puffer_wh_avery_1",
+      "productId": "prod_winter_puffer",
+      "warehouseId": "wh_avery_1",
+      "productName": "Ultralight Packable Duck Down Puffer Vest",
+      "productSku": "WIN-PUFF-VST",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 60,
+      "reservedQuantity": 0,
+      "reorderLevel": 8,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "winv_g3jijbr",
+      "productId": "prod_x36jefdcu",
+      "warehouseId": "wh_avery_1",
+      "productName": "Warehouse Test Product",
+      "productSku": "TEST-SKU-1793207452449",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 120,
+      "reservedQuantity": 0,
+      "reorderLevel": 15,
+      "createdAt": "2026-10-28T17:10:52.512Z",
+      "updatedAt": "2026-10-28T17:10:58.246Z"
+    },
+    {
+      "id": "winv_7ddgsrl",
+      "productId": "prod_bvbqhjg6k",
+      "warehouseId": "wh_avery_1",
+      "productName": "Warehouse Test Product",
+      "productSku": "TEST-SKU-1793207549330",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 120,
+      "reservedQuantity": 0,
+      "reorderLevel": 15,
+      "createdAt": "2026-10-28T17:12:29.420Z",
+      "updatedAt": "2026-10-28T17:12:31.183Z"
+    }
+  ],
+  "inventoryMovements": [
+    {
+      "id": "mov_22hxs37",
+      "productId": "prod_bvbqhjg6k",
+      "warehouseId": "wh_avery_1",
+      "productName": "Warehouse Test Product",
+      "warehouseName": "Avery Dennison",
+      "type": "DISPATCH",
+      "quantity": 5,
+      "previousAvailable": 120,
+      "newAvailable": 120,
+      "previousReserved": 5,
+      "newReserved": 0,
+      "referenceId": "shp_6y75w5q",
+      "notes": "Stock dispatched from warehouse for shipment #shp_6y75w5q",
+      "createdAt": "2026-10-28T17:12:31.183Z"
+    },
+    {
+      "id": "mov_vbiea02",
+      "productId": "prod_bvbqhjg6k",
+      "warehouseId": "wh_avery_1",
+      "productName": "Warehouse Test Product",
+      "warehouseName": "Avery Dennison",
+      "type": "RESERVATION",
+      "quantity": 5,
+      "previousAvailable": 125,
+      "newAvailable": 120,
+      "previousReserved": 0,
+      "newReserved": 5,
+      "referenceId": "ord_52srbnu",
+      "notes": "Stock reserved for order #ord_52srbnu",
+      "createdAt": "2026-10-28T17:12:30.793Z"
+    },
+    {
+      "id": "mov_7eqmnx5",
+      "productId": "prod_bvbqhjg6k",
+      "warehouseId": "wh_avery_1",
+      "productName": "Warehouse Test Product",
+      "warehouseName": "Avery Dennison",
+      "type": "STOCK_ADD",
+      "quantity": 25,
+      "previousAvailable": 100,
+      "newAvailable": 125,
+      "previousReserved": 0,
+      "newReserved": 0,
+      "referenceId": "PO-7789",
+      "notes": "Stock delivery shipment received",
+      "createdAt": "2026-10-28T17:12:30.242Z"
+    },
+    {
+      "id": "mov_tijvauh",
+      "productId": "prod_bvbqhjg6k",
+      "warehouseId": "wh_avery_1",
+      "productName": "Warehouse Test Product",
+      "warehouseName": "Avery Dennison",
+      "type": "STOCK_ADD",
+      "quantity": 100,
+      "previousAvailable": 0,
+      "newAvailable": 100,
+      "previousReserved": 0,
+      "newReserved": 0,
+      "referenceId": "PRODUCT_CREATION",
+      "notes": "Initial inventory allocation upon product creation",
+      "createdAt": "2026-10-28T17:12:29.420Z"
+    },
+    {
+      "id": "mov_ocn5gx5",
+      "productId": "prod_x36jefdcu",
+      "warehouseId": "wh_avery_1",
+      "productName": "Warehouse Test Product",
+      "warehouseName": "Avery Dennison",
+      "type": "DISPATCH",
+      "quantity": 5,
+      "previousAvailable": 120,
+      "newAvailable": 120,
+      "previousReserved": 5,
+      "newReserved": 0,
+      "referenceId": "shp_e81nuom",
+      "notes": "Stock dispatched from warehouse for shipment #shp_e81nuom",
+      "createdAt": "2026-10-28T17:10:58.246Z"
+    },
+    {
+      "id": "mov_hnbni0f",
+      "productId": "prod_x36jefdcu",
+      "warehouseId": "wh_avery_1",
+      "productName": "Warehouse Test Product",
+      "warehouseName": "Avery Dennison",
+      "type": "RESERVATION",
+      "quantity": 5,
+      "previousAvailable": 125,
+      "newAvailable": 120,
+      "previousReserved": 0,
+      "newReserved": 5,
+      "referenceId": "ord_8qkdls4",
+      "notes": "Stock reserved for order #ord_8qkdls4",
+      "createdAt": "2026-10-28T17:10:56.742Z"
+    },
+    {
+      "id": "mov_m1fk8h3",
+      "productId": "prod_x36jefdcu",
+      "warehouseId": "wh_avery_1",
+      "productName": "Warehouse Test Product",
+      "warehouseName": "Avery Dennison",
+      "type": "STOCK_ADD",
+      "quantity": 25,
+      "previousAvailable": 100,
+      "newAvailable": 125,
+      "previousReserved": 0,
+      "newReserved": 0,
+      "referenceId": "PO-7789",
+      "notes": "Stock delivery shipment received",
+      "createdAt": "2026-10-28T17:10:54.467Z"
+    },
+    {
+      "id": "mov_diygldj",
+      "productId": "prod_x36jefdcu",
+      "warehouseId": "wh_avery_1",
+      "productName": "Warehouse Test Product",
+      "warehouseName": "Avery Dennison",
+      "type": "STOCK_ADD",
+      "quantity": 100,
+      "previousAvailable": 0,
+      "newAvailable": 100,
+      "previousReserved": 0,
+      "newReserved": 0,
+      "referenceId": "PRODUCT_CREATION",
+      "notes": "Initial inventory allocation upon product creation",
+      "createdAt": "2026-10-28T17:10:52.513Z"
+    }
+  ],
+  "storageSettings": {
+    "provider": "s3",
+    "s3Bucket": "my-test-ecommerce-bucket",
+    "s3Region": "us-east-1",
+    "s3Enabled": true,
+    "updatedAt": "2026-10-28T17:12:27.340Z",
+    "cloudfrontUrl": "https://d123456abcdef.cloudfront.net",
+    "s3AccessKeyId": "AKIAIOSFODNN7EXAMPLE",
+    "s3SecretAccessKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+  },
+  "mailConfig": {
+    "id": "cmvsdez2g0001tzzghnkvsdxp",
+    "isEnabled": true,
+    "defaultFromName": "QAReply Updated",
+    "defaultFromEmail": "qaadmin@example.com",
+    "defaultReplyName": "tag31",
+    "defaultReplyTo": "tag31@example.com",
+    "transportMethod": "SMTP",
+    "server": "smtp.gmail.com",
+    "port": 587,
+    "secureSocketType": "TLS",
+    "authType": "LOGIN",
+    "username": "admin@tag.com",
+    "password": "secret_app_password_123",
+    "contactUsEmail": "test2xuark@gmail.com",
+    "ccMailOption": true,
+    "ccEmailAddresses": [
+      "audit@example.com",
+      "manager@example.com"
+    ],
+    "createdAt": "2026-10-28T17:10:49.094Z",
+    "updatedAt": "2026-10-28T17:12:28.466Z"
+  },
+  "emailTemplates": [
+    {
+      "id": "tpl_user_reg",
+      "code": "USER_REGISTRATION",
+      "title": "User Registration Updated Title",
+      "subject": "Welcome to emox Store! [UPDATED]",
+      "bodyHtml": "\n            <div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px;\">\n              <h2 style=\"color: #2563eb; margin-top: 0;\">Welcome to emox Store, {userName}!</h2>\n              <p>Thank you for creating an account. Your customer account is now active and ready for express checkout.</p>\n              <div style=\"background: #f8fafc; padding: 15px; border-radius: 6px; margin: 20px 0;\">\n                <p style=\"margin: 4px 0;\"><strong>Email:</strong> {email}</p>\n                <p style=\"margin: 4px 0;\"><strong>Phone:</strong> {phone}</p>\n              </div>\n              <p>Explore exclusive seasonal deals and track your shipments directly from your Customer Dashboard.</p>\n              <p style=\"color: #64748b; font-size: 12px; margin-top: 30px;\">emox Store • Automated System Notification</p>\n            </div>\n          ",
+      "variables": [
+        "userName",
+        "email",
+        "phone"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T17:12:29.027Z"
+    },
+    {
+      "id": "tpl_forgot_pwd",
+      "code": "FORGET_PASSWORD",
+      "title": "Forget Password",
+      "subject": "Forget Password",
+      "bodyHtml": "\n            <div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;\">\n              <h2 style=\"color: #0f172a;\">Password Reset Request</h2>\n              <p>We received a request to reset your emox account password.</p>\n              <p>Click the link below or copy it to your browser to set a new password:</p>\n              <p><a href=\"{resetLink}\" style=\"display: inline-block; padding: 10px 20px; background: #2563eb; color: #ffffff; text-decoration: none; border-radius: 6px;\">Reset Password</a></p>\n              <p style=\"color: #64748b; font-size: 12px;\">If you did not request this, please ignore this email.</p>\n            </div>\n          ",
+      "variables": [
+        "resetLink",
+        "userName",
+        "email"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "tpl_order_confirm",
+      "code": "ORDER_CONFIRMATION",
+      "title": "Order Confirmation",
+      "subject": "Order Confirmation",
+      "bodyHtml": "\n            <div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;\">\n              <h2 style=\"color: #16a34a;\">Thank You for Your Order!</h2>\n              <p>Hi {userName}, your order <strong>#{orderNumber}</strong> has been received and confirmed.</p>\n              <div style=\"background: #f8fafc; padding: 15px; border-radius: 6px; margin: 20px 0;\">\n                <p style=\"margin: 4px 0;\"><strong>Order Total:</strong> {totalAmount}</p>\n                <p style=\"margin: 4px 0;\"><strong>Shipping Address:</strong> {shippingAddress}</p>\n                <p style=\"margin: 4px 0;\"><strong>Items:</strong> {items}</p>\n              </div>\n              <p>Our warehouse team is preparing your package for dispatch.</p>\n            </div>\n          ",
+      "variables": [
+        "userName",
+        "orderNumber",
+        "totalAmount",
+        "shippingAddress",
+        "items"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "tpl_bulk_order",
+      "code": "BULK_ORDER_CONFIRMATION",
+      "title": "Bulk Order Confirmation",
+      "subject": "New Bulk Order Email from Metalxplus !!",
+      "bodyHtml": "<p>Bulk order inquiry received for #{orderNumber}. Total: {totalAmount}.</p>",
+      "variables": [
+        "orderNumber",
+        "totalAmount",
+        "userName"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "tpl_custom_shipping",
+      "code": "CUSTOM_SHIPPING_ORDER",
+      "title": "Custom Shipping Order",
+      "subject": "Custom Shipping Order user [ORDERID]",
+      "bodyHtml": "<p>Custom shipping arranged for order #[ORDERID]. Carrier: {carrier}.</p>",
+      "variables": [
+        "orderId",
+        "carrier",
+        "userName"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "tpl_revised_order",
+      "code": "REVISED_ORDER",
+      "title": "Revised Order",
+      "subject": "Revised Order Details from Metalxplus !!",
+      "bodyHtml": "<p>Your order #{orderNumber} has been revised. New Total: {totalAmount}.</p>",
+      "variables": [
+        "orderNumber",
+        "totalAmount",
+        "items"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "tpl_low_inv",
+      "code": "LOW_INVENTORY",
+      "title": "Low Inventory Notification",
+      "subject": "Update the Stock for the testing",
+      "bodyHtml": "\n            <div style=\"font-family: Arial, sans-serif; padding: 20px; border: 1px solid #fecaca; background: #fff1f2; border-radius: 8px;\">\n              <h3 style=\"color: #dc2626;\">⚠️ Low Stock Alert: {productName}</h3>\n              <p>Warehouse: <strong>{warehouse}</strong></p>\n              <p>SKU: <strong>{sku}</strong></p>\n              <p>Current Available Stock: <strong>{currentStock}</strong> units (Reorder Level: {reorderLevel})</p>\n              <p>Please reorder stock promptly to prevent fulfillment delays.</p>\n            </div>\n          ",
+      "variables": [
+        "productName",
+        "sku",
+        "warehouse",
+        "currentStock",
+        "reorderLevel"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "tpl_unsub_news",
+      "code": "UNSUBSCRIBE_NEWSLETTER",
+      "title": "Unsubscribe Newsletter Footer",
+      "subject": "Unsubscribe Link Newsletter Footer",
+      "bodyHtml": "<p>You have successfully unsubscribed from marketing emails.</p>",
+      "variables": [
+        "email"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "tpl_news_sub",
+      "code": "NEWSLETTER_SUBSCRIBER",
+      "title": "Newsletter Subscriber Confirmation",
+      "subject": "Newsletter Subscriber Confirmation",
+      "bodyHtml": "<p>Welcome! Thank you for subscribing to our newsletter updates.</p>",
+      "variables": [
+        "email"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "tpl_news_remind",
+      "code": "NEWSLETTER_REMINDER",
+      "title": "Newsletter Subscriber Confirmation Reminder",
+      "subject": "Newsletter Subscriber Confirmation Reminder",
+      "bodyHtml": "<p>Reminder: Confirm your newsletter subscription to receive exclusive promo codes.</p>",
+      "variables": [
+        "email",
+        "confirmLink"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "tpl_mfg_created",
+      "code": "MANUFACTURER_CREATED",
+      "title": "Manufacturer Created",
+      "subject": "Manufacturer Created",
+      "bodyHtml": "<p>New manufacturer <strong>{mfgName}</strong> has been registered in the system. Contact: {contactName} ({email}).</p>",
+      "variables": [
+        "mfgName",
+        "contactName",
+        "email"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "tpl_wh_created",
+      "code": "WAREHOUSE_CREATED",
+      "title": "Warehouse Created",
+      "subject": "Warehouse Created",
+      "bodyHtml": "<p>New warehouse <strong>{warehouseName}</strong> has been successfully configured and activated.</p>",
+      "variables": [
+        "warehouseName",
+        "contactName"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "tpl_unpaid_order",
+      "code": "UNPAID_ORDER_DETAILS",
+      "title": "Pay Button Click - Unpaid Order Details",
+      "subject": "Pay Button Click - Unpaid Order Details",
+      "bodyHtml": "<p>Order #{orderNumber} is pending payment. Click here to complete checkout: <a href=\"{checkoutUrl}\">Complete Payment</a></p>",
+      "variables": [
+        "orderNumber",
+        "checkoutUrl",
+        "totalAmount"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "tpl_new_review",
+      "code": "NEW_REVIEW_RECEIVED",
+      "title": "New Review Received",
+      "subject": "New Review Received",
+      "bodyHtml": "<p>New product review submitted by {userName} for {productName}. Rating: {rating}/5 stars.</p>",
+      "variables": [
+        "userName",
+        "productName",
+        "rating"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "tpl_user_approval",
+      "code": "REQUEST_USER_APPROVAL",
+      "title": "Request for User Approval",
+      "subject": "New Registration At Metalxplus - Need to Approve",
+      "bodyHtml": "<p>A new customer account {email} requires administrative verification.</p>",
+      "variables": [
+        "email",
+        "name"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "tpl_wh_packing",
+      "code": "WAREHOUSE_PACKING_LIST",
+      "title": "Warehouse Packing List",
+      "subject": "Warehouse Packing List",
+      "bodyHtml": "<p>Packing list generated for order #{orderNumber}. Fulfilling Warehouse: {warehouse}. Items: {items}</p>",
+      "variables": [
+        "orderNumber",
+        "warehouse",
+        "items"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
+    },
+    {
+      "id": "tpl_order_dispatched",
+      "code": "ORDER_DISPATCHED",
+      "title": "Order Dispatched / Shipped",
+      "subject": "Order Dispatched - Tracking #[TRACKINGNUMBER]",
+      "bodyHtml": "\n            <div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;\">\n              <h2 style=\"color: #2563eb;\">Your Package is on the Way! 🚚</h2>\n              <p>Hi {userName}, your order <strong>#{orderNumber}</strong> has been dispatched from <strong>{warehouse}</strong>.</p>\n              <div style=\"background: #f8fafc; padding: 15px; border-radius: 6px; margin: 20px 0;\">\n                <p style=\"margin: 4px 0;\"><strong>Logistics Carrier:</strong> {carrier}</p>\n                <p style=\"margin: 4px 0;\"><strong>Tracking Number:</strong> {trackingNumber}</p>\n              </div>\n              <p><a href=\"{trackingUrl}\" style=\"display: inline-block; padding: 10px 20px; background: #2563eb; color: #ffffff; text-decoration: none; border-radius: 6px;\">Track Your Shipment</a></p>\n            </div>\n          ",
+      "variables": [
+        "userName",
+        "orderNumber",
+        "trackingNumber",
+        "carrier",
+        "warehouse",
+        "trackingUrl"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-28T16:45:55.245Z",
+      "updatedAt": "2026-10-28T16:45:55.245Z"
     }
   ],
   "themes": [
@@ -5687,6 +7148,44 @@
       "status": "Active",
       "createdAt": "2026-10-25T16:32:14.974Z",
       "updatedAt": "2026-10-25T16:32:14.974Z"
+    },
+    {
+      "id": "addr_6imcb3l",
+      "userId": "usr_pwhq6yht",
+      "customerEmail": "gyanu@gmail.com",
+      "type": "billing",
+      "name": "Gyanu",
+      "company": "",
+      "addressLine1": "Village and post niyauj",
+      "addressLine2": "",
+      "country": "India",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "phone": "+918957058666",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-28T16:43:06.116Z",
+      "updatedAt": "2026-10-28T16:43:06.116Z"
+    },
+    {
+      "id": "addr_1tg8e4a",
+      "userId": "usr_pwhq6yht",
+      "customerEmail": "gyanu@gmail.com",
+      "type": "shipping",
+      "name": "Gyanu",
+      "company": "",
+      "addressLine1": "Village and post niyauj",
+      "addressLine2": "",
+      "country": "India",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "phone": "+918957058666",
+      "isDefault": true,
+      "status": "Active",
+      "createdAt": "2026-10-28T16:43:06.116Z",
+      "updatedAt": "2026-10-28T16:43:06.116Z"
     }
   ],
   "reviewAutoApprove": true,

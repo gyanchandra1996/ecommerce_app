@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { DatabaseStore } from "@/core/db/store";
 import { AuthService } from "@/modules/auth/services/auth.service";
+import { EmailService } from "@/core/mail/email.service";
 
 export async function GET(req: Request) {
   try {
@@ -153,6 +154,37 @@ export async function POST(req: Request) {
       shippedAt: body.shippedAt || undefined,
       estimatedDelivery: body.estimatedDelivery || undefined,
     });
+
+    // 1. Reserve stock in Warehouse Inventory
+    if (created.items && created.items.length > 0) {
+      const reserveItems = created.items
+        .filter((it: any) => Boolean(it.productId))
+        .map((it: any) => ({
+          productId: it.productId!,
+          quantity: it.quantity,
+          warehouseId: body.warehouseId || undefined,
+        }));
+      if (reserveItems.length > 0) {
+        await DatabaseStore.reserveStock(created.id, reserveItems);
+      }
+    }
+
+    // 2. Trigger Order Confirmation Email
+    if (created.customerEmail) {
+      EmailService.sendOrderConfirmedEmail({
+        id: created.id,
+        orderNumber: created.orderNumber,
+        customerName: created.customerName,
+        customerEmail: created.customerEmail,
+        totalPrice: created.totalPrice,
+        items: created.items.map((it: any) => ({
+          name: it.name,
+          quantity: it.quantity,
+          price: it.price,
+        })),
+        shippingAddress: created.shippingAddress,
+      }).catch((e) => console.error("Failed to trigger order confirmation email:", e));
+    }
 
     return NextResponse.json({ success: true, data: created }, { status: 201 });
   } catch (error: any) {

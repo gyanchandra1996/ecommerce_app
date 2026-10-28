@@ -146,6 +146,8 @@ export interface ProductRecord {
   currentStock: number;
   minStock: number;
   warehouse?: string | null;
+  warehouseId?: string | null;
+  manufacturerId?: string | null;
   status: "ACTIVE" | "DRAFT" | "ARCHIVED";
   isSoldOut: boolean;
   rating?: number;
@@ -269,6 +271,7 @@ export interface ManufacturerRecord {
   id: string;
   accountNumber: string;
   name: string;
+  companyName?: string;
   contactName: string;
   email: string;
   phone?: string;
@@ -280,6 +283,8 @@ export interface ManufacturerRecord {
   state?: string;
   city?: string;
   zipCode?: string;
+  logo?: string;
+  description?: string;
   isActive: boolean;
   showAdvanced?: boolean;
   advancedOptions?: {
@@ -305,8 +310,89 @@ export interface WarehouseRecord {
   state?: string;
   country?: string;
   zipCode?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  fax?: string;
+  shipstationWarehouse?: string;
+  sellbriteWarehouse?: string;
   isActive: boolean;
   manufacturerId?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+
+export interface StorageSettingsRecord {
+  provider: "local" | "s3";
+  s3Enabled: boolean;
+  s3Region?: string;
+  s3Bucket?: string;
+  s3AccessKeyId?: string;
+  s3SecretAccessKey?: string;
+  cloudfrontUrl?: string;
+  updatedAt?: string;
+}
+
+export interface WarehouseInventoryRecord {
+  id: string;
+  productId: string;
+  warehouseId: string;
+  productName?: string;
+  productSku?: string;
+  warehouseName?: string;
+  availableQuantity: number;
+  reservedQuantity: number;
+  reorderLevel: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface InventoryMovementRecord {
+  id: string;
+  productId: string;
+  warehouseId: string;
+  productName?: string;
+  warehouseName?: string;
+  type: "STOCK_ADD" | "RESERVATION" | "DISPATCH" | "RETURN" | "ADJUSTMENT" | "RELEASE";
+  quantity: number;
+  previousAvailable: number;
+  newAvailable: number;
+  previousReserved: number;
+  newReserved: number;
+  referenceId?: string; // orderId, shipmentId, manual
+  notes?: string;
+  createdAt: string;
+}
+
+export interface MailConfigurationRecord {
+  id?: string;
+  isEnabled: boolean;
+  defaultFromName: string;
+  defaultFromEmail: string;
+  defaultReplyName?: string | null;
+  defaultReplyTo?: string | null;
+  transportMethod: "SMTP" | "SENDMAIL" | "SES" | "SIMULATED";
+  server: string;
+  port: number;
+  secureSocketType: "TLS" | "SSL" | "NONE";
+  authType: "LOGIN" | "PLAIN" | "CRAM-MD5";
+  username: string;
+  password?: string | null;
+  contactUsEmail: string;
+  ccMailOption: boolean;
+  ccEmailAddresses: string[];
+  updatedAt?: string;
+}
+
+export interface EmailTemplateRecord {
+  id: string;
+  code: string;
+  title: string;
+  subject: string;
+  bodyHtml: string;
+  bodyText?: string | null;
+  variables: string[];
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -364,6 +450,7 @@ export interface OrderRecord {
   customerName: string;
   customerEmail?: string;
   customerPhone?: string;
+  warehouseId?: string | null;
   orderDate: string;
   gateway: string; // "Razorpay" | "PayPal" | "Paytm" | "Stripe" | "Authorize.net" | "Braintree" | "COD"
   gatewayCode?: string;
@@ -456,6 +543,9 @@ export interface ShipmentRecord {
   recipientName?: string;
   recipientPhone?: string;
   shippingAddress?: string;
+  warehouseId?: string;
+  pickupAddress?: string;
+  deliveryAddress?: string;
   carrier?: string;
   shippedAt?: string;
   deliveredAt?: string;
@@ -716,6 +806,11 @@ interface LocalDatabaseSchema {
   shipments?: ShipmentRecord[];
   shippingSettings?: ShippingSettingsRecord;
   shippingZones?: ShippingZoneRecord[];
+  warehouseInventory?: WarehouseInventoryRecord[];
+  inventoryMovements?: InventoryMovementRecord[];
+  storageSettings?: StorageSettingsRecord | null;
+  mailConfig?: MailConfigurationRecord | null;
+  emailTemplates?: EmailTemplateRecord[];
   themes?: ThemeRecord[];
   addresses?: AddressRecord[];
   reviewAutoApprove?: boolean;
@@ -791,6 +886,11 @@ export class DatabaseStore {
         shipments: parsed.shipments || [],
         shippingSettings: parsed.shippingSettings || null,
         shippingZones: parsed.shippingZones || [],
+        warehouseInventory: parsed.warehouseInventory || [],
+        inventoryMovements: parsed.inventoryMovements || [],
+        storageSettings: parsed.storageSettings || null,
+        mailConfig: parsed.mailConfig || null,
+        emailTemplates: parsed.emailTemplates || [],
         themes: parsed.themes || [],
         addresses: parsed.addresses || [],
         reviewAutoApprove: parsed.reviewAutoApprove ?? true,
@@ -798,14 +898,19 @@ export class DatabaseStore {
         productCategories: parsed.productCategories || [],
         productAssets: parsed.productAssets || [],
       };
-      return this.memoryCache;
+      return this.memoryCache!;
     } catch {
       try {
         const tmpFile = path.join(os.tmpdir(), "ecommerce-local-db.json");
         const data = await fs.readFile(tmpFile, "utf-8");
         const parsed = JSON.parse(data);
         this.memoryCache = {
-          users: parsed.users || [],
+          users: (parsed.users || []).map((u: UserRecord) => {
+            if (!u.type) {
+              u.type = (u.accountType === "admin" || u.role === "ADMIN" || (u.role && u.role !== "CUSTOMER" && u.accountType !== "customer")) ? "admin" : "customer";
+            }
+            return u;
+          }),
           assets: parsed.assets || [],
           categories: parsed.categories || [],
           products: parsed.products || [],
@@ -826,10 +931,15 @@ export class DatabaseStore {
           wishlist: parsed.wishlist || [],
           coupons: parsed.coupons || [],
           gateways: parsed.gateways || [],
-        shippingProviders: parsed.shippingProviders || [],
-        shipments: parsed.shipments || [],
-        shippingSettings: parsed.shippingSettings || null,
-        shippingZones: parsed.shippingZones || [],
+          shippingProviders: parsed.shippingProviders || [],
+          shipments: parsed.shipments || [],
+          shippingSettings: parsed.shippingSettings || null,
+          shippingZones: parsed.shippingZones || [],
+          warehouseInventory: parsed.warehouseInventory || [],
+          inventoryMovements: parsed.inventoryMovements || [],
+          storageSettings: parsed.storageSettings || null,
+          mailConfig: parsed.mailConfig || null,
+          emailTemplates: parsed.emailTemplates || [],
           themes: parsed.themes || [],
           addresses: parsed.addresses || [],
           reviewAutoApprove: parsed.reviewAutoApprove ?? true,
@@ -837,7 +947,7 @@ export class DatabaseStore {
           productCategories: parsed.productCategories || [],
           productAssets: parsed.productAssets || [],
         };
-        return this.memoryCache;
+        return this.memoryCache!;
       } catch {
         const initial: LocalDatabaseSchema = {
           users: [],
@@ -1459,6 +1569,8 @@ export class DatabaseStore {
     currentStock?: number;
     minStock?: number;
     warehouse?: string;
+    warehouseId?: string;
+    manufacturerId?: string;
     status?: "ACTIVE" | "DRAFT" | "ARCHIVED";
     brand?: string;
     categoryIds?: string[];
@@ -1491,6 +1603,8 @@ export class DatabaseStore {
       currentStock: data.currentStock !== undefined ? Number(data.currentStock) : 10,
       minStock: data.minStock !== undefined ? Number(data.minStock) : 5,
       warehouse: data.warehouse || "gyanwarehouse",
+      warehouseId: data.warehouseId || null,
+      manufacturerId: data.manufacturerId || null,
       status: data.status || "ACTIVE",
       isSoldOut: Number(data.currentStock) === 0,
       brand: data.brand || null,
@@ -2449,8 +2563,27 @@ export class DatabaseStore {
   }
 
   public static async deleteManufacturer(id: string): Promise<boolean> {
+    const usePg = await this.testPostgres();
+    if (usePg) {
+      try {
+        const prodCount = await prisma.product.count({ where: { manufacturerId: id } });
+        if (prodCount > 0) {
+          throw new Error(`Cannot delete manufacturer: it is linked to ${prodCount} product(s). Please reassign products first.`);
+        }
+        await prisma.manufacturer.delete({ where: { id } });
+        return true;
+      } catch (err: any) {
+        if (err.message && err.message.includes("Cannot delete manufacturer")) throw err;
+        // fallback to local db
+      }
+    }
+
     const db = await this.readLocalDb();
     if (!db.manufacturers) return false;
+    const linkedProducts = (db.products || []).filter((p) => p.manufacturerId === id);
+    if (linkedProducts.length > 0) {
+      throw new Error(`Cannot delete manufacturer: it is linked to ${linkedProducts.length} product(s). Please reassign products first.`);
+    }
     db.manufacturers = db.manufacturers.filter((m) => m.id !== id);
     if (db.warehouses) {
       db.warehouses = db.warehouses.filter((w) => w.manufacturerId !== id);
@@ -2515,8 +2648,51 @@ export class DatabaseStore {
   }
 
   public static async deleteWarehouse(id: string): Promise<boolean> {
+    const usePg = await this.testPostgres();
+    if (usePg) {
+      try {
+        const prodCount = await prisma.product.count({ where: { warehouseId: id } });
+        if (prodCount > 0) {
+          throw new Error(`Cannot delete warehouse: it is assigned to ${prodCount} product(s).`);
+        }
+        const invCount = await prisma.warehouseInventory.count({
+          where: {
+            warehouseId: id,
+            OR: [{ availableQuantity: { gt: 0 } }, { reservedQuantity: { gt: 0 } }],
+          },
+        });
+        if (invCount > 0) {
+          throw new Error("Cannot delete warehouse: it currently holds stock records.");
+        }
+        const shipmentCount = await prisma.shipment.count({ where: { warehouseId: id } });
+        if (shipmentCount > 0) {
+          throw new Error("Cannot delete warehouse: order fulfillment records depend on it.");
+        }
+        await prisma.warehouse.delete({ where: { id } });
+        return true;
+      } catch (err: any) {
+        if (err.message && err.message.includes("Cannot delete warehouse")) throw err;
+        // fallback
+      }
+    }
+
     const db = await this.readLocalDb();
     if (!db.warehouses) return false;
+    const linkedProducts = (db.products || []).filter((p) => p.warehouseId === id);
+    if (linkedProducts.length > 0) {
+      throw new Error(`Cannot delete warehouse: it is assigned to ${linkedProducts.length} product(s).`);
+    }
+    const hasStock = (db.warehouseInventory || []).some(
+      (inv) => inv.warehouseId === id && (inv.availableQuantity > 0 || inv.reservedQuantity > 0)
+    );
+    if (hasStock) {
+      throw new Error("Cannot delete warehouse: it currently holds available or reserved stock.");
+    }
+    const hasShipment = (db.shipments || []).some((s) => s.warehouseId === id);
+    if (hasShipment) {
+      throw new Error("Cannot delete warehouse: order shipments depend on it.");
+    }
+
     db.warehouses = db.warehouses.filter((w) => w.id !== id);
     await this.writeLocalDb(db);
     return true;
@@ -6971,6 +7147,375 @@ export class DatabaseStore {
       hasChanges = true;
     }
 
+
+    // 24. Seed Warehouses if empty (Matching Screenshot 2)
+    if (!db.warehouses || db.warehouses.length === 0) {
+      db.warehouses = [
+        {
+          id: "wh_gyan",
+          accountNumber: "45",
+          name: "gyanwarehouse",
+          contactName: "Gyan",
+          email: "kaucrutelsicro-4756@yopmail.com",
+          phone: "8957058666",
+          fax: "(222) 223-3333",
+          address: "address1",
+          addressLine1: "address1",
+          addressLine2: "",
+          city: "Floral Park",
+          state: "New York",
+          country: "United States",
+          zipCode: "11005",
+          isActive: true,
+          shipstationWarehouse: "624047",
+          sellbriteWarehouse: "04816333-dfbe-49e4-9769-f4bd6b972f21",
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "wh_mumbai",
+          accountNumber: "WH-101",
+          name: "Mumbai West Fulfillment Center",
+          contactName: "Kamlesh Patel",
+          email: "mumbai.wh@emox.store",
+          phone: "+91 98200 44556",
+          fax: "+91 22 2844 1122",
+          address: "Bandra Kurla Complex, Plot 14, Mumbai",
+          addressLine1: "Bandra Kurla Complex, Plot 14",
+          addressLine2: "Industrial Wing B",
+          city: "Mumbai",
+          state: "Maharashtra",
+          country: "India",
+          zipCode: "400051",
+          isActive: true,
+          shipstationWarehouse: "882109",
+          sellbriteWarehouse: "99120-mumbai-hub",
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "wh_delhi",
+          accountNumber: "WH-102",
+          name: "Delhi NCR Hub",
+          contactName: "Sunil Verma",
+          email: "delhi.wh@emox.store",
+          phone: "+91 98111 22334",
+          fax: "",
+          address: "Sector 18, Udyog Vihar, Gurugram",
+          addressLine1: "Sector 18, Udyog Vihar",
+          addressLine2: "Phase 4",
+          city: "Gurugram",
+          state: "Haryana",
+          country: "India",
+          zipCode: "122015",
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ];
+      hasChanges = true;
+    }
+
+    // 25. Seed Warehouse Inventory for all existing products if empty
+    if (!db.warehouseInventory || db.warehouseInventory.length === 0) {
+      const primaryWh = (db.warehouses || [])[0] || { id: "wh_gyan", name: "gyanwarehouse" };
+      db.warehouseInventory = (db.products || []).map((p) => ({
+        id: "winv_" + p.id + "_" + primaryWh.id,
+        productId: p.id,
+        warehouseId: primaryWh.id,
+        productName: p.name,
+        productSku: p.sku,
+        warehouseName: primaryWh.name,
+        availableQuantity: p.currentStock || 50,
+        reservedQuantity: 0,
+        reorderLevel: p.minStock || 10,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      }));
+      hasChanges = true;
+    }
+
+    // 26. Seed Storage Settings if missing
+    if (!db.storageSettings) {
+      db.storageSettings = {
+        provider: "local",
+        s3Enabled: false,
+        s3Region: "us-east-1",
+        s3Bucket: "",
+        s3AccessKeyId: "",
+        s3SecretAccessKey: "",
+        cloudfrontUrl: "",
+        updatedAt: new Date().toISOString(),
+      };
+      hasChanges = true;
+    }
+
+    // 27. Seed Mail Configuration (Matching Screenshot 2)
+    if (!db.mailConfig) {
+      db.mailConfig = {
+        isEnabled: true,
+        defaultFromName: "QAReply",
+        defaultFromEmail: "qaadmin@example.com",
+        defaultReplyName: "tag31",
+        defaultReplyTo: "tag31@example.com",
+        transportMethod: "SENDMAIL",
+        server: "smtp.gmail.com",
+        port: 25,
+        secureSocketType: "TLS",
+        authType: "LOGIN",
+        username: "admin@tag.com",
+        password: "",
+        contactUsEmail: "test2xuark@gmail.com",
+        ccMailOption: true,
+        ccEmailAddresses: ["dup@example.com", "cc2@example.com"],
+        updatedAt: new Date().toISOString(),
+      };
+      hasChanges = true;
+    }
+
+    // 28. Seed Email Templates (Matching all 16 rows in Screenshot 1)
+    if (!db.emailTemplates || db.emailTemplates.length === 0) {
+      db.emailTemplates = [
+        {
+          id: "tpl_user_reg",
+          code: "USER_REGISTRATION",
+          title: "User RegistrationAug22title",
+          subject: "[EMAIL]User RegistrationAug22title[PHONE]",
+          bodyHtml: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px;">
+              <h2 style="color: #2563eb; margin-top: 0;">Welcome to emox Store, {userName}!</h2>
+              <p>Thank you for creating an account. Your customer account is now active and ready for express checkout.</p>
+              <div style="background: #f8fafc; padding: 15px; border-radius: 6px; margin: 20px 0;">
+                <p style="margin: 4px 0;"><strong>Email:</strong> {email}</p>
+                <p style="margin: 4px 0;"><strong>Phone:</strong> {phone}</p>
+              </div>
+              <p>Explore exclusive seasonal deals and track your shipments directly from your Customer Dashboard.</p>
+              <p style="color: #64748b; font-size: 12px; margin-top: 30px;">emox Store • Automated System Notification</p>
+            </div>
+          `,
+          bodyText: "Welcome to emox Store, {userName}! Your account ({email}) is now active.",
+          variables: ["userName", "email", "phone"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_forgot_pwd",
+          code: "FORGET_PASSWORD",
+          title: "Forget Password",
+          subject: "Forget Password",
+          bodyHtml: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
+              <h2 style="color: #0f172a;">Password Reset Request</h2>
+              <p>We received a request to reset your emox account password.</p>
+              <p>Click the link below or copy it to your browser to set a new password:</p>
+              <p><a href="{resetLink}" style="display: inline-block; padding: 10px 20px; background: #2563eb; color: #ffffff; text-decoration: none; border-radius: 6px;">Reset Password</a></p>
+              <p style="color: #64748b; font-size: 12px;">If you did not request this, please ignore this email.</p>
+            </div>
+          `,
+          variables: ["resetLink", "userName", "email"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_order_confirm",
+          code: "ORDER_CONFIRMATION",
+          title: "Order Confirmation",
+          subject: "Order Confirmation",
+          bodyHtml: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
+              <h2 style="color: #16a34a;">Thank You for Your Order!</h2>
+              <p>Hi {userName}, your order <strong>#{orderNumber}</strong> has been received and confirmed.</p>
+              <div style="background: #f8fafc; padding: 15px; border-radius: 6px; margin: 20px 0;">
+                <p style="margin: 4px 0;"><strong>Order Total:</strong> {totalAmount}</p>
+                <p style="margin: 4px 0;"><strong>Shipping Address:</strong> {shippingAddress}</p>
+                <p style="margin: 4px 0;"><strong>Items:</strong> {items}</p>
+              </div>
+              <p>Our warehouse team is preparing your package for dispatch.</p>
+            </div>
+          `,
+          variables: ["userName", "orderNumber", "totalAmount", "shippingAddress", "items"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_bulk_order",
+          code: "BULK_ORDER_CONFIRMATION",
+          title: "Bulk Order Confirmation",
+          subject: "New Bulk Order Email from Metalxplus !!",
+          bodyHtml: `<p>Bulk order inquiry received for #{orderNumber}. Total: {totalAmount}.</p>`,
+          variables: ["orderNumber", "totalAmount", "userName"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_custom_shipping",
+          code: "CUSTOM_SHIPPING_ORDER",
+          title: "Custom Shipping Order",
+          subject: "Custom Shipping Order user [ORDERID]",
+          bodyHtml: `<p>Custom shipping arranged for order #[ORDERID]. Carrier: {carrier}.</p>`,
+          variables: ["orderId", "carrier", "userName"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_revised_order",
+          code: "REVISED_ORDER",
+          title: "Revised Order",
+          subject: "Revised Order Details from Metalxplus !!",
+          bodyHtml: `<p>Your order #{orderNumber} has been revised. New Total: {totalAmount}.</p>`,
+          variables: ["orderNumber", "totalAmount", "items"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_low_inv",
+          code: "LOW_INVENTORY",
+          title: "Low Inventory Notification",
+          subject: "Update the Stock for the testing",
+          bodyHtml: `
+            <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #fecaca; background: #fff1f2; border-radius: 8px;">
+              <h3 style="color: #dc2626;">⚠️ Low Stock Alert: {productName}</h3>
+              <p>Warehouse: <strong>{warehouse}</strong></p>
+              <p>SKU: <strong>{sku}</strong></p>
+              <p>Current Available Stock: <strong>{currentStock}</strong> units (Reorder Level: {reorderLevel})</p>
+              <p>Please reorder stock promptly to prevent fulfillment delays.</p>
+            </div>
+          `,
+          variables: ["productName", "sku", "warehouse", "currentStock", "reorderLevel"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_unsub_news",
+          code: "UNSUBSCRIBE_NEWSLETTER",
+          title: "Unsubscribe Newsletter Footer",
+          subject: "Unsubscribe Link Newsletter Footer",
+          bodyHtml: `<p>You have successfully unsubscribed from marketing emails.</p>`,
+          variables: ["email"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_news_sub",
+          code: "NEWSLETTER_SUBSCRIBER",
+          title: "Newsletter Subscriber Confirmation",
+          subject: "Newsletter Subscriber Confirmation",
+          bodyHtml: `<p>Welcome! Thank you for subscribing to our newsletter updates.</p>`,
+          variables: ["email"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_news_remind",
+          code: "NEWSLETTER_REMINDER",
+          title: "Newsletter Subscriber Confirmation Reminder",
+          subject: "Newsletter Subscriber Confirmation Reminder",
+          bodyHtml: `<p>Reminder: Confirm your newsletter subscription to receive exclusive promo codes.</p>`,
+          variables: ["email", "confirmLink"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_mfg_created",
+          code: "MANUFACTURER_CREATED",
+          title: "Manufacturer Created",
+          subject: "Manufacturer Created",
+          bodyHtml: `<p>New manufacturer <strong>{mfgName}</strong> has been registered in the system. Contact: {contactName} ({email}).</p>`,
+          variables: ["mfgName", "contactName", "email"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_wh_created",
+          code: "WAREHOUSE_CREATED",
+          title: "Warehouse Created",
+          subject: "Warehouse Created",
+          bodyHtml: `<p>New warehouse <strong>{warehouseName}</strong> has been successfully configured and activated.</p>`,
+          variables: ["warehouseName", "contactName"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_unpaid_order",
+          code: "UNPAID_ORDER_DETAILS",
+          title: "Pay Button Click - Unpaid Order Details",
+          subject: "Pay Button Click - Unpaid Order Details",
+          bodyHtml: `<p>Order #{orderNumber} is pending payment. Click here to complete checkout: <a href="{checkoutUrl}">Complete Payment</a></p>`,
+          variables: ["orderNumber", "checkoutUrl", "totalAmount"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_new_review",
+          code: "NEW_REVIEW_RECEIVED",
+          title: "New Review Received",
+          subject: "New Review Received",
+          bodyHtml: `<p>New product review submitted by {userName} for {productName}. Rating: {rating}/5 stars.</p>`,
+          variables: ["userName", "productName", "rating"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_user_approval",
+          code: "REQUEST_USER_APPROVAL",
+          title: "Request for User Approval",
+          subject: "New Registration At Metalxplus - Need to Approve",
+          bodyHtml: `<p>A new customer account {email} requires administrative verification.</p>`,
+          variables: ["email", "name"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_wh_packing",
+          code: "WAREHOUSE_PACKING_LIST",
+          title: "Warehouse Packing List",
+          subject: "Warehouse Packing List",
+          bodyHtml: `<p>Packing list generated for order #{orderNumber}. Fulfilling Warehouse: {warehouse}. Items: {items}</p>`,
+          variables: ["orderNumber", "warehouse", "items"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: "tpl_order_dispatched",
+          code: "ORDER_DISPATCHED",
+          title: "Order Dispatched / Shipped",
+          subject: "Order Dispatched - Tracking #[TRACKINGNUMBER]",
+          bodyHtml: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
+              <h2 style="color: #2563eb;">Your Package is on the Way! 🚚</h2>
+              <p>Hi {userName}, your order <strong>#{orderNumber}</strong> has been dispatched from <strong>{warehouse}</strong>.</p>
+              <div style="background: #f8fafc; padding: 15px; border-radius: 6px; margin: 20px 0;">
+                <p style="margin: 4px 0;"><strong>Logistics Carrier:</strong> {carrier}</p>
+                <p style="margin: 4px 0;"><strong>Tracking Number:</strong> {trackingNumber}</p>
+              </div>
+              <p><a href="{trackingUrl}" style="display: inline-block; padding: 10px 20px; background: #2563eb; color: #ffffff; text-decoration: none; border-radius: 6px;">Track Your Shipment</a></p>
+            </div>
+          `,
+          variables: ["userName", "orderNumber", "trackingNumber", "carrier", "warehouse", "trackingUrl"],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ];
+      hasChanges = true;
+    }
+
     // 23. Seed Shipments for existing orders if empty
     if (!db.shipments || db.shipments.length === 0) {
       db.shipments = (db.orders || []).slice(0, 5).map((o, idx) => {
@@ -7007,4 +7552,548 @@ export class DatabaseStore {
       await this.writeLocalDb(db);
     }
   }
+
+  // ================= STORAGE SETTINGS =================
+
+  public static async getStorageSettings(): Promise<StorageSettingsRecord> {
+    await this.seedInitialData();
+    const usePg = await this.testPostgres();
+    if (usePg) {
+      try {
+        const s = await prisma.setting.findUnique({ where: { key: "asset_storage_settings" } });
+        if (s && s.value) {
+          return s.value as unknown as StorageSettingsRecord;
+        }
+      } catch {}
+    }
+
+    const db = await this.readLocalDb();
+    if (db.storageSettings) {
+      return db.storageSettings;
+    }
+
+    const defaultSettings: StorageSettingsRecord = {
+      provider: "local",
+      s3Enabled: false,
+      s3Region: "us-east-1",
+      s3Bucket: "",
+      s3AccessKeyId: "",
+      s3SecretAccessKey: "",
+      cloudfrontUrl: "",
+      updatedAt: new Date().toISOString(),
+    };
+    db.storageSettings = defaultSettings;
+    await this.writeLocalDb(db);
+    return defaultSettings;
+  }
+
+  public static async saveStorageSettings(settings: Partial<StorageSettingsRecord>): Promise<StorageSettingsRecord> {
+    const existing = await this.getStorageSettings();
+    const updated: StorageSettingsRecord = {
+      ...existing,
+      ...settings,
+      updatedAt: new Date().toISOString(),
+    };
+
+    const usePg = await this.testPostgres();
+    if (usePg) {
+      try {
+        await prisma.setting.upsert({
+          where: { key: "asset_storage_settings" },
+          create: { key: "asset_storage_settings", value: updated as any },
+          update: { value: updated as any },
+        });
+      } catch {}
+    }
+
+    const db = await this.readLocalDb();
+    db.storageSettings = updated;
+    await this.writeLocalDb(db);
+    return updated;
+  }
+
+  // ================= MAIL CONFIGURATION =================
+
+  public static async getMailConfiguration(): Promise<MailConfigurationRecord> {
+    await this.seedInitialData();
+    const usePg = await this.testPostgres();
+    if (usePg) {
+      try {
+        const config = await prisma.mailConfiguration.findFirst();
+        if (config) {
+          return {
+            ...config,
+            transportMethod: config.transportMethod as any,
+            secureSocketType: config.secureSocketType as any,
+            authType: config.authType as any,
+            updatedAt: config.updatedAt.toISOString(),
+          };
+        }
+      } catch {}
+    }
+
+    const db = await this.readLocalDb();
+    if (db.mailConfig) {
+      return db.mailConfig;
+    }
+
+    const defaultConfig: MailConfigurationRecord = {
+      isEnabled: true,
+      defaultFromName: "QAReply",
+      defaultFromEmail: "qaadmin@example.com",
+      defaultReplyName: "tag31",
+      defaultReplyTo: "tag31@example.com",
+      transportMethod: "SENDMAIL",
+      server: "smtp.gmail.com",
+      port: 25,
+      secureSocketType: "TLS",
+      authType: "LOGIN",
+      username: "admin@tag.com",
+      password: "",
+      contactUsEmail: "test2xuark@gmail.com",
+      ccMailOption: true,
+      ccEmailAddresses: ["dup@example.com", "cc2@example.com"],
+      updatedAt: new Date().toISOString(),
+    };
+    db.mailConfig = defaultConfig;
+    await this.writeLocalDb(db);
+    return defaultConfig;
+  }
+
+  public static async saveMailConfiguration(data: Partial<MailConfigurationRecord>): Promise<MailConfigurationRecord> {
+    const existing = await this.getMailConfiguration();
+    const updated: MailConfigurationRecord = {
+      ...existing,
+      ...data,
+      updatedAt: new Date().toISOString(),
+    };
+
+    const usePg = await this.testPostgres();
+    if (usePg) {
+      try {
+        const first = await prisma.mailConfiguration.findFirst();
+        if (first) {
+          await prisma.mailConfiguration.update({
+            where: { id: first.id },
+            data: {
+              isEnabled: updated.isEnabled,
+              defaultFromName: updated.defaultFromName,
+              defaultFromEmail: updated.defaultFromEmail,
+              defaultReplyName: updated.defaultReplyName,
+              defaultReplyTo: updated.defaultReplyTo,
+              transportMethod: updated.transportMethod,
+              server: updated.server,
+              port: updated.port,
+              secureSocketType: updated.secureSocketType,
+              authType: updated.authType,
+              username: updated.username,
+              password: updated.password || "",
+              contactUsEmail: updated.contactUsEmail,
+              ccMailOption: updated.ccMailOption,
+              ccEmailAddresses: updated.ccEmailAddresses,
+            },
+          });
+        } else {
+          await prisma.mailConfiguration.create({
+            data: {
+              isEnabled: updated.isEnabled,
+              defaultFromName: updated.defaultFromName,
+              defaultFromEmail: updated.defaultFromEmail,
+              defaultReplyName: updated.defaultReplyName,
+              defaultReplyTo: updated.defaultReplyTo,
+              transportMethod: updated.transportMethod,
+              server: updated.server,
+              port: updated.port,
+              secureSocketType: updated.secureSocketType,
+              authType: updated.authType,
+              username: updated.username,
+              password: updated.password || "",
+              contactUsEmail: updated.contactUsEmail,
+              ccMailOption: updated.ccMailOption,
+              ccEmailAddresses: updated.ccEmailAddresses,
+            },
+          });
+        }
+      } catch {}
+    }
+
+    const db = await this.readLocalDb();
+    db.mailConfig = updated;
+    await this.writeLocalDb(db);
+    return updated;
+  }
+
+  // ================= EMAIL TEMPLATES =================
+
+  public static async findEmailTemplates(search?: string): Promise<EmailTemplateRecord[]> {
+    await this.seedInitialData();
+    const usePg = await this.testPostgres();
+    if (usePg) {
+      try {
+        const list = await prisma.emailTemplate.findMany({
+          orderBy: { createdAt: "asc" },
+        });
+        if (list && list.length > 0) {
+          let mapped = list.map((t) => ({
+            ...t,
+            createdAt: t.createdAt.toISOString(),
+            updatedAt: t.updatedAt.toISOString(),
+          }));
+          if (search?.trim()) {
+            const q = search.toLowerCase().trim();
+            mapped = mapped.filter((t) => t.title.toLowerCase().includes(q) || t.subject.toLowerCase().includes(q));
+          }
+          return mapped;
+        }
+      } catch {}
+    }
+
+    const db = await this.readLocalDb();
+    let templates = db.emailTemplates || [];
+    if (search?.trim()) {
+      const q = search.toLowerCase().trim();
+      templates = templates.filter((t) => t.title.toLowerCase().includes(q) || t.subject.toLowerCase().includes(q));
+    }
+    return templates;
+  }
+
+  public static async findEmailTemplateById(id: string): Promise<EmailTemplateRecord | null> {
+    await this.seedInitialData();
+    const usePg = await this.testPostgres();
+    if (usePg) {
+      try {
+        const t = await prisma.emailTemplate.findUnique({ where: { id } });
+        if (t) return { ...t, createdAt: t.createdAt.toISOString(), updatedAt: t.updatedAt.toISOString() };
+      } catch {}
+    }
+    const db = await this.readLocalDb();
+    return (db.emailTemplates || []).find((t) => t.id === id) || null;
+  }
+
+  public static async findEmailTemplateByCode(code: string): Promise<EmailTemplateRecord | null> {
+    await this.seedInitialData();
+    const usePg = await this.testPostgres();
+    if (usePg) {
+      try {
+        const t = await prisma.emailTemplate.findUnique({ where: { code } });
+        if (t) return { ...t, createdAt: t.createdAt.toISOString(), updatedAt: t.updatedAt.toISOString() };
+      } catch {}
+    }
+    const db = await this.readLocalDb();
+    return (db.emailTemplates || []).find((t) => t.code === code) || null;
+  }
+
+  public static async updateEmailTemplate(
+    id: string,
+    data: Partial<EmailTemplateRecord>
+  ): Promise<EmailTemplateRecord | null> {
+    const usePg = await this.testPostgres();
+    if (usePg) {
+      try {
+        const updated = await prisma.emailTemplate.update({
+          where: { id },
+          data: {
+            title: data.title,
+            subject: data.subject,
+            bodyHtml: data.bodyHtml,
+            bodyText: data.bodyText,
+            isActive: data.isActive,
+          },
+        });
+        if (updated) {
+          return {
+            ...updated,
+            createdAt: updated.createdAt.toISOString(),
+            updatedAt: updated.updatedAt.toISOString(),
+          };
+        }
+      } catch {}
+    }
+
+    const db = await this.readLocalDb();
+    if (!db.emailTemplates) db.emailTemplates = [];
+    const idx = db.emailTemplates.findIndex((t) => t.id === id);
+    if (idx === -1) return null;
+
+    db.emailTemplates[idx] = {
+      ...db.emailTemplates[idx],
+      ...data,
+      updatedAt: new Date().toISOString(),
+    };
+    await this.writeLocalDb(db);
+    return db.emailTemplates[idx];
+  }
+
+  // ================= WAREHOUSE INVENTORY & MOVEMENTS =================
+
+  public static async findWarehouseInventory(params?: {
+    productId?: string;
+    warehouseId?: string;
+    search?: string;
+  }): Promise<WarehouseInventoryRecord[]> {
+    await this.seedInitialData();
+    const db = await this.readLocalDb();
+    let list = db.warehouseInventory || [];
+
+    if (params?.productId) {
+      list = list.filter((i) => i.productId === params.productId);
+    }
+    if (params?.warehouseId) {
+      list = list.filter((i) => i.warehouseId === params.warehouseId);
+    }
+    if (params?.search?.trim()) {
+      const q = params.search.toLowerCase().trim();
+      list = list.filter(
+        (i) =>
+          (i.productName || "").toLowerCase().includes(q) ||
+          (i.productSku || "").toLowerCase().includes(q) ||
+          (i.warehouseName || "").toLowerCase().includes(q)
+      );
+    }
+
+    return list;
+  }
+
+  public static async findInventoryMovements(params?: {
+    productId?: string;
+    warehouseId?: string;
+    type?: string;
+    limit?: number;
+  }): Promise<InventoryMovementRecord[]> {
+    await this.seedInitialData();
+    const db = await this.readLocalDb();
+    let list = db.inventoryMovements || [];
+
+    if (params?.productId) {
+      list = list.filter((m) => m.productId === params.productId);
+    }
+    if (params?.warehouseId) {
+      list = list.filter((m) => m.warehouseId === params.warehouseId);
+    }
+    if (params?.type) {
+      list = list.filter((m) => m.type === params.type);
+    }
+
+    list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    if (params?.limit) {
+      list = list.slice(0, params.limit);
+    }
+    return list;
+  }
+
+  public static async adjustStock(data: {
+    productId: string;
+    warehouseId: string;
+    quantity: number;
+    notes?: string;
+    referenceId?: string;
+  }): Promise<WarehouseInventoryRecord> {
+    const db = await this.readLocalDb();
+    if (!db.warehouseInventory) db.warehouseInventory = [];
+    if (!db.inventoryMovements) db.inventoryMovements = [];
+
+    const product = (db.products || []).find((p) => p.id === data.productId);
+    const warehouse = (db.warehouses || []).find((w) => w.id === data.warehouseId);
+
+    let inv = db.warehouseInventory.find(
+      (i) => i.productId === data.productId && i.warehouseId === data.warehouseId
+    );
+
+    const prevAvail = inv ? inv.availableQuantity : 0;
+    const prevReserved = inv ? inv.reservedQuantity : 0;
+    const newAvail = Math.max(0, prevAvail + data.quantity);
+
+    if (inv) {
+      inv.availableQuantity = newAvail;
+      inv.updatedAt = new Date().toISOString();
+    } else {
+      inv = {
+        id: "winv_" + Math.random().toString(36).substring(2, 9),
+        productId: data.productId,
+        warehouseId: data.warehouseId,
+        productName: product?.name || "Product",
+        productSku: product?.sku || "SKU",
+        warehouseName: warehouse?.name || "Warehouse",
+        availableQuantity: newAvail,
+        reservedQuantity: 0,
+        reorderLevel: product?.minStock || 10,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      db.warehouseInventory.push(inv);
+    }
+
+    // Sync product total stock across warehouses
+    if (product) {
+      const allProductInv = db.warehouseInventory.filter((i) => i.productId === data.productId);
+      product.currentStock = allProductInv.reduce((sum, i) => sum + i.availableQuantity, 0);
+    }
+
+    // Record movement
+    const movement: InventoryMovementRecord = {
+      id: "mov_" + Math.random().toString(36).substring(2, 9),
+      productId: data.productId,
+      warehouseId: data.warehouseId,
+      productName: product?.name || "Product",
+      warehouseName: warehouse?.name || "Warehouse",
+      type: data.quantity >= 0 ? "STOCK_ADD" : "ADJUSTMENT",
+      quantity: data.quantity,
+      previousAvailable: prevAvail,
+      newAvailable: newAvail,
+      previousReserved: prevReserved,
+      newReserved: prevReserved,
+      referenceId: data.referenceId || "MANUAL_ADJUSTMENT",
+      notes: data.notes || "Stock manual adjustment",
+      createdAt: new Date().toISOString(),
+    };
+    db.inventoryMovements.unshift(movement);
+
+    await this.writeLocalDb(db);
+    return inv;
+  }
+
+  public static async reserveStock(
+    orderId: string,
+    items: Array<{ productId: string; quantity: number; warehouseId?: string }>
+  ): Promise<boolean> {
+    const db = await this.readLocalDb();
+    if (!db.warehouseInventory) db.warehouseInventory = [];
+    if (!db.inventoryMovements) db.inventoryMovements = [];
+
+    for (const item of items) {
+      // Find suitable warehouse inventory record
+      let inv = item.warehouseId
+        ? db.warehouseInventory.find((i) => i.productId === item.productId && i.warehouseId === item.warehouseId)
+        : db.warehouseInventory.find((i) => i.productId === item.productId && i.availableQuantity >= item.quantity);
+
+      if (!inv) {
+        inv = db.warehouseInventory.find((i) => i.productId === item.productId);
+      }
+
+      if (inv) {
+        const prevAvail = inv.availableQuantity;
+        const prevReserved = inv.reservedQuantity;
+        const qtyToReserve = Math.min(prevAvail, item.quantity);
+
+        inv.availableQuantity = Math.max(0, prevAvail - qtyToReserve);
+        inv.reservedQuantity = prevReserved + qtyToReserve;
+        inv.updatedAt = new Date().toISOString();
+
+        db.inventoryMovements.unshift({
+          id: "mov_" + Math.random().toString(36).substring(2, 9),
+          productId: item.productId,
+          warehouseId: inv.warehouseId,
+          productName: inv.productName,
+          warehouseName: inv.warehouseName,
+          type: "RESERVATION",
+          quantity: qtyToReserve,
+          previousAvailable: prevAvail,
+          newAvailable: inv.availableQuantity,
+          previousReserved: prevReserved,
+          newReserved: inv.reservedQuantity,
+          referenceId: orderId,
+          notes: "Stock reserved for order #" + orderId,
+          createdAt: new Date().toISOString(),
+        });
+      }
+    }
+
+    await this.writeLocalDb(db);
+    return true;
+  }
+
+  public static async releaseStock(
+    orderId: string,
+    items: Array<{ productId: string; quantity: number; warehouseId?: string }>
+  ): Promise<boolean> {
+    const db = await this.readLocalDb();
+    if (!db.warehouseInventory) return false;
+    if (!db.inventoryMovements) db.inventoryMovements = [];
+
+    for (const item of items) {
+      let inv = item.warehouseId
+        ? db.warehouseInventory.find((i) => i.productId === item.productId && i.warehouseId === item.warehouseId)
+        : db.warehouseInventory.find((i) => i.productId === item.productId && i.reservedQuantity >= item.quantity);
+
+      if (!inv) {
+        inv = db.warehouseInventory.find((i) => i.productId === item.productId);
+      }
+
+      if (inv) {
+        const prevAvail = inv.availableQuantity;
+        const prevReserved = inv.reservedQuantity;
+        const qtyToRelease = Math.min(prevReserved, item.quantity);
+
+        inv.availableQuantity = prevAvail + qtyToRelease;
+        inv.reservedQuantity = Math.max(0, prevReserved - qtyToRelease);
+        inv.updatedAt = new Date().toISOString();
+
+        db.inventoryMovements.unshift({
+          id: "mov_" + Math.random().toString(36).substring(2, 9),
+          productId: item.productId,
+          warehouseId: inv.warehouseId,
+          productName: inv.productName,
+          warehouseName: inv.warehouseName,
+          type: "RELEASE",
+          quantity: qtyToRelease,
+          previousAvailable: prevAvail,
+          newAvailable: inv.availableQuantity,
+          previousReserved: prevReserved,
+          newReserved: inv.reservedQuantity,
+          referenceId: orderId,
+          notes: "Reserved stock released due to order cancellation #" + orderId,
+          createdAt: new Date().toISOString(),
+        });
+      }
+    }
+
+    await this.writeLocalDb(db);
+    return true;
+  }
+
+  public static async dispatchStock(
+    shipmentId: string,
+    orderId: string,
+    items: Array<{ productId: string; quantity: number; warehouseId?: string }>
+  ): Promise<boolean> {
+    const db = await this.readLocalDb();
+    if (!db.warehouseInventory) return false;
+    if (!db.inventoryMovements) db.inventoryMovements = [];
+
+    for (const item of items) {
+      let inv = item.warehouseId
+        ? db.warehouseInventory.find((i) => i.productId === item.productId && i.warehouseId === item.warehouseId)
+        : db.warehouseInventory.find((i) => i.productId === item.productId);
+
+      if (inv) {
+        const prevAvail = inv.availableQuantity;
+        const prevReserved = inv.reservedQuantity;
+        const qtyToDispatch = Math.min(prevReserved, item.quantity);
+
+        inv.reservedQuantity = Math.max(0, prevReserved - qtyToDispatch);
+        inv.updatedAt = new Date().toISOString();
+
+        db.inventoryMovements.unshift({
+          id: "mov_" + Math.random().toString(36).substring(2, 9),
+          productId: item.productId,
+          warehouseId: inv.warehouseId,
+          productName: inv.productName,
+          warehouseName: inv.warehouseName,
+          type: "DISPATCH",
+          quantity: qtyToDispatch,
+          previousAvailable: prevAvail,
+          newAvailable: inv.availableQuantity,
+          previousReserved: prevReserved,
+          newReserved: inv.reservedQuantity,
+          referenceId: shipmentId || orderId,
+          notes: "Stock dispatched from warehouse for shipment #" + shipmentId,
+          createdAt: new Date().toISOString(),
+        });
+      }
+    }
+
+    await this.writeLocalDb(db);
+    return true;
+  }
+
 }

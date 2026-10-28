@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { AuthService } from "@/modules/auth/services/auth.service";
 import { apiError, apiSuccess } from "@/core/utils/api-response";
+import { EmailService } from "@/core/mail/email.service";
 
 export async function POST(req: NextRequest) {
   try {
@@ -60,6 +61,12 @@ export async function POST(req: NextRequest) {
     });
 
     await AuthService.setSessionCookie(token, "customer", true);
+
+    EmailService.sendUserRegisteredEmail({
+      email: user.email,
+      name: user.name,
+      phone: mobileNumber?.trim(),
+    }).catch((e) => console.error("Failed to trigger registration email:", e));
 
     return apiSuccess({ user }, "Registration successful!", 201);
   } catch (error: unknown) {

@@ -45,16 +45,30 @@ export default function InventoryPage() {
   const [stockEdits, setStockEdits] = useState<
     Record<string, { currentStock: number; warehouse: string; isSoldOut: boolean; modified: boolean }>
   >({});
+  const [movements, setMovements] = useState<Array<{
+    id: string;
+    productName: string;
+    warehouseName: string;
+    type: string;
+    quantity: number;
+    previousAvailable: number;
+    newAvailable: number;
+    referenceId?: string;
+    notes?: string;
+    createdAt: string;
+  }>>([]);
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
 
   const fetchInventory = async () => {
     try {
-      const [prodRes, whRes] = await Promise.all([
+      const [prodRes, whRes, movRes] = await Promise.all([
         fetch("/api/products"),
         fetch("/api/warehouses"),
+        fetch("/api/inventory/movements?limit=15"),
       ]);
       const prodJson = await prodRes.json();
       const whJson = await whRes.json();
+      const movJson = await movRes.json();
 
       if (prodJson.data) {
         setProducts(prodJson.data);
@@ -72,6 +86,10 @@ export default function InventoryPage() {
 
       if (whJson.data) {
         setWarehouses(whJson.data);
+      }
+
+      if (movJson.data) {
+        setMovements(movJson.data);
       }
     } catch (err) {
       console.error("Error loading inventory:", err);
@@ -139,6 +157,25 @@ export default function InventoryPage() {
       });
 
       if (res.ok) {
+        // Synchronize warehouse stock
+        const currentProd = products.find((p) => p.id === id);
+        const whOption = warehouses.find((w) => w.name === edit.warehouse);
+        if (currentProd && whOption) {
+          const diff = Number(edit.currentStock) - Number(currentProd.currentStock);
+          if (diff !== 0) {
+            await fetch("/api/inventory/adjust", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                productId: id,
+                warehouseId: whOption.id,
+                quantity: diff,
+                notes: `Stock adjusted from ${currentProd.currentStock} to ${edit.currentStock} in ${edit.warehouse}`,
+              }),
+            }).catch(() => {});
+          }
+        }
+
         setStockEdits((prev) => ({
           ...prev,
           [id]: { ...prev[id], modified: false },
@@ -156,6 +193,13 @@ export default function InventoryPage() {
           )
         );
         notify("Inventory updated successfully.");
+        // Refresh movements
+        fetch("/api/inventory/movements?limit=15")
+          .then((r) => r.json())
+          .then((j) => {
+            if (j.data) setMovements(j.data);
+          })
+          .catch(() => {});
       }
     } catch (err) {
       console.error("Error saving inventory item:", err);
@@ -446,6 +490,90 @@ export default function InventoryPage() {
             })}
           </tbody>
         </table>
+      </div>
+
+      {/* Inventory Movements History Log */}
+      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs mt-6">
+        <div className="p-4 border-b border-slate-100 flex items-center justify-between">
+          <div>
+            <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+              <Boxes className="w-4 h-4 text-indigo-600" />
+              Inventory Movement & Fulfillment History
+            </h2>
+            <p className="text-[11px] text-slate-500">
+              Audit log of stock allocations, order reservations, shipping dispatches, and adjustments
+            </p>
+          </div>
+          <span className="text-[11px] font-mono text-slate-400">
+            {movements.length} recent record(s)
+          </span>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200">
+              <tr>
+                <th className="py-2.5 px-4">Date / Time</th>
+                <th className="py-2.5 px-4">Product</th>
+                <th className="py-2.5 px-4">Warehouse</th>
+                <th className="py-2.5 px-4">Type</th>
+                <th className="py-2.5 px-4 text-right">Quantity</th>
+                <th className="py-2.5 px-4 text-right">Available (Before → After)</th>
+                <th className="py-2.5 px-4">Reference / Reason</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 text-slate-700">
+              {movements.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="py-8 text-center text-slate-400">
+                    No inventory movements recorded yet.
+                  </td>
+                </tr>
+              ) : (
+                movements.map((m) => (
+                  <tr key={m.id} className="hover:bg-slate-50/70 transition">
+                    <td className="py-2.5 px-4 font-mono text-[11px] text-slate-500 whitespace-nowrap">
+                      {new Date(m.createdAt).toLocaleString()}
+                    </td>
+                    <td className="py-2.5 px-4 font-semibold text-slate-800">
+                      {m.productName}
+                    </td>
+                    <td className="py-2.5 px-4 text-slate-600">
+                      {m.warehouseName}
+                    </td>
+                    <td className="py-2.5 px-4">
+                      <span
+                        className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold ${
+                          m.type === "RESERVATION"
+                            ? "bg-amber-100 text-amber-800"
+                            : m.type === "DISPATCH"
+                            ? "bg-blue-100 text-blue-800"
+                            : m.type === "RELEASE"
+                            ? "bg-purple-100 text-purple-800"
+                            : m.type === "STOCK_ADD"
+                            ? "bg-emerald-100 text-emerald-800"
+                            : "bg-slate-100 text-slate-700"
+                        }`}
+                      >
+                        {m.type}
+                      </span>
+                    </td>
+                    <td className="py-2.5 px-4 text-right font-mono font-bold">
+                      {m.quantity > 0 ? `+${m.quantity}` : m.quantity}
+                    </td>
+                    <td className="py-2.5 px-4 text-right font-mono text-[11px] text-slate-500">
+                      {m.previousAvailable} → <span className="font-bold text-slate-800">{m.newAvailable}</span>
+                    </td>
+                    <td className="py-2.5 px-4 text-slate-500 text-[11px]">
+                      <span className="font-mono text-indigo-600">{m.referenceId || "—"}</span>
+                      {m.notes && <span className="block text-slate-400">{m.notes}</span>}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
