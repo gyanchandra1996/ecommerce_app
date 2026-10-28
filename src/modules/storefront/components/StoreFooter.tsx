@@ -258,11 +258,6 @@ export function StoreFooter({ storeName }: Props = {}) {
                   </a>
                 </li>
               ))}
-              <li>
-                <Link href="/admin/settings" className="text-blue-400 hover:underline">
-                  ⚙ All Settings
-                </Link>
-              </li>
             </ul>
           </div>
         </div>

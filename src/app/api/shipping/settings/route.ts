@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { DatabaseStore } from "@/core/db/store";
+import { requireAdminAuth } from "@/core/auth/admin-guard";
 
 export async function GET() {
   try {
@@ -12,6 +13,11 @@ export async function GET() {
 
 export async function PUT(req: Request) {
   try {
+    const auth = await requireAdminAuth();
+    if (!auth.authorized) {
+      return auth.response!;
+    }
+
     const body = await req.json();
     const updated = await DatabaseStore.updateShippingSettings(body);
     return NextResponse.json({ success: true, data: updated, message: "Shipping settings updated successfully." });

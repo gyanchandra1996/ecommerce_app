@@ -12,7 +12,6 @@ export function RegisterForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState<"ADMIN" | "MANAGER">("ADMIN");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,7 +36,7 @@ export function RegisterForm() {
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, confirmPassword, role }),
+        body: JSON.stringify({ name, email, password, confirmPassword }),
       });
 
       const data = await res.json();
@@ -45,7 +44,7 @@ export function RegisterForm() {
         throw new Error(data.message || data.error || "Failed to register account.");
       }
 
-      router.push("/admin/assets");
+      router.push("/customer/dashboard");
       router.refresh();
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Registration failed.");
@@ -61,8 +60,8 @@ export function RegisterForm() {
         <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-emerald-600 text-white shadow-lg shadow-emerald-600/30 mb-4">
           <UserPlus className="w-8 h-8" />
         </div>
-        <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Create Account</h1>
-        <p className="text-sm text-slate-500 mt-1">Register administrator or manager access</p>
+        <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Create Customer Account</h1>
+        <p className="text-sm text-slate-500 mt-1">Register for exclusive discounts and order tracking</p>
       </div>
 
       {error && (
@@ -108,25 +107,6 @@ export function RegisterForm() {
               placeholder="you@example.com"
               className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm text-slate-900 placeholder:text-slate-400 transition"
             />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-            Assign Role
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-              <Shield className="w-5 h-5" />
-            </div>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value as "ADMIN" | "MANAGER")}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm text-slate-900 transition bg-white"
-            >
-              <option value="ADMIN">Administrator (Full Access)</option>
-              <option value="MANAGER">Store Manager (Products & Media)</option>
-            </select>
           </div>
         </div>
 

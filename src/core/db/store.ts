@@ -14,6 +14,7 @@ export interface UserRecord {
   role: string;
   roleId?: string;
   avatar?: string | null;
+  type?: "admin" | "customer";
   accountType?: "admin" | "customer" | "manager" | "staff";
   customerType?: "Customer" | "Customer (Guest)" | "Wholesale" | "VIP";
   address?: string | null;
@@ -728,6 +729,7 @@ export class DatabaseStore {
   private static isPgAvailable: boolean | null = null;
   private static checkedPg = false;
   private static memoryCache: LocalDatabaseSchema | null = null;
+  private static lastMtime = 0;
   private static isSeeded = false;
 
   private static async testPostgres(): Promise<boolean> {
@@ -745,15 +747,26 @@ export class DatabaseStore {
   }
 
   private static async readLocalDb(): Promise<LocalDatabaseSchema> {
-    if (this.memoryCache) {
-      return this.memoryCache;
+    try {
+      const stat = await fs.stat(this.localDbFile);
+      if (this.memoryCache && stat.mtimeMs <= this.lastMtime) {
+        return this.memoryCache;
+      }
+      this.lastMtime = stat.mtimeMs;
+    } catch {
+      if (this.memoryCache) return this.memoryCache;
     }
 
     try {
       const data = await fs.readFile(this.localDbFile, "utf-8");
       const parsed = JSON.parse(data);
       this.memoryCache = {
-        users: parsed.users || [],
+        users: (parsed.users || []).map((u: any) => {
+          if (!u.type) {
+            u.type = (u.accountType === "admin" || u.role === "ADMIN" || (u.role && u.role !== "CUSTOMER" && u.accountType !== "customer")) ? "admin" : "customer";
+          }
+          return u;
+        }),
         assets: parsed.assets || [],
         categories: parsed.categories || [],
         products: parsed.products || [],
@@ -865,6 +878,7 @@ export class DatabaseStore {
     try {
       await fs.mkdir(path.dirname(this.localDbFile), { recursive: true });
       await fs.writeFile(this.localDbFile, JSON.stringify(data, null, 2), "utf-8");
+      try { const stat = await fs.stat(this.localDbFile); this.lastMtime = stat.mtimeMs; } catch {}
       return;
     } catch {
       try {
@@ -946,6 +960,7 @@ export class DatabaseStore {
       email: data.email.toLowerCase(),
       password: data.password,
       role: data.role || (isCustomer ? "CUSTOMER" : "ADMIN"),
+      type: isCustomer ? "customer" : "admin",
       avatar: null,
       accountType: data.accountType || (isCustomer ? "customer" : "admin"),
       customerType: data.customerType || "Customer",
@@ -1950,6 +1965,7 @@ export class DatabaseStore {
       roleId: data.roleId || "",
       assignedRoles: data.assignedRoles || (data.roleId ? [data.roleId] : []),
       accountType: data.accountType || "customer",
+      type: (data.accountType === "admin" || (data as any).type === "admin") ? "admin" : "customer",
       customerType: data.customerType || "Customer",
       address: data.address || data.streetAddress || null,
       shippingAddress: data.shippingAddress || data.streetAddress || null,
@@ -2039,6 +2055,11 @@ export class DatabaseStore {
       mobileNumber: data.mobileNumber || data.phone || existingUser.mobileNumber || existingUser.phone,
       updatedAt: new Date().toISOString(),
     };
+    if (updatedUser.accountType === "admin" || updatedUser.role === "ADMIN") {
+      updatedUser.type = "admin";
+    } else if (updatedUser.accountType === "customer" || updatedUser.role === "CUSTOMER") {
+      updatedUser.type = "customer";
+    }
     db.users[index] = updatedUser;
 
     // Synchronize addresses if details were provided

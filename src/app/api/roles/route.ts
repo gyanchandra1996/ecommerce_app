@@ -1,9 +1,15 @@
 import { NextRequest } from "next/server";
 import { DatabaseStore } from "@/core/db/store";
 import { apiError, apiSuccess } from "@/core/utils/api-response";
+import { requireAdminAuth } from "@/core/auth/admin-guard";
 
 export async function GET(req: NextRequest) {
   try {
+    const auth = await requireAdminAuth();
+    if (!auth.authorized) {
+      return auth.response!;
+    }
+
     const view = req.nextUrl?.searchParams?.get("view") || new URL(req.url).searchParams.get("view");
     if (view === "employees") {
       const data = await DatabaseStore.findRoleEmployees();
@@ -20,6 +26,11 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    const auth = await requireAdminAuth();
+    if (!auth.authorized) {
+      return auth.response!;
+    }
+
     const body = await req.json();
     const { name, description, status, screenPrivilegesCount, permissions } = body;
 

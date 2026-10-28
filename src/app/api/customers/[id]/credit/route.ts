@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { DatabaseStore } from "@/core/db/store";
 import { apiError, apiSuccess } from "@/core/utils/api-response";
+import { requireAdminAuth } from "@/core/auth/admin-guard";
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -8,6 +9,11 @@ interface RouteParams {
 
 export async function POST(req: NextRequest, { params }: RouteParams) {
   try {
+    const auth = await requireAdminAuth();
+    if (!auth.authorized) {
+      return auth.response!;
+    }
+
     const { id } = await params;
     const body = await req.json();
     const { amount } = body;

@@ -5,6 +5,8 @@ export interface AuthUser {
   name: string;
   email: string;
   role: "ADMIN" | "MANAGER" | "STAFF" | string;
+  type?: "admin" | "customer";
+  accountType?: "admin" | "customer" | "manager" | "staff";
   roleId?: string;
   avatar?: string | null;
   createdAt: string;

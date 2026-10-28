@@ -37,10 +37,8 @@ export function LoginForm() {
       const userRole = (data.data?.user?.role || "").toUpperCase();
       if (searchParams.get("callbackUrl")) {
         router.push(callbackUrl);
-      } else if (userRole === "CUSTOMER") {
-        router.push("/customer/dashboard");
       } else {
-        router.push("/admin/assets");
+        router.push("/customer/dashboard");
       }
       router.refresh();
     } catch (err: unknown) {

@@ -36,8 +36,10 @@ export async function POST(req: NextRequest) {
       return apiError("Passwords do not match.", 400);
     }
 
-    const assignedRole = role || (accountType === "admin" ? "ADMIN" : "CUSTOMER");
-    const assignedAccountType = accountType || (assignedRole === "ADMIN" ? "admin" : "customer");
+    // Server-side security: Public registration strictly creates customer accounts.
+    // Client-supplied role or accountType fields are explicitly rejected/ignored.
+    const assignedRole = "CUSTOMER";
+    const assignedAccountType = "customer";
 
     const { user, token } = await AuthService.register({
       name: name.trim(),
@@ -57,7 +59,7 @@ export async function POST(req: NextRequest) {
       accountType: assignedAccountType,
     });
 
-    await AuthService.setSessionCookie(token, assignedRole === "ADMIN" ? "admin" : "customer", true);
+    await AuthService.setSessionCookie(token, "customer", true);
 
     return apiSuccess({ user }, "Registration successful!", 201);
   } catch (error: unknown) {

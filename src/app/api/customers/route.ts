@@ -1,9 +1,15 @@
 import { NextRequest } from "next/server";
 import { DatabaseStore } from "@/core/db/store";
 import { apiError, apiSuccess } from "@/core/utils/api-response";
+import { requireAdminAuth } from "@/core/auth/admin-guard";
 
 export async function GET(req: NextRequest) {
   try {
+    const auth = await requireAdminAuth();
+    if (!auth.authorized) {
+      return auth.response!;
+    }
+
     const { searchParams } = new URL(req.url);
     const search = searchParams.get("search") || "";
     const accountType = searchParams.get("accountType") || "All";
@@ -27,6 +33,11 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    const auth = await requireAdminAuth();
+    if (!auth.authorized) {
+      return auth.response!;
+    }
+
     const body = await req.json();
     const {
       email,

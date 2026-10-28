@@ -18,11 +18,19 @@ export async function POST(req: NextRequest) {
     });
 
     // Enforce role separation for admin portal logins
-    if (portal === "admin" && user.role === "CUSTOMER") {
-      return apiError(
-        "Access Denied: Customer accounts cannot access the Administrator Console. Please use the customer login.",
-        403
-      );
+    if (portal === "admin") {
+      const isAdmin =
+        user.type === "admin" ||
+        user.accountType === "admin" ||
+        user.role === "ADMIN" ||
+        (user.role !== "CUSTOMER" && user.type !== "customer");
+
+      if (!isAdmin || user.role === "CUSTOMER" || user.type === "customer") {
+        return apiError(
+          "Access Denied: Customer accounts cannot access the Administrator Console. Please use the customer login.",
+          403
+        );
+      }
     }
 
     const targetPortal: "admin" | "customer" =

@@ -19,11 +19,13 @@ export class AuthService {
 
   public static async createToken(user: AuthUser, expiresIn = "7d"): Promise<string> {
     const expirationSeconds = expiresIn === "7d" ? 7 * 24 * 60 * 60 : 24 * 60 * 60;
+    const type = user.type || (user.role === "ADMIN" ? "admin" : "customer");
     return new SignJWT({
       sub: user.id,
       email: user.email,
       name: user.name,
       role: user.role,
+      type,
     })
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
@@ -35,11 +37,14 @@ export class AuthService {
     try {
       const { payload } = await jwtVerify(token, secretKey);
       if (!payload.sub) return null;
+      const role = (payload.role as "ADMIN" | "MANAGER" | "STAFF" | "CUSTOMER") || "CUSTOMER";
+      const type = (payload.type as "admin" | "customer") || (role === "ADMIN" ? "admin" : "customer");
       return {
         id: payload.sub as string,
         email: (payload.email as string) || "",
         name: (payload.name as string) || "",
-        role: (payload.role as "ADMIN" | "MANAGER" | "STAFF") || "ADMIN",
+        role,
+        type,
         createdAt: new Date().toISOString(),
       };
     } catch {
@@ -48,11 +53,18 @@ export class AuthService {
   }
 
   public static mapToAuthUser(record: UserRecord): AuthUser {
+    const isAdmin =
+      record.type === "admin" ||
+      record.accountType === "admin" ||
+      record.role === "ADMIN" ||
+      (record.role !== "CUSTOMER" && record.accountType !== "customer");
     return {
       id: record.id,
       name: record.name,
       email: record.email,
-      role: record.role,
+      role: record.role || (isAdmin ? "ADMIN" : "CUSTOMER"),
+      type: isAdmin ? "admin" : "customer",
+      accountType: record.accountType || (isAdmin ? "admin" : "customer"),
       avatar: record.avatar,
       createdAt: record.createdAt,
     };
@@ -74,11 +86,15 @@ export class AuthService {
     }
 
     const hashedPassword = await this.hashPassword(credentials.password);
+
+    // Strict security: Public registration is strictly customer only!
+    // Cannot be escalated via client request or body parameters.
     const created = await DatabaseStore.createUser({
       name: credentials.name.trim(),
       email,
       password: hashedPassword,
-      role: credentials.role || (credentials.accountType === "customer" ? "CUSTOMER" : "ADMIN"),
+      role: "CUSTOMER",
+      accountType: "customer",
       mobileNumber: credentials.mobileNumber,
       countryCode: credentials.countryCode,
       phone: credentials.phone || credentials.mobileNumber,
@@ -88,7 +104,6 @@ export class AuthService {
       postalCode: credentials.postalCode,
       streetAddress: credentials.streetAddress,
       apartment: credentials.apartment,
-      accountType: credentials.accountType || ((credentials.role || "").toUpperCase() === "CUSTOMER" ? "customer" : "admin"),
     });
 
     const user = this.mapToAuthUser(created);
@@ -120,13 +135,29 @@ export class AuthService {
       let token: string | undefined;
 
       if (portal === "admin") {
-        token =
-          cookieStore.get(APP_CONFIG.adminCookieName)?.value ||
-          cookieStore.get(APP_CONFIG.cookieName)?.value;
+        token = cookieStore.get(APP_CONFIG.adminCookieName)?.value;
+        if (!token) {
+          // Check legacy cookie only if it holds an admin
+          const leg = cookieStore.get(APP_CONFIG.cookieName)?.value;
+          if (leg) {
+            const v = await this.verifyToken(leg);
+            if (v && v.role !== "CUSTOMER" && v.type === "admin") {
+              token = leg;
+            }
+          }
+        }
       } else if (portal === "customer") {
-        token =
-          cookieStore.get(APP_CONFIG.customerCookieName)?.value ||
-          cookieStore.get(APP_CONFIG.cookieName)?.value;
+        token = cookieStore.get(APP_CONFIG.customerCookieName)?.value;
+        if (!token) {
+          // Check legacy cookie only if it holds a customer
+          const leg = cookieStore.get(APP_CONFIG.cookieName)?.value;
+          if (leg) {
+            const v = await this.verifyToken(leg);
+            if (v && v.role === "CUSTOMER") {
+              token = leg;
+            }
+          }
+        }
       } else {
         token =
           cookieStore.get(APP_CONFIG.customerCookieName)?.value ||
@@ -139,12 +170,18 @@ export class AuthService {
       const verified = await this.verifyToken(token);
       if (!verified) return null;
 
-      if (portal === "admin" && verified.role === "CUSTOMER") {
-        return null;
-      }
-
       const record = await DatabaseStore.findUserById(verified.id);
       if (!record) return null;
+
+      const isDbAdmin =
+        record.type === "admin" ||
+        record.accountType === "admin" ||
+        record.role === "ADMIN" ||
+        (record.role !== "CUSTOMER" && record.accountType !== "customer");
+
+      if (portal === "admin" && (!isDbAdmin || record.role === "CUSTOMER")) {
+        return null;
+      }
 
       const permissions = await DatabaseStore.getUserPermissions(record.id);
       return {
@@ -185,6 +222,7 @@ export class AuthService {
     const cookieName =
       portal === "admin" ? APP_CONFIG.adminCookieName : APP_CONFIG.customerCookieName;
 
+    // Set isolated portal cookie
     cookieStore.set(cookieName, token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -193,35 +231,59 @@ export class AuthService {
       maxAge,
     });
 
-    // Also set legacy cookie for compatibility with any unmodified endpoints
-    cookieStore.set(APP_CONFIG.cookieName, token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge,
-    });
+    // Handle legacy auth_token without overwriting other active portal sessions
+    const legacyToken = cookieStore.get(APP_CONFIG.cookieName)?.value;
+    if (!legacyToken) {
+      cookieStore.set(APP_CONFIG.cookieName, token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge,
+      });
+    } else {
+      const verified = await this.verifyToken(legacyToken);
+      const isLegacyAdmin = verified && (verified.role !== "CUSTOMER" && verified.type === "admin");
+      if (portal === "admin" && (isLegacyAdmin || !verified)) {
+        cookieStore.set(APP_CONFIG.cookieName, token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          path: "/",
+          maxAge,
+        });
+      }
+      if (portal === "customer" && (!isLegacyAdmin || !verified)) {
+        cookieStore.set(APP_CONFIG.cookieName, token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          path: "/",
+          maxAge,
+        });
+      }
+    }
   }
 
   public static async clearSessionCookie(portal?: "admin" | "customer" | "all"): Promise<void> {
     const cookieStore = await cookies();
     if (portal === "admin") {
       cookieStore.delete(APP_CONFIG.adminCookieName);
-      // If legacy auth_token holds an admin user, remove it too
+      cookieStore.delete("admin_token");
       const legacyToken = cookieStore.get(APP_CONFIG.cookieName)?.value;
       if (legacyToken) {
         const verified = await this.verifyToken(legacyToken);
-        if (verified && verified.role !== "CUSTOMER") {
+        if (verified && (verified.role !== "CUSTOMER" || verified.type === "admin")) {
           cookieStore.delete(APP_CONFIG.cookieName);
         }
       }
     } else if (portal === "customer") {
       cookieStore.delete(APP_CONFIG.customerCookieName);
-      // If legacy auth_token holds a customer user, remove it too
+      cookieStore.delete("customer_token");
       const legacyToken = cookieStore.get(APP_CONFIG.cookieName)?.value;
       if (legacyToken) {
         const verified = await this.verifyToken(legacyToken);
-        if (verified && verified.role === "CUSTOMER") {
+        if (verified && (verified.role === "CUSTOMER" || verified.type === "customer")) {
           cookieStore.delete(APP_CONFIG.cookieName);
         }
       }
@@ -229,6 +291,8 @@ export class AuthService {
       cookieStore.delete(APP_CONFIG.adminCookieName);
       cookieStore.delete(APP_CONFIG.customerCookieName);
       cookieStore.delete(APP_CONFIG.cookieName);
+      cookieStore.delete("admin_token");
+      cookieStore.delete("customer_token");
     }
   }
 }

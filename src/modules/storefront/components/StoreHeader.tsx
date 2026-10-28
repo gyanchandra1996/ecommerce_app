@@ -74,6 +74,7 @@ export function StoreHeader({
   const effectiveClear = onClearCart ?? cartContext.clearCart;
 
   const [currentUser, setCurrentUser] = useState<any>(null);
+  const [isAdminUser, setIsAdminUser] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -163,14 +164,32 @@ export function StoreHeader({
   useEffect(() => {
     let isMounted = true;
 
-    // Check logged-in user
-    fetch("/api/auth/me")
+    // Check logged-in customer for the storefront header
+    fetch("/api/auth/me?portal=customer")
       .then((res) => res.json())
       .then((json) => {
         if (isMounted && json.data?.user) {
           setCurrentUser(json.data.user);
           if (json.data.user.name) setCheckoutName(json.data.user.name);
           if (json.data.user.email) setCheckoutEmail(json.data.user.email);
+        }
+      })
+      .catch(() => {});
+
+    // Check if an authenticated administrator session is active
+    fetch("/api/auth/me?portal=admin")
+      .then((res) => res.json())
+      .then((json) => {
+        if (isMounted && json.data?.user) {
+          const u = json.data.user;
+          const isAdmin =
+            u.type === "admin" ||
+            u.accountType === "admin" ||
+            u.role === "ADMIN" ||
+            (u.role !== "CUSTOMER" && u.type !== "customer");
+          if (isAdmin) {
+            setIsAdminUser(true);
+          }
         }
       })
       .catch(() => {});
@@ -335,19 +354,22 @@ export function StoreHeader({
                   type="button"
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   className="flex items-center space-x-1.5 text-xs font-bold text-slate-800 hover:text-blue-600 transition cursor-pointer"
+                  title={currentUser.email || currentUser.name}
                 >
                   <div className="w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-[10px]">
-                    {currentUser.name ? currentUser.name[0].toUpperCase() : "U"}
+                    {currentUser.email ? currentUser.email[0].toUpperCase() : (currentUser.name ? currentUser.name[0].toUpperCase() : "U")}
                   </div>
-                  <span className="hidden md:inline max-w-[100px] truncate">{currentUser.name || "Account"}</span>
+                  <span className="hidden md:inline max-w-[150px] lg:max-w-[180px] truncate text-slate-800 font-semibold" title={currentUser.email || currentUser.name}>
+                    {currentUser.email || currentUser.name || "Account"}
+                  </span>
                   <ChevronDown className="w-3 h-3 text-slate-400" />
                 </button>
 
                 {isUserMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in zoom-in-95 duration-100">
+                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in zoom-in-95 duration-100">
                     <div className="px-4 py-2 border-b border-slate-100">
-                      <div className="font-bold text-xs text-slate-900 truncate">{currentUser.name}</div>
-                      <div className="text-[10px] text-slate-400 truncate">{currentUser.email}</div>
+                      <div className="font-bold text-xs text-slate-900 truncate">{currentUser.name || "Customer Account"}</div>
+                      <div className="text-[11px] font-medium text-blue-600 truncate">{currentUser.email}</div>
                     </div>
 
                     <Link
@@ -377,7 +399,8 @@ export function StoreHeader({
                       <span>Saved Addresses</span>
                     </Link>
 
-                    {currentUser.role === "ADMIN" && (
+                    {/* Admin Console link: only visible to authenticated admins */}
+                    {isAdminUser && (
                       <Link
                         href="/admin/assets"
                         onClick={() => setIsUserMenuOpen(false)}
@@ -422,15 +445,17 @@ export function StoreHeader({
               </div>
             )}
 
-            {/* Admin Shortcut */}
-            <Link
-              href="/admin/sliders"
-              title="Admin Slider & Roles Manager"
-              className="hidden xl:inline-flex items-center space-x-1 px-2.5 py-1 rounded-md text-[10px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition"
-            >
-              <ShieldCheck className="w-3 h-3 text-blue-600" />
-              <span>Admin</span>
-            </Link>
+            {/* Admin Shortcut - Only shown to authenticated admins, strictly hidden from customers */}
+            {isAdminUser && (
+              <Link
+                href="/admin/sliders"
+                title="Admin Slider & Roles Manager"
+                className="hidden xl:inline-flex items-center space-x-1 px-2.5 py-1 rounded-md text-[10px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition"
+              >
+                <ShieldCheck className="w-3 h-3 text-blue-600" />
+                <span>Admin</span>
+              </Link>
+            )}
           </div>
         </div>
 
@@ -1160,13 +1185,23 @@ export function StoreHeader({
               >
                 Continue Shopping
               </button>
-              <Link
-                href="/admin/orders"
-                onClick={() => setPlacedOrder(null)}
-                className="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition"
-              >
-                View in Admin
-              </Link>
+              {isAdminUser ? (
+                <Link
+                  href="/admin/orders"
+                  onClick={() => setPlacedOrder(null)}
+                  className="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition text-center"
+                >
+                  View in Admin
+                </Link>
+              ) : (
+                <Link
+                  href="/customer/dashboard?tab=orders"
+                  onClick={() => setPlacedOrder(null)}
+                  className="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition text-center"
+                >
+                  View My Order
+                </Link>
+              )}
             </div>
           </div>
         </div>

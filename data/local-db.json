@@ -31,7 +31,8 @@
       "ordersCount": 0,
       "wishlistCount": 0,
       "createdAt": "2026-10-25T16:39:08.493Z",
-      "updatedAt": "2026-10-25T16:39:08.493Z"
+      "updatedAt": "2026-10-25T16:39:08.493Z",
+      "type": "customer"
     },
     {
       "id": "usr_jq39ue49",
@@ -65,7 +66,8 @@
       "ordersCount": 0,
       "wishlistCount": 0,
       "createdAt": "2026-10-25T07:30:10.284Z",
-      "updatedAt": "2026-10-25T07:30:10.301Z"
+      "updatedAt": "2026-10-25T07:30:10.301Z",
+      "type": "customer"
     },
     {
       "id": "usr_bbnnjuwa",
@@ -96,7 +98,8 @@
       "ordersCount": 0,
       "wishlistCount": 0,
       "createdAt": "2026-10-25T07:29:43.894Z",
-      "updatedAt": "2026-10-25T07:29:43.896Z"
+      "updatedAt": "2026-10-25T07:29:43.896Z",
+      "type": "customer"
     },
     {
       "id": "usr_if6xuynq",
@@ -104,10 +107,10 @@
       "name": "Elena Rostova",
       "firstName": "Elena",
       "lastName": "Rostova",
-      "password": "EditorPassword123!",
-      "role": "STAFF",
+      "password": "$2b$10$WROgmDDCV1tBnD0Dr2AEUeqfSqkK.hrOM5jv5nKyLRM5zzT2oCmXW",
+      "role": "ADMIN",
       "roleId": "role_tgprby1",
-      "accountType": "staff",
+      "accountType": "admin",
       "customerType": "Wholesale",
       "address": "45 Rue de Rivoli, Paris, France",
       "shippingAddress": "45 Rue de Rivoli, Paris, France",
@@ -117,17 +120,20 @@
       "ordersCount": 0,
       "wishlistCount": 0,
       "createdAt": "2026-10-23T17:53:05.043Z",
-      "updatedAt": "2026-10-24T15:13:20.451Z"
+      "updatedAt": "2026-10-24T15:13:20.451Z",
+      "type": "admin"
     },
     {
       "id": "usr_admin_default",
       "name": "Admin admin",
       "email": "admin@tagateway.com",
-      "password": "$2b$10$RMI/yGDMEIwyGDrME.W5KOsCHgDTLDkZkQZW9xAU66JWy/AQwbO4K",
+      "password": "$2b$10$uMe0EiM2FYpz0waUwQXjJeppFQQ0ww.KgJhwlFcQZboWKfVwi5Dkq",
       "role": "ADMIN",
       "avatar": null,
       "createdAt": "2026-01-10T10:00:00.000Z",
-      "updatedAt": "2026-01-10T10:00:00.000Z"
+      "updatedAt": "2026-01-10T10:00:00.000Z",
+      "type": "admin",
+      "accountType": "admin"
     },
     {
       "id": "usr_simon",
@@ -147,7 +153,8 @@
       "ordersCount": 18,
       "wishlistCount": 2,
       "createdAt": "2026-10-23T17:49:47.338Z",
-      "updatedAt": "2026-10-23T17:49:47.338Z"
+      "updatedAt": "2026-10-23T17:49:47.338Z",
+      "type": "admin"
     },
     {
       "id": "usr_trustedsite",
@@ -167,7 +174,8 @@
       "ordersCount": 9,
       "wishlistCount": 3,
       "createdAt": "2026-10-23T17:49:47.338Z",
-      "updatedAt": "2026-10-23T17:49:47.338Z"
+      "updatedAt": "2026-10-23T17:49:47.338Z",
+      "type": "customer"
     },
     {
       "id": "usr_qa_checkout",
@@ -187,7 +195,8 @@
       "ordersCount": 1,
       "wishlistCount": 0,
       "createdAt": "2026-10-23T17:49:47.338Z",
-      "updatedAt": "2026-10-23T17:49:47.338Z"
+      "updatedAt": "2026-10-23T17:49:47.338Z",
+      "type": "customer"
     },
     {
       "id": "usr_test323",
@@ -207,7 +216,8 @@
       "ordersCount": 0,
       "wishlistCount": 1,
       "createdAt": "2026-10-23T17:49:47.338Z",
-      "updatedAt": "2026-10-23T17:49:47.338Z"
+      "updatedAt": "2026-10-23T17:49:47.338Z",
+      "type": "customer"
     },
     {
       "id": "usr_admin22222",
@@ -227,7 +237,8 @@
       "ordersCount": 4,
       "wishlistCount": 2,
       "createdAt": "2026-10-23T17:49:47.338Z",
-      "updatedAt": "2026-10-23T17:49:47.338Z"
+      "updatedAt": "2026-10-23T17:49:47.338Z",
+      "type": "customer"
     },
     {
       "id": "usr_ash",
@@ -247,7 +258,8 @@
       "ordersCount": 7,
       "wishlistCount": 4,
       "createdAt": "2026-10-23T17:49:47.338Z",
-      "updatedAt": "2026-10-23T17:49:47.338Z"
+      "updatedAt": "2026-10-23T17:49:47.338Z",
+      "type": "customer"
     },
     {
       "id": "usr_macocoz",
@@ -267,7 +279,8 @@
       "ordersCount": 12,
       "wishlistCount": 6,
       "createdAt": "2026-10-23T17:49:47.338Z",
-      "updatedAt": "2026-10-23T17:49:47.338Z"
+      "updatedAt": "2026-10-23T17:49:47.338Z",
+      "type": "customer"
     },
     {
       "id": "emp_kamendra",
@@ -296,7 +309,8 @@
         "Rate Request"
       ],
       "createdAt": "2026-06-01T08:00:00.000Z",
-      "updatedAt": "2026-10-24T15:31:19.984Z"
+      "updatedAt": "2026-10-24T15:31:19.984Z",
+      "type": "admin"
     },
     {
       "id": "emp_nikhil",
@@ -320,7 +334,8 @@
         "HR Admin"
       ],
       "createdAt": "2026-01-15T08:00:00.000Z",
-      "updatedAt": "2026-10-24T15:12:29.874Z"
+      "updatedAt": "2026-10-24T15:12:29.874Z",
+      "type": "admin"
     },
     {
       "id": "emp_antu",
@@ -344,7 +359,8 @@
         "new company"
       ],
       "createdAt": "2026-02-10T08:00:00.000Z",
-      "updatedAt": "2026-10-24T15:12:29.874Z"
+      "updatedAt": "2026-10-24T15:12:29.874Z",
+      "type": "admin"
     },
     {
       "id": "emp_ankita",
@@ -368,7 +384,8 @@
         "PPC"
       ],
       "createdAt": "2026-03-12T08:00:00.000Z",
-      "updatedAt": "2026-10-24T15:12:29.874Z"
+      "updatedAt": "2026-10-24T15:12:29.874Z",
+      "type": "admin"
     },
     {
       "id": "emp_gyan",
@@ -392,7 +409,8 @@
         "Super Administrator"
       ],
       "createdAt": "2026-04-05T08:00:00.000Z",
-      "updatedAt": "2026-10-25T16:35:08.724Z"
+      "updatedAt": "2026-10-25T16:35:08.724Z",
+      "type": "admin"
     },
     {
       "id": "emp_rohit",
@@ -418,7 +436,8 @@
         "Sales Team"
       ],
       "createdAt": "2026-05-20T08:00:00.000Z",
-      "updatedAt": "2026-10-24T15:12:29.874Z"
+      "updatedAt": "2026-10-24T15:12:29.874Z",
+      "type": "admin"
     },
     {
       "id": "emp_pooja",
@@ -439,7 +458,8 @@
       "status": "ACTIVE",
       "assignedRoles": [],
       "createdAt": "2026-07-01T08:00:00.000Z",
-      "updatedAt": "2026-10-24T15:12:29.874Z"
+      "updatedAt": "2026-10-24T15:12:29.874Z",
+      "type": "admin"
     },
     {
       "id": "emp_vikas",
@@ -460,7 +480,8 @@
       "status": "ACTIVE",
       "assignedRoles": [],
       "createdAt": "2026-08-15T08:00:00.000Z",
-      "updatedAt": "2026-10-24T15:12:29.874Z"
+      "updatedAt": "2026-10-24T15:12:29.874Z",
+      "type": "admin"
     },
     {
       "id": "usr_84pb9jcs0",
@@ -489,7 +510,8 @@
       "emailVerified": true,
       "phoneVerified": true,
       "createdAt": "2026-10-25T06:16:24.085Z",
-      "updatedAt": "2026-10-25T06:16:24.085Z"
+      "updatedAt": "2026-10-25T06:16:24.085Z",
+      "type": "customer"
     },
     {
       "id": "usr_b1187i7ym",
@@ -518,7 +540,8 @@
       "emailVerified": true,
       "phoneVerified": true,
       "createdAt": "2026-10-25T06:16:34.710Z",
-      "updatedAt": "2026-10-25T06:16:34.710Z"
+      "updatedAt": "2026-10-25T06:16:34.710Z",
+      "type": "customer"
     },
     {
       "id": "usr_6bzq26x37",
@@ -547,7 +570,8 @@
       "emailVerified": true,
       "phoneVerified": true,
       "createdAt": "2026-10-25T06:17:00.453Z",
-      "updatedAt": "2026-10-25T06:17:00.453Z"
+      "updatedAt": "2026-10-25T06:17:00.453Z",
+      "type": "customer"
     },
     {
       "id": "usr_5h2gzr4tf",
@@ -576,7 +600,8 @@
       "emailVerified": true,
       "phoneVerified": true,
       "createdAt": "2026-10-25T06:17:48.044Z",
-      "updatedAt": "2026-10-25T06:17:48.044Z"
+      "updatedAt": "2026-10-25T06:17:48.044Z",
+      "type": "customer"
     },
     {
       "id": "usr_4ek7ecysd",
@@ -605,7 +630,8 @@
       "emailVerified": true,
       "phoneVerified": true,
       "createdAt": "2026-10-25T09:45:23.014Z",
-      "updatedAt": "2026-10-25T09:45:23.014Z"
+      "updatedAt": "2026-10-25T09:45:23.014Z",
+      "type": "customer"
     },
     {
       "id": "usr_mnbpqw19r",
@@ -634,7 +660,8 @@
       "emailVerified": true,
       "phoneVerified": true,
       "createdAt": "2026-10-25T09:45:34.842Z",
-      "updatedAt": "2026-10-25T09:45:34.842Z"
+      "updatedAt": "2026-10-25T09:45:34.842Z",
+      "type": "customer"
     },
     {
       "id": "usr_w9wjwdfru",
@@ -663,7 +690,8 @@
       "emailVerified": true,
       "phoneVerified": true,
       "createdAt": "2026-10-25T09:49:54.289Z",
-      "updatedAt": "2026-10-25T09:49:54.289Z"
+      "updatedAt": "2026-10-25T09:49:54.289Z",
+      "type": "customer"
     },
     {
       "id": "usr_4o2zexxue",
@@ -692,7 +720,8 @@
       "emailVerified": true,
       "phoneVerified": true,
       "createdAt": "2026-10-25T09:49:55.522Z",
-      "updatedAt": "2026-10-25T09:49:55.522Z"
+      "updatedAt": "2026-10-25T09:49:55.522Z",
+      "type": "customer"
     },
     {
       "id": "usr_nye6zxjrd",
@@ -721,7 +750,8 @@
       "emailVerified": true,
       "phoneVerified": true,
       "createdAt": "2026-10-25T09:50:42.106Z",
-      "updatedAt": "2026-10-25T09:50:42.106Z"
+      "updatedAt": "2026-10-25T09:50:42.106Z",
+      "type": "customer"
     },
     {
       "id": "usr_6w24wbq0c",
@@ -750,7 +780,8 @@
       "emailVerified": true,
       "phoneVerified": true,
       "createdAt": "2026-10-25T09:52:42.400Z",
-      "updatedAt": "2026-10-25T09:52:42.400Z"
+      "updatedAt": "2026-10-25T09:52:42.400Z",
+      "type": "customer"
     },
     {
       "id": "usr_m2bukc4zg",
@@ -779,7 +810,8 @@
       "emailVerified": true,
       "phoneVerified": true,
       "createdAt": "2026-10-25T09:52:43.314Z",
-      "updatedAt": "2026-10-25T09:52:43.314Z"
+      "updatedAt": "2026-10-25T09:52:43.314Z",
+      "type": "customer"
     },
     {
       "id": "usr_y6cac9uff",
@@ -808,7 +840,8 @@
       "emailVerified": true,
       "phoneVerified": true,
       "createdAt": "2026-10-25T16:27:44.444Z",
-      "updatedAt": "2026-10-25T16:27:44.444Z"
+      "updatedAt": "2026-10-25T16:27:44.444Z",
+      "type": "customer"
     },
     {
       "id": "usr_72x4rqvlm",
@@ -840,7 +873,8 @@
       "updatedAt": "2026-10-25T16:34:10.587Z",
       "assignedRoles": [
         "Customer"
-      ]
+      ],
+      "type": "customer"
     },
     {
       "id": "usr_48kx9myz9",
@@ -869,7 +903,38 @@
       "emailVerified": true,
       "phoneVerified": true,
       "createdAt": "2026-10-27T18:46:32.990Z",
-      "updatedAt": "2026-10-27T18:46:32.990Z"
+      "updatedAt": "2026-10-27T18:46:32.990Z",
+      "type": "customer"
+    },
+    {
+      "id": "usr_07q5gbkem",
+      "name": "Test",
+      "email": "test_inspect_3001@example.com",
+      "password": "$2b$10$vZ4nG1WZZhh5qYtmrxe1pedU8cPdHbre7K0Wzo6ANMzLMUtG.Ulbi",
+      "role": "CUSTOMER",
+      "type": "customer",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "",
+      "phone": "",
+      "countryCode": "+1",
+      "country": "",
+      "state": "",
+      "city": "",
+      "postalCode": "",
+      "streetAddress": "",
+      "apartment": "",
+      "address": "",
+      "shippingAddress": "",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-28T16:19:08.319Z",
+      "updatedAt": "2026-10-28T16:19:08.319Z"
     }
   ],
   "assets": [
@@ -883,13 +948,13 @@
       "url": "/uploads/image_1792918380103_949hnj.webp",
       "thumbnailUrl": null,
       "fileType": "IMAGE",
-      "altText": null,
-      "caption": null,
+      "altText": "",
+      "caption": "",
       "folder": "default",
       "tags": [],
       "uploaderId": "usr_4gyuc6dk0",
       "createdAt": "2026-10-25T08:53:00.106Z",
-      "updatedAt": "2026-10-25T08:53:00.106Z",
+      "updatedAt": "2026-10-28T15:18:52.176Z",
       "productCount": 0
     },
     {
