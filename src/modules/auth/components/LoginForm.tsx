@@ -59,7 +59,7 @@ export function LoginForm() {
       <div className="text-center mb-8">
         <Link href="/" className="inline-flex items-center space-x-1 group mb-3">
           <span className="text-3xl font-black tracking-tight text-slate-900 group-hover:text-blue-600 transition lowercase">
-            emox
+            g-store
           </span>
           <span className="w-2 h-2 rounded-full bg-blue-600 mb-2"></span>
         </Link>
@@ -168,7 +168,7 @@ export function LoginForm() {
 
       <div className="mt-8 pt-6 border-t border-slate-100 text-center space-y-3">
         <p className="text-xs text-slate-500">
-          New to emox?{" "}
+          New to G-Store?{" "}
           <Link href="/register" className="font-bold text-blue-600 hover:underline">
             Create an Account
           </Link>

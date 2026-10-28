@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { CheckoutPageView } from "@/modules/checkout/components/CheckoutPageView";
 
 export const metadata = {
-  title: "Secure Checkout | emox India",
+  title: "Secure Checkout | G-Store India",
   description: "Complete your order with flexible payment gateways, express shipping, and instant buyer protection across India.",
 };
 

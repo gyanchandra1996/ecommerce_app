@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "emox Admin | E-Commerce Platform",
+  title: "G-Store | E-Commerce Platform",
   description: "Enterprise E-Commerce Management Platform with Assets & Inventory",
 };
 

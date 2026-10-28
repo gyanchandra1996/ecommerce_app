@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { CartPageView } from "@/modules/cart/components/CartPageView";
 
 export const metadata = {
-  title: "Shopping Cart | emox Online Shopping India",
+  title: "Shopping Cart | G-Store Online Shopping India",
   description: "View and manage items in your shopping cart, apply coupons, and proceed to secure checkout.",
 };
 

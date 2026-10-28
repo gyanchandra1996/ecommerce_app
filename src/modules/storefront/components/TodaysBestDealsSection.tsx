@@ -40,7 +40,7 @@ export function TodaysBestDealsSection({ onAddToCart, onOpenProduct, searchFilte
                 rating: Number(p.rating) || 4.7,
                 reviewsCount: Number(p.reviewsCount) || 120,
                 category: p.categoryNames?.[0] || "General",
-                brand: p.brand || "Emox Choice",
+                brand: p.brand || "Top Pick",
                 image:
                   p.mainImage ||
                   "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80",

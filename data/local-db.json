@@ -1668,9 +1668,9 @@
     },
     {
       "id": "slider_promo_3",
-      "badge": "قبل نفاد المخزون",
-      "tag": "EMOX SPECIAL OFFER",
-      "title": "عرض إيموكس المميز",
+      "badge": "Limited Stock",
+      "tag": "SPECIAL OFFER",
+      "title": "Super Value Deals",
       "subtitle": "Organic mountain honey, imported pantry staples, dates & oils",
       "buttonText": "Shop now",
       "buttonLink": "/#deals",
@@ -1797,7 +1797,7 @@
     },
     {
       "id": "menu_live",
-      "label": "emox Live",
+      "label": "Live Deals",
       "url": "/#deals",
       "badge": "Live",
       "displayOrder": 10,
@@ -1818,9 +1818,9 @@
     "defaultCurrency": "INR",
     "deliveryLocation": "Delivering to India",
     "timeZone": "Asia/Kolkata",
-    "supportEmail": "support@emox.in",
-    "supportPhone": "+91 1800 123 EMOX",
-    "footerCopyrightText": "© 2026 emox India Pvt Ltd. All rights reserved.",
+    "supportEmail": "support@g-store.in",
+    "supportPhone": "+91 1800 123 4567",
+    "footerCopyrightText": "© 2026 G-store India Pvt Ltd. All rights reserved.",
     "footerAboutText": "Your one-stop destination for authentic electronics, top fashion labels, and household essentials across India with 100% buyer protection.",
     "footerLinks": [
       {
@@ -1897,7 +1897,7 @@
       },
       {
         "id": "fl_10",
-        "label": "Sell on emox",
+        "label": "Sell on G-store",
         "url": "/#deals",
         "displayOrder": 2,
         "isActive": true,
@@ -1971,7 +1971,7 @@
     "autoCancelDays": 7,
     "handlingCharge": 5,
     "freeShippingThreshold": 200,
-    "updatedAt": "2026-10-28T17:09:46.672Z"
+    "updatedAt": "2026-10-28T18:19:52.600Z"
   },
   "manufacturers": [
     {
@@ -3950,6 +3950,14 @@
       "quantity": 2,
       "createdAt": "2026-10-27T18:46:39.490Z",
       "updatedAt": "2026-10-27T18:46:39.490Z"
+    },
+    {
+      "id": "ci_pxx2js2",
+      "cartId": "cart_cngd2fb",
+      "productId": "prod_b0tc2ooe4",
+      "quantity": 1,
+      "createdAt": "2026-10-28T18:11:41.172Z",
+      "updatedAt": "2026-10-28T18:11:41.172Z"
     }
   ],
   "pricingSettings": {
@@ -5579,7 +5587,7 @@
           "headerStyle": "modern",
           "footerStyle": "standard",
           "announcementBar": {
-            "enabled": true,
+            "enabled": false,
             "text": "Note: Limited time offer - Get free express delivery on all orders over $50!",
             "link": "/#deals",
             "bgColor": "#1e293b",
@@ -5614,7 +5622,7 @@
         "customCss": ""
       },
       "createdAt": "2026-10-25T09:31:13.441Z",
-      "updatedAt": "2026-10-25T15:08:46.724Z"
+      "updatedAt": "2026-10-28T18:19:52.532Z"
     },
     {
       "id": "thm_unishop1",

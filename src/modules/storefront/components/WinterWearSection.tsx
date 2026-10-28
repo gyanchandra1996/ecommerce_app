@@ -55,7 +55,7 @@ export function WinterWearSection({ onAddToCart, onOpenProduct }: Props) {
               rating: Number(p.rating) || 4.7,
               reviewsCount: Number(p.reviewsCount) || 150,
               category: "Winter-Wear",
-              brand: p.brand || "Emox Winter",
+              brand: p.brand || "Winter Collection",
               image:
                 p.mainImage ||
                 "https://images.unsplash.com/photo-1539533018447-63fcce667823?auto=format&fit=crop&w=500&q=80",

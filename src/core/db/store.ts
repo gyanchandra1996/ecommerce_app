@@ -593,6 +593,8 @@ export interface ShippingZoneRecord {
 }
 
 export interface ThemeDesignSettings {
+  storeName?: string;
+  storeTagline?: string;
   primaryColor: string;
   secondaryColor: string;
   accentColor: string;
@@ -2617,18 +2619,18 @@ export class DatabaseStore {
   public static getDefaultSettings(): SiteSettingsRecord {
     return {
       id: "site_settings_main",
-      themeName: "emox",
-      siteTitle: "emox | Online Shopping for Electronics, Fashion, Deals & More in India",
+      themeName: "G-store",
+      siteTitle: "G-store | Online Shopping for Electronics, Fashion, Deals & More in India",
       tagline: "Express delivery across India",
-      uniqueTitle: "emox",
-      alternateTitle: "EMOX1",
+      uniqueTitle: "G-STORE",
+      alternateTitle: "G-STORE1",
       orderPrefix: "tags",
       defaultCurrency: "INR",
       deliveryLocation: "Delivering to India",
       timeZone: "Asia/Kolkata",
-      supportEmail: "support@emox.in",
-      supportPhone: "+91 1800 123 EMOX",
-      footerCopyrightText: "© 2026 emox India Pvt Ltd. All rights reserved.",
+      supportEmail: "support@g-store.in",
+      supportPhone: "+91 1800 123 4567",
+      footerCopyrightText: "© 2026 G-store India Pvt Ltd. All rights reserved.",
       footerAboutText: "Your one-stop destination for authentic electronics, top fashion labels, and household essentials across India with 100% buyer protection.",
       footerLinks: [
         { id: "fl_1", label: "Today's Best Deals", url: "/#deals", displayOrder: 1, isActive: true, section: "shop" },
@@ -2642,7 +2644,7 @@ export class DatabaseStore {
         { id: "fl_8", label: "Help Center / FAQs", url: "/#deals", displayOrder: 4, isActive: true, section: "customer_service" },
 
         { id: "fl_9", label: "About Our Story", url: "/#deals", displayOrder: 1, isActive: true, section: "about" },
-        { id: "fl_10", label: "Sell on emox", url: "/#deals", displayOrder: 2, isActive: true, section: "about" },
+        { id: "fl_10", label: "Sell on G-store", url: "/#deals", displayOrder: 2, isActive: true, section: "about" },
         { id: "fl_11", label: "Careers", url: "/#deals", displayOrder: 3, isActive: true, section: "about" },
         { id: "fl_12", label: "Press & Media", url: "/#deals", displayOrder: 4, isActive: true, section: "about" },
 
@@ -2652,7 +2654,7 @@ export class DatabaseStore {
         { id: "fl_16", label: "Security & Fraud Notice", url: "/#deals", displayOrder: 4, isActive: true, section: "legal" },
       ],
       socialLinks: {
-        facebook: "https://facebook.com/emox",
+        facebook: "https://facebook.com/g-store",
         instagram: "https://instagram.com/emox",
         twitter: "https://twitter.com/emox",
         youtube: "https://youtube.com/@emox",

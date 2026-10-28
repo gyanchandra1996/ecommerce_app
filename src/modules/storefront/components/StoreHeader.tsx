@@ -88,7 +88,7 @@ export function StoreHeader({
 
   const [menuItems, setMenuItems] = useState<DynamicMenuItem[]>([]);
   const [isMenuLoading, setIsMenuLoading] = useState(true);
-  const [themeName, setThemeName] = useState(storeName || "emox");
+  const [themeName, setThemeName] = useState(storeName || "G-store");
 
   useEffect(() => {
     if (storeName) {
@@ -669,33 +669,41 @@ export function StoreHeader({
               )}
             </div>
 
-            {/* Right: Highlighted Links (Best Deals & emox Live) dynamically managed from Backend */}
+            {/* Right: Highlighted Links (e.g. Best Deals & Live) dynamically managed from Backend */}
             <div className="flex items-center space-x-4 shrink-0 font-bold">
               {menuItems
                 .filter((item) => item.isHighlight)
-                .map((item) => (
-                  <a
-                    key={item.id}
-                    href={item.url}
-                    className={`flex items-center space-x-1.5 transition ${
-                      item.label.toLowerCase().includes("live")
-                        ? "text-slate-800 hover:text-red-600"
-                        : "text-blue-600 hover:text-blue-700"
-                    }`}
-                  >
-                    {item.label.toLowerCase().includes("live") ? (
-                      <>
-                        <span>{item.label}</span>
-                        <Radio className="w-3.5 h-3.5 text-red-500 animate-pulse" />
-                      </>
-                    ) : (
-                      <>
-                        <Gift className="w-3.5 h-3.5" />
-                        <span>{item.label}</span>
-                      </>
-                    )}
-                  </a>
-                ))}
+                .map((item) => {
+                  const rawLabel = item.label || "";
+                  const displayLabel = rawLabel.toLowerCase().includes("emox")
+                    ? rawLabel.replace(/emox/gi, themeName || "Store")
+                    : rawLabel;
+                  const isLive = displayLabel.toLowerCase().includes("live");
+
+                  return (
+                    <a
+                      key={item.id}
+                      href={item.url}
+                      className={`flex items-center space-x-1.5 transition ${
+                        isLive
+                          ? "text-slate-800 hover:text-red-600"
+                          : "text-blue-600 hover:text-blue-700"
+                      }`}
+                    >
+                      {isLive ? (
+                        <>
+                          <span>{displayLabel}</span>
+                          <Radio className="w-3.5 h-3.5 text-red-500 animate-pulse" />
+                        </>
+                      ) : (
+                        <>
+                          <Gift className="w-3.5 h-3.5" />
+                          <span>{displayLabel}</span>
+                        </>
+                      )}
+                    </a>
+                  );
+                })}
             </div>
           </div>
         </div>

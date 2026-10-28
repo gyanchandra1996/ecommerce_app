@@ -48,13 +48,15 @@ export function StoreFooter({ storeName }: Props = {}) {
     };
   }, []);
 
-  const themeName = liveStoreName || settings?.themeName || "emox";
-  const aboutText =
+  const themeName = liveStoreName || settings?.themeName || "G-store";
+  const aboutText = (
     settings?.footerAboutText ||
-    "Your premier Middle East destination for authentic electronics, global fashion, luxury goods, home decor and daily essentials.";
-  const copyrightText =
+    "Your premier destination for authentic electronics, global fashion, luxury goods, home decor and daily essentials."
+  ).replace(/emox/gi, themeName);
+  const copyrightText = (
     settings?.footerCopyrightText ||
-    `© 2026 ${themeName} Technologies LLC. All rights reserved.`;
+    `© 2026 ${themeName} Technologies LLC. All rights reserved.`
+  ).replace(/emox/gi, themeName);
 
   const links = settings?.footerLinks || [];
   const shopLinks = links

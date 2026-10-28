@@ -36,9 +36,9 @@ const DEFAULT_PROMOS: Slider[] = [
   },
   {
     id: "def_promo_3",
-    badge: "قبل نفاد المخزون",
-    tag: "EMOX SPECIAL OFFER",
-    title: "عرض إيموكس المميز",
+    badge: "Limited Stock",
+    tag: "EXCLUSIVE SPECIAL OFFER",
+    title: "Organic Mountain Delights",
     subtitle: "Organic mountain honey, pantry spices & dates sets",
     buttonText: "Shop now",
     buttonLink: "#deals",
@@ -97,7 +97,7 @@ export function TriplePromoBannersSection() {
               <div className="flex items-center justify-between">
                 {promo.tag && (
                   <span className="text-[10px] font-black uppercase tracking-wider opacity-90">
-                    {promo.tag}
+                    {promo.tag.replace(/emox/gi, "Special")}
                   </span>
                 )}
                 {promo.badge && (
@@ -108,7 +108,7 @@ export function TriplePromoBannersSection() {
               </div>
 
               <h3 className="text-xl sm:text-2xl font-black tracking-tight leading-tight pt-1">
-                {promo.title}
+                {promo.title?.replace(/عرض إيموكس المميز/gi, "Special Value Deals").replace(/emox/gi, "Special")}
               </h3>
 
               {promo.subtitle && (

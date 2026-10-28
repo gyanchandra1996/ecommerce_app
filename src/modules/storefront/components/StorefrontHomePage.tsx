@@ -52,14 +52,14 @@ interface ActiveThemeConfig {
   };
 }
 
-function StorefrontHomePageContent() {
+function StorefrontHomePageContent({ initialStoreName }: { initialStoreName?: string }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const previewThemeId = searchParams?.get("themePreview");
   const overridePrimary = searchParams?.get("primary");
   const overrideAccent = searchParams?.get("accent");
   const overrideStoreName = searchParams?.get("storeName");
-  const [liveStoreName, setLiveStoreName] = useState(overrideStoreName || "");
+  const [liveStoreName, setLiveStoreName] = useState(overrideStoreName || initialStoreName || "G-store");
 
   const { items: cart, addItem, adjustQuantity, removeItem, clearCart } = useCart();
   const [searchQuery, setSearchQuery] = useState("");
@@ -226,17 +226,19 @@ function StorefrontHomePageContent() {
   );
 }
 
-export function StorefrontHomePage() {
+export function StorefrontHomePage({ initialStoreName }: { initialStoreName?: string } = {}) {
   return (
     <Suspense
       fallback={
         <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-8 text-center">
           <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-3" />
-          <p className="text-xs font-semibold text-slate-500">Loading emox Storefront...</p>
+          <p className="text-xs font-semibold text-slate-500">
+            Loading {initialStoreName || "Store"} Storefront...
+          </p>
         </div>
       }
     >
-      <StorefrontHomePageContent />
+      <StorefrontHomePageContent initialStoreName={initialStoreName} />
     </Suspense>
   );
 }

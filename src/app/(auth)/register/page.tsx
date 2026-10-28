@@ -3,7 +3,7 @@ import { CustomerRegisterForm } from "@/modules/auth/components/CustomerRegister
 import { Loader2 } from "lucide-react";
 
 export const metadata = {
-  title: "Create Account | emox Store",
+  title: "Create Account | G-Store",
   description: "Register a customer account with mobile number, address, and postal autofill.",
 };
 

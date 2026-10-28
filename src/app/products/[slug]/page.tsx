@@ -13,7 +13,7 @@ export async function generateMetadata({
 
   if (!product) {
     return {
-      title: "Product Not Found | emox Online Shopping",
+      title: "Product Not Found | G-Store Online Shopping",
       description: "The requested product is not available.",
     };
   }
@@ -21,10 +21,10 @@ export async function generateMetadata({
   const categoryName = product.categoryNames?.[0] || "Catalog";
   const desc =
     product.description ||
-    `Shop ${product.name} on emox. Best deals, multiple options, authentic guarantee and fast shipping.`;
+    `Shop ${product.name} on G-Store. Best deals, multiple options, authentic guarantee and fast shipping.`;
 
   return {
-    title: `${product.name} | emox ${categoryName}`,
+    title: `${product.name} | G-Store ${categoryName}`,
     description: desc.slice(0, 160),
     openGraph: {
       title: product.name,

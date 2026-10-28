@@ -111,7 +111,7 @@ const GRADIENT_PRESETS = [
   { name: "Sky Cyan (Puma)", value: "from-[#0284c7] via-[#0ea5e9] to-[#38bdf8]" },
   { name: "Berry Red (Vegetables)", value: "from-[#881337] via-[#9f1239] to-[#be123c]" },
   { name: "Soft Sky Blue (Samsung FE)", value: "from-[#bfdbfe] via-[#dbeafe] to-[#eff6ff]" },
-  { name: "Flame Crimson (Emox Special)", value: "from-[#b91c1c] via-[#dc2626] to-[#ea580c]" },
+  { name: "Flame Crimson (Special Offer)", value: "from-[#b91c1c] via-[#dc2626] to-[#ea580c]" },
   { name: "Emerald Forest", value: "from-[#064e3b] via-[#047857] to-[#059669]" },
   { name: "Royal Violet", value: "from-[#3b0764] via-[#581c87] to-[#7e22ce]" },
 ];
@@ -691,7 +691,7 @@ export function ThemeCustomizerView() {
                         type="text"
                         value={config.design.storeName || ""}
                         onChange={(e) => handleStoreNameChange(e.target.value)}
-                        placeholder="e.g. emox, MyStore"
+                        placeholder="e.g. G-Store, MyStore"
                         className="w-full px-2.5 py-2 bg-slate-900 border border-slate-700 rounded-lg text-xs text-white font-bold focus:border-indigo-500 focus:outline-none"
                       />
                       <p className="text-[10px] text-slate-500 mt-1">
