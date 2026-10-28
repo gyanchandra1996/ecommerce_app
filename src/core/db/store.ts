@@ -1329,11 +1329,62 @@ export class DatabaseStore {
       list = list.filter((c) => c.name.toLowerCase().includes(q));
     }
 
+    const allProducts = db.products || [];
+    const allProductCats = db.productCategories || [];
+
+    // Map children for hierarchical count rollup
+    const childrenMap = new Map<string, string[]>();
+    (db.categories || []).forEach((cat) => {
+      if (cat.parentId) {
+        if (!childrenMap.has(cat.parentId)) childrenMap.set(cat.parentId, []);
+        childrenMap.get(cat.parentId)!.push(cat.id);
+      }
+    });
+
+    const getDescendantCategoryIds = (catId: string): Set<string> => {
+      const result = new Set<string>([catId]);
+      const queue = [catId];
+      while (queue.length > 0) {
+        const cur = queue.shift()!;
+        const kids = childrenMap.get(cur) || [];
+        for (const kid of kids) {
+          if (!result.has(kid)) {
+            result.add(kid);
+            queue.push(kid);
+          }
+        }
+      }
+      return result;
+    };
+
     return list.map((c) => {
-      const count = (db.productCategories || []).filter((pc) => pc.categoryId === c.id).length;
+      const catAndDescendantIds = getDescendantCategoryIds(c.id);
+      const matchedProductIds = new Set<string>();
+
+      // 1. Direct mapping table
+      allProductCats.forEach((pc) => {
+        if (catAndDescendantIds.has(pc.categoryId)) {
+          matchedProductIds.add(pc.productId);
+        }
+      });
+
+      // 2. Product categoryIds or categoryNames
+      allProducts.forEach((p) => {
+        if (p.categoryIds && Array.isArray(p.categoryIds)) {
+          if (p.categoryIds.some((cid) => catAndDescendantIds.has(cid) || cid === c.slug)) {
+            matchedProductIds.add(p.id);
+          }
+        }
+        if (p.categoryNames && Array.isArray(p.categoryNames)) {
+          if (p.categoryNames.some((cn) => cn.toLowerCase() === c.name.toLowerCase())) {
+            matchedProductIds.add(p.id);
+          }
+        }
+      });
+
       return {
         ...c,
-        productCount: count,
+        productCount: matchedProductIds.size,
       };
     });
   }
@@ -1426,7 +1477,7 @@ export class DatabaseStore {
 
   public static async updateCategory(
     id: string,
-    data: Partial<Pick<CategoryRecord, "name" | "description" | "parentId" | "isActive" | "image">>
+    data: Partial<Pick<CategoryRecord, "name" | "slug" | "description" | "parentId" | "isActive" | "image" | "displayOrder">>
   ): Promise<CategoryRecord | null> {
     const db = await this.readLocalDb();
     const idx = (db.categories || []).findIndex((c) => c.id === id);
@@ -1435,21 +1486,65 @@ export class DatabaseStore {
     let level = db.categories[idx].level;
     if (data.parentId !== undefined) {
       if (data.parentId) {
+        if (data.parentId === id) {
+          throw new Error("A category cannot be its own parent.");
+        }
+        // Check cycle in descendants
+        const getDescendants = (currId: string): string[] => {
+          const res: string[] = [];
+          (db.categories || []).forEach((c) => {
+            if (c.parentId === currId) {
+              res.push(c.id, ...getDescendants(c.id));
+            }
+          });
+          return res;
+        };
+        const descendants = getDescendants(id);
+        if (descendants.includes(data.parentId)) {
+          throw new Error("Cannot select a descendant subcategory as the parent.");
+        }
+
         const parent = db.categories.find((c) => c.id === data.parentId);
-        level = parent ? Math.min(2, parent.level + 1) : 0;
+        level = parent ? Math.min(2, (parent.level || 0) + 1) : 0;
       } else {
         level = 0;
       }
     }
 
+    // Auto-update slug if name changed and slug not explicitly provided
+    let slug = data.slug !== undefined ? data.slug : db.categories[idx].slug;
+    if (data.name && !data.slug && data.name !== db.categories[idx].name) {
+      slug = data.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+    }
+
     db.categories[idx] = {
       ...db.categories[idx],
       ...data,
+      slug,
       level,
       updatedAt: new Date().toISOString(),
     };
 
     await this.writeLocalDb(db);
+
+    const usePg = await this.testPostgres();
+    if (usePg) {
+      try {
+        await prisma.category.update({
+          where: { id },
+          data: {
+            name: db.categories[idx].name,
+            slug: db.categories[idx].slug,
+            description: db.categories[idx].description,
+            parentId: db.categories[idx].parentId,
+            image: db.categories[idx].image,
+            isActive: db.categories[idx].isActive,
+            level: db.categories[idx].level,
+          },
+        });
+      } catch {}
+    }
+
     return db.categories[idx];
   }
 
@@ -1515,17 +1610,36 @@ export class DatabaseStore {
       const targetCatId = targetCat ? targetCat.id : categoryId;
       const targetCatSlug = targetCat ? targetCat.slug : categoryId;
 
+      const childrenMap = new Map<string, string[]>();
+      (db.categories || []).forEach((cat) => {
+        if (cat.parentId) {
+          if (!childrenMap.has(cat.parentId)) childrenMap.set(cat.parentId, []);
+          childrenMap.get(cat.parentId)!.push(cat.id);
+        }
+      });
+      const catIdsToMatch = new Set<string>([targetCatId]);
+      const queue = [targetCatId];
+      while (queue.length > 0) {
+        const cur = queue.shift()!;
+        const kids = childrenMap.get(cur) || [];
+        for (const k of kids) {
+          if (!catIdsToMatch.has(k)) {
+            catIdsToMatch.add(k);
+            queue.push(k);
+          }
+        }
+      }
+
       const matchingProductIds = new Set(
         (db.productCategories || [])
-          .filter((pc) => pc.categoryId === targetCatId)
+          .filter((pc) => catIdsToMatch.has(pc.categoryId))
           .map((pc) => pc.productId)
       );
 
       list = list.filter(
         (p) =>
           matchingProductIds.has(p.id) ||
-          (p.categoryIds && p.categoryIds.includes(targetCatId)) ||
-          (p.categoryIds && p.categoryIds.includes(targetCatSlug)) ||
+          (p.categoryIds && p.categoryIds.some((cid) => catIdsToMatch.has(cid) || cid === targetCatSlug)) ||
           (p.categoryNames &&
             targetCat &&
             p.categoryNames.some((cn) => cn.toLowerCase() === targetCat.name.toLowerCase()))

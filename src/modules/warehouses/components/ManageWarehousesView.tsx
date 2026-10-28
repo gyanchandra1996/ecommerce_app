@@ -17,6 +17,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { WarehouseRecord } from "@/core/db/store";
+import { COUNTRIES } from "@/core/utils/postal-autofill";
 
 export function ManageWarehousesView() {
   const [warehouses, setWarehouses] = useState<WarehouseRecord[]>([]);
@@ -396,19 +397,19 @@ export function ManageWarehousesView() {
         </div>
       </div>
 
-      {/* Add / Edit Warehouse Modal (Matching Screenshot 2) */}
+      {/* Add / Edit Warehouse Modal (Matching User Screenshot: Warehouse Create[Virat]) */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-2xl max-h-[92vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+          <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-xl max-h-[92vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-150">
             {/* Modal Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/70">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/80">
               <div className="flex items-center space-x-2.5">
                 <div className="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center shadow-xs">
                   <WarehouseIcon className="w-4 h-4" />
                 </div>
                 <div>
-                  <h2 className="text-sm font-bold text-slate-800">
-                    {editingWarehouse ? "Edit Warehouse" : "Manage Warehouse"}
+                  <h2 className="text-base font-bold text-slate-800 tracking-tight">
+                    {editingWarehouse ? "Warehouse Edit[Virat]" : "Warehouse Create[Virat]"}
                   </h2>
                   <p className="text-[11px] text-slate-500">
                     Fulfillment location details and multi-channel mappings
@@ -423,8 +424,8 @@ export function ManageWarehousesView() {
               </button>
             </div>
 
-            {/* Modal Body */}
-            <form onSubmit={handleSave} className="flex-1 overflow-y-auto p-6 space-y-4 text-xs">
+            {/* Modal Body Matching Exact Screenshot Order */}
+            <form onSubmit={handleSave} className="flex-1 overflow-y-auto p-6 space-y-3.5 text-xs">
               {modalError && (
                 <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 shrink-0" />
@@ -432,205 +433,261 @@ export function ManageWarehousesView() {
                 </div>
               )}
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">
-                    Warehouse Name <span className="text-red-500">*</span>
-                  </label>
+              {/* 1. Email Address:* */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1.5 sm:gap-4">
+                <label className="text-slate-600 font-medium sm:text-right">
+                  Email Address:<span className="text-red-500">*</span>
+                </label>
+                <div className="sm:col-span-2">
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder="e.g. warehouse@tagateway.com"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-xs shadow-2xs"
+                  />
+                </div>
+              </div>
+
+              {/* 2. Account Number:* */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1.5 sm:gap-4">
+                <label className="text-slate-600 font-medium sm:text-right">
+                  Account Number:<span className="text-red-500">*</span>
+                </label>
+                <div className="sm:col-span-2">
+                  <input
+                    type="text"
+                    required
+                    value={formData.accountNumber}
+                    onChange={(e) => setFormData({ ...formData, accountNumber: e.target.value })}
+                    placeholder="e.g. WH-89"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-800 font-mono focus:outline-none focus:ring-1 focus:ring-indigo-500 text-xs shadow-2xs"
+                  />
+                </div>
+              </div>
+
+              {/* 3. Warehouse Name:* */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1.5 sm:gap-4">
+                <label className="text-slate-600 font-medium sm:text-right">
+                  Warehouse Name:<span className="text-red-500">*</span>
+                </label>
+                <div className="sm:col-span-2">
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Dallas Distribution Hub"
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">
-                    Account / Code #
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.accountNumber}
-                    onChange={(e) => setFormData({ ...formData, accountNumber: e.target.value })}
-                    placeholder="e.g. WH-89"
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-mono"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-xs shadow-2xs"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">
-                    Warehouse Manager / Contact Name
-                  </label>
+              {/* 4. Contact Name:* */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1.5 sm:gap-4">
+                <label className="text-slate-600 font-medium sm:text-right">
+                  Contact Name:<span className="text-red-500">*</span>
+                </label>
+                <div className="sm:col-span-2">
                   <input
                     type="text"
+                    required
                     value={formData.contactName}
                     onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
                     placeholder="e.g. John Doe"
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Email</label>
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="e.g. warehouse@example.com"
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-xs shadow-2xs"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Phone</label>
-                  <input
-                    type="text"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="e.g. (555) 019-2834"
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              {/* 5. Address Line1:* */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 sm:items-start gap-1.5 sm:gap-4">
+                <label className="text-slate-600 font-medium sm:text-right sm:pt-2">
+                  Address Line1:<span className="text-red-500">*</span>
+                </label>
+                <div className="sm:col-span-2">
+                  <textarea
+                    rows={2}
+                    required
+                    value={formData.addressLine1}
+                    onChange={(e) => setFormData({ ...formData, addressLine1: e.target.value, address: e.target.value })}
+                    placeholder="e.g. 123 Logistics Way, Dock 4"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-xs shadow-2xs resize-none"
                   />
                 </div>
+              </div>
 
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Fax</label>
+              {/* 6. Country:* */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1.5 sm:gap-4">
+                <label className="text-slate-600 font-medium sm:text-right">
+                  Country:<span className="text-red-500">*</span>
+                </label>
+                <div className="sm:col-span-2">
+                  <select
+                    required
+                    value={formData.country}
+                    onChange={(e) => {
+                      const newCountry = e.target.value;
+                      const cObj = COUNTRIES.find((c) => c.name.toLowerCase() === newCountry.toLowerCase());
+                      const defaultState = cObj && cObj.states.length > 0 ? cObj.states[0] : "";
+                      setFormData({ ...formData, country: newCountry, state: defaultState });
+                    }}
+                    className="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-xs shadow-2xs"
+                  >
+                    <option value="">Select Country</option>
+                    {COUNTRIES.map((c) => (
+                      <option key={c.code} value={c.name}>
+                        {c.flag} {c.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* 7. ZipCode:* */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1.5 sm:gap-4">
+                <label className="text-slate-600 font-medium sm:text-right">
+                  ZipCode:<span className="text-red-500">*</span>
+                </label>
+                <div className="sm:col-span-2">
+                  <input
+                    type="text"
+                    required
+                    value={formData.zipCode}
+                    onChange={(e) => setFormData({ ...formData, zipCode: e.target.value })}
+                    placeholder="e.g. 110001 or 94103"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-800 font-mono focus:outline-none focus:ring-1 focus:ring-indigo-500 text-xs shadow-2xs"
+                  />
+                </div>
+              </div>
+
+              {/* 8. State:* */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1.5 sm:gap-4">
+                <label className="text-slate-600 font-medium sm:text-right">
+                  State:<span className="text-red-500">*</span>
+                </label>
+                <div className="sm:col-span-2">
+                  {(() => {
+                    const cObj = COUNTRIES.find(
+                      (c) => c.name.toLowerCase() === (formData.country || "").toLowerCase()
+                    );
+                    const states = cObj?.states || [];
+                    if (states.length > 0) {
+                      return (
+                        <select
+                          required
+                          value={formData.state}
+                          onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                          className="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-xs shadow-2xs"
+                        >
+                          <option value="">Select State</option>
+                          {states.map((st) => (
+                            <option key={st} value={st}>
+                              {st}
+                            </option>
+                          ))}
+                        </select>
+                      );
+                    }
+                    return (
+                      <input
+                        type="text"
+                        required
+                        value={formData.state}
+                        onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                        placeholder="Select State or type province"
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-xs shadow-2xs"
+                      />
+                    );
+                  })()}
+                </div>
+              </div>
+
+              {/* 9. City:* */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1.5 sm:gap-4">
+                <label className="text-slate-600 font-medium sm:text-right">
+                  City:<span className="text-red-500">*</span>
+                </label>
+                <div className="sm:col-span-2">
+                  <input
+                    type="text"
+                    required
+                    value={formData.city}
+                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    placeholder="e.g. New Delhi or Dallas"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-xs shadow-2xs"
+                  />
+                </div>
+              </div>
+
+              {/* 10. Phone:* */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1.5 sm:gap-4">
+                <label className="text-slate-600 font-medium sm:text-right">
+                  Phone:<span className="text-red-500">*</span>
+                </label>
+                <div className="sm:col-span-2">
+                  <input
+                    type="text"
+                    required
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    placeholder="e.g. +91 9876543210"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-xs shadow-2xs"
+                  />
+                </div>
+              </div>
+
+              {/* 11. Fax:* */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1.5 sm:gap-4">
+                <label className="text-slate-600 font-medium sm:text-right">
+                  Fax:<span className="text-red-500">*</span>
+                </label>
+                <div className="sm:col-span-2">
                   <input
                     type="text"
                     value={formData.fax}
                     onChange={(e) => setFormData({ ...formData, fax: e.target.value })}
                     placeholder="e.g. (555) 019-2835"
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-xs shadow-2xs"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Address Line 1</label>
-                  <input
-                    type="text"
-                    value={formData.addressLine1}
-                    onChange={(e) => setFormData({ ...formData, addressLine1: e.target.value })}
-                    placeholder="123 Warehouse Way"
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Address Line 2</label>
-                  <input
-                    type="text"
-                    value={formData.addressLine2}
-                    onChange={(e) => setFormData({ ...formData, addressLine2: e.target.value })}
-                    placeholder="Suite / Dock 4"
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Country</label>
-                  <input
-                    type="text"
-                    value={formData.country}
-                    onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                  />
-                </div>
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">State</label>
-                  <input
-                    type="text"
-                    value={formData.state}
-                    onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                  />
-                </div>
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">City</label>
-                  <input
-                    type="text"
-                    value={formData.city}
-                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                  />
-                </div>
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Postal Code</label>
-                  <input
-                    type="text"
-                    value={formData.zipCode}
-                    onChange={(e) => setFormData({ ...formData, zipCode: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-slate-100">
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">
-                    ShipStation Warehouse
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.shipstationWarehouse}
-                    onChange={(e) => setFormData({ ...formData, shipstationWarehouse: e.target.value })}
-                    placeholder="e.g. SS-DAL-01"
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">
-                    Sellbrite Warehouse
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.sellbriteWarehouse}
-                    onChange={(e) => setFormData({ ...formData, sellbriteWarehouse: e.target.value })}
-                    placeholder="e.g. SB-WH-DALLAS"
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                  />
-                </div>
-              </div>
-
-              <div className="pt-2 flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  id="whIsActive"
-                  checked={formData.isActive}
-                  onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-                  className="w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500"
-                />
-                <label htmlFor="whIsActive" className="text-xs font-semibold text-slate-700">
-                  Active (Warehouse is operational and eligible for order fulfillment and product inventory)
+              {/* 12. Status:* */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 sm:items-center gap-1.5 sm:gap-4">
+                <label className="text-slate-600 font-medium sm:text-right">
+                  Status:<span className="text-red-500">*</span>
                 </label>
+                <div className="sm:col-span-2">
+                  <select
+                    required
+                    value={formData.isActive ? "Active" : "Inactive"}
+                    onChange={(e) => setFormData({ ...formData, isActive: e.target.value === "Active" })}
+                    className="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-800 font-medium focus:outline-none focus:ring-1 focus:ring-indigo-500 text-xs shadow-2xs"
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
+                </div>
               </div>
 
               {/* Modal Footer */}
-              <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-2">
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 transition"
+                  className="px-4 py-2 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 font-medium transition cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition flex items-center gap-1.5 disabled:opacity-50"
+                  className="px-5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition flex items-center gap-1.5 disabled:opacity-50 shadow-xs cursor-pointer"
                 >
                   {saving && <RefreshCw className="w-3.5 h-3.5 animate-spin" />}
-                  Save Warehouse
+                  {editingWarehouse ? "Save Warehouse" : "Create Warehouse"}
                 </button>
               </div>
             </form>

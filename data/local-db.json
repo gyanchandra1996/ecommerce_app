@@ -1,6 +1,73 @@
 {
   "users": [
     {
+      "id": "usr_ahex4ecf",
+      "email": "test.cust.1793210787881@example.com",
+      "name": "Plain Customer Test",
+      "firstName": "Plain",
+      "lastName": "Customer Test",
+      "phone": "",
+      "mobileNumber": "",
+      "country": "India",
+      "countryCode": "IN",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "streetAddress": "",
+      "apartment": "",
+      "password": "Customer123!",
+      "role": "CUSTOMER",
+      "roleId": "",
+      "assignedRoles": [],
+      "accountType": "customer",
+      "type": "customer",
+      "customerType": "Customer",
+      "address": null,
+      "shippingAddress": null,
+      "lastLogin": "Just now",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "createdAt": "2026-10-28T18:06:28.259Z",
+      "updatedAt": "2026-10-28T18:06:28.259Z"
+    },
+    {
+      "id": "usr_kdslcwyx",
+      "email": "satendra@gmail.com",
+      "name": "satendra",
+      "firstName": "satendra",
+      "lastName": "",
+      "phone": "",
+      "mobileNumber": "",
+      "country": "India",
+      "countryCode": "IN",
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "postalCode": "400001",
+      "streetAddress": "",
+      "apartment": "",
+      "password": "admin@123",
+      "role": "ADMIN",
+      "roleId": "role_admin",
+      "assignedRoles": [
+        "role_admin",
+        "Super Administrator"
+      ],
+      "accountType": "admin",
+      "type": "admin",
+      "customerType": "Admin",
+      "address": null,
+      "shippingAddress": null,
+      "lastLogin": "Just now",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "createdAt": "2026-10-28T17:52:45.413Z",
+      "updatedAt": "2026-10-28T17:54:16.799Z"
+    },
+    {
       "id": "usr_admin_gyan",
       "name": "Gyan Admin",
       "firstName": "Gyan",
@@ -121,6 +188,36 @@
       "lastLogin": "Just now",
       "createdAt": "2026-10-28T17:49:01.930Z",
       "updatedAt": "2026-10-28T17:49:01.930Z"
+    },
+    {
+      "id": "usr_44nlg64ik",
+      "name": "Tamper Attacker",
+      "email": "tamper.1793210788325@example.com",
+      "password": "$2b$10$Xxsu6psDl3WObpAQ3fwMVuytaxcppqARRuMS5wOsPBYWHYhsAQJM.",
+      "role": "CUSTOMER",
+      "type": "customer",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "",
+      "phone": "",
+      "countryCode": "+1",
+      "country": "",
+      "state": "",
+      "city": "",
+      "postalCode": "",
+      "streetAddress": "",
+      "apartment": "",
+      "address": "",
+      "shippingAddress": "",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-28T18:06:28.833Z",
+      "updatedAt": "2026-10-28T18:06:28.833Z"
     }
   ],
   "assets": [
@@ -434,7 +531,7 @@
       "isActive": true,
       "displayOrder": 6,
       "createdAt": "2026-10-23T17:17:57.593Z",
-      "updatedAt": "2026-10-23T17:17:57.593Z"
+      "updatedAt": "2026-10-28T17:50:33.930Z"
     },
     {
       "id": "cat_grocery",
@@ -467,7 +564,7 @@
       "displayOrder": 1,
       "productCount": 48,
       "createdAt": "2026-10-24T15:47:43.103Z",
-      "updatedAt": "2026-10-24T15:47:43.103Z",
+      "updatedAt": "2026-10-28T17:50:29.014Z",
       "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=300&q=80"
     },
     {
@@ -3833,9 +3930,16 @@
     {
       "id": "cart_adbxkog",
       "sessionId": "gst_df4hn37c1l",
-      "status": "active",
+      "status": "merged",
       "createdAt": "2026-10-28T17:43:12.299Z",
-      "updatedAt": "2026-10-28T17:43:12.299Z"
+      "updatedAt": "2026-10-28T17:53:35.956Z"
+    },
+    {
+      "id": "cart_cngd2fb",
+      "sessionId": "gst_df4hn37c1l",
+      "status": "active",
+      "createdAt": "2026-10-28T17:58:11.267Z",
+      "updatedAt": "2026-10-28T17:58:11.267Z"
     }
   ],
   "cartItems": [
