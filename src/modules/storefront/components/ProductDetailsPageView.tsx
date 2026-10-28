@@ -57,21 +57,34 @@ interface QnaItem {
 
 interface Props {
   slug: string;
+  initialProduct?: any;
 }
 
-export function ProductDetailsPageView({ slug }: Props) {
+export function ProductDetailsPageView({ slug, initialProduct }: Props) {
   const router = useRouter();
   const { addItem, items: cart, adjustQuantity, removeItem, clearCart, setIsCartDrawerOpen } = useCart();
 
-  const [product, setProduct] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState<any>(initialProduct || null);
+  const [loading, setLoading] = useState(!initialProduct);
   const [notFound, setNotFound] = useState(false);
 
   // Gallery
-  const [activeImage, setActiveImage] = useState<string>("");
+  const [activeImage, setActiveImage] = useState<string>(
+    initialProduct?.mainImage ||
+      (initialProduct?.assets && initialProduct.assets[0]?.url) ||
+      ""
+  );
 
   // Variant selection
-  const [selectedAttributes, setSelectedAttributes] = useState<Record<string, string>>({});
+  const [selectedAttributes, setSelectedAttributes] = useState<Record<string, string>>(() => {
+    if (initialProduct?.hasVariants && Array.isArray(initialProduct.variants) && initialProduct.variants.length > 0) {
+      const firstVar =
+        initialProduct.variants.find((v: any) => v.isActive && v.currentStock > 0) ||
+        initialProduct.variants[0];
+      return firstVar?.attributes || {};
+    }
+    return {};
+  });
   const [quantity, setQuantity] = useState(1);
 
   // Feedback notifications
@@ -109,7 +122,9 @@ export function ProductDetailsPageView({ slug }: Props) {
     let isMounted = true;
     async function loadProduct() {
       try {
-        setLoading(true);
+        if (!initialProduct) {
+          setLoading(true);
+        }
         setNotFound(false);
         const res = await fetch(`/api/products/${encodeURIComponent(slug)}`);
         const json = await res.json();
@@ -882,7 +897,7 @@ export function ProductDetailsPageView({ slug }: Props) {
                     "This high-grade authentic item is carefully crafted with premium materials to guarantee industry-leading performance and long-lasting durability. Explore all available options and variant configurations above to suit your preferences."}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
                   <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                       Category
@@ -894,9 +909,33 @@ export function ProductDetailsPageView({ slug }: Props) {
                       Warehouse Location
                     </span>
                     <div className="font-bold text-xs text-slate-800">
-                      {product.warehouse || "Central India Logistics Hub"}
+                      {product.warehouseName || product.warehouse || "Central India Logistics Hub"}
                     </div>
                   </div>
+                  {product.manufacturer ? (
+                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                        Manufacturer
+                      </span>
+                      <div className="font-bold text-xs text-slate-800">
+                        {product.manufacturer.name || product.manufacturerName}
+                      </div>
+                      {product.manufacturer.country && (
+                        <div className="text-[10px] text-slate-500">
+                          {product.manufacturer.city ? `${product.manufacturer.city}, ` : ""}{product.manufacturer.country}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                        Brand / Partner
+                      </span>
+                      <div className="font-bold text-xs text-slate-800">
+                        {product.brand || "Official Partner"}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

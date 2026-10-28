@@ -6,7 +6,7 @@
       "firstName": "Gyan",
       "lastName": "Admin",
       "email": "gyan@gmail.com",
-      "password": "$2b$10$ylLeX2I.OXWPNqIQPg1sbevN0SENNbo4nA2Tbu80zZJ8VVTff8cJe",
+      "password": "$2b$10$evC/wJhvrXGb5LcT47Dh.ekL7iRpnB6/bq1ZFuzHzVC0/62/RiwFi",
       "role": "ADMIN",
       "roleId": "role_admin",
       "assignedRoles": [
@@ -27,8 +27,8 @@
       "ordersCount": 0,
       "wishlistCount": 0,
       "lastLogin": "Just now",
-      "createdAt": "2026-10-28T17:39:51.505Z",
-      "updatedAt": "2026-10-28T17:39:51.505Z"
+      "createdAt": "2026-10-28T17:49:01.930Z",
+      "updatedAt": "2026-10-28T17:49:01.930Z"
     },
     {
       "id": "usr_cust_gyanchandra",
@@ -36,7 +36,7 @@
       "firstName": "Gyan",
       "lastName": "Chandra",
       "email": "gyanchandranist@gmail.com",
-      "password": "$2b$10$ylLeX2I.OXWPNqIQPg1sbevN0SENNbo4nA2Tbu80zZJ8VVTff8cJe",
+      "password": "$2b$10$evC/wJhvrXGb5LcT47Dh.ekL7iRpnB6/bq1ZFuzHzVC0/62/RiwFi",
       "role": "CUSTOMER",
       "roleId": "",
       "assignedRoles": [],
@@ -57,8 +57,8 @@
       "ordersCount": 3,
       "wishlistCount": 2,
       "lastLogin": "Just now",
-      "createdAt": "2026-10-28T17:39:51.505Z",
-      "updatedAt": "2026-10-28T17:39:51.505Z"
+      "createdAt": "2026-10-28T17:49:01.930Z",
+      "updatedAt": "2026-10-28T17:49:01.930Z"
     },
     {
       "id": "usr_admin_default",
@@ -66,7 +66,7 @@
       "firstName": "Admin",
       "lastName": "Administrator",
       "email": "admin@tagateway.com",
-      "password": "$2b$10$GW.k9yj5rRlHaaIYCgA3POQOAtCvU./dl7T4NNg7v0Ajj7pGaVPrK",
+      "password": "$2b$10$FF/zMUjLrZTgOzQADvQMRe7YcmEi4U3jHx/oB.uBjJwvc9XnEk5hO",
       "role": "ADMIN",
       "roleId": "role_admin",
       "assignedRoles": [
@@ -87,8 +87,8 @@
       "ordersCount": 0,
       "wishlistCount": 0,
       "lastLogin": "Just now",
-      "createdAt": "2026-10-28T17:39:51.505Z",
-      "updatedAt": "2026-10-28T17:39:51.505Z"
+      "createdAt": "2026-10-28T17:49:01.930Z",
+      "updatedAt": "2026-10-28T17:49:01.930Z"
     },
     {
       "id": "usr_both_gyan",
@@ -96,7 +96,7 @@
       "firstName": "Gyan",
       "lastName": "Dual",
       "email": "gyanboth@gmail.com",
-      "password": "$2b$10$ylLeX2I.OXWPNqIQPg1sbevN0SENNbo4nA2Tbu80zZJ8VVTff8cJe",
+      "password": "$2b$10$evC/wJhvrXGb5LcT47Dh.ekL7iRpnB6/bq1ZFuzHzVC0/62/RiwFi",
       "role": "ADMIN",
       "roleId": "role_admin",
       "assignedRoles": [
@@ -119,11 +119,30 @@
       "ordersCount": 5,
       "wishlistCount": 4,
       "lastLogin": "Just now",
-      "createdAt": "2026-10-28T17:39:51.505Z",
-      "updatedAt": "2026-10-28T17:39:51.505Z"
+      "createdAt": "2026-10-28T17:49:01.930Z",
+      "updatedAt": "2026-10-28T17:49:01.930Z"
     }
   ],
   "assets": [
+    {
+      "id": "ast_40a0ea6cu",
+      "name": "gyantesg.webp",
+      "fileName": "gyantesg_1793209499072_twqpbp.webp",
+      "originalName": "gyantesg.webp",
+      "mimeType": "image/webp",
+      "size": 38102,
+      "url": "/uploads/gyantesg_1793209499072_twqpbp.webp",
+      "thumbnailUrl": null,
+      "fileType": "IMAGE",
+      "altText": null,
+      "caption": null,
+      "folder": "default",
+      "tags": [],
+      "uploaderId": null,
+      "createdAt": "2026-10-28T17:45:02.765Z",
+      "updatedAt": "2026-10-28T17:45:02.765Z",
+      "productCount": 0
+    },
     {
       "id": "ast_048xx3ip2",
       "name": "image.webp",
@@ -140,7 +159,7 @@
       "tags": [],
       "uploaderId": "usr_4gyuc6dk0",
       "createdAt": "2026-10-25T08:53:00.106Z",
-      "updatedAt": "2026-10-28T15:18:52.176Z",
+      "updatedAt": "2026-10-28T17:44:01.783Z",
       "productCount": 0
     },
     {
@@ -548,6 +567,34 @@
   ],
   "products": [
     {
+      "id": "prod_trkmn04v6",
+      "sku": "TEST-SKU-1793209733764",
+      "upc": null,
+      "name": "Warehouse Test Product",
+      "slug": "warehouse-test-product-mvsery10",
+      "description": null,
+      "price": 99.99,
+      "comparePrice": null,
+      "costPrice": null,
+      "currentStock": 125,
+      "minStock": 15,
+      "warehouse": "Avery Dennison",
+      "warehouseId": "wh_avery_1",
+      "manufacturerId": null,
+      "status": "ACTIVE",
+      "isSoldOut": false,
+      "brand": null,
+      "googleMerchantSync": false,
+      "googleCategory": null,
+      "googleCondition": "new",
+      "googleBrand": null,
+      "googleGtin": null,
+      "googleMpn": "TEST-SKU-1793209733764",
+      "googleLastSyncedAt": null,
+      "createdAt": "2026-10-28T17:48:53.892Z",
+      "updatedAt": "2026-10-28T17:48:53.892Z"
+    },
+    {
       "id": "prod_ntuzbpq3e",
       "sku": "TEST-SKU-1793209178252",
       "upc": null,
@@ -889,7 +936,7 @@
       "costPrice": 850,
       "currentStock": 44,
       "minStock": 5,
-      "warehouse": "dubai_hub_1",
+      "warehouse": "Samsung Silicon Valley Center",
       "status": "ACTIVE",
       "isSoldOut": false,
       "brand": "Samsung",
@@ -939,7 +986,9 @@
       "googleCategory": "Apparel & Accessories > Clothing",
       "googleBrand": "Samsung",
       "googleGtin": "",
-      "googleMpn": "SAM-S24U-TI"
+      "googleMpn": "SAM-S24U-TI",
+      "manufacturerId": "mfg_samsung",
+      "warehouseId": "wh_samsung_1"
     },
     {
       "id": "prod_nike_hoodie",
@@ -952,7 +1001,7 @@
       "costPrice": 28,
       "currentStock": 120,
       "minStock": 15,
-      "warehouse": "dubai_hub_1",
+      "warehouse": "Nike Oregon Hub",
       "status": "ACTIVE",
       "isSoldOut": false,
       "brand": "Nike",
@@ -990,7 +1039,9 @@
             "XL"
           ]
         }
-      ]
+      ],
+      "manufacturerId": "mfg_nike",
+      "warehouseId": "wh_nike_1"
     },
     {
       "id": "prod_beanless_bag",
@@ -1061,7 +1112,7 @@
       "costPrice": 120,
       "currentStock": 65,
       "minStock": 8,
-      "warehouse": "dubai_hub_1",
+      "warehouse": "Nike Memphis Logistics Depot",
       "status": "ACTIVE",
       "isSoldOut": false,
       "brand": "Nike",
@@ -1097,7 +1148,9 @@
             "11"
           ]
         }
-      ]
+      ],
+      "manufacturerId": "mfg_nike",
+      "warehouseId": "wh_nike_2"
     },
     {
       "id": "prod_winter_parka",
@@ -1309,8 +1362,8 @@
           "canDelete": true
         }
       },
-      "createdAt": "2026-10-28T17:39:51.493Z",
-      "updatedAt": "2026-10-28T17:39:51.505Z"
+      "createdAt": "2026-10-28T17:49:01.929Z",
+      "updatedAt": "2026-10-28T17:49:01.930Z"
     },
     {
       "id": "role_store_manager",
@@ -1358,8 +1411,8 @@
           "canDelete": false
         }
       },
-      "createdAt": "2026-10-28T17:39:51.505Z",
-      "updatedAt": "2026-10-28T17:39:51.505Z"
+      "createdAt": "2026-10-28T17:49:01.930Z",
+      "updatedAt": "2026-10-28T17:49:01.930Z"
     },
     {
       "id": "role_editor",
@@ -1395,8 +1448,8 @@
           "canDelete": false
         }
       },
-      "createdAt": "2026-10-28T17:39:51.505Z",
-      "updatedAt": "2026-10-28T17:39:51.505Z"
+      "createdAt": "2026-10-28T17:49:01.930Z",
+      "updatedAt": "2026-10-28T17:49:01.930Z"
     },
     {
       "id": "role_support",
@@ -1426,8 +1479,8 @@
           "canDelete": false
         }
       },
-      "createdAt": "2026-10-28T17:39:51.505Z",
-      "updatedAt": "2026-10-28T17:39:51.505Z"
+      "createdAt": "2026-10-28T17:49:01.930Z",
+      "updatedAt": "2026-10-28T17:49:01.930Z"
     }
   ],
   "sliders": [
@@ -1986,6 +2039,59 @@
     }
   ],
   "orders": [
+    {
+      "id": "ord_jwobbdw",
+      "orderNumber": "tags802",
+      "customerName": "Jane Doe Customer",
+      "customerEmail": "janedoe@example.com",
+      "customerPhone": "+1 555-019-9999",
+      "orderDate": "2026-10-28T17:48:55.082Z",
+      "gateway": "COD",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Shipped",
+      "subtotal": 499.95,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 499.95,
+      "shippingAddress": "456 Market St, Austin, TX 78701",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_vs9i6_0",
+          "orderId": "",
+          "productId": "prod_trkmn04v6",
+          "itemNo": "TEST-SKU-1793209733764",
+          "name": "Warehouse Test Product",
+          "price": 99.99,
+          "quantity": 5,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-28T17:48:55.082Z",
+          "action": "CREATE",
+          "performedBy": "Admin Administrator",
+          "notes": "Order created"
+        },
+        {
+          "timestamp": "2026-10-28T17:48:55.572Z",
+          "action": "UPDATE",
+          "performedBy": "Admin",
+          "notes": "Status changed: Processing -> Shipped"
+        }
+      ],
+      "shipmentStatus": "Ready to Ship",
+      "createdAt": "2026-10-28T17:48:55.083Z",
+      "updatedAt": "2026-10-28T17:48:55.572Z",
+      "trackingNumber": "AWB-1793209735294",
+      "carrier": "BlueDart Express Air",
+      "shippedAt": "2026-10-28T17:48:55.571Z"
+    },
     {
       "id": "ord_93aslxt",
       "orderNumber": "tags331",
@@ -3542,6 +3648,19 @@
   ],
   "payments": [
     {
+      "id": "pay_2617qmx",
+      "orderId": "ord_jwobbdw",
+      "orderNumber": "tags802",
+      "customerName": "Jane Doe Customer",
+      "customerEmail": "janedoe@example.com",
+      "paymentGateway": "COD",
+      "amount": 499.95,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-28T17:48:55.083Z",
+      "updatedAt": "2026-10-28T17:48:55.083Z"
+    },
+    {
       "id": "pay_uifrb6q",
       "orderId": "ord_93aslxt",
       "orderNumber": "tags331",
@@ -3707,9 +3826,16 @@
     {
       "id": "cart_lqelqgr",
       "sessionId": "gst_df4hn37c1l",
-      "status": "active",
+      "status": "merged",
       "createdAt": "2026-10-28T17:36:46.992Z",
-      "updatedAt": "2026-10-28T17:36:46.992Z"
+      "updatedAt": "2026-10-28T17:41:06.110Z"
+    },
+    {
+      "id": "cart_adbxkog",
+      "sessionId": "gst_df4hn37c1l",
+      "status": "active",
+      "createdAt": "2026-10-28T17:43:12.299Z",
+      "updatedAt": "2026-10-28T17:43:12.299Z"
     }
   ],
   "cartItems": [
@@ -4402,6 +4528,30 @@
       "shippedAt": "2026-10-28T17:39:41.172Z",
       "createdAt": "2026-10-28T17:39:41.173Z",
       "updatedAt": "2026-10-28T17:39:41.173Z"
+    },
+    {
+      "id": "shp_29juyiw",
+      "orderId": "ord_jwobbdw",
+      "orderNumber": "tags802",
+      "warehouseId": "wh_avery_1",
+      "pickupAddress": "Avery Dennison, 8080 Norton Pkwy, Mentor, Ohio 44060",
+      "deliveryAddress": "456 Market St, Austin, TX 78701",
+      "shippingProviderId": "sp_shiprocket",
+      "shippingProviderName": "Shiprocket",
+      "shippingProviderCode": "shiprocket",
+      "providerShipmentId": "SR-SHP-81949853",
+      "awbNumber": "AWB-1793209735294",
+      "trackingUrl": "https://shiprocket.co/tracking/SR211861066",
+      "shippingCharge": 187,
+      "shipmentStatus": "Ready to Ship",
+      "shippingLabelPath": "/api/shipping/shipments/SR-SHP-81949853/label",
+      "recipientName": "Jane Doe Customer",
+      "recipientPhone": "+1 555-019-9999",
+      "shippingAddress": "456 Market St, Austin, TX 78701",
+      "carrier": "BlueDart Express Air",
+      "shippedAt": "2026-10-28T17:48:55.559Z",
+      "createdAt": "2026-10-28T17:48:55.560Z",
+      "updatedAt": "2026-10-28T17:48:55.560Z"
     }
   ],
   "shippingSettings": {
@@ -4739,9 +4889,86 @@
       "reorderLevel": 15,
       "createdAt": "2026-10-28T17:39:38.976Z",
       "updatedAt": "2026-10-28T17:39:41.183Z"
+    },
+    {
+      "id": "winv_3nf7doi",
+      "productId": "prod_trkmn04v6",
+      "warehouseId": "wh_avery_1",
+      "productName": "Warehouse Test Product",
+      "productSku": "TEST-SKU-1793209733764",
+      "warehouseName": "Avery Dennison",
+      "availableQuantity": 120,
+      "reservedQuantity": 0,
+      "reorderLevel": 15,
+      "createdAt": "2026-10-28T17:48:53.906Z",
+      "updatedAt": "2026-10-28T17:48:55.583Z"
     }
   ],
   "inventoryMovements": [
+    {
+      "id": "mov_gvixqc7",
+      "productId": "prod_trkmn04v6",
+      "warehouseId": "wh_avery_1",
+      "productName": "Warehouse Test Product",
+      "warehouseName": "Avery Dennison",
+      "type": "DISPATCH",
+      "quantity": 5,
+      "previousAvailable": 120,
+      "newAvailable": 120,
+      "previousReserved": 5,
+      "newReserved": 0,
+      "referenceId": "shp_29juyiw",
+      "notes": "Stock dispatched from warehouse for shipment #shp_29juyiw",
+      "createdAt": "2026-10-28T17:48:55.583Z"
+    },
+    {
+      "id": "mov_rdqq4yo",
+      "productId": "prod_trkmn04v6",
+      "warehouseId": "wh_avery_1",
+      "productName": "Warehouse Test Product",
+      "warehouseName": "Avery Dennison",
+      "type": "RESERVATION",
+      "quantity": 5,
+      "previousAvailable": 125,
+      "newAvailable": 120,
+      "previousReserved": 0,
+      "newReserved": 5,
+      "referenceId": "ord_jwobbdw",
+      "notes": "Stock reserved for order #ord_jwobbdw",
+      "createdAt": "2026-10-28T17:48:55.096Z"
+    },
+    {
+      "id": "mov_ya3ghpy",
+      "productId": "prod_trkmn04v6",
+      "warehouseId": "wh_avery_1",
+      "productName": "Warehouse Test Product",
+      "warehouseName": "Avery Dennison",
+      "type": "STOCK_ADD",
+      "quantity": 25,
+      "previousAvailable": 100,
+      "newAvailable": 125,
+      "previousReserved": 0,
+      "newReserved": 0,
+      "referenceId": "PO-7789",
+      "notes": "Stock delivery shipment received",
+      "createdAt": "2026-10-28T17:48:54.509Z"
+    },
+    {
+      "id": "mov_249s1j5",
+      "productId": "prod_trkmn04v6",
+      "warehouseId": "wh_avery_1",
+      "productName": "Warehouse Test Product",
+      "warehouseName": "Avery Dennison",
+      "type": "STOCK_ADD",
+      "quantity": 100,
+      "previousAvailable": 0,
+      "newAvailable": 100,
+      "previousReserved": 0,
+      "newReserved": 0,
+      "referenceId": "PRODUCT_CREATION",
+      "notes": "Initial inventory allocation upon product creation",
+      "createdAt": "2026-10-28T17:48:53.906Z"
+    },
     {
       "id": "mov_fhiuwno",
       "productId": "prod_ntuzbpq3e",
@@ -4940,7 +5167,7 @@
     "s3Bucket": "my-test-ecommerce-bucket",
     "s3Region": "us-east-1",
     "s3Enabled": true,
-    "updatedAt": "2026-10-28T17:39:36.279Z",
+    "updatedAt": "2026-10-28T17:48:52.542Z",
     "cloudfrontUrl": "https://d123456abcdef.cloudfront.net",
     "s3AccessKeyId": "AKIAIOSFODNN7EXAMPLE",
     "s3SecretAccessKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
@@ -4966,7 +5193,7 @@
       "manager@example.com"
     ],
     "createdAt": "2026-10-28T17:10:49.094Z",
-    "updatedAt": "2026-10-28T17:39:36.762Z"
+    "updatedAt": "2026-10-28T17:48:52.938Z"
   },
   "emailTemplates": [
     {
@@ -4982,7 +5209,7 @@
       ],
       "isActive": true,
       "createdAt": "2026-10-28T16:45:55.245Z",
-      "updatedAt": "2026-10-28T17:39:37.625Z"
+      "updatedAt": "2026-10-28T17:48:53.490Z"
     },
     {
       "id": "tpl_forgot_pwd",

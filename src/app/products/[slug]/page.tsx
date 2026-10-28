@@ -40,6 +40,7 @@ export default async function ProductDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const product = await DatabaseStore.findProductById(slug);
 
   return (
     <Suspense
@@ -50,7 +51,7 @@ export default async function ProductDetailPage({
         </div>
       }
     >
-      <ProductDetailsPageView slug={slug} />
+      <ProductDetailsPageView slug={slug} initialProduct={product} />
     </Suspense>
   );
 }

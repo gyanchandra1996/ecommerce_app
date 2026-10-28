@@ -1534,6 +1534,8 @@ export class DatabaseStore {
 
     const categoryMap = new Map((db.categories || []).map((c) => [c.id, c.name]));
     const assetMap = new Map((db.assets || []).map((a) => [a.id, a]));
+    const manufacturerMap = new Map((db.manufacturers || []).map((m) => [m.id, m]));
+    const warehouseMap = new Map((db.warehouses || []).map((w) => [w.id, w]));
 
     return list.map((p) => {
       const pCatLinks = (db.productCategories || []).filter((pc) => pc.productId === p.id);
@@ -1555,6 +1557,8 @@ export class DatabaseStore {
         .filter(Boolean) as { id: string; url: string; name: string; isPrimary: boolean }[];
 
       const primaryAsset = pAssets.find((a) => a.isPrimary) || pAssets[0];
+      const mfg = p.manufacturerId ? manufacturerMap.get(p.manufacturerId) : null;
+      const wh = p.warehouseId ? warehouseMap.get(p.warehouseId) : null;
 
       return {
         ...p,
@@ -1563,13 +1567,25 @@ export class DatabaseStore {
         assetIds: pAssetLinks.map((pa) => pa.assetId),
         assets: pAssets,
         mainImage: primaryAsset ? primaryAsset.url : (p.mainImage || null),
+        manufacturer: mfg || null,
+        manufacturerName: mfg ? mfg.name : null,
+        warehouseName: wh ? wh.name : (p.warehouse || null),
       };
     });
   }
 
-  public static async findProductById(id: string): Promise<ProductRecord | null> {
+  public static async findProductById(idOrSlug: string): Promise<ProductRecord | null> {
+    if (!idOrSlug) return null;
     const products = await this.findProducts();
-    return products.find((p) => p.id === id) || null;
+    const query = idOrSlug.toLowerCase().trim();
+    return (
+      products.find(
+        (p) =>
+          (p.id && p.id.toLowerCase() === query) ||
+          (p.slug && p.slug.toLowerCase() === query) ||
+          (p.sku && p.sku.toLowerCase() === query)
+      ) || null
+    );
   }
 
   public static async createProduct(data: {
@@ -5472,7 +5488,9 @@ export class DatabaseStore {
         costPrice: 850.0,
         currentStock: 45,
         minStock: 5,
-        warehouse: "dubai_hub_1",
+        warehouse: "Samsung Silicon Valley Center",
+        warehouseId: "wh_samsung_1",
+        manufacturerId: "mfg_samsung",
         status: "ACTIVE",
         isSoldOut: false,
         brand: "Samsung",
