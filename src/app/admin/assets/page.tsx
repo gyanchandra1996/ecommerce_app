@@ -78,6 +78,27 @@ export default function AssetsPage() {
     }
   };
 
+  const handleBatchSyncS3 = async () => {
+    if (!selectedIds.length) return;
+    try {
+      const res = await fetch("/api/assets/sync-s3", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ assetIds: selectedIds }),
+      });
+      const json = await res.json();
+      if (json.success) {
+        alert(json.message || `Successfully synced ${selectedIds.length} asset(s) to AWS S3.`);
+        setSelectedIds([]);
+        loadAssets();
+      } else {
+        alert(json.error || "Failed to sync assets to S3.");
+      }
+    } catch {
+      alert("Error syncing assets to S3.");
+    }
+  };
+
   const handleAssetClick = (asset: Asset) => {
     setSelectedAsset(asset);
     setIsDetailOpen(true);
@@ -119,6 +140,7 @@ export default function AssetsPage() {
         selectedCount={selectedIds.length}
         totalCount={assets.length}
         onBatchDelete={handleBatchDelete}
+        onBatchSyncS3={handleBatchSyncS3}
         onSelectAll={handleSelectAll}
       />
 
@@ -132,6 +154,7 @@ export default function AssetsPage() {
         onSelectId={handleSelectId}
         onAssetClick={handleAssetClick}
         onOpenUpload={() => setIsUploadOpen(true)}
+        onAssetUpdated={handleAssetUpdated}
         page={filters.page}
         totalPages={totalPages}
         onPageChange={(p) => setFilters((prev) => ({ ...prev, page: p }))}

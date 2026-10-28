@@ -11,6 +11,7 @@ export class AssetClientService {
     const params = new URLSearchParams();
     if (filters.search) params.set("search", filters.search);
     if (filters.fileType && filters.fileType !== "all") params.set("fileType", filters.fileType);
+    if (filters.storage && filters.storage !== "all") params.set("storage", filters.storage);
     if (filters.sort) params.set("sort", filters.sort);
     if (filters.page) params.set("page", filters.page.toString());
     if (filters.pageSize) params.set("pageSize", filters.pageSize.toString());

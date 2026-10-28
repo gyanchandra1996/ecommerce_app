@@ -94,6 +94,9 @@ export interface AssetRecord {
   createdAt: string;
   updatedAt: string;
   productCount?: number;
+  storageProvider?: "local" | "s3";
+  storageKey?: string;
+  s3SyncedAt?: string;
 }
 
 export interface CategoryRecord {
@@ -1183,18 +1186,27 @@ export class DatabaseStore {
   public static async findAssets(params: {
     search?: string;
     fileType?: string;
+    storage?: string;
     folder?: string;
     sort?: "recent" | "oldest" | "name_asc" | "name_desc" | "size_desc";
     page?: number;
     pageSize?: number;
   }): Promise<{ items: AssetRecord[]; total: number }> {
-    const { search = "", fileType = "all", sort = "recent", page = 1, pageSize = 24 } = params;
+    const { search = "", fileType = "all", storage = "all", sort = "recent", page = 1, pageSize = 24 } = params;
 
     const db = await this.readLocalDb();
     let filtered = [...db.assets];
 
     if (fileType && fileType !== "all") {
       filtered = filtered.filter((a) => a.fileType.toLowerCase() === fileType.toLowerCase());
+    }
+
+    if (storage && storage !== "all") {
+      if (storage === "s3") {
+        filtered = filtered.filter((a) => a.storageProvider === "s3");
+      } else if (storage === "local") {
+        filtered = filtered.filter((a) => a.storageProvider !== "s3");
+      }
     }
 
     if (search.trim()) {
@@ -1223,10 +1235,14 @@ export class DatabaseStore {
     const paginated = filtered.slice((page - 1) * pageSize, page * pageSize);
 
     return {
-      items: paginated.map((item) => ({
-        ...item,
-        productCount: db.productAssets.filter((pa) => pa.assetId === item.id).length,
-      })),
+      items: paginated.map((item) => {
+        const isS3 = item.storageProvider === "s3" || (item.url && (item.url.includes("s3") || item.url.includes("cloudfront")));
+        return {
+          ...item,
+          storageProvider: isS3 ? ("s3" as const) : ("local" as const),
+          productCount: db.productAssets.filter((pa) => pa.assetId === item.id).length,
+        };
+      }),
       total,
     };
   }
@@ -1235,8 +1251,10 @@ export class DatabaseStore {
     const db = await this.readLocalDb();
     const item = db.assets.find((a) => a.id === id);
     if (!item) return null;
+    const isS3 = item.storageProvider === "s3" || (item.url && (item.url.includes("s3") || item.url.includes("cloudfront")));
     return {
       ...item,
+      storageProvider: isS3 ? ("s3" as const) : ("local" as const),
       productCount: db.productAssets.filter((pa) => pa.assetId === id).length,
     };
   }
@@ -1254,6 +1272,9 @@ export class DatabaseStore {
     caption?: string;
     uploaderId?: string;
     tags?: string[];
+    storageProvider?: "local" | "s3";
+    storageKey?: string;
+    s3SyncedAt?: string;
   }): Promise<AssetRecord> {
     const db = await this.readLocalDb();
     const newAsset: AssetRecord = {
@@ -1271,6 +1292,9 @@ export class DatabaseStore {
       folder: "default",
       tags: data.tags || [],
       uploaderId: data.uploaderId || null,
+      storageProvider: data.storageProvider || "local",
+      storageKey: data.storageKey || undefined,
+      s3SyncedAt: data.s3SyncedAt || undefined,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       productCount: 0,
@@ -1283,7 +1307,7 @@ export class DatabaseStore {
 
   public static async updateAsset(
     id: string,
-    data: Partial<Pick<AssetRecord, "name" | "altText" | "caption" | "tags">>
+    data: Partial<Pick<AssetRecord, "name" | "altText" | "caption" | "tags" | "url" | "storageProvider" | "storageKey" | "s3SyncedAt">>
   ): Promise<AssetRecord | null> {
     const db = await this.readLocalDb();
     const index = db.assets.findIndex((a) => a.id === id);

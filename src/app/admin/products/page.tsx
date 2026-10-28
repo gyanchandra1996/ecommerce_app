@@ -284,16 +284,27 @@ export default function ProductsPage() {
                     </span>
                   </td>
 
-                  {/* Image Column: Thumbnail or "NO IMAGE AVAILABLE" */}
+                  {/* Image Column: Thumbnail with Storage Indicator */}
                   <td className="p-3">
                     {item.mainImage ? (
-                      <div className="w-16 h-16 rounded border border-slate-200 bg-slate-50 overflow-hidden flex items-center justify-center p-1">
+                      <div className="relative w-16 h-16 rounded border border-slate-200 bg-slate-50 overflow-hidden flex items-center justify-center p-1 group/thumb">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={item.mainImage}
                           alt={item.name}
                           className="max-h-full max-w-full object-contain"
                         />
+                        <span
+                          className={`absolute bottom-0 inset-x-0 text-[8px] font-bold text-center py-0.5 leading-tight ${
+                            item.mainImage.includes("s3") || item.mainImage.includes("cloudfront")
+                              ? "bg-sky-600/90 text-white"
+                              : "bg-slate-900/60 text-white"
+                          }`}
+                        >
+                          {item.mainImage.includes("s3") || item.mainImage.includes("cloudfront")
+                            ? "AWS S3"
+                            : "Local"}
+                        </span>
                       </div>
                     ) : (
                       <div className="w-16 h-16 rounded border border-slate-200 bg-slate-50 flex flex-col items-center justify-center text-slate-400 p-1 text-center">

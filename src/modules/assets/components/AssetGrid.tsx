@@ -3,7 +3,7 @@
 import React from "react";
 import { AssetCard } from "./AssetCard";
 import { Asset } from "../types/asset.types";
-import { FolderOpen, Upload, ChevronLeft, ChevronRight } from "lucide-react";
+import { FolderOpen, Upload, ChevronLeft, ChevronRight, Cloud, HardDrive } from "lucide-react";
 
 interface Props {
   assets: Asset[];
@@ -14,6 +14,7 @@ interface Props {
   onSelectId: (id: string) => void;
   onAssetClick: (asset: Asset) => void;
   onOpenUpload: () => void;
+  onAssetUpdated?: (updated: Asset) => void;
   page: number;
   totalPages: number;
   onPageChange: (newPage: number) => void;
@@ -28,6 +29,7 @@ export function AssetGrid({
   onSelectId,
   onAssetClick,
   onOpenUpload,
+  onAssetUpdated,
   page,
   totalPages,
   onPageChange,
@@ -86,6 +88,7 @@ export function AssetGrid({
               multiselect={multiselect}
               onSelect={onSelectId}
               onClick={onAssetClick}
+              onAssetUpdated={onAssetUpdated}
             />
           ))}
         </div>
@@ -99,6 +102,7 @@ export function AssetGrid({
                 <th className="p-3 w-16">Preview</th>
                 <th className="p-3">File Name</th>
                 <th className="p-3">Type</th>
+                <th className="p-3">Storage</th>
                 <th className="p-3">Size</th>
                 <th className="p-3">Added Date</th>
                 <th className="p-3 text-right">Products</th>
@@ -147,6 +151,19 @@ export function AssetGrid({
                     <td className="p-3 font-medium text-slate-800">{asset.name}</td>
                     <td className="p-3 uppercase font-mono text-[10px] text-slate-500">
                       {asset.fileType}
+                    </td>
+                    <td className="p-3">
+                      {asset.storageProvider === "s3" || (asset.url && (asset.url.includes("s3") || asset.url.includes("cloudfront"))) ? (
+                        <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded text-[10px] font-bold bg-sky-50 text-sky-700 border border-sky-200">
+                          <Cloud className="w-3 h-3 text-sky-500" />
+                          <span>AWS S3</span>
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">
+                          <HardDrive className="w-3 h-3 text-slate-400" />
+                          <span>Local</span>
+                        </span>
+                      )}
                     </td>
                     <td className="p-3 text-slate-500">
                       {(asset.size / (1024 * 1024)).toFixed(2)} MB

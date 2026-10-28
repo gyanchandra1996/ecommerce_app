@@ -9,6 +9,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const search = searchParams.get("search") || "";
     const fileType = searchParams.get("fileType") || "all";
+    const storage = searchParams.get("storage") || "all";
     const sort = (searchParams.get("sort") || "recent") as
       | "recent"
       | "oldest"
@@ -21,6 +22,7 @@ export async function GET(req: NextRequest) {
     const { items, total } = await DatabaseStore.findAssets({
       search,
       fileType,
+      storage,
       sort,
       page,
       pageSize,
@@ -79,6 +81,8 @@ export async function POST(req: NextRequest) {
         caption,
         tags,
         uploaderId: user?.id,
+        storageProvider: stored.storageProvider,
+        storageKey: stored.storageKey,
       });
 
       uploadedAssets.push(asset);

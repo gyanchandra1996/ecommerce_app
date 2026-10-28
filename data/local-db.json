@@ -228,7 +228,7 @@
       "originalName": "gyantesg.webp",
       "mimeType": "image/webp",
       "size": 38102,
-      "url": "/uploads/gyantesg_1793209499072_twqpbp.webp",
+      "url": "https://d123456abcdef.cloudfront.net/assets/gyantesg_1793209499072_twqpbp.webp",
       "thumbnailUrl": null,
       "fileType": "IMAGE",
       "altText": null,
@@ -237,8 +237,11 @@
       "tags": [],
       "uploaderId": null,
       "createdAt": "2026-10-28T17:45:02.765Z",
-      "updatedAt": "2026-10-28T17:45:02.765Z",
-      "productCount": 0
+      "updatedAt": "2026-10-28T18:35:17.934Z",
+      "productCount": 0,
+      "storageProvider": "s3",
+      "storageKey": "assets/gyantesg_1793209499072_twqpbp.webp",
+      "s3SyncedAt": "2026-10-28T18:35:17.933Z"
     },
     {
       "id": "ast_048xx3ip2",
@@ -247,7 +250,7 @@
       "originalName": "image.webp",
       "mimeType": "image/webp",
       "size": 10808,
-      "url": "/uploads/image_1792918380103_949hnj.webp",
+      "url": "https://d123456abcdef.cloudfront.net/assets/image_1792918380103_949hnj.webp",
       "thumbnailUrl": null,
       "fileType": "IMAGE",
       "altText": "",
@@ -256,8 +259,11 @@
       "tags": [],
       "uploaderId": "usr_4gyuc6dk0",
       "createdAt": "2026-10-25T08:53:00.106Z",
-      "updatedAt": "2026-10-28T17:44:01.783Z",
-      "productCount": 0
+      "updatedAt": "2026-10-28T18:39:04.255Z",
+      "productCount": 0,
+      "storageProvider": "s3",
+      "storageKey": "assets/image_1792918380103_949hnj.webp",
+      "s3SyncedAt": "2026-10-28T18:39:04.254Z"
     },
     {
       "id": "ast_sotnfcmpv",
@@ -266,7 +272,7 @@
       "originalName": "image (1).webp",
       "mimeType": "image/webp",
       "size": 18410,
-      "url": "/uploads/image__1__1792918379910_la39ev.webp",
+      "url": "https://d123456abcdef.cloudfront.net/assets/image__1__1792918379910_la39ev.webp",
       "thumbnailUrl": null,
       "fileType": "IMAGE",
       "altText": null,
@@ -275,8 +281,11 @@
       "tags": [],
       "uploaderId": "usr_4gyuc6dk0",
       "createdAt": "2026-10-25T08:52:59.914Z",
-      "updatedAt": "2026-10-25T08:52:59.914Z",
-      "productCount": 0
+      "updatedAt": "2026-10-28T18:39:14.919Z",
+      "productCount": 0,
+      "storageProvider": "s3",
+      "storageKey": "assets/image__1__1792918379910_la39ev.webp",
+      "s3SyncedAt": "2026-10-28T18:39:14.916Z"
     },
     {
       "id": "ast_rgzjf6z8d",
@@ -323,7 +332,7 @@
       "originalName": "images.jfif",
       "mimeType": "image/jpeg",
       "size": 9873,
-      "url": "/uploads/images_1792904973922_51drvb.jfif",
+      "url": "https://d123456abcdef.cloudfront.net/assets/images_1792904973922_51drvb.jfif",
       "thumbnailUrl": null,
       "fileType": "IMAGE",
       "altText": "smartphone",
@@ -334,8 +343,11 @@
       ],
       "uploaderId": "usr_4gyuc6dk0",
       "createdAt": "2026-10-25T05:09:33.927Z",
-      "updatedAt": "2026-10-25T05:09:33.927Z",
-      "productCount": 0
+      "updatedAt": "2026-10-28T18:35:20.220Z",
+      "productCount": 0,
+      "storageProvider": "s3",
+      "storageKey": "assets/images_1792904973922_51drvb.jfif",
+      "s3SyncedAt": "2026-10-28T18:35:20.218Z"
     },
     {
       "id": "ast_7derd7jj7",

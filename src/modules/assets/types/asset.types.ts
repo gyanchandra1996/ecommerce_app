@@ -21,6 +21,9 @@ export interface Asset {
   createdAt: string;
   updatedAt: string;
   productCount?: number;
+  storageProvider?: "local" | "s3";
+  storageKey?: string;
+  s3SyncedAt?: string;
 }
 
 export interface AssetUploadItem {
@@ -37,6 +40,7 @@ export interface AssetUploadItem {
 export interface AssetFilters {
   search: string;
   fileType: "all" | "image" | "video" | "document" | "audio";
+  storage?: "all" | "s3" | "local";
   sort: "recent" | "oldest" | "name_asc" | "name_desc" | "size_desc";
   page: number;
   pageSize: number;

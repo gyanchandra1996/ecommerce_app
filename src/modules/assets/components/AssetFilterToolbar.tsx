@@ -10,6 +10,9 @@ import {
   Trash2,
   CheckSquare,
   Square,
+  Cloud,
+  CloudUpload,
+  HardDrive,
 } from "lucide-react";
 import { AssetFilters } from "../types/asset.types";
 
@@ -24,6 +27,7 @@ interface Props {
   selectedCount: number;
   totalCount: number;
   onBatchDelete: () => void;
+  onBatchSyncS3?: () => void;
   onSelectAll: () => void;
 }
 
@@ -38,6 +42,7 @@ export function AssetFilterToolbar({
   selectedCount,
   totalCount,
   onBatchDelete,
+  onBatchSyncS3,
   onSelectAll,
 }: Props) {
   return (
@@ -91,6 +96,22 @@ export function AssetFilterToolbar({
             <option value="size_desc">File Size</option>
           </select>
 
+          {/* Storage Filter Dropdown (S3 vs Local) */}
+          <select
+            value={filters.storage || "all"}
+            onChange={(e) =>
+              onFilterChange({
+                storage: e.target.value as AssetFilters["storage"],
+                page: 1,
+              })
+            }
+            className="h-9 px-3 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 cursor-pointer min-w-[125px]"
+          >
+            <option value="all">☁️ All Storage</option>
+            <option value="s3">☁️ AWS S3 Synced</option>
+            <option value="local">💻 Local Storage</option>
+          </select>
+
           {/* Advance Option Dropdown */}
           <div className="relative inline-block">
             <select
@@ -126,6 +147,17 @@ export function AssetFilterToolbar({
                 )}
                 <span>Select All ({totalCount})</span>
               </button>
+
+              {selectedCount > 0 && onBatchSyncS3 && (
+                <button
+                  type="button"
+                  onClick={onBatchSyncS3}
+                  className="h-9 px-3 text-xs font-semibold text-white bg-sky-600 hover:bg-sky-700 active:bg-sky-800 rounded-md flex items-center space-x-1.5 transition shadow-xs cursor-pointer"
+                >
+                  <CloudUpload className="w-3.5 h-3.5" />
+                  <span>Sync S3 ({selectedCount})</span>
+                </button>
+              )}
 
               {selectedCount > 0 && (
                 <button
