@@ -218,6 +218,36 @@
       "phoneVerified": true,
       "createdAt": "2026-10-28T18:06:28.833Z",
       "updatedAt": "2026-10-28T18:06:28.833Z"
+    },
+    {
+      "id": "usr_qv2kt2s0x",
+      "name": "Test Google Customer",
+      "email": "test.google.user@example.com",
+      "password": "OAuthGoogle_ejf8m235ej4_1793296596366",
+      "role": "CUSTOMER",
+      "type": "customer",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "",
+      "phone": "",
+      "countryCode": "+1",
+      "country": "",
+      "state": "",
+      "city": "",
+      "postalCode": "",
+      "streetAddress": "",
+      "apartment": "",
+      "address": "",
+      "shippingAddress": "",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-29T17:56:36.367Z",
+      "updatedAt": "2026-10-29T17:56:36.367Z"
     }
   ],
   "assets": [
@@ -12543,12 +12573,22 @@
       "rating": 5,
       "review": "Swiss Heritage Automatic Chronograph Stainless Steel Watch  very good product",
       "media": [],
-      "comments": [],
-      "commentCount": 0,
+      "comments": [
+        {
+          "id": "rcmt_vli4ovo",
+          "reviewId": "rev_g8yxx0l",
+          "userName": "G-Store Admin",
+          "userEmail": "admin@gstore.com",
+          "comment": "bg",
+          "isAdmin": true,
+          "createdAt": "2026-10-29T17:36:12.699Z"
+        }
+      ],
+      "commentCount": 1,
       "status": "Active",
       "postedOn": "2026-10-29",
       "createdAt": "2026-10-29T17:17:33.798Z",
-      "updatedAt": "2026-10-29T17:17:33.798Z"
+      "updatedAt": "2026-10-29T17:36:12.699Z"
     },
     {
       "id": "rev_eq36x7s",
@@ -14248,23 +14288,22 @@
     "isEnabled": true,
     "defaultFromName": "QAReply Updated",
     "defaultFromEmail": "qaadmin@example.com",
-    "defaultReplyName": "tag31",
-    "defaultReplyTo": "tag31@example.com",
+    "defaultReplyName": "Gyantech",
+    "defaultReplyTo": "gyanchandranist@gmail.com",
     "transportMethod": "SMTP",
     "server": "smtp.gmail.com",
     "port": 587,
     "secureSocketType": "TLS",
-    "authType": "LOGIN",
-    "username": "admin@tag.com",
-    "password": "secret_app_password_123",
-    "contactUsEmail": "test2xuark@gmail.com",
+    "authType": "CRAM-MD5",
+    "username": "gyan17091996@gmail.com",
+    "password": "rubzonaonsnygdqz",
+    "contactUsEmail": "gyanchandranist@gmail.com",
     "ccMailOption": true,
     "ccEmailAddresses": [
-      "audit@example.com",
-      "manager@example.com"
+      "gyanchandranist@gmail.com"
     ],
     "createdAt": "2026-10-28T17:10:49.094Z",
-    "updatedAt": "2026-10-28T17:48:52.938Z"
+    "updatedAt": "2026-10-29T17:51:20.723Z"
   },
   "emailTemplates": [
     {
@@ -15175,6 +15214,35 @@
   ],
   "reviewAutoApprove": false,
   "qnaAutoApprove": true,
+  "appSettings": [
+    {
+      "id": "set_hdqhcvb",
+      "key": "auth_oauth",
+      "context": "auth_oauth",
+      "value": {
+        "google": {
+          "enabled": true,
+          "clientId": "987654321000-samplegoogleoauthclientid.apps.googleusercontent.com",
+          "clientSecret": "GOCSPX-SampleSecretKeyForGoogleOAuth",
+          "redirectUri": "/api/auth/oauth/google/callback"
+        },
+        "github": {
+          "enabled": false,
+          "clientId": "",
+          "clientSecret": "",
+          "redirectUri": "/api/auth/oauth/github/callback"
+        },
+        "facebook": {
+          "enabled": false,
+          "clientId": "",
+          "appSecret": "",
+          "redirectUri": "/api/auth/oauth/facebook/callback"
+        }
+      },
+      "createdAt": "2026-10-29T17:56:25.783Z",
+      "updatedAt": "2026-10-29T17:57:16.923Z"
+    }
+  ],
   "productCategories": [
     {
       "productId": "prod_s24_ultra",

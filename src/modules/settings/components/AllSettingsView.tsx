@@ -25,8 +25,10 @@ import {
   Star,
   Layers,
   Sparkles,
+  KeyRound,
+  LogIn,
 } from "lucide-react";
-import { SiteSettingsRecord, FooterLinkItem } from "@/core/db/store";
+import { SiteSettingsRecord, FooterLinkItem, SocialAuthSettings } from "@/core/db/store";
 
 export function AllSettingsView() {
   const [settings, setSettings] = useState<SiteSettingsRecord | null>(null);
@@ -36,8 +38,13 @@ export function AllSettingsView() {
 
   // Top Tabs
   const [activeMainTab, setActiveMainTab] = useState<
-    "config" | "social" | "qna" | "reviews"
+    "config" | "social" | "qna" | "reviews" | "oauth"
   >("config");
+
+  // OAuth Settings State (Stored in Setting table with context = "auth_oauth")
+  const [oauthSettings, setOauthSettings] = useState<SocialAuthSettings | null>(null);
+  const [oauthLoading, setOauthLoading] = useState(false);
+  const [oauthSaving, setOauthSaving] = useState(false);
 
   // Secondary Configuration Pill Tabs (matching screenshot)
   const [activeSubTab, setActiveSubTab] = useState<
@@ -82,9 +89,47 @@ export function AllSettingsView() {
     }
   };
 
+  const fetchOauthSettings = async () => {
+    try {
+      setOauthLoading(true);
+      const res = await fetch("/api/settings/auth/oauth");
+      const json = await res.json();
+      if (json.success && json.data) {
+        setOauthSettings(json.data);
+      }
+    } catch {
+      showNotification("error", "Failed to load OAuth settings.");
+    } finally {
+      setOauthLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchSettings();
+    fetchOauthSettings();
   }, []);
+
+  const handleSaveOauth = async () => {
+    if (!oauthSettings) return;
+    try {
+      setOauthSaving(true);
+      const res = await fetch("/api/settings/auth/oauth", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(oauthSettings),
+      });
+      const json = await res.json();
+      if (json.success) {
+        showNotification("success", "OAuth and Social Login settings saved to Setting table (context: auth_oauth)!");
+      } else {
+        showNotification("error", json.error || "Failed to save OAuth settings.");
+      }
+    } catch {
+      showNotification("error", "Failed to save OAuth settings.");
+    } finally {
+      setOauthSaving(false);
+    }
+  };
 
   const handleSave = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -297,6 +342,25 @@ export function AllSettingsView() {
             }`}
           >
             Review Configuration
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setActiveMainTab("oauth");
+              if (!oauthSettings) fetchOauthSettings();
+            }}
+            className={`px-4 py-2.5 border-b-2 transition whitespace-nowrap cursor-pointer flex items-center space-x-1.5 ${
+              activeMainTab === "oauth"
+                ? "border-blue-600 text-blue-600 bg-blue-50/50 rounded-t-lg"
+                : "border-transparent text-slate-600 hover:text-slate-900"
+            }`}
+          >
+            <KeyRound className="w-3.5 h-3.5 text-blue-600" />
+            <span>OAuth &amp; Social Login</span>
+            <span className="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full font-bold ml-1">
+              context: auth_oauth
+            </span>
           </button>
         </div>
 
@@ -1098,6 +1162,290 @@ export function AllSettingsView() {
                 <span>Auto-approve 4-star and 5-star verified reviews</span>
               </label>
             </div>
+          </div>
+        )}
+
+        {/* ================= TAB 5: OAUTH & SOCIAL LOGIN (context: "auth_oauth") ================= */}
+        {activeMainTab === "oauth" && (
+          <div className="p-6 space-y-6 text-xs max-w-4xl">
+            {/* Context Badge Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl">
+              <div className="space-y-1">
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs font-black uppercase tracking-wider text-blue-900">
+                    OAuth &amp; Social Authentication Config
+                  </span>
+                  <span className="px-2 py-0.5 text-[10px] font-mono font-bold bg-blue-600 text-white rounded-md shadow-xs">
+                    context = &quot;auth_oauth&quot;
+                  </span>
+                </div>
+                <p className="text-[11px] text-blue-700">
+                  Settings are loaded and persisted dynamically from the <code className="bg-white/80 px-1 py-0.5 rounded font-mono font-bold">setting</code> database table using the unique <code className="bg-white/80 px-1 py-0.5 rounded font-mono font-bold">context</code> column.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleSaveOauth}
+                disabled={oauthSaving || oauthLoading}
+                className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-xs transition disabled:opacity-50 cursor-pointer shrink-0"
+              >
+                <Save className="w-4 h-4" />
+                <span>{oauthSaving ? "Saving..." : "Save OAuth Settings"}</span>
+              </button>
+            </div>
+
+            {oauthLoading ? (
+              <div className="py-12 text-center text-slate-400">Loading OAuth configuration...</div>
+            ) : oauthSettings ? (
+              <div className="space-y-6">
+                {/* 1. Google OAuth Provider Card */}
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
+                  <div className="p-4 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-xs">
+                        <svg className="w-5 h-5" viewBox="0 0 24 24">
+                          <path
+                            fill="#4285F4"
+                            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                          />
+                          <path
+                            fill="#34A853"
+                            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                          />
+                          <path
+                            fill="#FBBC05"
+                            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                          />
+                          <path
+                            fill="#EA4335"
+                            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                          />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-900 text-sm">Google Sign-In</h4>
+                        <p className="text-[11px] text-slate-500">
+                          One-click Google authentication for storefront login and checkout
+                        </p>
+                      </div>
+                    </div>
+
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={oauthSettings.google?.enabled ?? true}
+                        onChange={(e) =>
+                          setOauthSettings({
+                            ...oauthSettings,
+                            google: { ...oauthSettings.google, enabled: e.target.checked },
+                          })
+                        }
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                      <span className="ml-2.5 font-bold text-slate-700">
+                        {oauthSettings.google?.enabled ? "Enabled" : "Disabled"}
+                      </span>
+                    </label>
+                  </div>
+
+                  <div className="p-5 space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">
+                          Google Client ID <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={oauthSettings.google?.clientId || ""}
+                          onChange={(e) =>
+                            setOauthSettings({
+                              ...oauthSettings,
+                              google: { ...oauthSettings.google, clientId: e.target.value },
+                            })
+                          }
+                          placeholder="e.g. 123456789-xxxx.apps.googleusercontent.com"
+                          className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 font-mono text-[11px] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">
+                          Google Client Secret <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="password"
+                          value={oauthSettings.google?.clientSecret || ""}
+                          onChange={(e) =>
+                            setOauthSettings({
+                              ...oauthSettings,
+                              google: { ...oauthSettings.google, clientSecret: e.target.value },
+                            })
+                          }
+                          placeholder="GOCSPX-••••••••••••••••••••"
+                          className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 font-mono text-[11px] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">
+                        Authorized Redirect URI (Copy to Google Cloud Console)
+                      </label>
+                      <input
+                        type="text"
+                        readOnly
+                        value={typeof window !== "undefined" ? `${window.location.origin}/api/auth/oauth/google/callback` : "/api/auth/oauth/google/callback"}
+                        className="w-full px-3 py-2 bg-slate-100 border border-slate-200 rounded-lg text-slate-600 font-mono text-[11px] select-all cursor-text"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2. GitHub OAuth Card */}
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
+                  <div className="p-4 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-xs">
+                        <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-900 text-sm">GitHub Authentication</h4>
+                        <p className="text-[11px] text-slate-500">Allow users to sign in with their developer GitHub profile</p>
+                      </div>
+                    </div>
+
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={oauthSettings.github?.enabled ?? false}
+                        onChange={(e) =>
+                          setOauthSettings({
+                            ...oauthSettings,
+                            github: { ...oauthSettings.github, enabled: e.target.checked },
+                          })
+                        }
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                      <span className="ml-2.5 font-bold text-slate-700">
+                        {oauthSettings.github?.enabled ? "Enabled" : "Disabled"}
+                      </span>
+                    </label>
+                  </div>
+
+                  <div className="p-5 space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">GitHub Client ID</label>
+                        <input
+                          type="text"
+                          value={oauthSettings.github?.clientId || ""}
+                          onChange={(e) =>
+                            setOauthSettings({
+                              ...oauthSettings,
+                              github: { ...oauthSettings.github, clientId: e.target.value },
+                            })
+                          }
+                          placeholder="Ov23..."
+                          className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 font-mono text-[11px] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">GitHub Client Secret</label>
+                        <input
+                          type="password"
+                          value={oauthSettings.github?.clientSecret || ""}
+                          onChange={(e) =>
+                            setOauthSettings({
+                              ...oauthSettings,
+                              github: { ...oauthSettings.github, clientSecret: e.target.value },
+                            })
+                          }
+                          placeholder="••••••••••••••••••••"
+                          className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 font-mono text-[11px] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3. Facebook OAuth Card */}
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
+                  <div className="p-4 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs">
+                        <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-900 text-sm">Facebook Login</h4>
+                        <p className="text-[11px] text-slate-500">Enable social login via Meta / Facebook accounts</p>
+                      </div>
+                    </div>
+
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={oauthSettings.facebook?.enabled ?? false}
+                        onChange={(e) =>
+                          setOauthSettings({
+                            ...oauthSettings,
+                            facebook: { ...oauthSettings.facebook, enabled: e.target.checked },
+                          })
+                        }
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                      <span className="ml-2.5 font-bold text-slate-700">
+                        {oauthSettings.facebook?.enabled ? "Enabled" : "Disabled"}
+                      </span>
+                    </label>
+                  </div>
+
+                  <div className="p-5 space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Facebook App ID</label>
+                        <input
+                          type="text"
+                          value={oauthSettings.facebook?.clientId || ""}
+                          onChange={(e) =>
+                            setOauthSettings({
+                              ...oauthSettings,
+                              facebook: { ...oauthSettings.facebook, clientId: e.target.value },
+                            })
+                          }
+                          placeholder="e.g. 1092837465..."
+                          className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 font-mono text-[11px] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Facebook App Secret</label>
+                        <input
+                          type="password"
+                          value={oauthSettings.facebook?.appSecret || ""}
+                          onChange={(e) =>
+                            setOauthSettings({
+                              ...oauthSettings,
+                              facebook: { ...oauthSettings.facebook, appSecret: e.target.value },
+                            })
+                          }
+                          placeholder="••••••••••••••••••••"
+                          className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 font-mono text-[11px] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : null}
           </div>
         )}
       </div>

@@ -806,6 +806,36 @@ export interface CartItemRecord {
   updatedAt: string;
 }
 
+export interface SettingItemRecord {
+  id: string;
+  key: string;
+  context?: string | null;
+  value: any;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SocialAuthSettings {
+  google: {
+    enabled: boolean;
+    clientId: string;
+    clientSecret?: string;
+    redirectUri?: string;
+  };
+  github: {
+    enabled: boolean;
+    clientId: string;
+    clientSecret?: string;
+    redirectUri?: string;
+  };
+  facebook: {
+    enabled: boolean;
+    clientId: string;
+    appSecret?: string;
+    redirectUri?: string;
+  };
+}
+
 interface LocalDatabaseSchema {
   users: UserRecord[];
   assets: AssetRecord[];
@@ -842,6 +872,7 @@ interface LocalDatabaseSchema {
   addresses?: AddressRecord[];
   reviewAutoApprove?: boolean;
   qnaAutoApprove?: boolean;
+  appSettings?: SettingItemRecord[];
   productCategories: { productId: string; categoryId: string; isMain: boolean }[];
   productAssets: { productId: string; assetId: string; isPrimary: boolean; displayOrder?: number }[];
 }
@@ -923,6 +954,7 @@ export class DatabaseStore {
         addresses: parsed.addresses || [],
         reviewAutoApprove: parsed.reviewAutoApprove ?? true,
         qnaAutoApprove: parsed.qnaAutoApprove ?? true,
+        appSettings: parsed.appSettings || [],
         productCategories: parsed.productCategories || [],
         productAssets: parsed.productAssets || [],
       };
@@ -973,6 +1005,7 @@ export class DatabaseStore {
           addresses: parsed.addresses || [],
           reviewAutoApprove: parsed.reviewAutoApprove ?? true,
           qnaAutoApprove: parsed.qnaAutoApprove ?? true,
+          appSettings: parsed.appSettings || [],
           productCategories: parsed.productCategories || [],
           productAssets: parsed.productAssets || [],
         };
@@ -1002,6 +1035,7 @@ export class DatabaseStore {
           gateways: [],
           themes: [],
           addresses: [],
+          appSettings: [],
           productCategories: [],
           productAssets: [],
         };
@@ -2726,6 +2760,186 @@ export class DatabaseStore {
       freeShippingThreshold: 200,
       updatedAt: new Date().toISOString(),
     };
+  }
+
+  // ================= GENERAL / CONTEXT-BASED SETTINGS =================
+
+  public static async getSettingByKey(key: string): Promise<SettingItemRecord | null> {
+    try {
+      if (await this.testPostgres()) {
+        const found = await (prisma as any).setting.findUnique({ where: { key } });
+        if (found) {
+          return {
+            id: found.id,
+            key: found.key,
+            context: found.context,
+            value: found.value,
+            createdAt: found.createdAt instanceof Date ? found.createdAt.toISOString() : String(found.createdAt),
+            updatedAt: found.updatedAt instanceof Date ? found.updatedAt.toISOString() : String(found.updatedAt),
+          };
+        }
+      }
+    } catch {
+      // Fallback
+    }
+
+    const db = await this.readLocalDb();
+    const item = (db.appSettings || []).find((s) => s.key === key);
+    return item || null;
+  }
+
+  public static async getSettingByContext(context: string): Promise<SettingItemRecord | null> {
+    try {
+      if (await this.testPostgres()) {
+        const found = await (prisma as any).setting.findUnique({ where: { context } });
+        if (found) {
+          return {
+            id: found.id,
+            key: found.key,
+            context: found.context,
+            value: found.value,
+            createdAt: found.createdAt instanceof Date ? found.createdAt.toISOString() : String(found.createdAt),
+            updatedAt: found.updatedAt instanceof Date ? found.updatedAt.toISOString() : String(found.updatedAt),
+          };
+        }
+      }
+    } catch {
+      // Fallback
+    }
+
+    const db = await this.readLocalDb();
+    const item = (db.appSettings || []).find((s) => s.context === context);
+    return item || null;
+  }
+
+  public static async saveSetting(data: { key: string; context?: string | null; value: any }): Promise<SettingItemRecord> {
+    const now = new Date().toISOString();
+    try {
+      if (await this.testPostgres()) {
+        const upserted = await (prisma as any).setting.upsert({
+          where: data.context ? { context: data.context } : { key: data.key },
+          update: {
+            key: data.key,
+            context: data.context || null,
+            value: data.value,
+            updatedAt: new Date(),
+          },
+          create: {
+            key: data.key,
+            context: data.context || null,
+            value: data.value,
+            updatedAt: new Date(),
+          },
+        });
+        return {
+          id: upserted.id,
+          key: upserted.key,
+          context: upserted.context,
+          value: upserted.value,
+          createdAt: upserted.createdAt instanceof Date ? upserted.createdAt.toISOString() : String(upserted.createdAt),
+          updatedAt: upserted.updatedAt instanceof Date ? upserted.updatedAt.toISOString() : String(upserted.updatedAt),
+        };
+      }
+    } catch {
+      // Fallback
+    }
+
+    const db = await this.readLocalDb();
+    if (!db.appSettings) db.appSettings = [];
+    const idx = db.appSettings.findIndex((s) => (data.context && s.context === data.context) || s.key === data.key);
+    let record: SettingItemRecord;
+    if (idx >= 0) {
+      record = {
+        ...db.appSettings[idx],
+        key: data.key,
+        context: data.context || null,
+        value: data.value,
+        updatedAt: now,
+      };
+      db.appSettings[idx] = record;
+    } else {
+      record = {
+        id: `set_${Math.random().toString(36).substring(2, 9)}`,
+        key: data.key,
+        context: data.context || null,
+        value: data.value,
+        createdAt: now,
+        updatedAt: now,
+      };
+      db.appSettings.push(record);
+    }
+    await this.writeLocalDb(db);
+    return record;
+  }
+
+  public static getDefaultSocialAuthSettings(): SocialAuthSettings {
+    return {
+      google: {
+        enabled: true,
+        clientId: "987654321000-samplegoogleoauthclientid.apps.googleusercontent.com",
+        clientSecret: "GOCSPX-SampleSecretKeyForGoogleOAuth",
+        redirectUri: "/api/auth/oauth/google/callback",
+      },
+      github: {
+        enabled: false,
+        clientId: "",
+        clientSecret: "",
+        redirectUri: "/api/auth/oauth/github/callback",
+      },
+      facebook: {
+        enabled: false,
+        clientId: "",
+        appSecret: "",
+        redirectUri: "/api/auth/oauth/facebook/callback",
+      },
+    };
+  }
+
+  public static async getSocialAuthSettings(): Promise<SocialAuthSettings> {
+    const existing = await this.getSettingByContext("auth_oauth");
+    if (existing && existing.value) {
+      const val = typeof existing.value === "string" ? JSON.parse(existing.value) : existing.value;
+      const defaults = this.getDefaultSocialAuthSettings();
+      return {
+        google: { ...defaults.google, ...(val.google || {}) },
+        github: { ...defaults.github, ...(val.github || {}) },
+        facebook: { ...defaults.facebook, ...(val.facebook || {}) },
+      };
+    }
+
+    // Initialize with default social auth settings
+    const defaults = this.getDefaultSocialAuthSettings();
+    await this.saveSetting({
+      key: "auth_oauth",
+      context: "auth_oauth",
+      value: defaults,
+    });
+    return defaults;
+  }
+
+  public static async saveSocialAuthSettings(data: Partial<SocialAuthSettings>): Promise<SocialAuthSettings> {
+    const current = await this.getSocialAuthSettings();
+    const updated: SocialAuthSettings = {
+      google: {
+        ...current.google,
+        ...(data.google || {}),
+      },
+      github: {
+        ...current.github,
+        ...(data.github || {}),
+      },
+      facebook: {
+        ...current.facebook,
+        ...(data.facebook || {}),
+      },
+    };
+
+    await this.saveSetting({
+      key: "auth_oauth",
+      context: "auth_oauth",
+      value: updated,
+    });
+    return updated;
   }
 
   // ================= MANUFACTURERS =================

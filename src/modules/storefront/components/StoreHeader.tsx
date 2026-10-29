@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { CartItem } from "../types/storefront.types";
 import { useCart } from "@/modules/cart/context/CartContext";
+import { DeliveryLocationDrawer, DeliveryLocationInfo } from "./DeliveryLocationDrawer";
 
 interface Props {
   cart?: CartItem[];
@@ -108,6 +109,40 @@ export function StoreHeader({
     return () => window.removeEventListener("message", handleMsg);
   }, []);
   const [deliveryLocation, setDeliveryLocation] = useState("Delivering to India");
+  const [isLocationDrawerOpen, setIsLocationDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    // Check saved delivery location in localStorage
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem("gstore_delivery_location");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && parsed.label) {
+            setDeliveryLocation(parsed.label);
+          }
+        }
+      } catch {}
+    }
+
+    const handleLocationChange = (e: any) => {
+      if (e.detail && e.detail.label) {
+        setDeliveryLocation(e.detail.label);
+      }
+    };
+    window.addEventListener("gstore_delivery_location_changed", handleLocationChange);
+    return () => window.removeEventListener("gstore_delivery_location_changed", handleLocationChange);
+  }, []);
+
+  const handleLocationSelect = (loc: DeliveryLocationInfo) => {
+    setDeliveryLocation(loc.label);
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem("gstore_delivery_location", JSON.stringify(loc));
+      } catch {}
+      window.dispatchEvent(new CustomEvent("gstore_delivery_location_changed", { detail: loc }));
+    }
+  };
   const [currencyCode, setCurrencyCode] = useState("INR");
   const [couponCode, setCouponCode] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<{
@@ -307,14 +342,18 @@ export function StoreHeader({
 
           {/* Right Action Icons: Delivery, Country, Cart, Sign In */}
           <div className="flex items-center space-x-4 sm:space-x-6 shrink-0 text-slate-700">
-            {/* Delivery Location dynamically from Settings */}
-            <div className="hidden lg:flex items-center space-x-2 text-left cursor-pointer group">
+            {/* Delivery Location dynamically from Settings & Flipkart Drawer */}
+            <div
+              onClick={() => setIsLocationDrawerOpen(true)}
+              className="flex items-center space-x-1.5 sm:space-x-2 text-left cursor-pointer group hover:opacity-90 transition"
+              title="Click to update delivery address or PIN code"
+            >
               <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-blue-50 transition">
                 <MapPin className="w-4 h-4 text-slate-500 group-hover:text-blue-600" />
               </div>
-              <div className="text-[11px] leading-tight">
-                <div className="text-slate-400">{deliveryLocation}</div>
-                <div className="font-bold text-slate-800">Update Location</div>
+              <div className="text-[11px] leading-tight hidden sm:block">
+                <div className="text-slate-400 max-w-[140px] truncate">{deliveryLocation}</div>
+                <div className="font-bold text-slate-800 group-hover:text-blue-600 transition">Update Location</div>
               </div>
             </div>
 
@@ -1258,6 +1297,15 @@ export function StoreHeader({
           </div>
         </div>
       )}
+
+      {/* Flipkart-Style Delivery Location Drawer */}
+      <DeliveryLocationDrawer
+        isOpen={isLocationDrawerOpen}
+        onClose={() => setIsLocationDrawerOpen(false)}
+        currentLocation={deliveryLocation}
+        onLocationSelect={handleLocationSelect}
+        currentUser={currentUser}
+      />
     </>
   );
 }

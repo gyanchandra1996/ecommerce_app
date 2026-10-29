@@ -838,6 +838,63 @@ This API powers the G-Store e-commerce application, mobile apps (Flutter, React 
           },
         },
       },
+      "/api/settings/auth/oauth": {
+        get: {
+          tags: ["Storefront & Banners"],
+          summary: "Get OAuth & Social Login Settings (Context: auth_oauth)",
+          description: "Returns public enabled flags and client IDs for Google, GitHub, and Facebook authentication.",
+          responses: {
+            200: {
+              description: "OAuth configuration with context",
+              content: { "application/json": { schema: { $ref: "#/components/schemas/ApiResponse" } } },
+            },
+          },
+        },
+        put: {
+          tags: ["Storefront & Banners"],
+          summary: "Update OAuth & Social Login Configuration",
+          description: "Administrator endpoint to update provider client IDs, secrets, and toggle enable/disable flags in the Setting table.",
+          responses: {
+            200: {
+              description: "Updated OAuth settings",
+              content: { "application/json": { schema: { $ref: "#/components/schemas/ApiResponse" } } },
+            },
+          },
+        },
+      },
+      "/api/auth/oauth/google": {
+        post: {
+          tags: ["Authentication"],
+          summary: "Google One-Click OAuth Sign-In & Registration",
+          description: "Sign in or register a customer using Google authentication. Verifies provider is enabled in Settings.",
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["email"],
+                  properties: {
+                    email: { type: "string", example: "customer@gmail.com" },
+                    name: { type: "string", example: "Jane Doe" },
+                    googleId: { type: "string", example: "google_123456789" },
+                    avatar: { type: "string", example: "https://images.unsplash.com/photo-1534528741775-53994a69daeb" },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            200: {
+              description: "Customer authenticated successfully with JWT token",
+              content: { "application/json": { schema: { $ref: "#/components/schemas/ApiResponse" } } },
+            },
+            403: {
+              description: "Google Sign-In disabled by administrator in Settings",
+            },
+          },
+        },
+      },
       "/api/reviews": {
         get: {
           tags: ["Product Reviews & Comments"],
