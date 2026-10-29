@@ -256,8 +256,8 @@ export default function CustomersPage() {
               <option value="all">All</option>
               <option value="Customer">Customer</option>
               <option value="Customer (Guest)">Customer (Guest)</option>
-              <option value="Wholesale">Wholesale</option>
-              <option value="VIP">VIP</option>
+              <option value="Admin">Admin</option>
+              <option value="Both">Both (Dual)</option>
             </select>
           </div>
 

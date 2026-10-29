@@ -453,7 +453,7 @@ export function AddCustomerModal({ isOpen, onClose, customer, onCustomerSaved }:
                   onChange={(e) => {
                     const newType = e.target.value as CustomerType;
                     setCustomerType(newType);
-                    if (newType === "Customer" || newType === "VIP" || newType === "Wholesale" || newType === "Customer (Guest)") {
+                    if (newType === "Customer" || newType === "Customer (Guest)") {
                       setAccountType("customer");
                       setRoleId("");
                     } else if (newType === "Admin") {
@@ -469,11 +469,9 @@ export function AddCustomerModal({ isOpen, onClose, customer, onCustomerSaved }:
                   <option value="Customer">Customer (Frontend Store Only)</option>
                   <option value="Admin">Admin (Administrator Portal Only)</option>
                   <option value="Both">Both (Customer & Administrator)</option>
-                  <option value="VIP">Customer - VIP Tier</option>
-                  <option value="Wholesale">Customer - Wholesale Tier</option>
                 </select>
                 <p className="text-[10px] text-slate-500 mt-1">
-                  {customerType === "Customer" || customerType === "VIP" || customerType === "Wholesale"
+                  {customerType === "Customer" || customerType === "Customer (Guest)"
                     ? "Frontend store buyer access only."
                     : customerType === "Admin"
                     ? "Backend Administrator panel access only."
@@ -485,7 +483,7 @@ export function AddCustomerModal({ isOpen, onClose, customer, onCustomerSaved }:
                 <label className="block text-[11px] font-semibold text-slate-600 mb-1">
                   Assign Custom Role
                 </label>
-                {customerType === "Customer" || customerType === "VIP" || customerType === "Wholesale" || customerType === "Customer (Guest)" ? (
+                {customerType === "Customer" || customerType === "Customer (Guest)" ? (
                   <>
                     <select
                       disabled

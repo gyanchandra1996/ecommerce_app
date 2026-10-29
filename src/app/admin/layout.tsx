@@ -9,6 +9,7 @@ import { PermissionSet } from "@/modules/roles/types/role.types";
 
 interface UserProfile {
   name: string;
+  email: string;
   role: string;
   permissions?: Record<string, PermissionSet>;
 }
@@ -17,21 +18,52 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [user, setUser] = useState<UserProfile>({
-    name: "Admin admin",
-    role: "Admin",
+    name: "Administrator",
+    email: "admin@tagateway.com",
+    role: "Administrator",
   });
 
   useEffect(() => {
     if (pathname === "/admin/login") return;
-    fetch("/api/auth/me")
-      .then((res) => (res.ok ? res.json() : null))
+
+    fetch("/api/auth/me?portal=admin")
+      .then((res) => {
+        if (!res.ok) {
+          window.location.href = `/admin/login?callbackUrl=${encodeURIComponent(pathname)}`;
+          return null;
+        }
+        return res.json();
+      })
       .then((json) => {
         if (json?.data?.user) {
+          const u = json.data.user;
+          // Security Guard: Strict Customer Rejection from Backend
+          const isPureCustomer =
+            (u.type === "customer" || u.accountType === "customer" || u.role === "CUSTOMER") &&
+            u.type !== "both" &&
+            u.accountType !== "both" &&
+            u.role !== "ADMIN";
+
+          if (isPureCustomer) {
+            window.location.href = "/admin/login?error=customer_denied";
+            return;
+          }
+
+          const displayRole =
+            u.type === "both"
+              ? "Super Admin (Dual)"
+              : u.role === "ADMIN" || u.type === "admin"
+              ? "Administrator"
+              : u.role || "Administrator";
+
           setUser({
-            name: json.data.user.name || "Admin admin",
-            role: json.data.user.role || "Admin",
-            permissions: json.data.user.permissions,
+            name: u.name || "Administrator",
+            email: u.email || "",
+            role: displayRole,
+            permissions: u.permissions,
           });
+        } else {
+          window.location.href = `/admin/login?callbackUrl=${encodeURIComponent(pathname)}`;
         }
       })
       .catch(() => {});
@@ -48,6 +80,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         isOpen={sidebarOpen}
         onCloseMobile={() => setSidebarOpen(false)}
         userName={user.name}
+        userEmail={user.email}
         userRole={user.role}
         permissions={user.permissions}
       />
@@ -57,6 +90,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <AdminHeader
           onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
           userName={user.name}
+          userEmail={user.email}
           userRole={user.role}
         />
 

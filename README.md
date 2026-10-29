@@ -1,151 +1,211 @@
-# Tagateway Enterprise E-Commerce Admin & Asset Management Platform
+# G-Store Enterprise E-Commerce & Mobile API Platform
 
-An enterprise-grade, modular e-commerce management platform built with **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS**, **Prisma ORM with PostgreSQL**, and **Docker**.
+A modern, full-stack, enterprise-grade e-commerce application and REST API built with **Next.js 16 (App Router with Turbopack)**, **React 19**, **TypeScript**, **Tailwind CSS**, and **Prisma ORM**.
 
-Matches the administrative UI design featuring **Authentication (Login & Register)**, **Live Asset Management** with multi-file and video support with **upload progress tracking**, **Inventory Management**, and **Settings**.
-
----
-
-## 🚀 Key Features
-
-### 1. Module-Wise Maintainable Architecture
-- **Auth Module (`src/modules/auth`)**:
-  - Secure Registration & Login with password hashing (`bcryptjs`)
-  - Stateless JWT Session Authentication (`jose`)
-  - Route protection middleware (`/admin/*`)
-  - Role management (Admin, Manager, Staff)
-- **Asset Management Module (`src/modules/assets`)**:
-  - Upload Images (`.jpg`, `.png`, `.webp`, `.svg`, `.gif`) and Videos (`.mp4`, `.webm`, `.mov`)
-  - **Live Upload Progress Indicators**: Real-time progress bar (0% to 100%) showing upload state, speed, and file size
-  - Dual View Modes: Grid Card View (matches media library) and Detailed Table List View
-  - Filter by asset type (*All*, *Images*, *Videos*, *Documents*, *Audio*)
-  - Sort by *Recent*, *Oldest*, *Name (A-Z)*, *Name (Z-A)*, *File Size*
-  - Multiselect toggle for bulk deletion and batch operations
-  - Full Asset Preview Drawer with high-res image zoom and HTML5 video player
-  - **Product Attachment**: Directly link any asset to one or more e-commerce products
-- **Dashboard & Shell (`src/modules/dashboard`)**:
-  - Responsive dark navy sidebar matching screenshot
-  - Quick Links with notification badge, global search, and user dropdown
-- **Inventory Management (`/admin/inventory`)**:
-  - Product stock tracking, warehouse filtering, and Sellbrite status banner
-- **Settings (`/admin/settings`)**:
-  - Categorized settings panel for Payment Gateways, API keys, Email, Shipping, and system configs
+Designed for both the **Storefront web experience**, **Administrator Management Console**, and **Mobile App Development (Flutter, React Native, iOS, Android)**.
 
 ---
 
-## 📁 Modular Directory Structure
+## ⚡ Quick Start (Project Kaise Chalana Hai)
 
-```
-├── src/
-│   ├── app/                         # Next.js App Router
-│   │   ├── (auth)/                  # Auth route group
-│   │   │   ├── login/page.tsx       # Sign In page
-│   │   │   └── register/page.tsx    # Registration page
-│   │   ├── admin/                   # Admin console routes
-│   │   │   ├── assets/page.tsx      # Media Library (Image 1)
-│   │   │   ├── dashboard/page.tsx   # Dashboard overview
-│   │   │   ├── inventory/page.tsx   # Manage Inventory (Image 2)
-│   │   │   ├── settings/page.tsx    # Settings panel (Image 3)
-│   │   │   └── layout.tsx           # Admin shell with header & sidebar
-│   │   ├── api/                     # REST API Endpoints
-│   │   │   ├── auth/                # Login, Register, Logout, Me
-│   │   │   ├── assets/              # Upload, List, Filter, Update, Delete, Batch
-│   │   │   └── products/            # Products and asset attachment
-│   │   ├── globals.css              # Custom styling
-│   │   └── layout.tsx               # Root layout
-│   │
-│   ├── core/                        # Core Foundation
-│   │   ├── config/env.ts            # Environment constants
-│   │   ├── db/prisma.ts             # Prisma client singleton
-│   │   ├── db/store.ts              # Data layer with PostgreSQL & local fallback
-│   │   ├── storage/file-storage.ts  # Media storage engine (images, videos, documents)
-│   │   └── utils/api-response.ts    # Standardized API response formatters
-│   │
-│   ├── modules/                     # Domain Feature Modules
-│   │   ├── auth/                    # Auth components, services, validations, types
-│   │   ├── assets/                  # Media library components, uploaders, cards, modals
-│   │   ├── dashboard/               # Sidebar, Header, Footer components
-│   │   └── products/                # Product interfaces & media linkage
-│   │
-│   └── middleware.ts                # Route protection middleware
-│
-├── prisma/
-│   └── schema.prisma                # PostgreSQL schema (User, Asset, Product, ProductAsset)
-│
-├── public/
-│   └── uploads/                     # Uploaded media storage
-│
-├── Dockerfile                       # Multi-stage production container build
-├── docker-compose.yml               # PostgreSQL 16 + Next.js App compose setup
-└── package.json
-```
+### 1. Requirements
+* **Node.js**: v18.18+ or v20+ (Node v22 / v24 supported)
+* **npm**: v9+
 
----
-
-## 🛠️ Quickstart
-
-### Prerequisites
-- Node.js 18+ (Node 20+ recommended)
-- npm 9+
-- (Optional) Docker & Docker Compose
-
-### Option A: Local Development
+### 2. Installation
+Clone the repository and install dependencies:
 ```bash
-# 1. Install dependencies
 npm install
+```
 
-# 2. Seed default admin and sample assets
-npm run db:seed
+### 3. Initialize & Seed Database
+Restore all 8 categories, 40 flagship products, 273 variants, studio packshots, admin accounts, sliders, and navigation menus:
+```bash
+npm run seed
+```
+*(Alternative command: `node scripts/seed-master.mjs`)*
 
-# 3. Start development server
+### 4. Start Development Server
+```bash
 npm run dev
 ```
+Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+* **Storefront (Customer Web Portal)**: [http://localhost:3000](http://localhost:3000)
+* **Admin Management Console**: [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
+* **Interactive Swagger UI Documentation**: [http://localhost:3000/docs](http://localhost:3000/docs)
+* **OpenAPI 3.0.3 Specification (JSON)**: [http://localhost:3000/api/openapi.json](http://localhost:3000/api/openapi.json)
 
----
-
-### Option B: Run with Docker & PostgreSQL
-
-The project includes an optimized multi-stage `Dockerfile` and a `docker-compose.yml` that provisions **PostgreSQL 16** and the **Next.js Web Service** with persistent volumes:
-
+### 5. Production Build
 ```bash
-# Start PostgreSQL database and Next.js container
-docker compose up -d
-
-# Check running containers
-docker compose ps
-
-# View container logs
-docker compose logs -f web
-```
-
-To stop containers:
-```bash
-docker compose down
+npm run build
+npm start
 ```
 
 ---
 
-## 🔑 Default Administrator Credentials
+## 🔐 Authentication & Role-Based Access Control
 
-Upon running `npm run db:seed` or opening the app, you can use the default administrator credentials:
+The platform enforces strict **separation of roles** between frontend customers and backend administrators:
 
-- **Email**: `admin@tagateway.com`
-- **Password**: `Admin123!`
+1. **Customer Accounts (`type: 'customer'`)**:
+   - Access only the storefront ([`/`](http://localhost:3000)), customer dashboard ([`/customer/dashboard`](http://localhost:3000/customer/dashboard)), order tracking, and cart.
+   - **STRICTLY DENIED from accessing the Administrator Console (`/admin/*`)**. Any attempt to access `/admin` automatically redirects to `/admin/login?error=customer_denied`.
 
-*(You can also register a new admin or manager account anytime on the `/register` page).*
+2. **Administrator Accounts (`type: 'admin'`)**:
+   - Full access to manage catalog, products, variants, assets, payments, gateways, shipments, warehouses, and settings at [`/admin`](http://localhost:3000/admin/assets).
+   - The top header and sidebar clearly display the **logged-in Administrator's Name, Email address, and Administrator badge**.
+
+### 👥 Default Seeded Logins (Password for all: `password123`)
+
+| Role | Name | Email | Login URL | Access Level |
+|---|---|---|---|---|
+| **Administrator** | Admin Administrator | `admin@tagateway.com` | `/admin/login` | Full Backend Administrator |
+| **Administrator** | Gyan Admin | `gyan@gmail.com` | `/admin/login` | Full Backend Administrator |
+| **Dual (Both)** | Gyan Dual Account | `gyanboth@gmail.com` | `/admin/login` | Admin Console + Storefront |
+| **Customer** | Gyan Chandra | `gyanchandranist@gmail.com` | `/login` | Frontend Store Buyer Only |
 
 ---
 
-## 🗄️ PostgreSQL Database Migration
+## 📱 Mobile App Development & Swagger OpenAPI Setup
 
-To apply Prisma schema changes directly to your PostgreSQL database:
+For mobile developers building iOS, Android, Flutter, or React Native apps, an interactive **Swagger UI** with full **API Key Authentication** is pre-configured:
 
+* **Interactive Swagger Documentation**: [http://localhost:3000/docs](http://localhost:3000/docs)
+* **OpenAPI Spec URL**: `http://localhost:3000/api/openapi.json`
+* **Swagger Redirects**: `/swagger` and `/api/docs` automatically forward to `/docs`.
+
+### Mobile Authentication Options:
+1. **Developer API Key (Recommended for Mobile App Development)**:
+   - Pass the header in all mobile network requests:
+     ```http
+     x-api-key: gstore_mobile_dev_key_2026_x89f
+     ```
+2. **Bearer JWT Token**:
+   - Obtained by calling `POST /api/auth/login` or `POST /api/auth/register`:
+     ```http
+     Authorization: Bearer <jwt_token>
+     ```
+3. **Guest Cart Session Persistence**:
+   - Send a device UUID to maintain shopping carts across app launches before the user logs in:
+     ```http
+     x-session-id: <unique_device_uuid>
+     ```
+
+---
+
+## 🌐 Complete REST API Route Reference
+
+### 1. Authentication (`/api/auth/*`)
+| Method | Endpoint | Description | Auth Required |
+|---|---|---|---|
+| `POST` | `/api/auth/login` | Login with email & password (returns user + JWT) | None |
+| `POST` | `/api/auth/register` | Register new customer account | None |
+| `GET` | `/api/auth/me` | Get authenticated profile (supports `?portal=admin` or `customer`) | Bearer / API Key / Cookie |
+| `POST` | `/api/auth/logout` | Invalidate session cookies | None |
+| `POST` | `/api/auth/forgot-password` | Request password reset token | None |
+| `POST` | `/api/auth/reset-password` | Set new password with token | None |
+
+### 2. Catalog & Products (`/api/products/*`)
+| Method | Endpoint | Description | Parameters |
+|---|---|---|---|
+| `GET` | `/api/products` | List products with variants, images, stock & prices | `categoryId`, `search`, `minPrice`, `maxPrice`, `sort`, `page`, `limit` |
+| `GET` | `/api/products/[id]` | Get detailed product by ID or slug with full variant matrix | `id` (e.g. `prod_s24_ultra`) |
+| `POST` | `/api/products` | Create product (Admin only) | Admin Auth |
+| `PUT` | `/api/products/[id]` | Update product specifications and assets | Admin Auth |
+| `DELETE` | `/api/products/[id]` | Delete or archive product | Admin Auth |
+
+### 3. Categories (`/api/categories/*`)
+| Method | Endpoint | Description | Parameters |
+|---|---|---|---|
+| `GET` | `/api/categories` | Get active category tree or flat list | `format=tree` or `format=flat` |
+| `GET` | `/api/categories/[id]` | Get category by ID or slug | `id` (e.g. `electronics`) |
+| `POST` | `/api/categories` | Create new category (Admin only) | Admin Auth |
+| `PUT` | `/api/categories/[id]` | Update category name, slug, image | Admin Auth |
+
+### 4. Shopping Cart (`/api/cart/*`)
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/cart` | Get current customer / guest cart items and subtotal |
+| `POST` | `/api/cart` | Add product or specific variant (`variantId`) to cart |
+| `DELETE` | `/api/cart` | Clear all items from cart |
+| `POST` | `/api/cart/merge` | Merge guest cart items into customer cart on login |
+
+### 5. Orders & Checkout (`/api/orders/*`)
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/orders` | List orders for current authenticated customer or admin |
+| `POST` | `/api/orders` | Place order with items, shipping address, and payment method |
+| `GET` | `/api/orders/[id]` | Get tracking status, items, and invoice breakdown for order |
+| `GET` | `/api/customer/orders` | Customer order history list |
+
+### 6. Sliders, Banners & Menus
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/sliders` | Get hero sliders and promo banners (`?position=main\|side\|triple_promo`) |
+| `GET` | `/api/menu` | Get header navigation bar links with `/category/[slug]` routes |
+
+### 7. Payments & Gateways (`/api/gateways/*`)
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/gateways` | List active payment gateways (Razorpay, COD, Paytm, Stripe) |
+| `POST` | `/api/payments/razorpay/order` | Create Razorpay order ID |
+| `POST` | `/api/payments/razorpay/verify` | Verify Razorpay payment signature |
+| `POST` | `/api/payments/paytm/initiate` | Initiate Paytm transaction token |
+
+### 8. Customer Profile & Addresses
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/customer/profile` | Get logged-in customer profile |
+| `PUT` | `/api/customer/profile` | Update profile information |
+| `GET` | `/api/addresses` | Get saved delivery addresses |
+| `POST` | `/api/addresses` | Add new shipping address |
+| `DELETE` | `/api/addresses/[id]` | Remove address |
+
+### 9. Coupons & Wishlist
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/coupons/apply` | Validate promo code (`WELCOME10`, `EMOX20`, `FREESHIP`) and compute discount |
+| `GET` | `/api/wishlist` | Get user saved items |
+| `POST` | `/api/wishlist` | Add or toggle item in wishlist |
+
+---
+
+## 🏷️ The 8 Core Categories & Direct URLs
+
+All 8 categories appear in the storefront navigation bar next to **"All Categories"** and open directly:
+
+1. **Electronics**: [`/category/electronics`](http://localhost:3000/category/electronics)
+2. **Fashion**: [`/category/fashion`](http://localhost:3000/category/fashion)
+3. **Women's**: [`/category/womens`](http://localhost:3000/category/womens)
+4. **Kids' Fashion**: [`/category/kids-fashion`](http://localhost:3000/category/kids-fashion)
+5. **Health & Beauty**: [`/category/health-beauty`](http://localhost:3000/category/health-beauty)
+6. **Pharmacy**: [`/category/pharmacy`](http://localhost:3000/category/pharmacy)
+7. **Groceries**: [`/category/groceries`](http://localhost:3000/category/groceries)
+8. **Luxury Item**: [`/category/luxury-item`](http://localhost:3000/category/luxury-item)
+
+---
+
+## 📦 Master Seeder & Data Management
+
+Whenever you need to refresh or restore the database, run:
 ```bash
-# Push schema to PostgreSQL
-npm run db:push
-
-# Open Prisma Studio to inspect tables
-npx prisma studio
+npm run seed
 ```
+This restores:
+- **8 Categories**: Complete hierarchy with slugs and metadata.
+- **40 Products**: Flagship products across all 8 departments with descriptions, pricing, and studio `.webp` packshots.
+- **273 Product Variants**: Storage (256GB/512GB/1TB), Colors, Sizes (S/M/L/XL, Shoe US 8-11), Pack sizes, Metals, and Flavors.
+- **118 Media Assets**: Local high-resolution WebP images stored in `public/uploads/`.
+- **4 Payment Gateways**: Razorpay (default enabled), COD, Paytm, Stripe.
+- **4 Fulfillment Warehouses**: Avery Dennison, Nike Oregon, Nike Memphis, Samsung Silicon Valley.
+- **4 Discount Coupons**: `WELCOME10`, `EMOX20`, `FREESHIP`, `SUPER15`.
+
+---
+
+## 🛠️ Tech Stack
+* **Framework**: Next.js 16.4.2 (App Router, Turbopack, Partial Prefetching)
+* **Frontend**: React 19, Tailwind CSS v4, Lucide React Icons
+* **Database & ORM**: Local JSON Store + Prisma ORM (PostgreSQL ready)
+* **Authentication**: JWT (`jose`) with bcrypt password hashing
+* **Documentation**: Swagger UI v5 via OpenAPI 3.0.3 specification

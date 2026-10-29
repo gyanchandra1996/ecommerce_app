@@ -64,11 +64,12 @@ export async function middleware(request: NextRequest) {
     session.isValid &&
     (session.type === "customer" || session.type === "both" || session.role === "CUSTOMER");
 
-  const effectiveAdmin =
+  const isWebAdminSession = isAdminSession(adminSession) || isAdminSession(legacySession);
+
+  const effectiveAdminApi =
     isApiKeyValid ||
     isAdminSession(bearerSession) ||
-    isAdminSession(adminSession) ||
-    isAdminSession(legacySession);
+    isWebAdminSession;
 
   const effectiveCustomer =
     isApiKeyValid ||
@@ -78,7 +79,7 @@ export async function middleware(request: NextRequest) {
 
   // 1. Admin login route
   if (pathname === "/admin/login") {
-    if (effectiveAdmin) {
+    if (isWebAdminSession) {
       return NextResponse.redirect(new URL("/admin/assets", request.url));
     }
     return NextResponse.next();
@@ -90,7 +91,7 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith("/api/roles") ||
     pathname.startsWith("/api/customers")
   ) {
-    if (!effectiveAdmin) {
+    if (!effectiveAdminApi) {
       const status = adminSession.isValid || customerSession.isValid ? 403 : 401;
       return NextResponse.json(
         {
@@ -103,9 +104,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 3. Protected admin pages: require valid admin session
+  // 3. Protected admin pages: strictly require valid admin session. Customer accounts are denied!
   if (pathname.startsWith("/admin")) {
-    if (!effectiveAdmin) {
+    if (customerSession.isValid && !isWebAdminSession) {
+      const adminLoginUrl = new URL("/admin/login", request.url);
+      adminLoginUrl.searchParams.set("error", "customer_denied");
+      return NextResponse.redirect(adminLoginUrl);
+    }
+
+    if (!isWebAdminSession) {
       const adminLoginUrl = new URL("/admin/login", request.url);
       adminLoginUrl.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(adminLoginUrl);

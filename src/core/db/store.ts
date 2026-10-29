@@ -16,7 +16,7 @@ export interface UserRecord {
   avatar?: string | null;
   type?: "admin" | "customer" | "both";
   accountType?: "admin" | "customer" | "both" | "manager" | "staff";
-  customerType?: "Customer" | "Admin" | "Both" | "Customer (Guest)" | "Wholesale" | "VIP" | string;
+  customerType?: "Customer" | "Admin" | "Both" | "Customer (Guest)" | string;
   address?: string | null;
   shippingAddress?: string | null;
   lastLogin?: string | null;

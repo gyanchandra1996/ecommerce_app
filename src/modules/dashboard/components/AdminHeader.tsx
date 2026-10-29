@@ -17,13 +17,15 @@ import {
 interface Props {
   onToggleSidebar: () => void;
   userName?: string;
+  userEmail?: string;
   userRole?: string;
 }
 
 export function AdminHeader({
   onToggleSidebar,
   userName = "Admin admin",
-  userRole = "Admin",
+  userEmail = "",
+  userRole = "Administrator",
 }: Props) {
   const router = useRouter();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -106,9 +108,14 @@ export function AdminHeader({
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-100 py-1.5 z-50 animate-in fade-in zoom-in-95 duration-100">
               <div className="px-3.5 py-2 border-b border-slate-100">
                 <p className="text-xs font-bold text-slate-800 truncate">{userName}</p>
-                <p className="text-[11px] text-slate-500 flex items-center space-x-1 mt-0.5">
-                  <Shield className="w-3 h-3 text-emerald-600" />
-                  <span>{userRole} Account</span>
+                {userEmail && (
+                  <p className="text-[11px] text-slate-500 font-mono truncate select-all" title={userEmail}>
+                    {userEmail}
+                  </p>
+                )}
+                <p className="text-[10px] text-emerald-700 font-bold uppercase tracking-wider flex items-center space-x-1 mt-1 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100 w-fit">
+                  <Shield className="w-3 h-3 text-emerald-600 shrink-0" />
+                  <span>{userRole}</span>
                 </p>
               </div>
 

@@ -9,13 +9,18 @@ export function AdminLoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/admin/assets";
+  const urlError = searchParams.get("error");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(
+    urlError === "customer_denied"
+      ? "Access Denied: Customer accounts cannot access the Administrator Console. Please log in with an Administrator account."
+      : null
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

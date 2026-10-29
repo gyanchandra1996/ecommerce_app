@@ -29,6 +29,7 @@ interface Props {
   isOpen: boolean;
   onCloseMobile: () => void;
   userName?: string;
+  userEmail?: string;
   userRole?: string;
   permissions?: Record<string, PermissionSet>;
 }
@@ -47,7 +48,8 @@ export function AdminSidebar({
   isOpen,
   onCloseMobile,
   userName = "Admin admin",
-  userRole = "Admin",
+  userEmail = "",
+  userRole = "Administrator",
   permissions,
 }: Props) {
   const pathname = usePathname();
@@ -301,9 +303,14 @@ export function AdminSidebar({
             </div>
             <div className="overflow-hidden">
               <h2 className="text-xs font-bold text-white truncate">{userName}</h2>
-              <div className="flex items-center space-x-1.5 text-[11px] text-slate-400">
-                <Circle className="w-2 h-2 fill-emerald-500 text-emerald-500" />
-                <span>{userRole}</span>
+              {userEmail && (
+                <p className="text-[10px] text-slate-400 truncate font-mono select-all" title={userEmail}>
+                  {userEmail}
+                </p>
+              )}
+              <div className="flex items-center space-x-1.5 text-[10px] text-emerald-400 mt-0.5">
+                <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
+                <span className="font-semibold uppercase tracking-wider">{userRole}</span>
               </div>
             </div>
           </div>
