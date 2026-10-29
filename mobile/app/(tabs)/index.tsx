@@ -25,7 +25,7 @@ import {
 } from "lucide-react-native";
 import { useLocationStore, POPULAR_INDIAN_HUBS } from "../../src/store/locationStore";
 import { useCartStore } from "../../src/store/cartStore";
-import { apiClient, API_BASE_URL } from "../../src/services/api";
+import { apiClient, getFullImageUrl, API_BASE_URL } from "../../src/services/api";
 
 const TOP_CATEGORIES = [
   { id: "cat_electronics", name: "Electronics", slug: "electronics", icon: "📱" },
@@ -47,6 +47,7 @@ export default function HomeScreen() {
   const [pinSearch, setPinSearch] = useState("");
   const [products, setProducts] = useState<any[]>([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [addingId, setAddingId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -56,12 +57,13 @@ export default function HomeScreen() {
   const loadFeaturedProducts = async () => {
     try {
       setLoadingProducts(true);
+      setLoadError(null);
       const res = await apiClient.get("/api/products?limit=10");
       if (res.data?.success && Array.isArray(res.data?.data)) {
         setProducts(res.data.data);
       }
-    } catch {
-      // Fallback
+    } catch (err: any) {
+      setLoadError(err.message || "Failed to load products from server.");
     } finally {
       setLoadingProducts(false);
     }
@@ -228,15 +230,26 @@ export default function HomeScreen() {
 
           {loadingProducts ? (
             <ActivityIndicator size="small" color="#2563EB" style={{ marginVertical: 30 }} />
+          ) : loadError ? (
+            <View style={{ backgroundColor: "#EFF6FF", borderWidth: 1, borderColor: "#DBEAFE", borderRadius: 12, padding: 14, alignItems: "center", marginVertical: 12 }}>
+              <Text style={{ fontSize: 13, fontWeight: "800", color: "#1E3A8A", marginBottom: 4 }}>
+                Connecting to Development Server
+              </Text>
+              <Text style={{ fontSize: 11, color: "#3B82F6", textAlign: "center", marginBottom: 10 }}>
+                Server: {API_BASE_URL}
+              </Text>
+              <TouchableOpacity
+                onPress={loadFeaturedProducts}
+                style={{ backgroundColor: "#2563EB", paddingHorizontal: 16, paddingVertical: 8, borderRadius: 8 }}
+              >
+                <Text style={{ color: "#FFFFFF", fontWeight: "700", fontSize: 12 }}>Tap to Retry</Text>
+              </TouchableOpacity>
+            </View>
           ) : (
             <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
               {products.map((prod) => {
                 const isAdding = addingId === prod.id;
-                const imageUrl = prod.mainImage
-                  ? prod.mainImage.startsWith("http")
-                    ? prod.mainImage
-                    : `${API_BASE_URL}${prod.mainImage}`
-                  : "https://images.unsplash.com/photo-1511707171634-5f897ff02560?w=200";
+                const imageUrl = getFullImageUrl(prod.mainImage);
 
                 return (
                   <TouchableOpacity

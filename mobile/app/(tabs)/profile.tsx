@@ -85,6 +85,19 @@ export default function ProfileScreen() {
             </TouchableOpacity>
           )}
         </View>
+
+        {/* Server Connection Information */}
+        <View style={{ marginTop: 20, padding: 14, backgroundColor: "#F8FAFC", borderRadius: 14, borderWidth: 1, borderColor: "#E2E8F0" }}>
+          <Text style={{ fontSize: 11, fontWeight: "800", color: "#475569", textTransform: "uppercase", marginBottom: 4 }}>
+            Backend API Server:
+          </Text>
+          <Text style={{ fontSize: 12, fontWeight: "700", color: "#2563EB", fontFamily: "monospace" }}>
+            http://10.196.90.130:3000
+          </Text>
+          <Text style={{ fontSize: 11, color: "#94A3B8", marginTop: 4 }}>
+            Connected over Wi-Fi with API Key and auto JWT session injection.
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
