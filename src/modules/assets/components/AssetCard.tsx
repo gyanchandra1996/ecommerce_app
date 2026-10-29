@@ -25,6 +25,7 @@ interface Props {
   onSelect: (id: string) => void;
   onClick: (asset: Asset) => void;
   onAssetUpdated?: (updated: Asset) => void;
+  isS3Enabled?: boolean;
 }
 
 export function AssetCard({
@@ -34,6 +35,7 @@ export function AssetCard({
   onSelect,
   onClick,
   onAssetUpdated,
+  isS3Enabled = false,
 }: Props) {
   const [copied, setCopied] = useState(false);
   const [syncing, setSyncing] = useState(false);
@@ -112,31 +114,33 @@ export function AssetCard({
         </div>
       )}
 
-      {/* Storage Provider Badge (S3 vs Local) */}
-      <div
-        className={`absolute top-2 ${multiselect ? "left-9" : "left-2"} z-20 flex items-center space-x-1 px-1.5 py-0.5 rounded text-[9px] font-bold shadow-xs backdrop-blur-xs transition ${
-          isS3
-            ? "bg-sky-600 text-white"
-            : "bg-slate-900/65 text-slate-100 border border-white/20"
-        }`}
-        title={isS3 ? "Asset is synced and hosted on AWS S3" : "Asset is stored on local server storage"}
-      >
-        {isS3 ? (
-          <>
-            <Cloud className="w-3 h-3 text-sky-200 fill-sky-200/40" />
-            <span>AWS S3</span>
-          </>
-        ) : (
-          <>
-            <HardDrive className="w-3 h-3 text-slate-300" />
-            <span>Local</span>
-          </>
-        )}
-      </div>
+      {/* Storage Provider Badge (S3 vs Local) - Only shown when S3 is enabled */}
+      {isS3Enabled && (
+        <div
+          className={`absolute top-2 ${multiselect ? "left-9" : "left-2"} z-20 flex items-center space-x-1 px-1.5 py-0.5 rounded text-[9px] font-bold shadow-xs backdrop-blur-xs transition ${
+            isS3
+              ? "bg-sky-600 text-white"
+              : "bg-slate-900/65 text-slate-100 border border-white/20"
+          }`}
+          title={isS3 ? "Asset is synced and hosted on AWS S3" : "Asset is stored on local server storage"}
+        >
+          {isS3 ? (
+            <>
+              <Cloud className="w-3 h-3 text-sky-200 fill-sky-200/40" />
+              <span>AWS S3</span>
+            </>
+          ) : (
+            <>
+              <HardDrive className="w-3 h-3 text-slate-300" />
+              <span>Local</span>
+            </>
+          )}
+        </div>
+      )}
 
       {/* Action buttons on hover: Quick S3 Sync & Copy URL */}
       <div className="absolute top-2 right-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center space-x-1">
-        {!isS3 && (
+        {isS3Enabled && !isS3 && (
           <button
             type="button"
             onClick={handleQuickSync}
@@ -163,7 +167,7 @@ export function AssetCard({
 
       {/* Media Thumbnail Container */}
       <div className="w-full h-44 bg-slate-50 relative flex items-center justify-center p-2 border-b border-slate-100">
-        {asset.fileType === "IMAGE" ? (
+        {asset.fileType?.toUpperCase() === "IMAGE" || asset.url?.match(/\.(webp|png|jpe?g|svg|gif|avif)$/i) ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={asset.url}
@@ -171,7 +175,7 @@ export function AssetCard({
             loading="lazy"
             className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
           />
-        ) : asset.fileType === "VIDEO" ? (
+        ) : asset.fileType?.toUpperCase() === "VIDEO" || asset.url?.match(/\.(mp4|webm|mov|mkv)$/i) ? (
           <div className="relative w-full h-full flex items-center justify-center bg-slate-900/5 rounded">
             <video
               src={asset.url}
@@ -225,10 +229,14 @@ export function AssetCard({
         </h3>
         <div className="flex items-center justify-center space-x-1.5 text-[11px] mt-1">
           <span className="text-slate-400">Added: {formatDate(asset.createdAt)}</span>
-          <span className="text-slate-300">•</span>
-          <span className={isS3 ? "text-sky-600 font-bold" : "text-slate-400 font-medium"}>
-            {isS3 ? "S3 Synced" : "Local"}
-          </span>
+          {isS3Enabled && (
+            <>
+              <span className="text-slate-300">•</span>
+              <span className={isS3 ? "text-sky-600 font-bold" : "text-slate-400 font-medium"}>
+                {isS3 ? "S3 Synced" : "Local"}
+              </span>
+            </>
+          )}
         </div>
       </div>
     </div>

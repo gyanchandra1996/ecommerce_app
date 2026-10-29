@@ -198,7 +198,7 @@ export function AssetSelectorModal({
 
                       {/* Thumbnail */}
                       <div className="w-full h-28 bg-slate-100 flex items-center justify-center p-2 border-b border-slate-100">
-                        {asset.fileType === "IMAGE" ? (
+                        {asset.fileType?.toUpperCase() === "IMAGE" || asset.url?.match(/\.(webp|png|jpe?g|svg|gif|avif)$/i) ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
                             src={asset.url}

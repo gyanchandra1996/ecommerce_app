@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { DatabaseStore } from "@/core/db/store";
 import { FileStorageEngine } from "@/core/storage/file-storage";
 import { apiError, apiSuccess } from "@/core/utils/api-response";
@@ -29,12 +29,19 @@ export async function GET(req: NextRequest) {
     });
 
     const totalPages = Math.ceil(total / pageSize) || 1;
+    const storageSettings = await DatabaseStore.getStorageSettings();
+    const isS3Enabled = Boolean(storageSettings?.s3Enabled || storageSettings?.provider === "s3");
 
-    return apiSuccess(items, undefined, 200, {
-      total,
-      page,
-      pageSize,
-      totalPages,
+    return NextResponse.json({
+      success: true,
+      data: items,
+      isS3Enabled,
+      pagination: {
+        total,
+        page,
+        pageSize,
+        totalPages,
+      },
     });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Failed to fetch assets.";

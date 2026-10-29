@@ -11,12 +11,15 @@ import { Asset, AssetFilters } from "@/modules/assets/types/asset.types";
 export default function AssetsPage() {
   const [assets, setAssets] = useState<Asset[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [isS3Enabled, setIsS3Enabled] = useState(false);
+
   const [filters, setFilters] = useState<AssetFilters>({
     search: "",
     fileType: "all",
     sort: "recent",
     page: 1,
-    pageSize: 20,
+    pageSize: 24,
   });
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
@@ -29,26 +32,72 @@ export default function AssetsPage() {
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
 
+  // Check storage settings on mount
+  useEffect(() => {
+    fetch("/api/settings/storage")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success && json.data) {
+          setIsS3Enabled(Boolean(json.data.s3Enabled || json.data.provider === "s3"));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const loadAssets = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await AssetClientService.fetchAssets(filters);
+      const res = await AssetClientService.fetchAssets({
+        ...filters,
+        page: 1,
+      });
       setAssets(res.items);
       setTotalPages(res.totalPages);
       setTotalCount(res.total);
+      if (typeof res.isS3Enabled === "boolean") {
+        setIsS3Enabled(res.isS3Enabled);
+      }
+      setFilters((prev) => ({ ...prev, page: 1 }));
     } catch {
       // Error handling
     } finally {
       setLoading(false);
     }
-  }, [filters]);
+  }, [filters.search, filters.fileType, filters.storage, filters.sort, filters.pageSize]);
 
   useEffect(() => {
     loadAssets();
   }, [loadAssets]);
 
+  const handleLoadMore = async () => {
+    if (loadingMore || loading || assets.length >= totalCount) return;
+    const nextPage = filters.page + 1;
+    setLoadingMore(true);
+    try {
+      const res = await AssetClientService.fetchAssets({
+        ...filters,
+        page: nextPage,
+      });
+      setAssets((prev) => {
+        const existingIds = new Set(prev.map((a) => a.id));
+        const novel = res.items.filter((a) => !existingIds.has(a.id));
+        return [...prev, ...novel];
+      });
+      setFilters((prev) => ({ ...prev, page: nextPage }));
+      setTotalPages(res.totalPages);
+      setTotalCount(res.total);
+      if (typeof res.isS3Enabled === "boolean") {
+        setIsS3Enabled(res.isS3Enabled);
+      }
+    } catch (err) {
+      console.error("Failed to load more assets:", err);
+    } finally {
+      setLoadingMore(false);
+    }
+  };
+
   const handleFilterChange = (newFilters: Partial<AssetFilters>) => {
-    setFilters((prev) => ({ ...prev, ...newFilters }));
+    setFilters((prev) => ({ ...prev, ...newFilters, page: 1 }));
   };
 
   const handleSelectId = (id: string) => {
@@ -116,7 +165,10 @@ export default function AssetsPage() {
   const handleAssetDeleted = (id: string) => {
     setAssets((prev) => prev.filter((a) => a.id !== id));
     setSelectedIds((prev) => prev.filter((i) => i !== id));
+    setTotalCount((prev) => Math.max(0, prev - 1));
   };
+
+  const hasMore = assets.length < totalCount;
 
   return (
     <div>
@@ -142,9 +194,10 @@ export default function AssetsPage() {
         onBatchDelete={handleBatchDelete}
         onBatchSyncS3={handleBatchSyncS3}
         onSelectAll={handleSelectAll}
+        isS3Enabled={isS3Enabled}
       />
 
-      {/* Grid / List of Assets */}
+      {/* Grid / List of Assets with Load More pagination */}
       <AssetGrid
         assets={assets}
         loading={loading}
@@ -157,7 +210,11 @@ export default function AssetsPage() {
         onAssetUpdated={handleAssetUpdated}
         page={filters.page}
         totalPages={totalPages}
-        onPageChange={(p) => setFilters((prev) => ({ ...prev, page: p }))}
+        totalCount={totalCount}
+        onLoadMore={handleLoadMore}
+        hasMore={hasMore}
+        loadingMore={loadingMore}
+        isS3Enabled={isS3Enabled}
       />
 
       {/* Upload Modal with Progress Bar */}
@@ -177,6 +234,7 @@ export default function AssetsPage() {
         }}
         onAssetUpdated={handleAssetUpdated}
         onAssetDeleted={handleAssetDeleted}
+        isS3Enabled={isS3Enabled}
       />
     </div>
   );

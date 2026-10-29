@@ -29,6 +29,7 @@ interface Props {
   onBatchDelete: () => void;
   onBatchSyncS3?: () => void;
   onSelectAll: () => void;
+  isS3Enabled?: boolean;
 }
 
 export function AssetFilterToolbar({
@@ -44,6 +45,7 @@ export function AssetFilterToolbar({
   onBatchDelete,
   onBatchSyncS3,
   onSelectAll,
+  isS3Enabled = false,
 }: Props) {
   return (
     <div className="bg-white rounded-xl shadow-xs border border-slate-200/80 p-3 mb-6 space-y-3">
@@ -96,21 +98,23 @@ export function AssetFilterToolbar({
             <option value="size_desc">File Size</option>
           </select>
 
-          {/* Storage Filter Dropdown (S3 vs Local) */}
-          <select
-            value={filters.storage || "all"}
-            onChange={(e) =>
-              onFilterChange({
-                storage: e.target.value as AssetFilters["storage"],
-                page: 1,
-              })
-            }
-            className="h-9 px-3 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 cursor-pointer min-w-[125px]"
-          >
-            <option value="all">☁️ All Storage</option>
-            <option value="s3">☁️ AWS S3 Synced</option>
-            <option value="local">💻 Local Storage</option>
-          </select>
+          {/* Storage Filter Dropdown (S3 vs Local) - Only shown when AWS S3 is enabled */}
+          {isS3Enabled && (
+            <select
+              value={filters.storage || "all"}
+              onChange={(e) =>
+                onFilterChange({
+                  storage: e.target.value as AssetFilters["storage"],
+                  page: 1,
+                })
+              }
+              className="h-9 px-3 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 cursor-pointer min-w-[125px]"
+            >
+              <option value="all">☁️ All Storage</option>
+              <option value="s3">☁️ AWS S3 Synced</option>
+              <option value="local">💻 Local Storage</option>
+            </select>
+          )}
 
           {/* Advance Option Dropdown */}
           <div className="relative inline-block">
@@ -148,7 +152,7 @@ export function AssetFilterToolbar({
                 <span>Select All ({totalCount})</span>
               </button>
 
-              {selectedCount > 0 && onBatchSyncS3 && (
+              {selectedCount > 0 && isS3Enabled && onBatchSyncS3 && (
                 <button
                   type="button"
                   onClick={onBatchSyncS3}

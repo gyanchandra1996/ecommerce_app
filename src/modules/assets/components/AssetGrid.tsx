@@ -3,7 +3,17 @@
 import React from "react";
 import { AssetCard } from "./AssetCard";
 import { Asset } from "../types/asset.types";
-import { FolderOpen, Upload, ChevronLeft, ChevronRight, Cloud, HardDrive } from "lucide-react";
+import {
+  FolderOpen,
+  Upload,
+  ChevronLeft,
+  ChevronRight,
+  Cloud,
+  HardDrive,
+  ChevronDown,
+  CheckCircle2,
+  Loader2,
+} from "lucide-react";
 
 interface Props {
   assets: Asset[];
@@ -15,9 +25,14 @@ interface Props {
   onAssetClick: (asset: Asset) => void;
   onOpenUpload: () => void;
   onAssetUpdated?: (updated: Asset) => void;
-  page: number;
-  totalPages: number;
-  onPageChange: (newPage: number) => void;
+  page?: number;
+  totalPages?: number;
+  totalCount?: number;
+  onPageChange?: (newPage: number) => void;
+  onLoadMore?: () => void;
+  hasMore?: boolean;
+  loadingMore?: boolean;
+  isS3Enabled?: boolean;
 }
 
 export function AssetGrid({
@@ -30,9 +45,14 @@ export function AssetGrid({
   onAssetClick,
   onOpenUpload,
   onAssetUpdated,
-  page,
-  totalPages,
+  page = 1,
+  totalPages = 1,
+  totalCount = 0,
   onPageChange,
+  onLoadMore,
+  hasMore = false,
+  loadingMore = false,
+  isS3Enabled = false,
 }: Props) {
   if (loading) {
     return (
@@ -89,6 +109,7 @@ export function AssetGrid({
               onSelect={onSelectId}
               onClick={onAssetClick}
               onAssetUpdated={onAssetUpdated}
+              isS3Enabled={isS3Enabled}
             />
           ))}
         </div>
@@ -102,7 +123,7 @@ export function AssetGrid({
                 <th className="p-3 w-16">Preview</th>
                 <th className="p-3">File Name</th>
                 <th className="p-3">Type</th>
-                <th className="p-3">Storage</th>
+                {isS3Enabled && <th className="p-3">Storage</th>}
                 <th className="p-3">Size</th>
                 <th className="p-3">Added Date</th>
                 <th className="p-3 text-right">Products</th>
@@ -134,7 +155,7 @@ export function AssetGrid({
                     )}
                     <td className="p-3">
                       <div className="w-10 h-10 rounded bg-slate-100 flex items-center justify-center overflow-hidden">
-                        {asset.fileType === "IMAGE" ? (
+                        {asset.fileType?.toUpperCase() === "IMAGE" || asset.url?.match(/\.(webp|png|jpe?g|svg|gif|avif)$/i) ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
                             src={asset.url}
@@ -152,19 +173,21 @@ export function AssetGrid({
                     <td className="p-3 uppercase font-mono text-[10px] text-slate-500">
                       {asset.fileType}
                     </td>
-                    <td className="p-3">
-                      {asset.storageProvider === "s3" || (asset.url && (asset.url.includes("s3") || asset.url.includes("cloudfront"))) ? (
-                        <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded text-[10px] font-bold bg-sky-50 text-sky-700 border border-sky-200">
-                          <Cloud className="w-3 h-3 text-sky-500" />
-                          <span>AWS S3</span>
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">
-                          <HardDrive className="w-3 h-3 text-slate-400" />
-                          <span>Local</span>
-                        </span>
-                      )}
-                    </td>
+                    {isS3Enabled && (
+                      <td className="p-3">
+                        {asset.storageProvider === "s3" || (asset.url && (asset.url.includes("s3") || asset.url.includes("cloudfront"))) ? (
+                          <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded text-[10px] font-bold bg-sky-50 text-sky-700 border border-sky-200">
+                            <Cloud className="w-3 h-3 text-sky-500" />
+                            <span>AWS S3</span>
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">
+                            <HardDrive className="w-3 h-3 text-slate-400" />
+                            <span>Local</span>
+                          </span>
+                        )}
+                      </td>
+                    )}
                     <td className="p-3 text-slate-500">
                       {(asset.size / (1024 * 1024)).toFixed(2)} MB
                     </td>
@@ -188,31 +211,49 @@ export function AssetGrid({
         </div>
       )}
 
-      {/* Pagination Controls */}
-      {totalPages > 1 && (
-        <div className="flex items-center justify-between bg-white px-4 py-3 rounded-lg border border-slate-200">
-          <p className="text-xs text-slate-500">
-            Showing Page <span className="font-semibold text-slate-800">{page}</span> of{" "}
-            <span className="font-semibold text-slate-800">{totalPages}</span>
-          </p>
-          <div className="flex items-center space-x-2">
-            <button
-              type="button"
-              disabled={page <= 1}
-              onClick={() => onPageChange(page - 1)}
-              className="p-1.5 rounded border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              disabled={page >= totalPages}
-              onClick={() => onPageChange(page + 1)}
-              className="p-1.5 rounded border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
+      {/* Load More Pagination Section */}
+      {totalCount > 0 && (
+        <div className="pt-6 pb-4 flex flex-col items-center justify-center space-y-3">
+          <div className="flex items-center space-x-2 text-xs text-slate-500">
+            <span>
+              Showing <strong className="text-slate-800">{assets.length}</strong> of{" "}
+              <strong className="text-slate-800">{totalCount}</strong> assets
+            </span>
           </div>
+
+          {/* Progress bar */}
+          <div className="w-full max-w-xs bg-slate-100 rounded-full h-1.5 overflow-hidden">
+            <div
+              className="bg-emerald-500 h-1.5 rounded-full transition-all duration-300"
+              style={{ width: `${Math.min(100, (assets.length / (totalCount || 1)) * 100)}%` }}
+            />
+          </div>
+
+          {hasMore && onLoadMore ? (
+            <button
+              type="button"
+              onClick={onLoadMore}
+              disabled={loadingMore}
+              className="inline-flex items-center space-x-2 px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-xs font-semibold shadow-xs hover:shadow transition disabled:opacity-60 cursor-pointer"
+            >
+              {loadingMore ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Loading more assets...</span>
+                </>
+              ) : (
+                <>
+                  <ChevronDown className="w-4 h-4" />
+                  <span>Load More Assets ({Math.min(24, totalCount - assets.length)} remaining)</span>
+                </>
+              )}
+            </button>
+          ) : (
+            <p className="text-xs text-slate-400 font-medium flex items-center gap-1.5 pt-1">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+              All {totalCount} assets loaded
+            </p>
+          )}
         </div>
       )}
     </div>

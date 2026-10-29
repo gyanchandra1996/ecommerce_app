@@ -7,6 +7,7 @@ export class AssetClientService {
     page: number;
     pageSize: number;
     totalPages: number;
+    isS3Enabled: boolean;
   }> {
     const params = new URLSearchParams();
     if (filters.search) params.set("search", filters.search);
@@ -26,6 +27,7 @@ export class AssetClientService {
       page: json.pagination?.page || 1,
       pageSize: json.pagination?.pageSize || 24,
       totalPages: json.pagination?.totalPages || 1,
+      isS3Enabled: Boolean(json.isS3Enabled),
     };
   }
 

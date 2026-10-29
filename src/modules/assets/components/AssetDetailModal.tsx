@@ -27,6 +27,7 @@ interface Props {
   onClose: () => void;
   onAssetUpdated: (updated: Asset) => void;
   onAssetDeleted: (id: string) => void;
+  isS3Enabled?: boolean;
 }
 
 interface ProductOption {
@@ -42,6 +43,7 @@ export function AssetDetailModal({
   onClose,
   onAssetUpdated,
   onAssetDeleted,
+  isS3Enabled = false,
 }: Props) {
   const [copied, setCopied] = useState(false);
   const [name, setName] = useState("");
@@ -199,14 +201,14 @@ export function AssetDetailModal({
           {/* Left Column: Media Preview */}
           <div className="md:col-span-7 p-6 flex flex-col items-center justify-center bg-slate-50/50">
             <div className="w-full h-80 sm:h-96 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center overflow-hidden p-3 shadow-inner">
-              {asset.fileType === "IMAGE" ? (
+              {asset.fileType?.toUpperCase() === "IMAGE" || asset.url?.match(/\.(webp|png|jpe?g|svg|gif|avif)$/i) ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={asset.url}
                   alt={asset.altText || asset.name}
                   className="max-h-full max-w-full object-contain"
                 />
-              ) : asset.fileType === "VIDEO" ? (
+              ) : asset.fileType?.toUpperCase() === "VIDEO" || asset.url?.match(/\.(mp4|webm|mov|mkv)$/i) ? (
                 <video
                   src={asset.url}
                   controls
@@ -283,74 +285,76 @@ export function AssetDetailModal({
               </div>
             </div>
 
-            {/* Storage Provider & Cloud Sync */}
-            <div className="pt-4 border-t border-slate-100 space-y-2">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                  Storage Provider
-                </h3>
-                {isS3 ? (
-                  <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-800">
-                    <Cloud className="w-3 h-3 text-sky-600" />
-                    <span>AWS S3 Synced</span>
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-700">
-                    <HardDrive className="w-3 h-3 text-slate-500" />
-                    <span>Local Disk</span>
-                  </span>
-                )}
-              </div>
-
-              <div
-                className={`p-3 rounded-xl border text-xs ${
-                  isS3 ? "bg-sky-50/70 border-sky-200" : "bg-slate-50 border-slate-200"
-                }`}
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <div className="min-w-0 flex-1">
-                    <p className={`font-bold ${isS3 ? "text-sky-900" : "text-slate-800"}`}>
-                      {isS3 ? "Amazon Simple Storage Service (S3)" : "Local Storage (/public/uploads)"}
-                    </p>
-                    {isS3 && asset.storageKey && (
-                      <p className="text-[11px] font-mono text-sky-700 mt-0.5 truncate">
-                        Key: {asset.storageKey}
-                      </p>
-                    )}
-                    {isS3 && asset.s3SyncedAt && (
-                      <p className="text-[10px] text-sky-600 mt-0.5">
-                        Synced: {new Date(asset.s3SyncedAt).toLocaleString()}
-                      </p>
-                    )}
-                    {!isS3 && (
-                      <p className="text-[10px] text-slate-500 mt-0.5">
-                        Stored locally. Click to sync asset and serve from AWS S3.
-                      </p>
-                    )}
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={handleSyncToS3}
-                    disabled={syncingS3}
-                    className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-600 hover:bg-sky-700 active:bg-sky-800 text-white shadow-xs transition flex items-center space-x-1.5 disabled:opacity-50 shrink-0 cursor-pointer self-start sm:self-auto"
-                  >
-                    {syncingS3 ? (
-                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                    ) : (
-                      <CloudUpload className="w-3.5 h-3.5" />
-                    )}
-                    <span>{isS3 ? "Re-sync to S3" : "Sync to AWS S3"}</span>
-                  </button>
+            {/* Storage Provider & Cloud Sync - Only shown when AWS S3 is enabled */}
+            {isS3Enabled && (
+              <div className="pt-4 border-t border-slate-100 space-y-2">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                    Storage Provider
+                  </h3>
+                  {isS3 ? (
+                    <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-800">
+                      <Cloud className="w-3 h-3 text-sky-600" />
+                      <span>AWS S3 Synced</span>
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-700">
+                      <HardDrive className="w-3 h-3 text-slate-500" />
+                      <span>Local Disk</span>
+                    </span>
+                  )}
                 </div>
 
-                {syncMessage && (
-                  <p className="text-[11px] text-emerald-700 font-medium mt-2 flex items-center">
-                    <Check className="w-3 h-3 mr-1" /> {syncMessage}
-                  </p>
-                )}
+                <div
+                  className={`p-3 rounded-xl border text-xs ${
+                    isS3 ? "bg-sky-50/70 border-sky-200" : "bg-slate-50 border-slate-200"
+                  }`}
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div className="min-w-0 flex-1">
+                      <p className={`font-bold ${isS3 ? "text-sky-900" : "text-slate-800"}`}>
+                        {isS3 ? "Amazon Simple Storage Service (S3)" : "Local Storage (/public/uploads)"}
+                      </p>
+                      {isS3 && asset.storageKey && (
+                        <p className="text-[11px] font-mono text-sky-700 mt-0.5 truncate">
+                          Key: {asset.storageKey}
+                        </p>
+                      )}
+                      {isS3 && asset.s3SyncedAt && (
+                        <p className="text-[10px] text-sky-600 mt-0.5">
+                          Synced: {new Date(asset.s3SyncedAt).toLocaleString()}
+                        </p>
+                      )}
+                      {!isS3 && (
+                        <p className="text-[10px] text-slate-500 mt-0.5">
+                          Stored locally. Click to sync asset and serve from AWS S3.
+                        </p>
+                      )}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={handleSyncToS3}
+                      disabled={syncingS3}
+                      className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-600 hover:bg-sky-700 active:bg-sky-800 text-white shadow-xs transition flex items-center space-x-1.5 disabled:opacity-50 shrink-0 cursor-pointer self-start sm:self-auto"
+                    >
+                      {syncingS3 ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : (
+                        <CloudUpload className="w-3.5 h-3.5" />
+                      )}
+                      <span>{isS3 ? "Re-sync to S3" : "Sync to AWS S3"}</span>
+                    </button>
+                  </div>
+
+                  {syncMessage && (
+                    <p className="text-[11px] text-emerald-700 font-medium mt-2 flex items-center">
+                      <Check className="w-3 h-3 mr-1" /> {syncMessage}
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Product Association Feature */}
             <div className="pt-4 border-t border-slate-100">
