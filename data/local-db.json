@@ -12542,6 +12542,20 @@
       "status": "active",
       "createdAt": "2026-10-29T16:29:38.009Z",
       "updatedAt": "2026-10-29T16:29:38.009Z"
+    },
+    {
+      "id": "cart_srja7h1",
+      "sessionId": "gst_df4hn37c1l",
+      "status": "merged",
+      "createdAt": "2026-10-29T18:04:15.897Z",
+      "updatedAt": "2026-10-29T18:04:55.527Z"
+    },
+    {
+      "id": "cart_31fwa56",
+      "sessionId": "gst_df4hn37c1l",
+      "status": "merged",
+      "createdAt": "2026-10-29T18:05:04.253Z",
+      "updatedAt": "2026-10-29T18:05:12.613Z"
     }
   ],
   "cartItems": [
