@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Search,
   MapPin,
@@ -73,6 +74,7 @@ export function StoreHeader({
   const effectiveRemove = onRemoveFromCart ?? cartContext.removeItem;
   const effectiveClear = onClearCart ?? cartContext.clearCart;
 
+  const pathname = usePathname();
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [isAdminUser, setIsAdminUser] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -641,35 +643,77 @@ export function StoreHeader({
               )}
             </div>
 
-            {/* Middle: Horizontal Category Links dynamically managed from Backend in its own scrollable box */}
+            {/* Middle: Horizontal 8 Category Links dynamically linked to category pages */}
             <div className="flex-1 overflow-x-auto scrollbar-none flex items-center space-x-6 whitespace-nowrap text-slate-600 font-medium">
-              {isMenuLoading ? (
+              {isMenuLoading && categories.length === 0 ? (
                 <div className="flex items-center space-x-4">
-                  {[1, 2, 3, 4, 5, 6].map((i) => (
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
                     <div key={i} className="h-4 w-16 bg-slate-100 rounded animate-pulse" />
                   ))}
                 </div>
-              ) : (
-                menuItems
-                  .filter((item) => !item.isHighlight)
-                  .map((item) => (
-                    <a
-                      key={item.id}
-                      href={item.url}
-                      className="hover:text-blue-600 transition flex items-center space-x-1"
-                    >
-                      <span>{item.label}</span>
-                      {item.badge && (
-                        <span className="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-amber-100 text-amber-800">
-                          {item.badge}
-                        </span>
-                      )}
-                    </a>
-                  ))
-              )}
+              ) : (() => {
+                  // Standard 8 Categories fallback
+                  const default8: { id: string; label: string; url: string; badge?: string }[] = [
+                    { id: "cat_electronics", label: "Electronics", url: "/category/electronics" },
+                    { id: "cat_fashion", label: "Fashion", url: "/category/fashion" },
+                    { id: "cat_womens", label: "Women's", url: "/category/womens" },
+                    { id: "cat_kids_fashion", label: "Kids' Fashion", url: "/category/kids-fashion" },
+                    { id: "cat_health_beauty", label: "Health & Beauty", url: "/category/health-beauty" },
+                    { id: "cat_pharmacy", label: "Pharmacy", url: "/category/pharmacy" },
+                    { id: "cat_groceries", label: "Groceries", url: "/category/groceries" },
+                    { id: "cat_luxury_item", label: "Luxury Item", url: "/category/luxury-item" },
+                  ];
+
+                  const itemsToRender =
+                    menuItems.filter((item) => !item.isHighlight).length > 0
+                      ? menuItems
+                          .filter((item) => !item.isHighlight)
+                          .map((item) => {
+                            let targetUrl = item.url;
+                            if (!targetUrl || targetUrl === "/#deals" || targetUrl === "#") {
+                              const matchCat = categories.find(
+                                (c) => c.name.toLowerCase() === item.label.toLowerCase()
+                              );
+                              if (matchCat) {
+                                targetUrl = `/category/${matchCat.slug}`;
+                              }
+                            }
+                            return { ...item, url: targetUrl };
+                          })
+                      : categories.length > 0
+                      ? categories.slice(0, 8).map((cat) => ({
+                          id: cat.id,
+                          label: cat.name,
+                          url: `/category/${cat.slug}`,
+                          badge: undefined,
+                        }))
+                      : default8;
+
+                  return itemsToRender.map((item) => {
+                    const isActive = pathname === item.url;
+                    return (
+                      <Link
+                        key={item.id}
+                        href={item.url}
+                        className={`transition flex items-center space-x-1 py-1 ${
+                          isActive
+                            ? "text-blue-600 font-bold border-b-2 border-blue-600"
+                            : "hover:text-blue-600 text-slate-700"
+                        }`}
+                      >
+                        <span>{item.label}</span>
+                        {item.badge && (
+                          <span className="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-amber-100 text-amber-800">
+                            {item.badge}
+                          </span>
+                        )}
+                      </Link>
+                    );
+                  });
+                })()}
             </div>
 
-            {/* Right: Highlighted Links (e.g. Best Deals & Live) dynamically managed from Backend */}
+            {/* Right: Highlighted Links (e.g. Best Deals & Live) */}
             <div className="flex items-center space-x-4 shrink-0 font-bold">
               {menuItems
                 .filter((item) => item.isHighlight)
@@ -681,9 +725,9 @@ export function StoreHeader({
                   const isLive = displayLabel.toLowerCase().includes("live");
 
                   return (
-                    <a
+                    <Link
                       key={item.id}
-                      href={item.url}
+                      href={item.url.startsWith("/") ? item.url : `/${item.url}`}
                       className={`flex items-center space-x-1.5 transition ${
                         isLive
                           ? "text-slate-800 hover:text-red-600"
@@ -701,7 +745,7 @@ export function StoreHeader({
                           <span>{displayLabel}</span>
                         </>
                       )}
-                    </a>
+                    </Link>
                   );
                 })}
             </div>

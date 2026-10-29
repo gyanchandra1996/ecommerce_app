@@ -2,16 +2,20 @@ import React, { Suspense } from "react";
 import { CategoryListingView } from "@/modules/storefront/components/CategoryListingView";
 
 export const metadata = {
-  title: "Category Catalog | emox India",
-  description: "Browse wide range of products, electronics, fashion, groceries and daily deals on emox India.",
+  title: "Category Catalog | G-Store India",
+  description: "Browse wide range of products, electronics, fashion, groceries and daily deals on G-Store India.",
 };
 
-export default async function CategoryPage({
+async function CategoryContent({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  return <CategoryListingView initialCategorySlug={slug} />;
+}
+
+export default function CategoryPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params;
   return (
     <Suspense
       fallback={
@@ -21,7 +25,7 @@ export default async function CategoryPage({
         </div>
       }
     >
-      <CategoryListingView initialCategorySlug={slug} />
+      <CategoryContent params={params} />
     </Suspense>
   );
 }

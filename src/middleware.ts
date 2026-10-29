@@ -34,6 +34,17 @@ export async function middleware(request: NextRequest) {
   const customerCookie = request.cookies.get(APP_CONFIG.customerCookieName)?.value;
   const legacyCookie = request.cookies.get(APP_CONFIG.cookieName)?.value;
 
+  // Check Headers for Mobile App Development
+  const authHeader = request.headers.get("authorization");
+  const apiKeyHeader = request.headers.get("x-api-key");
+  const isApiKeyValid = Boolean(apiKeyHeader && apiKeyHeader === APP_CONFIG.apiKey);
+
+  let bearerSession: TokenPayload = { isValid: false };
+  if (authHeader && authHeader.toLowerCase().startsWith("bearer ")) {
+    const bearerToken = authHeader.substring(7).trim();
+    bearerSession = await verifyToken(bearerToken);
+  }
+
   const adminSession = await verifyToken(adminCookie);
   const customerSession = await verifyToken(customerCookie);
 
@@ -53,8 +64,17 @@ export async function middleware(request: NextRequest) {
     session.isValid &&
     (session.type === "customer" || session.type === "both" || session.role === "CUSTOMER");
 
-  const effectiveAdmin = isAdminSession(adminSession) || isAdminSession(legacySession);
-  const effectiveCustomer = isCustomerSession(customerSession) || isCustomerSession(legacySession);
+  const effectiveAdmin =
+    isApiKeyValid ||
+    isAdminSession(bearerSession) ||
+    isAdminSession(adminSession) ||
+    isAdminSession(legacySession);
+
+  const effectiveCustomer =
+    isApiKeyValid ||
+    isCustomerSession(bearerSession) ||
+    isCustomerSession(customerSession) ||
+    isCustomerSession(legacySession);
 
   // 1. Admin login route
   if (pathname === "/admin/login") {

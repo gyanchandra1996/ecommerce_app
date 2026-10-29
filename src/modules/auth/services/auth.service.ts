@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { SignJWT, jwtVerify } from "jose";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { APP_CONFIG } from "@/core/config/env";
 import { DatabaseStore, UserRecord } from "@/core/db/store";
 import { AuthUser, LoginCredentials, RegisterCredentials } from "../types/auth.types";
@@ -133,6 +133,63 @@ export class AuthService {
 
   public static async getCurrentUser(portal?: "admin" | "customer"): Promise<AuthUser | null> {
     try {
+      // 1. Check HTTP Request Headers for Mobile Apps (Authorization: Bearer <token> & x-api-key)
+      try {
+        const headerList = await headers();
+        const authHeader = headerList.get("authorization");
+        const apiKeyHeader = headerList.get("x-api-key");
+
+        // Mobile API Key Authentication
+        if (apiKeyHeader && apiKeyHeader === APP_CONFIG.apiKey) {
+          const customUserId = headerList.get("x-user-id");
+          const customUserEmail = headerList.get("x-user-email");
+          let devRecord: UserRecord | null = null;
+
+          if (customUserId) {
+            devRecord = await DatabaseStore.findUserById(customUserId);
+          } else if (customUserEmail) {
+            devRecord = await DatabaseStore.findUserByEmail(customUserEmail);
+          }
+
+          if (!devRecord) {
+            // Default demo/dev accounts for mobile app development
+            const targetEmail = portal === "admin" ? "admin@tagateway.com" : "gyanchandranist@gmail.com";
+            devRecord = await DatabaseStore.findUserByEmail(targetEmail);
+          }
+
+          if (devRecord) {
+            const permissions = await DatabaseStore.getUserPermissions(devRecord.id);
+            return {
+              ...this.mapToAuthUser(devRecord),
+              roleId: (devRecord as unknown as { roleId?: string }).roleId,
+              permissions,
+            };
+          }
+        }
+
+        // Bearer Token Authentication
+        if (authHeader && authHeader.toLowerCase().startsWith("bearer ")) {
+          const bearerToken = authHeader.substring(7).trim();
+          if (bearerToken) {
+            const verified = await this.verifyToken(bearerToken);
+            if (verified) {
+              const record = await DatabaseStore.findUserById(verified.id);
+              if (record) {
+                const permissions = await DatabaseStore.getUserPermissions(record.id);
+                return {
+                  ...this.mapToAuthUser(record),
+                  roleId: (record as unknown as { roleId?: string }).roleId,
+                  permissions,
+                };
+              }
+            }
+          }
+        }
+      } catch {
+        // Headers might not be available outside request scope
+      }
+
+      // 2. Fallback to Browser Cookies
       const cookieStore = await cookies();
       let token: string | undefined;
 

@@ -20,23 +20,26 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function HomePage() {
+async function HomeContent() {
   const settings = await DatabaseStore.getSettings().catch(() => null);
   const activeTheme = await DatabaseStore.getActiveTheme().catch(() => null);
   const storeName = settings?.themeName || activeTheme?.config?.design?.storeName || "G-store";
+  return <StorefrontHomePage initialStoreName={storeName} />;
+}
 
+export default function HomePage() {
   return (
     <Suspense
       fallback={
         <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-8 text-center">
           <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-3" />
           <p className="text-xs font-semibold text-slate-500">
-            Loading {storeName} Storefront...
+            Loading Storefront...
           </p>
         </div>
       }
     >
-      <StorefrontHomePage initialStoreName={storeName} />
+      <HomeContent />
     </Suspense>
   );
 }

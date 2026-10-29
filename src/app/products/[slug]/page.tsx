@@ -34,14 +34,21 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProductDetailPage({
+async function ProductDetailContent({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
   const product = await DatabaseStore.findProductById(slug);
+  return <ProductDetailsPageView slug={slug} initialProduct={product} />;
+}
 
+export default function ProductDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   return (
     <Suspense
       fallback={
@@ -51,7 +58,7 @@ export default async function ProductDetailPage({
         </div>
       }
     >
-      <ProductDetailsPageView slug={slug} initialProduct={product} />
+      <ProductDetailContent params={params} />
     </Suspense>
   );
 }

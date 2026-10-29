@@ -1,6 +1,7 @@
 export const APP_CONFIG = {
   appName: process.env.NEXT_PUBLIC_APP_NAME || "emox Admin",
   appUrl: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+  apiKey: process.env.API_KEY || "gstore_mobile_dev_key_2026_x89f",
   jwtSecret: process.env.JWT_SECRET || "ecommerce_super_secure_jwt_secret_key_2026_!@#",
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || "7d",
   cookieName: "auth_token",

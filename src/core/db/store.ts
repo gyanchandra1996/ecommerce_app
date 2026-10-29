@@ -791,6 +791,7 @@ interface LocalDatabaseSchema {
   assets: AssetRecord[];
   categories: CategoryRecord[];
   products: ProductRecord[];
+  variants?: ProductVariantRecord[];
   roles: RoleRecord[];
   sliders: SliderRecord[];
   menuItems: MenuItemRecord[];
@@ -1700,6 +1701,7 @@ export class DatabaseStore {
       const primaryAsset = pAssets.find((a) => a.isPrimary) || pAssets[0];
       const mfg = p.manufacturerId ? manufacturerMap.get(p.manufacturerId) : null;
       const wh = p.warehouseId ? warehouseMap.get(p.warehouseId) : null;
+      const pVariants = (db.variants || []).filter((v: ProductVariantRecord) => v.productId === p.id);
 
       return {
         ...p,
@@ -1711,6 +1713,8 @@ export class DatabaseStore {
         manufacturer: mfg || null,
         manufacturerName: mfg ? mfg.name : null,
         warehouseName: wh ? wh.name : (p.warehouse || null),
+        hasVariants: pVariants.length > 0 || Boolean(p.hasVariants),
+        variants: pVariants.length > 0 ? pVariants : (p.variants || []),
       };
     });
   }

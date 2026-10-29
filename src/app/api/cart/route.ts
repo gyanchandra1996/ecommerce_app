@@ -4,7 +4,10 @@ import { AuthService } from "@/modules/auth/services/auth.service";
 
 async function getAuthContext(req: NextRequest) {
   const customer = await AuthService.getCurrentCustomerUser();
-  let guestSessionId = req.cookies.get("guest_session_id")?.value;
+  let guestSessionId =
+    req.headers.get("x-session-id") ||
+    req.headers.get("x-guest-id") ||
+    req.cookies.get("guest_session_id")?.value;
   let newGuestCookie: string | null = null;
 
   if (!customer && !guestSessionId) {
