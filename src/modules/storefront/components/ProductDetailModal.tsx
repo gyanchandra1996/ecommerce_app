@@ -15,6 +15,7 @@ import {
   PlusCircle,
   Send,
   AlertCircle,
+  Play,
 } from "lucide-react";
 import { StoreProduct } from "../types/storefront.types";
 
@@ -31,6 +32,8 @@ interface ReviewItem {
   rating: number;
   review: string;
   postedOn: string;
+  media?: { id: string; url: string; type: "IMAGE" | "VIDEO"; name?: string }[];
+  comments?: { id: string; userName: string; comment: string; isAdmin?: boolean; createdAt: string }[];
 }
 
 interface QnaItem {
@@ -551,6 +554,44 @@ export function ProductDetailModal({ product, onClose, onAddToCart }: Props) {
                         </div>
 
                         <p className="text-slate-700 leading-relaxed">{rev.review}</p>
+                        {rev.media && rev.media.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 pt-1">
+                            {rev.media.map((m: any, idx: number) => (
+                              <div key={m.id || idx} className="w-12 h-12 rounded-lg overflow-hidden border border-slate-200 bg-slate-100">
+                                {m.type === "VIDEO" ? (
+                                  <div className="w-full h-full flex items-center justify-center bg-slate-900 text-white">
+                                    <Play className="w-3.5 h-3.5 fill-white" />
+                                  </div>
+                                ) : (
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img src={m.url} alt="" className="w-full h-full object-cover" />
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        {rev.comments && rev.comments.length > 0 && (
+                          <div className="pt-2 pl-3 border-l-2 border-slate-200 space-y-1.5 text-[11px]">
+                            {rev.comments.map((c: any) => (
+                              <div key={c.id} className="p-2 rounded-lg bg-slate-50 border border-slate-100">
+                                <div className="flex items-center justify-between font-semibold text-slate-800">
+                                  <span>
+                                    {c.userName}{" "}
+                                    {c.isAdmin && (
+                                      <span className="text-[9px] text-emerald-700 font-bold ml-1 bg-emerald-100 px-1 py-0.2 rounded">
+                                        Store Team
+                                      </span>
+                                    )}
+                                  </span>
+                                  <span className="text-[10px] text-slate-400 font-normal">
+                                    {new Date(c.createdAt).toLocaleDateString()}
+                                  </span>
+                                </div>
+                                <p className="text-slate-600 mt-0.5">{c.comment}</p>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>

@@ -25,11 +25,36 @@ import {
   Tag,
   Boxes,
   Check,
+  Camera,
+  Video,
+  Play,
+  Loader2,
+  X,
+  CornerDownRight,
+  ZoomIn,
 } from "lucide-react";
 import { StoreHeader } from "./StoreHeader";
 import { StoreFooter } from "./StoreFooter";
 import { useCart } from "@/modules/cart/context/CartContext";
 import { StoreProduct } from "../types/storefront.types";
+
+export interface ReviewMediaItem {
+  id: string;
+  url: string;
+  type: "IMAGE" | "VIDEO";
+  name?: string;
+  size?: number;
+}
+
+export interface ReviewCommentItem {
+  id: string;
+  reviewId: string;
+  userName: string;
+  userEmail: string;
+  comment: string;
+  isAdmin?: boolean;
+  createdAt: string;
+}
 
 interface ReviewItem {
   id: string;
@@ -38,6 +63,9 @@ interface ReviewItem {
   rating: number;
   review: string;
   postedOn: string;
+  commentCount?: number;
+  media?: ReviewMediaItem[];
+  comments?: ReviewCommentItem[];
 }
 
 interface QnaItem {
@@ -104,6 +132,36 @@ export function ProductDetailsPageView({ slug, initialProduct }: Props) {
   const [reviewText, setReviewText] = useState("");
   const [reviewSubmitting, setReviewSubmitting] = useState(false);
   const [reviewSuccess, setReviewSuccess] = useState(false);
+  const [reviewMedia, setReviewMedia] = useState<ReviewMediaItem[]>([]);
+  const [uploadingReviewMedia, setUploadingReviewMedia] = useState(false);
+  const [lightboxMedia, setLightboxMedia] = useState<ReviewMediaItem | null>(null);
+
+  // Review comments / replies state
+  const [replyingReviewId, setReplyingReviewId] = useState<string | null>(null);
+  const [commentName, setCommentName] = useState("");
+  const [commentEmail, setCommentEmail] = useState("");
+  const [commentText, setCommentText] = useState("");
+  const [commentSubmitting, setCommentSubmitting] = useState(false);
+  const [expandedComments, setExpandedComments] = useState<Record<string, boolean>>({});
+
+  // Prefill user details if logged in
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((r) => r.json())
+      .then((j) => {
+        if (j.success && j.user) {
+          if (j.user.name) {
+            setReviewName(j.user.name);
+            setCommentName(j.user.name);
+          }
+          if (j.user.email) {
+            setReviewEmail(j.user.email);
+            setCommentEmail(j.user.email);
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   // Q&A state
   const [qnaList, setQnaList] = useState<QnaItem[]>([]);
@@ -319,6 +377,33 @@ export function ProductDetailsPageView({ slug, initialProduct }: Props) {
     router.push("/checkout");
   };
 
+  // Upload Review Media
+  const handleReviewMediaUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    setUploadingReviewMedia(true);
+    try {
+      const data = new FormData();
+      Array.from(files).forEach((file) => data.append("files", file));
+      const res = await fetch("/api/reviews/upload", { method: "POST", body: data });
+      const json = await res.json();
+      if (json.success && json.data) {
+        setReviewMedia((prev) => [...prev, ...json.data]);
+      } else {
+        alert(json.error || "Failed to upload media.");
+      }
+    } catch {
+      alert("Error uploading review media.");
+    } finally {
+      setUploadingReviewMedia(false);
+      e.target.value = "";
+    }
+  };
+
+  const handleRemoveReviewMedia = (index: number) => {
+    setReviewMedia((prev) => prev.filter((_, i) => i !== index));
+  };
+
   // Submit Review
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -337,14 +422,14 @@ export function ProductDetailsPageView({ slug, initialProduct }: Props) {
           userEmail: reviewEmail.trim(),
           rating: reviewRating,
           review: reviewText.trim(),
+          media: reviewMedia,
         }),
       });
       const json = await res.json();
       if (json.success) {
         setReviewSuccess(true);
-        setReviewName("");
-        setReviewEmail("");
         setReviewText("");
+        setReviewMedia([]);
         // Reload reviews
         const rRes = await fetch(`/api/reviews?productId=${encodeURIComponent(product.id)}`);
         const rJson = await rRes.json();
@@ -354,6 +439,39 @@ export function ProductDetailsPageView({ slug, initialProduct }: Props) {
       alert("Failed to submit review.");
     } finally {
       setReviewSubmitting(false);
+    }
+  };
+
+  // Submit Review Comment / Reply
+  const handlePostReviewComment = async (reviewId: string, e: React.FormEvent) => {
+    e.preventDefault();
+    if (!commentText.trim()) return;
+
+    setCommentSubmitting(true);
+    try {
+      const res = await fetch(`/api/reviews/${reviewId}/comments`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userName: commentName.trim() || "Customer",
+          userEmail: commentEmail.trim() || "customer@example.com",
+          comment: commentText.trim(),
+          isAdmin: false,
+        }),
+      });
+      const json = await res.json();
+      if (json.success && json.data) {
+        setReviews((prev) => prev.map((r) => (r.id === reviewId ? json.data : r)));
+        setCommentText("");
+        setReplyingReviewId(null);
+        setExpandedComments((prev) => ({ ...prev, [reviewId]: true }));
+      } else {
+        alert(json.error || "Failed to post comment.");
+      }
+    } catch {
+      alert("Error posting comment.");
+    } finally {
+      setCommentSubmitting(false);
     }
   };
 
@@ -1046,9 +1164,63 @@ export function ProductDetailsPageView({ slug, initialProduct }: Props) {
                     className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs bg-white font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   />
 
+                  {/* Attach Media: Photos & Video */}
+                  <div className="space-y-2 pt-1 border-t border-slate-200/60">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-slate-700">Attach Photos or Video (Optional):</span>
+                      <span className="text-[10px] text-slate-400">JPG, PNG, WEBP, MP4 (Max 50MB)</span>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      <label className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border border-dashed border-slate-300 bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold cursor-pointer transition">
+                        <Camera className="w-3.5 h-3.5 text-blue-600" />
+                        <span>Add Media (Photos/Video)</span>
+                        <input
+                          type="file"
+                          accept="image/*,video/*"
+                          multiple
+                          onChange={handleReviewMediaUpload}
+                          disabled={uploadingReviewMedia}
+                          className="hidden"
+                        />
+                      </label>
+                      {uploadingReviewMedia && (
+                        <span className="text-xs text-blue-600 font-medium flex items-center gap-1">
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" /> Uploading media...
+                        </span>
+                      )}
+                    </div>
+
+                    {reviewMedia.length > 0 && (
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        {reviewMedia.map((m, idx) => (
+                          <div key={m.id || idx} className="relative w-16 h-16 rounded-xl overflow-hidden border border-slate-200 bg-white group">
+                            {m.type === "VIDEO" ? (
+                              <div className="w-full h-full flex flex-col items-center justify-center bg-slate-900 text-white">
+                                <Video className="w-4 h-4 text-blue-400" />
+                                <span className="text-[8px] font-mono mt-0.5 text-slate-300">VIDEO</span>
+                              </div>
+                            ) : (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img src={m.url} alt="" className="w-full h-full object-cover" />
+                            )}
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveReviewMedia(idx)}
+                              className="absolute top-1 right-1 p-0.5 rounded-full bg-black/60 text-white hover:bg-red-600 transition"
+                              title="Remove file"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
                   <button
                     type="submit"
-                    disabled={reviewSubmitting}
+                    disabled={reviewSubmitting || uploadingReviewMedia}
                     className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                   >
                     <Send className="w-3.5 h-3.5" />
@@ -1067,9 +1239,9 @@ export function ProductDetailsPageView({ slug, initialProduct }: Props) {
                       No customer reviews yet. Be the first to review this product!
                     </div>
                   ) : (
-                    <div className="divide-y divide-slate-100 space-y-4">
+                    <div className="divide-y divide-slate-100 space-y-6">
                       {reviews.map((rev) => (
-                        <div key={rev.id} className="pt-4 first:pt-0 space-y-1.5">
+                        <div key={rev.id} className="pt-6 first:pt-0 space-y-3">
                           <div className="flex items-center justify-between">
                             <span className="font-bold text-xs text-slate-900">{rev.userName}</span>
                             <span className="text-[10px] text-slate-400">
@@ -1080,13 +1252,145 @@ export function ProductDetailsPageView({ slug, initialProduct }: Props) {
                             {[1, 2, 3, 4, 5].map((s) => (
                               <Star
                                 key={s}
-                                className={`w-3 h-3 ${
+                                className={`w-3.5 h-3.5 ${
                                   s <= rev.rating ? "fill-amber-400 text-amber-400" : "text-slate-200"
                                 }`}
                               />
                             ))}
                           </div>
-                          <p className="text-xs text-slate-600 leading-relaxed">{rev.review}</p>
+                          <p className="text-xs text-slate-700 leading-relaxed whitespace-pre-line">{rev.review}</p>
+
+                          {/* Review Media (Photos & Video) */}
+                          {rev.media && rev.media.length > 0 && (
+                            <div className="flex flex-wrap gap-2 pt-1">
+                              {rev.media.map((m, idx) => (
+                                <div
+                                  key={m.id || idx}
+                                  onClick={() => setLightboxMedia(m)}
+                                  className="relative w-18 h-18 rounded-xl overflow-hidden border border-slate-200 bg-slate-50 cursor-pointer group hover:ring-2 hover:ring-blue-500 transition"
+                                >
+                                  {m.type === "VIDEO" ? (
+                                    <div className="w-full h-full flex flex-col items-center justify-center bg-slate-900 text-white">
+                                      <Play className="w-5 h-5 fill-white text-white group-hover:scale-110 transition" />
+                                      <span className="text-[8px] font-mono mt-0.5 text-slate-300">VIDEO</span>
+                                    </div>
+                                  ) : (
+                                    // eslint-disable-next-line @next/next/no-img-element
+                                    <img src={m.url} alt="" className="w-full h-full object-cover group-hover:scale-105 transition" />
+                                  )}
+                                  <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                    <ZoomIn className="w-4 h-4 text-white drop-shadow" />
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* Comments & Replies Section */}
+                          <div className="mt-3 pt-3 border-t border-slate-100 space-y-3">
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="text-slate-500 font-semibold flex items-center gap-1.5">
+                                <MessageSquare className="w-3.5 h-3.5 text-slate-400" />
+                                <span>{rev.comments?.length || rev.commentCount || 0} Replies</span>
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => setReplyingReviewId(replyingReviewId === rev.id ? null : rev.id)}
+                                className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition cursor-pointer"
+                              >
+                                <CornerDownRight className="w-3.5 h-3.5" />
+                                <span>{replyingReviewId === rev.id ? "Cancel Reply" : "Reply / Add Comment"}</span>
+                              </button>
+                            </div>
+
+                            {/* Comments thread list */}
+                            {rev.comments && rev.comments.length > 0 && (
+                              <div className="pl-4 border-l-2 border-slate-200 space-y-2.5">
+                                {rev.comments.map((cmt) => (
+                                  <div
+                                    key={cmt.id}
+                                    className={`p-3 rounded-xl border text-xs space-y-1 ${
+                                      cmt.isAdmin ? "bg-emerald-50/60 border-emerald-200" : "bg-slate-50 border-slate-100"
+                                    }`}
+                                  >
+                                    <div className="flex items-center justify-between">
+                                      <div className="flex items-center space-x-1.5">
+                                        <span className="font-bold text-slate-900">{cmt.userName}</span>
+                                        {cmt.isAdmin && (
+                                          <span className="inline-flex items-center space-x-0.5 px-1.5 py-0.2 rounded text-[9px] font-bold bg-emerald-600 text-white">
+                                            <ShieldCheck className="w-2.5 h-2.5" />
+                                            <span>Store Team</span>
+                                          </span>
+                                        )}
+                                      </div>
+                                      <span className="text-[10px] text-slate-400">
+                                        {new Date(cmt.createdAt).toLocaleDateString()}
+                                      </span>
+                                    </div>
+                                    <p className="text-slate-700 leading-relaxed whitespace-pre-line">{cmt.comment}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+
+                            {/* Reply Input Form */}
+                            {replyingReviewId === rev.id && (
+                              <form
+                                onSubmit={(e) => handlePostReviewComment(rev.id, e)}
+                                className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3 animate-in fade-in duration-150"
+                              >
+                                <h5 className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                                  Add a Comment or Reply
+                                </h5>
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                  <input
+                                    type="text"
+                                    placeholder="Your Name *"
+                                    required
+                                    value={commentName}
+                                    onChange={(e) => setCommentName(e.target.value)}
+                                    className="px-3 py-1.5 border border-slate-200 rounded-lg text-xs bg-white font-medium focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                                  />
+                                  <input
+                                    type="email"
+                                    placeholder="Your Email *"
+                                    required
+                                    value={commentEmail}
+                                    onChange={(e) => setCommentEmail(e.target.value)}
+                                    className="px-3 py-1.5 border border-slate-200 rounded-lg text-xs bg-white font-medium focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                                  />
+                                </div>
+
+                                <textarea
+                                  rows={2}
+                                  placeholder="Write your comment or question about this review..."
+                                  required
+                                  value={commentText}
+                                  onChange={(e) => setCommentText(e.target.value)}
+                                  className="w-full px-3 py-1.5 border border-slate-200 rounded-lg text-xs bg-white font-medium focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                                />
+
+                                <div className="flex justify-end space-x-2">
+                                  <button
+                                    type="button"
+                                    onClick={() => setReplyingReviewId(null)}
+                                    className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-500 hover:bg-slate-200 transition"
+                                  >
+                                    Cancel
+                                  </button>
+                                  <button
+                                    type="submit"
+                                    disabled={commentSubmitting || !commentText.trim()}
+                                    className="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition flex items-center space-x-1 disabled:opacity-50"
+                                  >
+                                    <Send className="w-3 h-3" />
+                                    <span>{commentSubmitting ? "Posting..." : "Post Comment"}</span>
+                                  </button>
+                                </div>
+                              </form>
+                            )}
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -1263,6 +1567,38 @@ export function ProductDetailsPageView({ slug, initialProduct }: Props) {
             </div>
           </div>
         )}
+      {/* Review Media Lightbox Modal */}
+      {lightboxMedia && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xs animate-in fade-in duration-150">
+          <div className="relative max-w-3xl max-h-[90vh] bg-slate-900 rounded-2xl overflow-hidden shadow-2xl flex flex-col items-center justify-center p-2">
+            <button
+              type="button"
+              onClick={() => setLightboxMedia(null)}
+              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/60 text-white hover:bg-black/90 transition cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            {lightboxMedia.type === "VIDEO" ? (
+              <video
+                src={lightboxMedia.url}
+                controls
+                autoPlay
+                className="max-h-[80vh] max-w-full rounded-xl"
+              />
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={lightboxMedia.url}
+                alt={lightboxMedia.name || "Customer review photo"}
+                className="max-h-[80vh] max-w-full object-contain rounded-xl"
+              />
+            )}
+            {lightboxMedia.name && (
+              <p className="text-xs text-slate-300 mt-2 font-mono">{lightboxMedia.name}</p>
+            )}
+          </div>
+        </div>
+      )}
       </main>
 
       <StoreFooter />

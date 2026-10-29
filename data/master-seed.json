@@ -12533,7 +12533,9 @@
       "status": "Active",
       "postedOn": "2026-10-25",
       "createdAt": "2026-10-25T15:53:37.295Z",
-      "updatedAt": "2026-10-29T15:45:38.071Z"
+      "updatedAt": "2026-10-29T15:45:38.071Z",
+      "media": [],
+      "comments": []
     },
     {
       "id": "rev_1",
@@ -12547,7 +12549,26 @@
       "status": "Active",
       "postedOn": "2026-10-22",
       "createdAt": "2026-10-22T14:20:00Z",
-      "updatedAt": "2026-10-29T15:45:36.970Z"
+      "updatedAt": "2026-10-29T15:45:36.970Z",
+      "media": [
+        {
+          "id": "rmed_1_1",
+          "url": "/uploads/prod_airpods_1.webp",
+          "type": "IMAGE",
+          "name": "earbuds_unboxing.webp"
+        }
+      ],
+      "comments": [
+        {
+          "id": "rcmt_1_1",
+          "reviewId": "rev_1",
+          "userName": "G-Store Support Team",
+          "userEmail": "support@gstore.com",
+          "comment": "Thank you for the review, Johnathan! The ANC firmware update is also rolling out this week.",
+          "isAdmin": true,
+          "createdAt": "2026-10-23T10:15:00Z"
+        }
+      ]
     },
     {
       "id": "rev_2",
@@ -12561,7 +12582,35 @@
       "status": "Active",
       "postedOn": "2026-10-20",
       "createdAt": "2026-10-20T11:00:00Z",
-      "updatedAt": "2026-10-25T09:31:13.440Z"
+      "updatedAt": "2026-10-25T09:31:13.440Z",
+      "media": [
+        {
+          "id": "rmed_2_1",
+          "url": "/uploads/prod_polo_1.webp",
+          "type": "IMAGE",
+          "name": "polo_wear_fit.webp"
+        }
+      ],
+      "comments": [
+        {
+          "id": "rcmt_2_1",
+          "reviewId": "rev_2",
+          "userName": "Alex R.",
+          "userEmail": "alex.r@gmail.com",
+          "comment": "Does the color fade after machine wash?",
+          "isAdmin": false,
+          "createdAt": "2026-10-21T08:00:00Z"
+        },
+        {
+          "id": "rcmt_2_2",
+          "reviewId": "rev_2",
+          "userName": "G-Store Fashion Team",
+          "userEmail": "style@gstore.com",
+          "comment": "Hi Alex, our polo shirts use reactive colorfast dye that withstands 50+ wash cycles without fading.",
+          "isAdmin": true,
+          "createdAt": "2026-10-21T09:30:00Z"
+        }
+      ]
     },
     {
       "id": "rev_3",
@@ -12575,7 +12624,16 @@
       "status": "Active",
       "postedOn": "2026-10-18",
       "createdAt": "2026-10-18T09:30:00Z",
-      "updatedAt": "2026-10-25T09:31:13.440Z"
+      "updatedAt": "2026-10-25T09:31:13.440Z",
+      "media": [
+        {
+          "id": "rmed_3_1",
+          "url": "/uploads/prod_s24_1.webp",
+          "type": "IMAGE",
+          "name": "galaxy_camera_shot.webp"
+        }
+      ],
+      "comments": []
     },
     {
       "id": "rev_4",
@@ -12589,7 +12647,44 @@
       "status": "Active",
       "postedOn": "2026-10-15",
       "createdAt": "2026-10-15T16:45:00Z",
-      "updatedAt": "2026-10-25T09:31:13.441Z"
+      "updatedAt": "2026-10-25T09:31:13.441Z",
+      "media": [
+        {
+          "id": "rmed_4_1",
+          "url": "/uploads/prod_puffer_1.webp",
+          "type": "IMAGE",
+          "name": "down_jacket_outdoor.webp"
+        }
+      ],
+      "comments": [
+        {
+          "id": "rcmt_4_1",
+          "reviewId": "rev_4",
+          "userName": "Liam Davies",
+          "userEmail": "liam.d@gmail.com",
+          "comment": "Is the hood detachable?",
+          "isAdmin": false,
+          "createdAt": "2026-10-16T12:00:00Z"
+        },
+        {
+          "id": "rcmt_4_2",
+          "reviewId": "rev_4",
+          "userName": "Emma Watson",
+          "userEmail": "emma.w@gmail.com",
+          "comment": "Yes Liam, it zips off easily and has a nice fleece collar underneath.",
+          "isAdmin": false,
+          "createdAt": "2026-10-16T14:22:00Z"
+        },
+        {
+          "id": "rcmt_4_3",
+          "reviewId": "rev_4",
+          "userName": "G-Store Official Support",
+          "userEmail": "support@gstore.com",
+          "comment": "Thank you Emma! We hope you stay warm throughout the winter season.",
+          "isAdmin": true,
+          "createdAt": "2026-10-17T09:00:00Z"
+        }
+      ]
     }
   ],
   "qna": [

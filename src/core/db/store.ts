@@ -667,6 +667,24 @@ export interface PricingSettingsRecord {
   updatedAt: string;
 }
 
+export interface ReviewMediaItem {
+  id: string;
+  url: string;
+  type: "IMAGE" | "VIDEO";
+  name?: string;
+  size?: number;
+}
+
+export interface ReviewCommentRecord {
+  id: string;
+  reviewId: string;
+  userName: string;
+  userEmail: string;
+  comment: string;
+  isAdmin?: boolean;
+  createdAt: string;
+}
+
 export interface ReviewRecord {
   id: string;
   productId?: string;
@@ -677,6 +695,8 @@ export interface ReviewRecord {
   rating: number; // 1 - 5
   review: string;
   commentCount: number;
+  media?: ReviewMediaItem[];
+  comments?: ReviewCommentRecord[];
   status: "Active" | "Inactive" | "Pending";
   postedOn: string;
   createdAt: string;
@@ -872,6 +892,7 @@ export class DatabaseStore {
         assets: parsed.assets || [],
         categories: parsed.categories || [],
         products: parsed.products || [],
+        variants: parsed.variants || [],
         roles: parsed.roles || [],
         sliders: parsed.sliders || [],
         menuItems: parsed.menuItems || [],
@@ -3851,7 +3872,14 @@ export class DatabaseStore {
       }
     }
 
-    return reviews.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    return reviews
+      .map((r) => ({
+        ...r,
+        media: r.media || [],
+        comments: r.comments || [],
+        commentCount: r.comments ? r.comments.length : (r.commentCount || 0),
+      }))
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
   public static async createReview(
@@ -3866,7 +3894,9 @@ export class DatabaseStore {
       ...data,
       status: autoApprove ? "Active" : "Pending",
       postedOn: now.split("T")[0],
-      commentCount: data.commentCount || 0,
+      commentCount: data.comments ? data.comments.length : (data.commentCount || 0),
+      media: data.media || [],
+      comments: data.comments || [],
       createdAt: now,
       updatedAt: now,
     };
@@ -3892,6 +3922,52 @@ export class DatabaseStore {
 
     await this.writeLocalDb(db);
     return newRev;
+  }
+
+  public static async addReviewComment(
+    reviewId: string,
+    data: { userName: string; userEmail: string; comment: string; isAdmin?: boolean }
+  ): Promise<ReviewRecord | null> {
+    const db = await this.readLocalDb();
+    if (!db.reviews) return null;
+    const review = db.reviews.find((r) => r.id === reviewId);
+    if (!review) return null;
+
+    if (!review.comments) review.comments = [];
+    const newComment: ReviewCommentRecord = {
+      id: "rcmt_" + Math.random().toString(36).substring(2, 9),
+      reviewId,
+      userName: data.userName,
+      userEmail: data.userEmail,
+      comment: data.comment,
+      isAdmin: data.isAdmin !== undefined ? data.isAdmin : false,
+      createdAt: new Date().toISOString(),
+    };
+
+    review.comments.push(newComment);
+    review.commentCount = review.comments.length;
+    review.updatedAt = new Date().toISOString();
+
+    await this.writeLocalDb(db);
+    return review;
+  }
+
+  public static async deleteReviewComment(
+    reviewId: string,
+    commentId: string
+  ): Promise<ReviewRecord | null> {
+    const db = await this.readLocalDb();
+    if (!db.reviews) return null;
+    const review = db.reviews.find((r) => r.id === reviewId);
+    if (!review) return null;
+
+    if (review.comments) {
+      review.comments = review.comments.filter((c) => c.id !== commentId);
+      review.commentCount = review.comments.length;
+      review.updatedAt = new Date().toISOString();
+      await this.writeLocalDb(db);
+    }
+    return review;
   }
 
   public static async updateReview(

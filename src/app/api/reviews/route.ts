@@ -34,7 +34,9 @@ export async function POST(req: Request) {
       userEmail: body.userEmail || "customer@example.com",
       rating: Number(body.rating),
       review: body.review,
-      commentCount: Number(body.commentCount || 0),
+      media: Array.isArray(body.media) ? body.media : [],
+      comments: Array.isArray(body.comments) ? body.comments : [],
+      commentCount: Number(body.commentCount || (Array.isArray(body.comments) ? body.comments.length : 0)),
       status: body.status || "Active",
     });
 

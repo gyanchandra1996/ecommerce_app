@@ -198,6 +198,53 @@ This API powers the G-Store e-commerce application, mobile apps (Flutter, React 
             createdAt: { type: "string", format: "date-time" },
           },
         },
+        ReviewMedia: {
+          type: "object",
+          properties: {
+            id: { type: "string", example: "rmed_1_1" },
+            url: { type: "string", example: "/uploads/prod_airpods_1.webp" },
+            type: { type: "string", enum: ["IMAGE", "VIDEO"], example: "IMAGE" },
+            name: { type: "string", example: "earbuds_unboxing.webp" },
+            size: { type: "integer", example: 128450 },
+          },
+        },
+        ReviewComment: {
+          type: "object",
+          properties: {
+            id: { type: "string", example: "rcmt_1_1" },
+            reviewId: { type: "string", example: "rev_1" },
+            userName: { type: "string", example: "G-Store Support Team" },
+            userEmail: { type: "string", example: "support@gstore.com" },
+            comment: { type: "string", example: "Thank you for the review, Johnathan! Firmware update rolling out soon." },
+            isAdmin: { type: "boolean", example: true },
+            createdAt: { type: "string", format: "date-time" },
+          },
+        },
+        Review: {
+          type: "object",
+          properties: {
+            id: { type: "string", example: "rev_1" },
+            productId: { type: "string", example: "prod_wireless_earbuds" },
+            itemNo: { type: "string", example: "z2216" },
+            productName: { type: "string", example: "wireless-earbuds-z2216" },
+            userName: { type: "string", example: "Johnathan Smith" },
+            userEmail: { type: "string", example: "john.smith@gmail.com" },
+            rating: { type: "integer", minimum: 1, maximum: 5, example: 5 },
+            review: { type: "string", example: "Outstanding sound quality, crisp highs and deep bass!" },
+            commentCount: { type: "integer", example: 1 },
+            media: {
+              type: "array",
+              items: { $ref: "#/components/schemas/ReviewMedia" },
+            },
+            comments: {
+              type: "array",
+              items: { $ref: "#/components/schemas/ReviewComment" },
+            },
+            status: { type: "string", enum: ["Active", "Inactive", "Pending"], example: "Active" },
+            postedOn: { type: "string", example: "2026-10-22" },
+            createdAt: { type: "string", format: "date-time" },
+          },
+        },
       },
     },
     security: [
@@ -788,6 +835,228 @@ This API powers the G-Store e-commerce application, mobile apps (Flutter, React 
               description: "Store settings",
               content: { "application/json": { schema: { $ref: "#/components/schemas/ApiResponse" } } },
             },
+          },
+        },
+      },
+      "/api/reviews": {
+        get: {
+          tags: ["Product Reviews & Comments"],
+          summary: "List Customer Reviews with Media & Comments",
+          description: "Fetch customer reviews filtered by rating, search keyword, product ID, or status.",
+          parameters: [
+            { name: "productId", in: "query", schema: { type: "string" }, description: "Filter reviews for a specific product ID or SKU" },
+            { name: "rating", in: "query", schema: { type: "integer" }, description: "Filter by star rating (1-5)" },
+            { name: "search", in: "query", schema: { type: "string" }, description: "Search keyword in review text or reviewer name" },
+            { name: "status", in: "query", schema: { type: "string", enum: ["All", "Active", "Pending", "Inactive"] }, description: "Review approval status" },
+          ],
+          responses: {
+            200: {
+              description: "Array of customer reviews with attached media and comments",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      success: { type: "boolean", example: true },
+                      data: {
+                        type: "array",
+                        items: { $ref: "#/components/schemas/Review" },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        post: {
+          tags: ["Product Reviews & Comments"],
+          summary: "Submit Customer Review with Media",
+          description: "Submit a new customer review with rating, review text, and optional media packshots/videos.",
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["itemNo", "review", "rating"],
+                  properties: {
+                    productId: { type: "string", example: "prod_s24_ultra" },
+                    itemNo: { type: "string", example: "z2216" },
+                    productName: { type: "string", example: "Wireless Earbuds z2216" },
+                    userName: { type: "string", example: "Johnathan Smith" },
+                    userEmail: { type: "string", example: "john.smith@gmail.com" },
+                    rating: { type: "integer", minimum: 1, maximum: 5, example: 5 },
+                    review: { type: "string", example: "Outstanding sound quality, crisp highs and deep bass!" },
+                    media: {
+                      type: "array",
+                      items: { $ref: "#/components/schemas/ReviewMedia" },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            201: {
+              description: "Review created successfully",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      success: { type: "boolean", example: true },
+                      data: { $ref: "#/components/schemas/Review" },
+                    },
+                  },
+                },
+              },
+            },
+            400: { description: "Missing required fields" },
+          },
+        },
+      },
+      "/api/reviews/upload": {
+        post: {
+          tags: ["Product Reviews & Comments"],
+          summary: "Upload Review Media (Photos & Videos)",
+          description: "Upload customer review photos (JPG, PNG, WEBP) or review videos (MP4, WEBM). Returns media items with URLs.",
+          requestBody: {
+            required: true,
+            content: {
+              "multipart/form-data": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    files: {
+                      type: "array",
+                      items: { type: "string", format: "binary" },
+                      description: "One or more photo or video files to upload",
+                    },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            201: {
+              description: "Media files uploaded successfully",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      success: { type: "boolean", example: true },
+                      data: {
+                        type: "array",
+                        items: { $ref: "#/components/schemas/ReviewMedia" },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            400: { description: "Unsupported file format or file size exceeded" },
+          },
+        },
+      },
+      "/api/reviews/{id}/comments": {
+        get: {
+          tags: ["Product Reviews & Comments"],
+          summary: "Get All Comments / Replies for a Review",
+          parameters: [
+            { name: "id", in: "path", required: true, schema: { type: "string" }, description: "Review ID (e.g. rev_1)" },
+          ],
+          responses: {
+            200: {
+              description: "List of comments on review",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      success: { type: "boolean", example: true },
+                      data: {
+                        type: "array",
+                        items: { $ref: "#/components/schemas/ReviewComment" },
+                      },
+                      commentCount: { type: "integer", example: 2 },
+                    },
+                  },
+                },
+              },
+            },
+            404: { description: "Review not found" },
+          },
+        },
+        post: {
+          tags: ["Product Reviews & Comments"],
+          summary: "Add a Comment or Store Admin Reply on Review",
+          parameters: [
+            { name: "id", in: "path", required: true, schema: { type: "string" }, description: "Review ID (e.g. rev_1)" },
+          ],
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["comment"],
+                  properties: {
+                    userName: { type: "string", example: "G-Store Support Team" },
+                    userEmail: { type: "string", example: "support@gstore.com" },
+                    comment: { type: "string", example: "Thank you for the review, Johnathan! Firmware update rolling out soon." },
+                    isAdmin: { type: "boolean", example: true, description: "Set to true for official store/admin reply" },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            201: {
+              description: "Comment posted successfully",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      success: { type: "boolean", example: true },
+                      data: { $ref: "#/components/schemas/Review" },
+                      comment: { $ref: "#/components/schemas/ReviewComment" },
+                    },
+                  },
+                },
+              },
+            },
+            400: { description: "Empty comment text" },
+            404: { description: "Review not found" },
+          },
+        },
+      },
+      "/api/reviews/{id}/comments/{commentId}": {
+        delete: {
+          tags: ["Product Reviews & Comments"],
+          summary: "Delete Review Comment (Admin Moderation)",
+          parameters: [
+            { name: "id", in: "path", required: true, schema: { type: "string" }, description: "Review ID" },
+            { name: "commentId", in: "path", required: true, schema: { type: "string" }, description: "Comment ID to delete" },
+          ],
+          responses: {
+            200: {
+              description: "Comment deleted successfully",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      success: { type: "boolean", example: true },
+                      message: { type: "string", example: "Comment deleted successfully." },
+                    },
+                  },
+                },
+              },
+            },
+            404: { description: "Review or comment not found" },
           },
         },
       },
