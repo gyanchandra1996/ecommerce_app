@@ -10423,6 +10423,62 @@
   ],
   "orders": [
     {
+      "id": "ord_aproe4t",
+      "orderNumber": "tags203",
+      "customerName": "Customer",
+      "customerEmail": "customer@example.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-29T19:07:32.863Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "authorizenet",
+      "paymentStatus": "Pending",
+      "orderStatus": "Pending",
+      "subtotal": 1324,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 1324,
+      "shippingAddress": "Flat 402, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_yzpix_0",
+          "orderId": "",
+          "productId": "prod_iphone_15_pro",
+          "variantId": "var_prod_iphone_15_pro_256gb_gra",
+          "itemNo": "SKU-0",
+          "name": "Apple iPhone 15 Pro Max Titanium Natural (256GB)",
+          "price": 1199,
+          "quantity": 1,
+          "imageUrl": ""
+        },
+        {
+          "id": "item_6umjv_1",
+          "orderId": "",
+          "productId": "prod_mulberry_silk_blouse",
+          "variantId": "var_prod_mulberry_silk_blouse_s_cla",
+          "itemNo": "SKU-1",
+          "name": "Pure Mulberry Silk Button-Down Long Sleeve Blouse",
+          "price": 125,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-29T19:07:32.863Z",
+          "action": "CREATE",
+          "performedBy": "Gyan Chandra",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-29T19:07:32.870Z",
+      "updatedAt": "2026-10-29T19:07:32.870Z"
+    },
+    {
       "id": "ord_5u4xgni",
       "orderNumber": "tags7106",
       "customerName": "Gyan Chandra",
@@ -12271,6 +12327,19 @@
   ],
   "payments": [
     {
+      "id": "pay_tt620mr",
+      "orderId": "ord_aproe4t",
+      "orderNumber": "tags203",
+      "customerName": "Customer",
+      "customerEmail": "customer@example.com",
+      "paymentGateway": "Razorpay",
+      "amount": 1324,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-29T19:07:32.870Z",
+      "updatedAt": "2026-10-29T19:07:32.870Z"
+    },
+    {
       "id": "pay_v8m6rr7",
       "orderId": "ord_5u4xgni",
       "orderNumber": "tags7106",
@@ -12534,7 +12603,7 @@
       "userId": "usr_cust_gyanchandra",
       "status": "active",
       "createdAt": "2026-10-29T16:11:57.991Z",
-      "updatedAt": "2026-10-29T16:23:21.072Z"
+      "updatedAt": "2026-10-29T19:07:33.646Z"
     },
     {
       "id": "cart_ktairxg",
@@ -12556,6 +12625,13 @@
       "status": "merged",
       "createdAt": "2026-10-29T18:05:04.253Z",
       "updatedAt": "2026-10-29T18:05:12.613Z"
+    },
+    {
+      "id": "cart_25ax7d5",
+      "sessionId": "gst_xtmmxwksly",
+      "status": "merged",
+      "createdAt": "2026-10-29T18:49:08.303Z",
+      "updatedAt": "2026-10-29T19:02:03.160Z"
     }
   ],
   "cartItems": [
@@ -13528,11 +13604,11 @@
       "productName": "Apple iPhone 15 Pro Max Titanium Natural (256GB)",
       "productSku": "APL-IPH15PM-NAT",
       "warehouseName": "Samsung Silicon Valley Center",
-      "availableQuantity": 35,
-      "reservedQuantity": 0,
+      "availableQuantity": 34,
+      "reservedQuantity": 1,
       "reorderLevel": 5,
       "createdAt": "2026-10-28T18:50:07.904Z",
-      "updatedAt": "2026-10-28T18:50:07.904Z"
+      "updatedAt": "2026-10-29T19:07:32.900Z"
     },
     {
       "id": "winv_prod_sony_xm5_wh_avery_1",
@@ -13697,11 +13773,11 @@
       "productName": "Pure Mulberry Silk Button-Down Long Sleeve Blouse",
       "productSku": "WMN-SILK-BLOUSE-IVR",
       "warehouseName": "Avery Dennison",
-      "availableQuantity": 32,
-      "reservedQuantity": 0,
+      "availableQuantity": 31,
+      "reservedQuantity": 1,
       "reorderLevel": 5,
       "createdAt": "2026-10-28T18:50:07.904Z",
-      "updatedAt": "2026-10-28T18:50:07.904Z"
+      "updatedAt": "2026-10-29T19:07:32.900Z"
     },
     {
       "id": "winv_prod_kids_hoodie_tracksuit_wh_nike_1",
@@ -14030,6 +14106,38 @@
     }
   ],
   "inventoryMovements": [
+    {
+      "id": "mov_vb1ng8a",
+      "productId": "prod_mulberry_silk_blouse",
+      "warehouseId": "wh_avery_1",
+      "productName": "Pure Mulberry Silk Button-Down Long Sleeve Blouse",
+      "warehouseName": "Avery Dennison",
+      "type": "RESERVATION",
+      "quantity": 1,
+      "previousAvailable": 32,
+      "newAvailable": 31,
+      "previousReserved": 0,
+      "newReserved": 1,
+      "referenceId": "ord_aproe4t",
+      "notes": "Stock reserved for order #ord_aproe4t",
+      "createdAt": "2026-10-29T19:07:32.900Z"
+    },
+    {
+      "id": "mov_3iu4b0m",
+      "productId": "prod_iphone_15_pro",
+      "warehouseId": "wh_samsung_1",
+      "productName": "Apple iPhone 15 Pro Max Titanium Natural (256GB)",
+      "warehouseName": "Samsung Silicon Valley Center",
+      "type": "RESERVATION",
+      "quantity": 1,
+      "previousAvailable": 35,
+      "newAvailable": 34,
+      "previousReserved": 0,
+      "newReserved": 1,
+      "referenceId": "ord_aproe4t",
+      "notes": "Stock reserved for order #ord_aproe4t",
+      "createdAt": "2026-10-29T19:07:32.900Z"
+    },
     {
       "id": "mov_gvixqc7",
       "productId": "prod_trkmn04v6",

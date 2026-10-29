@@ -52,6 +52,8 @@ export default function ProfileScreen() {
         {/* Menu Items */}
         <View style={{ backgroundColor: "#F8FAFC", borderRadius: 16, borderWidth: 1, borderColor: "#E2E8F0", overflow: "hidden" }}>
           <TouchableOpacity
+            onPress={() => router.push("/orders")}
+            activeOpacity={0.7}
             style={{ flexDirection: "row", alignItems: "center", padding: 16, borderBottomWidth: 1, borderBottomColor: "#F1F5F9" }}
           >
             <Package size={18} color="#2563EB" style={{ marginRight: 12 }} />
@@ -60,6 +62,8 @@ export default function ProfileScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity
+            onPress={() => router.push("/addresses")}
+            activeOpacity={0.7}
             style={{ flexDirection: "row", alignItems: "center", padding: 16, borderBottomWidth: 1, borderBottomColor: "#F1F5F9" }}
           >
             <MapPin size={18} color="#2563EB" style={{ marginRight: 12 }} />

@@ -165,6 +165,15 @@ export default function LoginScreen() {
           </View>
         )}
 
+        <View style={{ marginTop: 24, alignItems: "center" }}>
+          <Text style={{ fontSize: 12, color: "#64748B" }}>
+            New to G-Store?{" "}
+            <Text onPress={() => router.push("/(auth)/register")} style={{ fontWeight: "800", color: "#2563EB" }}>
+              Create an Account
+            </Text>
+          </Text>
+        </View>
+
         {/* Demo Credentials Helper */}
         <View style={{ marginTop: 30, padding: 14, backgroundColor: "#F8FAFC", borderRadius: 12, borderWidth: 1, borderColor: "#E2E8F0" }}>
           <Text style={{ fontSize: 11, fontWeight: "800", color: "#475569", marginBottom: 4 }}>Quick Demo Fill:</Text>

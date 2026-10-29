@@ -200,13 +200,7 @@ export default function CartScreen() {
 
           {/* Checkout CTA */}
           <TouchableOpacity
-            onPress={() => {
-              if (!user) {
-                router.push("/(auth)/login");
-              } else {
-                router.push("/checkout");
-              }
-            }}
+            onPress={() => router.push("/checkout")}
             activeOpacity={0.8}
             style={{
               backgroundColor: "#2563EB",

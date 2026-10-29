@@ -5,6 +5,7 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  TextInput,
   ActivityIndicator,
   SafeAreaView,
   Alert,
@@ -18,16 +19,19 @@ import {
   Truck,
   RotateCcw,
   ArrowLeft,
-  ChevronRight,
   MessageSquare,
+  HelpCircle,
+  User,
 } from "lucide-react-native";
 import { apiClient, getFullImageUrl } from "../../src/services/api";
 import { useCartStore } from "../../src/store/cartStore";
+import { useAuthStore } from "../../src/store/authStore";
 
 export default function ProductDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
-  const addToCart = useCartStore((s) => s.addToCart);
+  const { addToCart, totalItems } = useCartStore();
+  const authUser = useAuthStore((s) => s.user);
 
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -36,9 +40,27 @@ export default function ProductDetailScreen() {
   const [isAdding, setIsAdding] = useState(false);
   const [addSuccess, setAddSuccess] = useState(false);
 
+  // Reviews & Q&A state
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [loadingReviews, setLoadingReviews] = useState(false);
+  const [activeTab, setActiveTab] = useState<"overview" | "reviews" | "qna">("overview");
+
+  // Review form
+  const [reviewRating, setReviewRating] = useState(5);
+  const [reviewText, setReviewText] = useState("");
+  const [submittingReview, setSubmittingReview] = useState(false);
+
+  // Q&A state
+  const [qnaList, setQnaList] = useState<any[]>([]);
+  const [loadingQna, setLoadingQna] = useState(false);
+  const [questionText, setQuestionText] = useState("");
+  const [submittingQna, setSubmittingQna] = useState(false);
+
   useEffect(() => {
     if (id) {
       loadProduct();
+      loadReviews();
+      loadQna();
     }
   }, [id]);
 
@@ -68,15 +90,108 @@ export default function ProductDetailScreen() {
     }
   };
 
+  const loadReviews = async () => {
+    try {
+      setLoadingReviews(true);
+      const res = await apiClient.get(`/api/reviews?productId=${id}`);
+      if (res.data?.success && Array.isArray(res.data?.data)) {
+        setReviews(res.data.data);
+      }
+    } catch {
+      // ignore
+    } finally {
+      setLoadingReviews(false);
+    }
+  };
+
+  const loadQna = async () => {
+    try {
+      setLoadingQna(true);
+      const res = await apiClient.get(`/api/qna?productId=${id}`);
+      if (res.data?.success && Array.isArray(res.data?.data)) {
+        setQnaList(res.data.data);
+      }
+    } catch {
+      // ignore
+    } finally {
+      setLoadingQna(false);
+    }
+  };
+
+  const handleSubmitReview = async () => {
+    if (!reviewText.trim()) {
+      Alert.alert("Missing Review", "Please enter your thoughts before submitting.");
+      return;
+    }
+
+    try {
+      setSubmittingReview(true);
+      const payload = {
+        productId: product?.id,
+        itemNo: product?.sku || product?.name,
+        productName: product?.name,
+        userName: authUser?.name || "Verified Customer",
+        userEmail: authUser?.email || "customer@example.com",
+        rating: reviewRating,
+        review: reviewText.trim(),
+        comments: [],
+        media: [],
+      };
+
+      const res = await apiClient.post("/api/reviews", payload);
+      if (res.data?.success && res.data?.data) {
+        setReviews([res.data.data, ...reviews]);
+        setReviewText("");
+        Alert.alert("Review Published!", "Thank you for sharing your experience.");
+      }
+    } catch (err: any) {
+      Alert.alert("Error", err.message || "Could not publish review.");
+    } finally {
+      setSubmittingReview(false);
+    }
+  };
+
+  const handleSubmitQuestion = async () => {
+    if (!questionText.trim()) {
+      Alert.alert("Missing Question", "Please type your question about this product.");
+      return;
+    }
+
+    try {
+      setSubmittingQna(true);
+      const payload = {
+        productId: product?.id,
+        itemNo: product?.sku || product?.name,
+        productName: product?.name,
+        userName: authUser?.name || "Customer",
+        userEmail: authUser?.email || "customer@example.com",
+        question: questionText.trim(),
+      };
+
+      const res = await apiClient.post("/api/qna", payload);
+      if (res.data?.success && res.data?.data) {
+        setQnaList([res.data.data, ...qnaList]);
+        setQuestionText("");
+        Alert.alert("Question Sent", "Your question was posted. Our team will answer shortly.");
+      }
+    } catch (err: any) {
+      Alert.alert("Error", err.message || "Could not post question.");
+    } finally {
+      setSubmittingQna(false);
+    }
+  };
+
   // Find active variant matching selected attributes
   const activeVariant = React.useMemo(() => {
     if (!product || !product.hasVariants || !Array.isArray(product.variants)) return null;
-    return product.variants.find((v: any) => {
-      if (!v.attributes) return false;
-      return Object.entries(selectedAttributes).every(
-        ([key, val]) => v.attributes[key] === val
-      );
-    }) || product.variants[0];
+    return (
+      product.variants.find((v: any) => {
+        if (!v.attributes) return false;
+        return Object.entries(selectedAttributes).every(
+          ([key, val]) => v.attributes[key] === val
+        );
+      }) || product.variants[0]
+    );
   }, [product, selectedAttributes]);
 
   const currentPrice = activeVariant?.price ?? product?.price ?? 0;
@@ -124,7 +239,49 @@ export default function ProductDetailScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-      <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
+      {/* Top Header Bar */}
+      <View
+        style={{
+          paddingHorizontal: 16,
+          paddingVertical: 12,
+          borderBottomWidth: 1,
+          borderBottomColor: "#F1F5F9",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <TouchableOpacity onPress={() => router.back()} style={{ padding: 4 }}>
+          <ArrowLeft size={20} color="#0F172A" />
+        </TouchableOpacity>
+
+        <Text numberOfLines={1} style={{ flex: 1, fontSize: 15, fontWeight: "800", color: "#0F172A", marginHorizontal: 12 }}>
+          {product.name}
+        </Text>
+
+        <TouchableOpacity onPress={() => router.push("/(tabs)/cart")} style={{ position: "relative", padding: 4 }}>
+          <ShoppingCart size={22} color="#0F172A" />
+          {totalItems > 0 && (
+            <View
+              style={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                backgroundColor: "#2563EB",
+                width: 16,
+                height: 16,
+                borderRadius: 8,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={{ color: "#FFFFFF", fontSize: 9, fontWeight: "900" }}>{totalItems}</Text>
+            </View>
+          )}
+        </TouchableOpacity>
+      </View>
+
+      <ScrollView contentContainerStyle={{ paddingBottom: 110 }}>
         {/* Product Image Stage */}
         <View style={{ backgroundColor: "#F8FAFC", paddingVertical: 20, alignItems: "center", borderBottomWidth: 1, borderBottomColor: "#F1F5F9" }}>
           <Image
@@ -168,7 +325,7 @@ export default function ProductDetailScreen() {
               <Text style={{ fontSize: 12, fontWeight: "800", color: "#B45309" }}>{product.rating || 4.5}</Text>
             </View>
             <Text style={{ fontSize: 12, color: "#64748B", marginLeft: 8 }}>
-              {product.reviewsCount || 120} verified customer reviews
+              {reviews.length > 0 ? `${reviews.length} customer reviews` : "120 verified customer reviews"}
             </Text>
           </View>
 
@@ -244,13 +401,241 @@ export default function ProductDetailScreen() {
             </View>
           </View>
 
-          {/* Description */}
-          <Text style={{ fontSize: 14, fontWeight: "800", color: "#0F172A", marginBottom: 6 }}>
-            Product Overview
-          </Text>
-          <Text style={{ fontSize: 13, color: "#64748B", lineHeight: 20 }}>
-            {product.description || "Premium authentic quality with full manufacturer warranty and express fulfillment."}
-          </Text>
+          {/* Navigation Sub-Tabs */}
+          <View style={{ flexDirection: "row", borderBottomWidth: 1, borderBottomColor: "#E2E8F0", marginBottom: 16 }}>
+            <TouchableOpacity
+              onPress={() => setActiveTab("overview")}
+              style={{
+                paddingVertical: 10,
+                marginRight: 20,
+                borderBottomWidth: 2,
+                borderBottomColor: activeTab === "overview" ? "#2563EB" : "transparent",
+              }}
+            >
+              <Text style={{ fontSize: 13, fontWeight: "800", color: activeTab === "overview" ? "#2563EB" : "#64748B" }}>
+                Overview
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => setActiveTab("reviews")}
+              style={{
+                paddingVertical: 10,
+                marginRight: 20,
+                borderBottomWidth: 2,
+                borderBottomColor: activeTab === "reviews" ? "#2563EB" : "transparent",
+              }}
+            >
+              <Text style={{ fontSize: 13, fontWeight: "800", color: activeTab === "reviews" ? "#2563EB" : "#64748B" }}>
+                Reviews ({reviews.length})
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => setActiveTab("qna")}
+              style={{
+                paddingVertical: 10,
+                borderBottomWidth: 2,
+                borderBottomColor: activeTab === "qna" ? "#2563EB" : "transparent",
+              }}
+            >
+              <Text style={{ fontSize: 13, fontWeight: "800", color: activeTab === "qna" ? "#2563EB" : "#64748B" }}>
+                Q&amp;A ({qnaList.length})
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* TAB 1: OVERVIEW */}
+          {activeTab === "overview" && (
+            <View>
+              <Text style={{ fontSize: 14, fontWeight: "800", color: "#0F172A", marginBottom: 6 }}>
+                Product Description
+              </Text>
+              <Text style={{ fontSize: 13, color: "#64748B", lineHeight: 20 }}>
+                {product.description || "Premium authentic quality with full manufacturer warranty and express fulfillment."}
+              </Text>
+            </View>
+          )}
+
+          {/* TAB 2: CUSTOMER REVIEWS */}
+          {activeTab === "reviews" && (
+            <View>
+              {/* Write Review Form */}
+              <View style={{ backgroundColor: "#F8FAFC", padding: 14, borderRadius: 12, borderWidth: 1, borderColor: "#E2E8F0", marginBottom: 18 }}>
+                <Text style={{ fontSize: 13, fontWeight: "800", color: "#0F172A", marginBottom: 8 }}>
+                  Write a Customer Review
+                </Text>
+
+                {/* Rating Stars Picker */}
+                <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }}>
+                  <Text style={{ fontSize: 12, color: "#64748B", marginRight: 8 }}>Rating:</Text>
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <TouchableOpacity key={s} onPress={() => setReviewRating(s)} style={{ padding: 4 }}>
+                      <Star
+                        size={20}
+                        color={s <= reviewRating ? "#F59E0B" : "#CBD5E1"}
+                        fill={s <= reviewRating ? "#F59E0B" : "transparent"}
+                      />
+                    </TouchableOpacity>
+                  ))}
+                </View>
+
+                <TextInput
+                  value={reviewText}
+                  onChangeText={setReviewText}
+                  placeholder="Share details of your experience with this item..."
+                  placeholderTextColor="#94A3B8"
+                  multiline
+                  numberOfLines={3}
+                  style={{
+                    backgroundColor: "#FFFFFF",
+                    borderWidth: 1,
+                    borderColor: "#E2E8F0",
+                    borderRadius: 8,
+                    padding: 10,
+                    fontSize: 12,
+                    textAlignVertical: "top",
+                    marginBottom: 10,
+                  }}
+                />
+
+                <TouchableOpacity
+                  onPress={handleSubmitReview}
+                  disabled={submittingReview}
+                  style={{
+                    backgroundColor: "#2563EB",
+                    paddingVertical: 10,
+                    borderRadius: 8,
+                    alignItems: "center",
+                  }}
+                >
+                  {submittingReview ? (
+                    <ActivityIndicator size="small" color="#FFFFFF" />
+                  ) : (
+                    <Text style={{ color: "#FFFFFF", fontWeight: "800", fontSize: 12 }}>Submit Review</Text>
+                  )}
+                </TouchableOpacity>
+              </View>
+
+              {/* Reviews List */}
+              {loadingReviews ? (
+                <ActivityIndicator size="small" color="#2563EB" style={{ marginVertical: 20 }} />
+              ) : reviews.length === 0 ? (
+                <View style={{ alignItems: "center", paddingVertical: 20 }}>
+                  <MessageSquare size={32} color="#94A3B8" style={{ marginBottom: 6 }} />
+                  <Text style={{ fontSize: 13, fontWeight: "700", color: "#64748B" }}>No reviews yet</Text>
+                  <Text style={{ fontSize: 11, color: "#94A3B8" }}>Be the first customer to review this product!</Text>
+                </View>
+              ) : (
+                reviews.map((rev) => (
+                  <View
+                    key={rev.id}
+                    style={{
+                      borderBottomWidth: 1,
+                      borderBottomColor: "#F1F5F9",
+                      paddingVertical: 12,
+                    }}
+                  >
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+                      <View style={{ flexDirection: "row", alignItems: "center" }}>
+                        <View style={{ width: 24, height: 24, borderRadius: 12, backgroundColor: "#E2E8F0", alignItems: "center", justifyContent: "center", marginRight: 8 }}>
+                          <User size={13} color="#64748B" />
+                        </View>
+                        <Text style={{ fontSize: 12, fontWeight: "800", color: "#0F172A" }}>
+                          {rev.userName || "Verified Buyer"}
+                        </Text>
+                      </View>
+                      <View style={{ flexDirection: "row" }}>
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <Star
+                            key={s}
+                            size={12}
+                            color={s <= rev.rating ? "#F59E0B" : "#E2E8F0"}
+                            fill={s <= rev.rating ? "#F59E0B" : "transparent"}
+                          />
+                        ))}
+                      </View>
+                    </View>
+                    <Text style={{ fontSize: 12, color: "#334155", lineHeight: 18 }}>
+                      {rev.review}
+                    </Text>
+                  </View>
+                ))
+              )}
+            </View>
+          )}
+
+          {/* TAB 3: QUESTIONS & ANSWERS */}
+          {activeTab === "qna" && (
+            <View>
+              {/* Ask Question Form */}
+              <View style={{ backgroundColor: "#F8FAFC", padding: 14, borderRadius: 12, borderWidth: 1, borderColor: "#E2E8F0", marginBottom: 18 }}>
+                <Text style={{ fontSize: 13, fontWeight: "800", color: "#0F172A", marginBottom: 8 }}>
+                  Ask a Question
+                </Text>
+                <TextInput
+                  value={questionText}
+                  onChangeText={setQuestionText}
+                  placeholder="e.g. Does this support 45W fast charging?"
+                  placeholderTextColor="#94A3B8"
+                  style={{
+                    backgroundColor: "#FFFFFF",
+                    borderWidth: 1,
+                    borderColor: "#E2E8F0",
+                    borderRadius: 8,
+                    padding: 10,
+                    fontSize: 12,
+                    marginBottom: 10,
+                  }}
+                />
+                <TouchableOpacity
+                  onPress={handleSubmitQuestion}
+                  disabled={submittingQna}
+                  style={{
+                    backgroundColor: "#2563EB",
+                    paddingVertical: 10,
+                    borderRadius: 8,
+                    alignItems: "center",
+                  }}
+                >
+                  {submittingQna ? (
+                    <ActivityIndicator size="small" color="#FFFFFF" />
+                  ) : (
+                    <Text style={{ color: "#FFFFFF", fontWeight: "800", fontSize: 12 }}>Post Question</Text>
+                  )}
+                </TouchableOpacity>
+              </View>
+
+              {/* Q&A List */}
+              {loadingQna ? (
+                <ActivityIndicator size="small" color="#2563EB" style={{ marginVertical: 20 }} />
+              ) : qnaList.length === 0 ? (
+                <View style={{ alignItems: "center", paddingVertical: 20 }}>
+                  <HelpCircle size={32} color="#94A3B8" style={{ marginBottom: 6 }} />
+                  <Text style={{ fontSize: 13, fontWeight: "700", color: "#64748B" }}>No questions asked yet</Text>
+                  <Text style={{ fontSize: 11, color: "#94A3B8" }}>Ask anything about compatibility, warranty, or delivery.</Text>
+                </View>
+              ) : (
+                qnaList.map((q) => (
+                  <View
+                    key={q.id}
+                    style={{
+                      borderBottomWidth: 1,
+                      borderBottomColor: "#F1F5F9",
+                      paddingVertical: 12,
+                    }}
+                  >
+                    <Text style={{ fontSize: 13, fontWeight: "800", color: "#0F172A", marginBottom: 4 }}>
+                      Q: {q.question}
+                    </Text>
+                    <Text style={{ fontSize: 11, color: "#64748B" }}>
+                      Asked by {q.userName || "Customer"} • {q.answers ? q.answers.length : 0} answers
+                    </Text>
+                  </View>
+                ))
+              )}
+            </View>
+          )}
         </View>
       </ScrollView>
 
