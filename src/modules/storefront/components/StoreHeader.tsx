@@ -91,7 +91,7 @@ export function StoreHeader({
 
   const [menuItems, setMenuItems] = useState<DynamicMenuItem[]>([]);
   const [isMenuLoading, setIsMenuLoading] = useState(true);
-  const [themeName, setThemeName] = useState(storeName || "G-store");
+  const [themeName, setThemeName] = useState(storeName || "G-Mart");
 
   useEffect(() => {
     if (storeName) {

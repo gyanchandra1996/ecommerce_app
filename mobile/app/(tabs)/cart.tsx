@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
-  SafeAreaView,
   Alert,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { ShoppingCart, Trash2, Plus, Minus, Tag, ArrowRight } from "lucide-react-native";
 import { useCartStore } from "../../src/store/cartStore";
@@ -33,10 +33,10 @@ export default function CartScreen() {
   const finalTotal = Math.max(0, subtotal - discount);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-      <View style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: "#F1F5F9", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+    <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+      <View style={{ paddingHorizontal: 16, paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: "#F1F5F9", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <View>
-          <Text style={{ fontSize: 20, fontWeight: "900", color: "#0F172A" }}>Shopping Cart</Text>
+          <Text style={{ fontSize: 20, fontWeight: "900", color: "#0F172A" }}>G-Mart Cart</Text>
           <Text style={{ fontSize: 12, color: "#64748B", marginTop: 2 }}>{totalItems} items in cart</Text>
         </View>
         {items.length > 0 && (

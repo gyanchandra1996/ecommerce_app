@@ -48,7 +48,7 @@ export function StoreFooter({ storeName }: Props = {}) {
     };
   }, []);
 
-  const themeName = liveStoreName || settings?.themeName || "G-store";
+  const themeName = liveStoreName || settings?.themeName || "G-Mart";
   const aboutText = (
     settings?.footerAboutText ||
     "Your premier destination for authentic electronics, global fashion, luxury goods, home decor and daily essentials."

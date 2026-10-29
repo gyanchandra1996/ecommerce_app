@@ -6,10 +6,10 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
-  SafeAreaView,
   Alert,
   Modal,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { ArrowLeft, Plus, MapPin, Trash2, Check, CheckCircle2, Home, Building2 } from "lucide-react-native";
 import { apiClient } from "../../src/services/api";
@@ -111,7 +111,7 @@ export default function AddressesScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       {/* Header */}
       <View
         style={{

@@ -7381,10 +7381,10 @@
         "ast_prod_toddler_canvas_sneakers_2"
       ],
       "mainImage": "/uploads/prod_kidssneaker_1.webp",
-      "rating": 4.8,
-      "reviewsCount": 120,
+      "rating": 5,
+      "reviewsCount": 0,
       "createdAt": "2026-10-28T18:50:00.445Z",
-      "updatedAt": "2026-10-28T18:50:00.445Z",
+      "updatedAt": "2026-10-29T19:16:17.678Z",
       "hasVariants": true,
       "variantAttributes": [
         {
@@ -10423,6 +10423,51 @@
   ],
   "orders": [
     {
+      "id": "ord_fxugqde",
+      "orderNumber": "tags105",
+      "customerName": "Gyan Chandra",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-29T19:17:16.112Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "authorizenet",
+      "paymentStatus": "Pending",
+      "orderStatus": "Pending",
+      "subtotal": 38,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 38,
+      "shippingAddress": "Flat 402, Hill Road, New Delhi, Delhi 110019",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_tchnm_0",
+          "orderId": "",
+          "productId": "prod_toddler_canvas_sneakers",
+          "variantId": "var_prod_toddler_canvas_sneakers_us8_tri",
+          "itemNo": "SKU-0",
+          "name": "Toddlers' Slip-On Breathable Canvas Sneakers",
+          "price": 38,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-29T19:17:16.111Z",
+          "action": "CREATE",
+          "performedBy": "Gyan Chandra",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-29T19:17:16.112Z",
+      "updatedAt": "2026-10-29T19:17:16.112Z"
+    },
+    {
       "id": "ord_aproe4t",
       "orderNumber": "tags203",
       "customerName": "Customer",
@@ -12327,6 +12372,19 @@
   ],
   "payments": [
     {
+      "id": "pay_635onob",
+      "orderId": "ord_fxugqde",
+      "orderNumber": "tags105",
+      "customerName": "Gyan Chandra",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "paymentGateway": "Razorpay",
+      "amount": 38,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-29T19:17:16.112Z",
+      "updatedAt": "2026-10-29T19:17:16.112Z"
+    },
+    {
       "id": "pay_tt620mr",
       "orderId": "ord_aproe4t",
       "orderNumber": "tags203",
@@ -12603,7 +12661,7 @@
       "userId": "usr_cust_gyanchandra",
       "status": "active",
       "createdAt": "2026-10-29T16:11:57.991Z",
-      "updatedAt": "2026-10-29T19:07:33.646Z"
+      "updatedAt": "2026-10-29T19:17:16.355Z"
     },
     {
       "id": "cart_ktairxg",
@@ -12653,6 +12711,23 @@
     "updatedAt": "2026-10-25T09:31:13.440Z"
   },
   "reviews": [
+    {
+      "id": "rev_3475xst",
+      "productId": "prod_toddler_canvas_sneakers",
+      "itemNo": "KID-CNVS-SNKR-RED",
+      "productName": "Toddlers' Slip-On Breathable Canvas Sneakers",
+      "userName": "Gyan Chandra",
+      "userEmail": "gyanchandranist@gmail.com",
+      "rating": 5,
+      "review": "This is nice product",
+      "media": [],
+      "comments": [],
+      "commentCount": 0,
+      "status": "Pending",
+      "postedOn": "2026-10-29",
+      "createdAt": "2026-10-29T19:16:17.678Z",
+      "updatedAt": "2026-10-29T19:16:17.678Z"
+    },
     {
       "id": "rev_g8yxx0l",
       "productId": "prod_swiss_watch",
@@ -13825,11 +13900,11 @@
       "productName": "Toddlers' Slip-On Breathable Canvas Sneakers",
       "productSku": "KID-CNVS-SNKR-RED",
       "warehouseName": "Nike Oregon Hub",
-      "availableQuantity": 60,
-      "reservedQuantity": 0,
+      "availableQuantity": 59,
+      "reservedQuantity": 1,
       "reorderLevel": 5,
       "createdAt": "2026-10-28T18:50:07.904Z",
-      "updatedAt": "2026-10-28T18:50:07.905Z"
+      "updatedAt": "2026-10-29T19:17:16.122Z"
     },
     {
       "id": "winv_prod_kids_denim_dungarees_wh_nike_2",
@@ -14106,6 +14181,22 @@
     }
   ],
   "inventoryMovements": [
+    {
+      "id": "mov_bgdg6qh",
+      "productId": "prod_toddler_canvas_sneakers",
+      "warehouseId": "wh_nike_1",
+      "productName": "Toddlers' Slip-On Breathable Canvas Sneakers",
+      "warehouseName": "Nike Oregon Hub",
+      "type": "RESERVATION",
+      "quantity": 1,
+      "previousAvailable": 60,
+      "newAvailable": 59,
+      "previousReserved": 0,
+      "newReserved": 1,
+      "referenceId": "ord_fxugqde",
+      "notes": "Stock reserved for order #ord_fxugqde",
+      "createdAt": "2026-10-29T19:17:16.122Z"
+    },
     {
       "id": "mov_vb1ng8a",
       "productId": "prod_mulberry_silk_blouse",

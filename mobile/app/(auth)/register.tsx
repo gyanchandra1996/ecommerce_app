@@ -4,10 +4,10 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  SafeAreaView,
   ActivityIndicator,
   ScrollView,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { X, User, Mail, Lock, UserPlus, ArrowRight } from "lucide-react-native";
 import { useAuthStore } from "../../src/store/authStore";
@@ -53,8 +53,8 @@ export default function RegisterScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-      <View style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: "#F1F5F9", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+    <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+      <View style={{ paddingHorizontal: 16, paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: "#F1F5F9", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <Text style={{ fontSize: 18, fontWeight: "900", color: "#0F172A" }}>Create Customer Account</Text>
         <TouchableOpacity onPress={() => router.back()} style={{ padding: 4 }}>
           <X size={20} color="#64748B" />
@@ -66,7 +66,7 @@ export default function RegisterScreen() {
           <View style={{ width: 56, height: 56, borderRadius: 28, backgroundColor: "#2563EB", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
             <UserPlus size={28} color="#FFFFFF" />
           </View>
-          <Text style={{ fontSize: 24, fontWeight: "900", color: "#0F172A" }}>Join G-Store</Text>
+          <Text style={{ fontSize: 24, fontWeight: "900", color: "#0F172A" }}>Join G-Mart</Text>
           <Text style={{ fontSize: 13, color: "#64748B", marginTop: 4 }}>
             Enjoy exclusive discounts and express tracking
           </Text>

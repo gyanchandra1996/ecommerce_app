@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { User, Package, MapPin, Shield, LogOut, ChevronRight } from "lucide-react-native";
 import { useAuthStore } from "../../src/store/authStore";
@@ -9,9 +10,9 @@ export default function ProfileScreen() {
   const { user, logout } = useAuthStore();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-      <View style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: "#F1F5F9" }}>
-        <Text style={{ fontSize: 20, fontWeight: "900", color: "#0F172A" }}>My Account</Text>
+    <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+      <View style={{ paddingHorizontal: 16, paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: "#F1F5F9" }}>
+        <Text style={{ fontSize: 20, fontWeight: "900", color: "#0F172A" }}>G-Mart Account</Text>
       </View>
 
       <ScrollView contentContainerStyle={{ padding: 16 }}>

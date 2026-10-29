@@ -31,15 +31,23 @@ export default function RootLayout() {
         />
         <Stack.Screen
           name="products/[id]"
-          options={{ headerShown: true, title: "Product Details" }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="category/[slug]"
-          options={{ headerShown: true, title: "Category Products" }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="checkout/index"
-          options={{ headerShown: true, title: "Express Checkout" }}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="orders/index"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="addresses/index"
+          options={{ headerShown: false }}
         />
       </Stack>
     </>

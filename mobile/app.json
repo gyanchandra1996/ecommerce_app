@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "G-Store",
-    "slug": "gstore-mobile",
-    "scheme": "gstore",
+    "name": "G-Mart",
+    "slug": "g-mart",
+    "scheme": "gmart",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

@@ -1,16 +1,17 @@
 import React from "react";
-import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Flame, Sparkles } from "lucide-react-native";
 
 export default function DealsScreen() {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-      <View style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: "#F1F5F9" }}>
+    <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+      <View style={{ paddingHorizontal: 16, paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: "#F1F5F9" }}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Flame size={20} color="#EA580C" style={{ marginRight: 6 }} />
-          <Text style={{ fontSize: 20, fontWeight: "900", color: "#0F172A" }}>Live Deals &amp; Discounts</Text>
+          <Text style={{ fontSize: 20, fontWeight: "900", color: "#0F172A" }}>G-Mart Live Deals</Text>
         </View>
-        <Text style={{ fontSize: 12, color: "#64748B", marginTop: 2 }}>Handpicked deals with verified lowest prices in India</Text>
+        <Text style={{ fontSize: 12, color: "#64748B", marginTop: 2 }}>Handpicked mega offers with verified lowest prices in India</Text>
       </View>
 
       <ScrollView contentContainerStyle={{ padding: 16 }}>

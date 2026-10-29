@@ -4,10 +4,10 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  SafeAreaView,
   ActivityIndicator,
   ScrollView,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { X, Mail, Lock, LogIn, ArrowRight } from "lucide-react-native";
 import { useAuthStore } from "../../src/store/authStore";
@@ -53,8 +53,8 @@ export default function LoginScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-      <View style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: "#F1F5F9", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+    <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+      <View style={{ paddingHorizontal: 16, paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: "#F1F5F9", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <Text style={{ fontSize: 18, fontWeight: "900", color: "#0F172A" }}>Customer Sign In</Text>
         <TouchableOpacity onPress={() => router.back()} style={{ padding: 4 }}>
           <X size={20} color="#64748B" />
@@ -63,9 +63,14 @@ export default function LoginScreen() {
 
       <ScrollView contentContainerStyle={{ padding: 20 }}>
         <View style={{ alignItems: "center", marginBottom: 24, marginTop: 10 }}>
-          <Text style={{ fontSize: 26, fontWeight: "900", color: "#0F172A", letterSpacing: -0.5 }}>
-            g-store
-          </Text>
+          <View style={{ flexDirection: "row", alignItems: "baseline" }}>
+            <Text style={{ fontSize: 28, fontWeight: "900", color: "#0F172A", letterSpacing: -0.5 }}>
+              G-
+            </Text>
+            <Text style={{ fontSize: 28, fontWeight: "900", color: "#2563EB", letterSpacing: -0.5 }}>
+              Mart
+            </Text>
+          </View>
           <Text style={{ fontSize: 13, color: "#64748B", marginTop: 4 }}>
             Sign in to track orders, addresses &amp; express checkout
           </Text>
@@ -167,7 +172,7 @@ export default function LoginScreen() {
 
         <View style={{ marginTop: 24, alignItems: "center" }}>
           <Text style={{ fontSize: 12, color: "#64748B" }}>
-            New to G-Store?{" "}
+            New to G-Mart?{" "}
             <Text onPress={() => router.push("/(auth)/register")} style={{ fontWeight: "800", color: "#2563EB" }}>
               Create an Account
             </Text>

@@ -59,7 +59,7 @@ function StorefrontHomePageContent({ initialStoreName }: { initialStoreName?: st
   const overridePrimary = searchParams?.get("primary");
   const overrideAccent = searchParams?.get("accent");
   const overrideStoreName = searchParams?.get("storeName");
-  const [liveStoreName, setLiveStoreName] = useState(overrideStoreName || initialStoreName || "G-store");
+  const [liveStoreName, setLiveStoreName] = useState(overrideStoreName || initialStoreName || "G-Mart");
 
   const { items: cart, addItem, adjustQuantity, removeItem, clearCart } = useCart();
   const [searchQuery, setSearchQuery] = useState("");
