@@ -245,6 +245,85 @@ This API powers the G-Store e-commerce application, mobile apps (Flutter, React 
             createdAt: { type: "string", format: "date-time" },
           },
         },
+        Address: {
+          type: "object",
+          properties: {
+            id: { type: "string", example: "addr_1" },
+            userId: { type: "string", example: "usr_cust_gyanchandra" },
+            name: { type: "string", example: "Gyanchandra" },
+            phone: { type: "string", example: "+91 98765 43210" },
+            addressLine1: { type: "string", example: "Flat 402, Hill Road" },
+            addressLine2: { type: "string", example: "Near Bandra Station" },
+            city: { type: "string", example: "Mumbai" },
+            state: { type: "string", example: "Maharashtra" },
+            postalCode: { type: "string", example: "400050" },
+            country: { type: "string", example: "India" },
+            type: { type: "string", enum: ["shipping", "billing"], example: "shipping" },
+            isDefault: { type: "boolean", example: true },
+            createdAt: { type: "string", format: "date-time" },
+          },
+        },
+        CustomerProfile: {
+          type: "object",
+          properties: {
+            id: { type: "string", example: "usr_cust_gyanchandra" },
+            name: { type: "string", example: "Gyanchandra" },
+            email: { type: "string", example: "gyanchandranist@gmail.com" },
+            phone: { type: "string", example: "+91 98765 43210" },
+            country: { type: "string", example: "India" },
+            state: { type: "string", example: "Maharashtra" },
+            city: { type: "string", example: "Mumbai" },
+            postalCode: { type: "string", example: "400050" },
+            role: { type: "string", example: "CUSTOMER" },
+            credit: { type: "number", example: 0 },
+            addresses: {
+              type: "array",
+              items: { $ref: "#/components/schemas/Address" },
+            },
+          },
+        },
+        Coupon: {
+          type: "object",
+          properties: {
+            id: { type: "string", example: "coup_diwali50" },
+            code: { type: "string", example: "DIWALI50" },
+            couponType: { type: "string", enum: ["percentage", "fixed"], example: "percentage" },
+            discountPercentage: { type: "number", example: 50 },
+            discountAmount: { type: "number", example: 500 },
+            minAmount: { type: "number", example: 1000 },
+            expiryDate: { type: "string", example: "2026-11-30" },
+            isActive: { type: "boolean", example: true },
+          },
+        },
+        QnaItem: {
+          type: "object",
+          properties: {
+            id: { type: "string", example: "qna_1" },
+            productId: { type: "string", example: "prod_s24_ultra" },
+            itemNo: { type: "string", example: "s24-ultra" },
+            productName: { type: "string", example: "Samsung Galaxy S24 Ultra" },
+            userName: { type: "string", example: "Rahul Verma" },
+            userEmail: { type: "string", example: "rahul@example.com" },
+            question: { type: "string", example: "Is this model Indian variant with Official Samsung Warranty?" },
+            rating: { type: "number", example: 5 },
+            status: { type: "string", enum: ["Active", "Pending", "Inactive"], example: "Active" },
+            answers: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  id: { type: "string", example: "ans_1" },
+                  questionId: { type: "string", example: "qna_1" },
+                  userName: { type: "string", example: "G-Store Admin" },
+                  answer: { type: "string", example: "Yes, 100% authentic Indian retail unit with 1 Year Manufacturer Warranty." },
+                  isAdmin: { type: "boolean", example: true },
+                  createdAt: { type: "string", format: "date-time" },
+                },
+              },
+            },
+            createdAt: { type: "string", format: "date-time" },
+          },
+        },
       },
     },
     security: [
@@ -1114,6 +1193,432 @@ This API powers the G-Store e-commerce application, mobile apps (Flutter, React 
               },
             },
             404: { description: "Review or comment not found" },
+          },
+        },
+      },
+      "/api/addresses": {
+        get: {
+          tags: ["Customer & Addresses"],
+          summary: "Get Customer Saved Delivery Addresses",
+          description: "Fetches all saved shipping and billing addresses for the authenticated customer.",
+          responses: {
+            200: {
+              description: "List of saved addresses",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      success: { type: "boolean", example: true },
+                      data: {
+                        type: "array",
+                        items: { $ref: "#/components/schemas/Address" },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        post: {
+          tags: ["Customer & Addresses"],
+          summary: "Add New Delivery Address",
+          description: "Creates and saves a new delivery or billing address with Indian PIN code auto-fill validation.",
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["name", "phone", "addressLine1", "city", "state", "postalCode"],
+                  properties: {
+                    name: { type: "string", example: "Gyanchandra" },
+                    phone: { type: "string", example: "+91 98765 43210" },
+                    addressLine1: { type: "string", example: "Flat 402, Hill Road" },
+                    addressLine2: { type: "string", example: "Near Bandra Station" },
+                    city: { type: "string", example: "Mumbai" },
+                    state: { type: "string", example: "Maharashtra" },
+                    postalCode: { type: "string", example: "400050" },
+                    country: { type: "string", example: "India" },
+                    type: { type: "string", enum: ["shipping", "billing"], example: "shipping" },
+                    isDefault: { type: "boolean", example: true },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            200: {
+              description: "Address created successfully",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      success: { type: "boolean", example: true },
+                      data: { $ref: "#/components/schemas/Address" },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      "/api/addresses/{id}": {
+        put: {
+          tags: ["Customer & Addresses"],
+          summary: "Update Saved Address",
+          description: "Update details of an existing customer address.",
+          parameters: [
+            { name: "id", in: "path", required: true, schema: { type: "string" }, description: "Address ID" },
+          ],
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    name: { type: "string" },
+                    phone: { type: "string" },
+                    addressLine1: { type: "string" },
+                    addressLine2: { type: "string" },
+                    city: { type: "string" },
+                    state: { type: "string" },
+                    postalCode: { type: "string" },
+                    isDefault: { type: "boolean" },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            200: { description: "Address updated successfully" },
+            404: { description: "Address not found" },
+          },
+        },
+        delete: {
+          tags: ["Customer & Addresses"],
+          summary: "Delete Saved Address",
+          description: "Permanently removes an address from customer account.",
+          parameters: [
+            { name: "id", in: "path", required: true, schema: { type: "string" }, description: "Address ID" },
+          ],
+          responses: {
+            200: { description: "Address deleted successfully" },
+            404: { description: "Address not found" },
+          },
+        },
+      },
+      "/api/customer/profile": {
+        get: {
+          tags: ["Customer & Addresses"],
+          summary: "Get Authenticated Customer Profile",
+          description: "Returns profile info, default addresses, and store credit balance for currently logged in customer.",
+          responses: {
+            200: {
+              description: "Customer profile details",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      success: { type: "boolean", example: true },
+                      data: { $ref: "#/components/schemas/CustomerProfile" },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        put: {
+          tags: ["Customer & Addresses"],
+          summary: "Update Customer Profile",
+          description: "Updates customer personal information, phone number, or preferences.",
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    name: { type: "string", example: "Gyanchandra" },
+                    phone: { type: "string", example: "+91 98765 43210" },
+                    city: { type: "string", example: "Mumbai" },
+                    state: { type: "string", example: "Maharashtra" },
+                    postalCode: { type: "string", example: "400050" },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            200: { description: "Profile updated successfully" },
+          },
+        },
+      },
+      "/api/customer/orders": {
+        get: {
+          tags: ["Customer & Addresses"],
+          summary: "Get Customer Order History",
+          description: "Fetches past orders, current status, item breakdown, and tracking for authenticated user.",
+          responses: {
+            200: {
+              description: "Customer's past orders",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      success: { type: "boolean", example: true },
+                      data: {
+                        type: "array",
+                        items: { $ref: "#/components/schemas/Order" },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      "/api/cart/merge": {
+        post: {
+          tags: ["Cart & Checkout"],
+          summary: "Merge Guest Cart to Customer Account",
+          description: "Transfers items from an anonymous guest cart session into the logged in customer's persistent cart upon mobile app login.",
+          responses: {
+            200: {
+              description: "Cart merged successfully",
+              content: { "application/json": { schema: { $ref: "#/components/schemas/ApiResponse" } } },
+            },
+          },
+        },
+      },
+      "/api/coupons": {
+        get: {
+          tags: ["Storefront & Banners"],
+          summary: "List Active Coupons & Offers",
+          description: "Returns currently active discount codes for mobile app banner/offers screen.",
+          responses: {
+            200: {
+              description: "List of active coupons",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      success: { type: "boolean", example: true },
+                      data: {
+                        type: "array",
+                        items: { $ref: "#/components/schemas/Coupon" },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      "/api/payments/razorpay/order": {
+        post: {
+          tags: ["Payments & Gateways"],
+          summary: "Create Razorpay Order (Mobile & Web Checkout)",
+          description: "Calculates order total with server-side validation and creates a Razorpay payment order for native SDKs.",
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["orderNumber", "customerName", "items"],
+                  properties: {
+                    orderNumber: { type: "string", example: "ORD-2026-9042" },
+                    customerName: { type: "string", example: "Gyanchandra" },
+                    customerEmail: { type: "string", example: "gyanwork1996@gmail.com" },
+                    customerPhone: { type: "string", example: "+91 98765 43210" },
+                    items: { type: "array", items: { type: "object" } },
+                    subtotal: { type: "number", example: 1200 },
+                    shippingCost: { type: "number", example: 50 },
+                    totalPrice: { type: "number", example: 1250 },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            200: {
+              description: "Razorpay order created with order_id and key",
+              content: { "application/json": { schema: { $ref: "#/components/schemas/ApiResponse" } } },
+            },
+          },
+        },
+      },
+      "/api/payments/razorpay/verify": {
+        post: {
+          tags: ["Payments & Gateways"],
+          summary: "Verify Razorpay Payment Signature",
+          description: "Validates HMAC signature returned by Razorpay mobile SDK and transitions order to Paid.",
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["orderNumber", "razorpay_order_id", "razorpay_payment_id", "razorpay_signature"],
+                  properties: {
+                    orderNumber: { type: "string", example: "ORD-2026-9042" },
+                    razorpay_order_id: { type: "string", example: "order_K8dG91k2Jkl9" },
+                    razorpay_payment_id: { type: "string", example: "pay_K8dG89H23jKl" },
+                    razorpay_signature: { type: "string", example: "9a8b7c6d5e4f3a2b1c0d" },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            200: { description: "Payment verified successfully" },
+            400: { description: "Invalid payment signature" },
+          },
+        },
+      },
+      "/api/qna": {
+        get: {
+          tags: ["Product Reviews & Comments"],
+          summary: "List Product Questions & Answers",
+          description: "Fetches community questions and admin answers, optionally filtered by productId or search term.",
+          parameters: [
+            { name: "productId", in: "query", schema: { type: "string" }, description: "Filter for a specific product ID" },
+            { name: "search", in: "query", schema: { type: "string" }, description: "Search keyword" },
+          ],
+          responses: {
+            200: {
+              description: "List of Q&A items with answers",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      success: { type: "boolean", example: true },
+                      data: {
+                        type: "array",
+                        items: { $ref: "#/components/schemas/QnaItem" },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        post: {
+          tags: ["Product Reviews & Comments"],
+          summary: "Ask a Question About a Product",
+          description: "Submits a new customer inquiry regarding a specific item.",
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["itemNo", "question"],
+                  properties: {
+                    productId: { type: "string", example: "prod_s24_ultra" },
+                    itemNo: { type: "string", example: "s24-ultra" },
+                    productName: { type: "string", example: "Samsung Galaxy S24 Ultra" },
+                    userName: { type: "string", example: "Rahul Verma" },
+                    userEmail: { type: "string", example: "rahul@example.com" },
+                    question: { type: "string", example: "Does this phone support wireless charging?" },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            201: { description: "Question submitted successfully" },
+          },
+        },
+      },
+      "/api/qna/{id}/answers": {
+        post: {
+          tags: ["Product Reviews & Comments"],
+          summary: "Post Answer to a Product Question",
+          description: "Submits an answer to an existing product question.",
+          parameters: [
+            { name: "id", in: "path", required: true, schema: { type: "string" }, description: "Question ID" },
+          ],
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["answer"],
+                  properties: {
+                    userName: { type: "string", example: "Store Admin" },
+                    userEmail: { type: "string", example: "support@gstore.com" },
+                    answer: { type: "string", example: "Yes, it supports 15W Qi wireless fast charging." },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            200: { description: "Answer posted successfully" },
+          },
+        },
+      },
+      "/api/auth/forgot-password": {
+        post: {
+          tags: ["Authentication"],
+          summary: "Request Password Reset Code",
+          description: "Generates and sends a secure password reset link / OTP to user email.",
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["email"],
+                  properties: {
+                    email: { type: "string", example: "customer@example.com" },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            200: { description: "Password reset instructions dispatched" },
+          },
+        },
+      },
+      "/api/auth/reset-password": {
+        post: {
+          tags: ["Authentication"],
+          summary: "Set New Password with Token",
+          description: "Updates customer account password using verified token from email.",
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["token", "newPassword"],
+                  properties: {
+                    token: { type: "string", example: "rst_tok_12345" },
+                    newPassword: { type: "string", example: "MySecurePassword123!" },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            200: { description: "Password updated successfully" },
           },
         },
       },
