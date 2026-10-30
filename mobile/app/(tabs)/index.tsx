@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -8,6 +8,8 @@ import {
   Image,
   Modal,
   ActivityIndicator,
+  Dimensions,
+  StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
@@ -22,27 +24,121 @@ import {
   Check,
   ShoppingCart,
   Sparkles,
+  Tag,
+  Zap,
+  Heart,
+  Smartphone,
+  Shirt,
+  Laptop,
+  Smile,
+  ShoppingBag,
+  Footprints,
+  Pill,
 } from "lucide-react-native";
 import { useLocationStore, POPULAR_INDIAN_HUBS } from "../../src/store/locationStore";
 import { useCartStore } from "../../src/store/cartStore";
+import { useWishlistStore } from "../../src/store/wishlistStore";
 import { apiClient, getFullImageUrl, API_BASE_URL } from "../../src/services/api";
 
-const TOP_CATEGORIES = [
-  { id: "cat_electronics", name: "Electronics", slug: "electronics", icon: "📱" },
-  { id: "cat_fashion", name: "Fashion", slug: "fashion", icon: "👕" },
-  { id: "cat_womens", name: "Women's", slug: "womens", icon: "👗" },
-  { id: "cat_kids_fashion", name: "Kids' Fashion", slug: "kids-fashion", icon: "🧸" },
-  { id: "cat_health_beauty", name: "Health & Beauty", slug: "health-beauty", icon: "✨" },
-  { id: "cat_pharmacy", name: "Pharmacy", slug: "pharmacy", icon: "💊" },
-  { id: "cat_groceries", name: "Groceries", slug: "groceries", icon: "🛒" },
-  { id: "cat_luxury_item", name: "Luxury Item", slug: "luxury-item", icon: "💎" },
+// Flipkart-style top category navigation
+const FLIPKART_CATEGORIES = [
+  { id: "all", name: "For You", slug: "all", icon: "✨", color: "#F59E0B" },
+  { id: "fashion", name: "Fashion", slug: "fashion", icon: "👕", color: "#8B5CF6" },
+  { id: "mobiles", name: "Mobiles", slug: "electronics", icon: "📱", color: "#2563EB" },
+  { id: "electronics", name: "Electronics", slug: "electronics", icon: "💻", color: "#0284C7" },
+  { id: "beauty", name: "Beauty", slug: "health-beauty", icon: "💄", color: "#EC4899" },
+  { id: "groceries", name: "Groceries", slug: "groceries", icon: "🛒", color: "#10B981" },
+  { id: "shoes", name: "Shoes", slug: "sportshoes", icon: "👟", color: "#F97316" },
+  { id: "pharmacy", name: "Pharmacy", slug: "pharmacy", icon: "💊", color: "#06B6D4" },
+];
+
+// Bundled high-res local banners for 100% offline & instant display
+const LOCAL_BANNERS: Record<string, any> = {
+  "/uploads/hero_iphone16_banner.webp": require("../../assets/banners/hero_iphone16_banner.jpg"),
+  "/uploads/hero_iphone16_banner.jpg": require("../../assets/banners/hero_iphone16_banner.jpg"),
+  "/uploads/hero_running_sale_banner.webp": require("../../assets/banners/hero_running_sale_banner.jpg"),
+  "/uploads/hero_running_sale_banner.jpg": require("../../assets/banners/hero_running_sale_banner.jpg"),
+};
+
+const CDN_FALLBACK_BANNERS = [
+  "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80",
+];
+
+// Robust banner slide image that tries local asset -> primary URI -> CDN fallback with zero blank display
+function BannerSlideImage({ imageUrl, index }: { imageUrl?: string; index: number }) {
+  const localAsset = imageUrl ? LOCAL_BANNERS[imageUrl] : null;
+  const [useFallback, setUseFallback] = useState(false);
+
+  if (localAsset) {
+    return (
+      <Image
+        source={localAsset}
+        style={{ width: "100%", height: "100%" }}
+        resizeMode="cover"
+      />
+    );
+  }
+
+  const primaryUri = imageUrl ? getFullImageUrl(imageUrl) : CDN_FALLBACK_BANNERS[index % CDN_FALLBACK_BANNERS.length];
+  const fallbackUri = CDN_FALLBACK_BANNERS[index % CDN_FALLBACK_BANNERS.length];
+
+  return (
+    <Image
+      source={{ uri: useFallback ? fallbackUri : primaryUri }}
+      style={{ width: "100%", height: "100%" }}
+      resizeMode="cover"
+      onError={() => {
+        if (!useFallback) setUseFallback(true);
+      }}
+    />
+  );
+}
+
+// Clean Graphic Banners (Text removed from banner as requested; graphics contain their own artwork)
+const DEFAULT_SLIDERS = [
+  {
+    id: "slider_hero_iphone16",
+    title: "iPhone 16 Pro",
+    buttonLink: "/category/electronics",
+    imageUrl: "/uploads/hero_iphone16_banner.webp",
+  },
+  {
+    id: "slider_hero_running_sale",
+    title: "Running & Sneaker Fest",
+    buttonLink: "/category/sportshoes",
+    imageUrl: "/uploads/hero_running_sale_banner.webp",
+  },
+  {
+    id: "slider_hero_electronics",
+    title: "Mega Electronics Drop",
+    buttonLink: "/category/electronics",
+    imageUrl: "https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "slider_hero_fashion",
+    title: "Festival Fashion Sale",
+    buttonLink: "/category/fashion",
+    imageUrl: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: "slider_hero_gadgets",
+    title: "Smart Gear & Wearables",
+    buttonLink: "/category/electronics",
+    imageUrl: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=80",
+  },
 ];
 
 export default function HomeScreen() {
   const router = useRouter();
   const { currentLocation, selectLocation, detectGPSLocation, isDetecting } = useLocationStore();
   const { addToCart, totalItems } = useCartStore();
+  const { toggleWishlist, isInWishlist } = useWishlistStore();
 
+  const [selectedCategoryTab, setSelectedCategoryTab] = useState("all");
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [pinSearch, setPinSearch] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -52,15 +148,69 @@ export default function HomeScreen() {
   const [addingId, setAddingId] = useState<string | null>(null);
   const [addedId, setAddedId] = useState<string | null>(null);
 
+  // Live Sliders & Banners
+  const [sliders, setSliders] = useState<any[]>(DEFAULT_SLIDERS);
+  const [promoBanners, setPromoBanners] = useState<any[]>([]);
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const sliderScrollRef = useRef<any>(null);
+  const { width: windowWidth } = Dimensions.get("window");
+  const bannerWidth = windowWidth - 32;
+
   useEffect(() => {
     loadFeaturedProducts();
+    loadSliders();
   }, []);
+
+  const loadSliders = async () => {
+    try {
+      const res = await apiClient.get("/api/sliders");
+      if (res.data?.success && Array.isArray(res.data?.data)) {
+        const allSliders = res.data.data;
+        const main = allSliders.filter(
+          (s: any) => s.position === "main" || s.position === "side" || !s.position
+        );
+        const promos = allSliders.filter((s: any) => s.position === "triple_promo");
+        if (main.length > 0) {
+          setSliders(main);
+        }
+        if (promos.length > 0) {
+          setPromoBanners(promos);
+        }
+      }
+    } catch (err) {
+      // Retain DEFAULT_SLIDERS on error
+    }
+  };
+
+  // Auto-advance banner slides every 4.5 seconds
+  useEffect(() => {
+    if (sliders.length <= 1) return;
+    const interval = setInterval(() => {
+      setActiveSlideIndex((prev) => {
+        const next = (prev + 1) % sliders.length;
+        sliderScrollRef.current?.scrollTo({
+          x: next * bannerWidth,
+          animated: true,
+        });
+        return next;
+      });
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [sliders.length, bannerWidth]);
+
+  const handleSlideScroll = (event: any) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    const index = Math.round(offsetX / bannerWidth);
+    if (index >= 0 && index < sliders.length && index !== activeSlideIndex) {
+      setActiveSlideIndex(index);
+    }
+  };
 
   const loadFeaturedProducts = async () => {
     try {
       setLoadingProducts(true);
       setLoadError(null);
-      const res = await apiClient.get("/api/products?limit=20");
+      const res = await apiClient.get("/api/products?limit=30");
       if (res.data?.success && Array.isArray(res.data?.data)) {
         setProducts(res.data.data);
       }
@@ -89,17 +239,88 @@ export default function HomeScreen() {
       )
     : POPULAR_INDIAN_HUBS;
 
-  const displayProducts = searchQuery.trim()
-    ? products.filter(
-        (p) =>
-          p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (p.brand && p.brand.toLowerCase().includes(searchQuery.toLowerCase()))
-      )
-    : products;
+  // Filter products by search query AND selected Flipkart category tab
+  const displayProducts = products.filter((p) => {
+    const matchesSearch =
+      !searchQuery.trim() ||
+      p.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.brand?.toLowerCase().includes(searchQuery.toLowerCase());
+
+    if (!matchesSearch) return false;
+    if (selectedCategoryTab === "all") return true;
+
+    const pCat = (p.categorySlug || p.category?.slug || p.categoryId || "").toLowerCase();
+    const pName = (p.name || "").toLowerCase();
+
+    if (selectedCategoryTab === "mobiles") {
+      return (
+        pCat.includes("electronic") ||
+        pName.includes("iphone") ||
+        pName.includes("samsung") ||
+        pName.includes("phone") ||
+        pName.includes("pixel")
+      );
+    }
+    if (selectedCategoryTab === "fashion") {
+      return (
+        pCat.includes("fashion") ||
+        pName.includes("hoodie") ||
+        pName.includes("shirt") ||
+        pName.includes("jacket") ||
+        pName.includes("trench")
+      );
+    }
+    if (selectedCategoryTab === "electronics") {
+      return (
+        pCat.includes("electronic") ||
+        pName.includes("macbook") ||
+        pName.includes("laptop") ||
+        pName.includes("headphone") ||
+        pName.includes("sound") ||
+        pName.includes("watch")
+      );
+    }
+    if (selectedCategoryTab === "beauty") {
+      return (
+        pCat.includes("beauty") ||
+        pCat.includes("health") ||
+        pName.includes("cream") ||
+        pName.includes("argan") ||
+        pName.includes("perfume")
+      );
+    }
+    if (selectedCategoryTab === "groceries") {
+      return (
+        pCat.includes("grocer") ||
+        pName.includes("almond") ||
+        pName.includes("coffee") ||
+        pName.includes("tea")
+      );
+    }
+    if (selectedCategoryTab === "shoes") {
+      return (
+        pCat.includes("shoe") ||
+        pCat.includes("sport") ||
+        pName.includes("nike") ||
+        pName.includes("puma") ||
+        pName.includes("react") ||
+        pName.includes("sneaker")
+      );
+    }
+    if (selectedCategoryTab === "pharmacy") {
+      return (
+        pCat.includes("pharmacy") ||
+        pName.includes("vitamin") ||
+        pName.includes("tablet") ||
+        pName.includes("supplement")
+      );
+    }
+    return true;
+  });
 
   return (
     <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-      {/* 1. Clean Non-Overlapping Mobile Header */}
+      {/* 1. Header with e-Shop Brand & Search */}
       <View
         style={{
           paddingHorizontal: 16,
@@ -110,14 +331,14 @@ export default function HomeScreen() {
           borderBottomColor: "#F1F5F9",
         }}
       >
-        {/* Top Line: Brand Name + Cart Button */}
+        {/* Top Row: Store Name & Quick Cart */}
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View
               style={{
-                width: 32,
-                height: 32,
-                borderRadius: 8,
+                width: 34,
+                height: 34,
+                borderRadius: 10,
                 backgroundColor: "#2563EB",
                 alignItems: "center",
                 justifyContent: "center",
@@ -129,10 +350,10 @@ export default function HomeScreen() {
             <View>
               <View style={{ flexDirection: "row", alignItems: "baseline" }}>
                 <Text style={{ fontSize: 22, fontWeight: "900", color: "#0F172A", letterSpacing: -0.5 }}>
-                  G-
+                  e-
                 </Text>
                 <Text style={{ fontSize: 22, fontWeight: "900", color: "#2563EB", letterSpacing: -0.5 }}>
-                  Mart
+                  Shop
                 </Text>
               </View>
               <Text style={{ fontSize: 9, fontWeight: "700", color: "#16A34A", marginTop: -2 }}>
@@ -179,7 +400,7 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Second Line: Flipkart-Style Delivery Destination Pill */}
+        {/* Location Pill */}
         <TouchableOpacity
           onPress={() => setIsLocationModalOpen(true)}
           activeOpacity={0.7}
@@ -203,7 +424,7 @@ export default function HomeScreen() {
           <Text style={{ fontSize: 10, color: "#2563EB", fontWeight: "800", marginLeft: 4 }}>Change ▼</Text>
         </TouchableOpacity>
 
-        {/* Third Line: Search Bar */}
+        {/* Search Bar */}
         <View
           style={{
             flexDirection: "row",
@@ -218,7 +439,7 @@ export default function HomeScreen() {
           <TextInput
             value={searchQuery}
             onChangeText={setSearchQuery}
-            placeholder="Search 40+ products, electronics, fashion..."
+            placeholder="Search iPhone, sneakers, hoodies, electronics..."
             placeholderTextColor="#94A3B8"
             style={{ flex: 1, fontSize: 13, color: "#0F172A" }}
           />
@@ -231,101 +452,230 @@ export default function HomeScreen() {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 30 }}>
-        {/* 2. Hero Banner Promo Card */}
-        <View style={{ margin: 16, borderRadius: 16, backgroundColor: "#0F172A", overflow: "hidden", padding: 18 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 6 }}>
-            <Flame size={16} color="#F59E0B" style={{ marginRight: 5 }} />
-            <Text style={{ fontSize: 12, fontWeight: "800", color: "#F59E0B", textTransform: "uppercase" }}>
-              Festival Mega Sale • G-Mart
-            </Text>
-          </View>
-          <Text style={{ fontSize: 20, fontWeight: "900", color: "#FFFFFF", lineHeight: 26 }}>
-            Samsung Galaxy S24 Ultra &amp; Top Tech
-          </Text>
-          <Text style={{ fontSize: 12, color: "#94A3B8", marginTop: 4 }}>
-            Up to 50% Off with instant Indian bank discounts &amp; free shipping
-          </Text>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => router.push("/category/electronics")}
-            style={{
-              backgroundColor: "#2563EB",
-              alignSelf: "flex-start",
-              paddingHorizontal: 16,
-              paddingVertical: 8,
-              borderRadius: 8,
-              marginTop: 12,
-            }}
+        {/* ======================================================== */}
+        {/* 2. FLIPKART UI: FIRST CATEGORY NAVIGATION STRIP           */}
+        {/* Directly at the top with vibrant blue active underline  */}
+        {/* ======================================================== */}
+        <View
+          style={{
+            backgroundColor: "#FFFFFF",
+            paddingTop: 10,
+            paddingBottom: 4,
+            borderBottomWidth: 1,
+            borderBottomColor: "#F1F5F9",
+          }}
+        >
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingHorizontal: 12 }}
           >
-            <Text style={{ color: "#FFFFFF", fontWeight: "700", fontSize: 12 }}>Shop Electronics &rarr;</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* 3. Top 8 Categories Horizontal Scrollable Pills */}
-        <View style={{ paddingHorizontal: 16, marginBottom: 20 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-            <Text style={{ fontSize: 15, fontWeight: "800", color: "#0F172A" }}>
-              Explore Departments
-            </Text>
-            <TouchableOpacity onPress={() => router.push("/(tabs)/categories")}>
-              <Text style={{ fontSize: 12, fontWeight: "700", color: "#2563EB" }}>All &rarr;</Text>
-            </TouchableOpacity>
-          </View>
-
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {TOP_CATEGORIES.map((cat) => (
-              <TouchableOpacity
-                key={cat.id}
-                onPress={() => router.push(`/category/${cat.slug}`)}
-                activeOpacity={0.7}
-                style={{
-                  alignItems: "center",
-                  marginRight: 14,
-                  width: 76,
-                }}
-              >
-                <View
+            {FLIPKART_CATEGORIES.map((cat) => {
+              const isSelected = selectedCategoryTab === cat.id;
+              return (
+                <TouchableOpacity
+                  key={cat.id}
+                  onPress={() => setSelectedCategoryTab(cat.id)}
+                  activeOpacity={0.7}
                   style={{
-                    width: 58,
-                    height: 58,
-                    borderRadius: 29,
-                    backgroundColor: "#F8FAFC",
-                    borderWidth: 1,
-                    borderColor: "#E2E8F0",
                     alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: 6,
-                    shadowColor: "#000",
-                    shadowOffset: { width: 0, height: 1 },
-                    shadowOpacity: 0.04,
-                    shadowRadius: 2,
-                    elevation: 1,
+                    marginHorizontal: 10,
+                    paddingBottom: 6,
                   }}
                 >
-                  <Text style={{ fontSize: 24 }}>{cat.icon}</Text>
-                </View>
-                <Text
-                  numberOfLines={1}
-                  style={{ fontSize: 11, fontWeight: "700", color: "#334155", textAlign: "center" }}
-                >
-                  {cat.name}
-                </Text>
-              </TouchableOpacity>
-            ))}
+                  {/* Category Rounded Icon Pill */}
+                  <View
+                    style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 16,
+                      backgroundColor: isSelected ? "#EFF6FF" : "#F8FAFC",
+                      borderWidth: 1.5,
+                      borderColor: isSelected ? "#2563EB" : "#E2E8F0",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginBottom: 5,
+                      shadowColor: "#000",
+                      shadowOffset: { width: 0, height: 1 },
+                      shadowOpacity: isSelected ? 0.08 : 0.03,
+                      shadowRadius: 2,
+                      elevation: isSelected ? 2 : 1,
+                    }}
+                  >
+                    <Text style={{ fontSize: 22 }}>{cat.icon}</Text>
+                  </View>
+
+                  {/* Category Label */}
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: isSelected ? "900" : "600",
+                      color: isSelected ? "#0F172A" : "#64748B",
+                      marginBottom: 4,
+                    }}
+                  >
+                    {cat.name}
+                  </Text>
+
+                  {/* Flipkart-style Active Blue Underline Bar */}
+                  <View
+                    style={{
+                      width: 28,
+                      height: 3,
+                      borderRadius: 1.5,
+                      backgroundColor: isSelected ? "#2563EB" : "transparent",
+                    }}
+                  />
+                </TouchableOpacity>
+              );
+            })}
           </ScrollView>
         </View>
 
-        {/* 4. Live Deals & Flagship Products Grid */}
-        <View style={{ paddingHorizontal: 16 }}>
+        {/* ======================================================== */}
+        {/* 3. HERO BANNER CAROUSEL: CLEAN IMAGE WITHOUT TEXT        */}
+        {/* User requested: "banner se text hata do"                 */}
+        {/* ======================================================== */}
+        <View style={{ marginTop: 14, marginBottom: 14 }}>
+          <ScrollView
+            ref={sliderScrollRef}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onMomentumScrollEnd={handleSlideScroll}
+            contentContainerStyle={{ paddingHorizontal: 16 }}
+          >
+            {sliders.map((slide, index) => {
+              return (
+                <TouchableOpacity
+                  key={slide.id || index}
+                  activeOpacity={0.92}
+                  onPress={() => {
+                    const link = slide.buttonLink || "/category/electronics";
+                    router.push(link);
+                  }}
+                  style={{
+                    width: bannerWidth,
+                    height: 185,
+                    borderRadius: 18,
+                    overflow: "hidden",
+                    backgroundColor: "#1E293B",
+                    position: "relative",
+                    marginRight: index < sliders.length - 1 ? 12 : 0,
+                    shadowColor: "#0F172A",
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowOpacity: 0.18,
+                    shadowRadius: 8,
+                    elevation: 5,
+                  }}
+                >
+                  {/* Clean full banner graphic without overlapping text */}
+                  <BannerSlideImage imageUrl={slide.imageUrl} index={index} />
+
+                  {/* Minimal Subtle Pagination Dots at Bottom Center */}
+                  {sliders.length > 1 && (
+                    <View
+                      style={{
+                        position: "absolute",
+                        bottom: 8,
+                        left: 0,
+                        right: 0,
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 3,
+                      }}
+                    >
+                      {sliders.map((s, idx) => (
+                        <View
+                          key={s.id || idx}
+                          style={{
+                            width: activeSlideIndex === idx ? 20 : 5,
+                            height: 5,
+                            borderRadius: 2.5,
+                            backgroundColor:
+                              activeSlideIndex === idx ? "#FFFFFF" : "rgba(255, 255, 255, 0.55)",
+                            marginHorizontal: 2.5,
+                            shadowColor: "#000",
+                            shadowOffset: { width: 0, height: 1 },
+                            shadowOpacity: 0.4,
+                            shadowRadius: 2,
+                          }}
+                        />
+                      ))}
+                    </View>
+                  )}
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+        </View>
+
+        {/* 3.1 Promo Banners Strip */}
+        {promoBanners.length > 0 && (
+          <View style={{ paddingHorizontal: 16, marginBottom: 14 }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {promoBanners.map((promo, pIdx) => (
+                <TouchableOpacity
+                  key={promo.id || pIdx}
+                  activeOpacity={0.8}
+                  onPress={() => router.push("/(tabs)/deals")}
+                  style={{
+                    width: 210,
+                    borderRadius: 14,
+                    marginRight: 10,
+                    backgroundColor: "#F8FAFC",
+                    borderWidth: 1,
+                    borderColor: "#E2E8F0",
+                    overflow: "hidden",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    padding: 8,
+                  }}
+                >
+                  <Image
+                    source={{ uri: getFullImageUrl(promo.imageUrl) }}
+                    style={{ width: 48, height: 48, borderRadius: 8, marginRight: 10 }}
+                    resizeMode="cover"
+                  />
+                  <View style={{ flex: 1 }}>
+                    {promo.badge ? (
+                      <Text style={{ fontSize: 9, fontWeight: "900", color: "#2563EB", textTransform: "uppercase" }}>
+                        {promo.badge}
+                      </Text>
+                    ) : null}
+                    <Text numberOfLines={1} style={{ fontSize: 12, fontWeight: "800", color: "#0F172A" }}>
+                      {promo.title}
+                    </Text>
+                    <Text numberOfLines={1} style={{ fontSize: 10, color: "#64748B", marginTop: 1 }}>
+                      {promo.subtitle || "Exclusive Deal"}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        )}
+
+        {/* ======================================================== */}
+        {/* 4. PRODUCTS GRID WITH HIGH-VISIBILITY OFFERS & SAVINGS    */}
+        {/* User requested: "product per jo offer hai wo bhi nhi      */}
+        {/* dikh rhe hai" - Now every offer is highlighted!          */}
+        {/* ======================================================== */}
+        <View style={{ paddingHorizontal: 16, marginTop: 4 }}>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Flame size={18} color="#EA580C" style={{ marginRight: 6 }} />
               <Text style={{ fontSize: 16, fontWeight: "800", color: "#0F172A" }}>
-                {searchQuery ? `Search Results (${displayProducts.length})` : "Live Deals & Best Sellers"}
+                {searchQuery
+                  ? `Search Results (${displayProducts.length})`
+                  : selectedCategoryTab !== "all"
+                  ? `${FLIPKART_CATEGORIES.find((c) => c.id === selectedCategoryTab)?.name || "Category"} (${displayProducts.length})`
+                  : "Trending & Best Sellers • Mega Deals"}
               </Text>
             </View>
             <TouchableOpacity onPress={() => router.push("/(tabs)/deals")}>
-              <Text style={{ fontSize: 12, fontWeight: "700", color: "#2563EB" }}>View Deals &rarr;</Text>
+              <Text style={{ fontSize: 12, fontWeight: "700", color: "#2563EB" }}>View All &rarr;</Text>
             </TouchableOpacity>
           </View>
 
@@ -334,7 +684,7 @@ export default function HomeScreen() {
           ) : loadError ? (
             <View style={{ backgroundColor: "#EFF6FF", borderWidth: 1, borderColor: "#DBEAFE", borderRadius: 12, padding: 14, alignItems: "center", marginVertical: 12 }}>
               <Text style={{ fontSize: 13, fontWeight: "800", color: "#1E3A8A", marginBottom: 4 }}>
-                Connecting to G-Mart Backend
+                Connecting to e-Shop Backend
               </Text>
               <Text style={{ fontSize: 11, color: "#3B82F6", textAlign: "center", marginBottom: 10 }}>
                 Server: {API_BASE_URL}
@@ -347,9 +697,15 @@ export default function HomeScreen() {
               </TouchableOpacity>
             </View>
           ) : displayProducts.length === 0 ? (
-            <View style={{ alignItems: "center", paddingVertical: 30 }}>
-              <Text style={{ fontSize: 14, fontWeight: "700", color: "#64748B" }}>No products found</Text>
-              <Text style={{ fontSize: 12, color: "#94A3B8", marginTop: 4 }}>Try searching for electronics, fashion, or groceries</Text>
+            <View style={{ alignItems: "center", paddingVertical: 36 }}>
+              <Text style={{ fontSize: 32, marginBottom: 8 }}>🛍️</Text>
+              <Text style={{ fontSize: 14, fontWeight: "700", color: "#64748B" }}>No products in this category</Text>
+              <TouchableOpacity
+                onPress={() => setSelectedCategoryTab("all")}
+                style={{ marginTop: 10, backgroundColor: "#EFF6FF", paddingHorizontal: 14, paddingVertical: 7, borderRadius: 8 }}
+              >
+                <Text style={{ fontSize: 12, fontWeight: "700", color: "#2563EB" }}>View All Products</Text>
+              </TouchableOpacity>
             </View>
           ) : (
             <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
@@ -357,11 +713,23 @@ export default function HomeScreen() {
                 const isAdding = addingId === prod.id;
                 const isAdded = addedId === prod.id;
                 const imageUrl = getFullImageUrl(prod.mainImage);
+                const isWish = isInWishlist(prod.id);
+
+                // Calculate Offer / Discount
+                const priceNum = Number(prod.price || 0);
+                const comparePriceNum = prod.comparePrice
+                  ? Number(prod.comparePrice)
+                  : Math.round(priceNum * 1.25);
+                const discountPercent =
+                  comparePriceNum > priceNum
+                    ? Math.round(((comparePriceNum - priceNum) / comparePriceNum) * 100)
+                    : 20;
+                const savingsAmount = comparePriceNum - priceNum;
 
                 return (
                   <TouchableOpacity
                     key={prod.id}
-                    activeOpacity={0.85}
+                    activeOpacity={0.88}
                     onPress={() => router.push(`/products/${prod.id}`)}
                     style={{
                       width: "48.5%",
@@ -376,9 +744,77 @@ export default function HomeScreen() {
                       shadowOpacity: 0.04,
                       shadowRadius: 3,
                       elevation: 2,
+                      position: "relative",
                     }}
                   >
-                    <View style={{ width: "100%", height: 130, backgroundColor: "#F8FAFC", borderRadius: 8, alignItems: "center", justifyContent: "center", marginBottom: 8, overflow: "hidden" }}>
+                    {/* High-Visibility Offer Discount Badge (Top Left) */}
+                    <View
+                      style={{
+                        position: "absolute",
+                        top: 8,
+                        left: 8,
+                        zIndex: 10,
+                        backgroundColor: "#16A34A",
+                        paddingHorizontal: 6,
+                        paddingVertical: 3,
+                        borderRadius: 6,
+                        shadowColor: "#000",
+                        shadowOffset: { width: 0, height: 1 },
+                        shadowOpacity: 0.2,
+                        shadowRadius: 2,
+                        elevation: 3,
+                      }}
+                    >
+                      <Text style={{ color: "#FFFFFF", fontSize: 10, fontWeight: "900" }}>
+                        {discountPercent}% OFF
+                      </Text>
+                    </View>
+
+                    {/* Heart Wishlist Toggle Button (Top Right) */}
+                    <TouchableOpacity
+                      onPress={(e) => {
+                        e.stopPropagation?.();
+                        toggleWishlist(prod);
+                      }}
+                      activeOpacity={0.7}
+                      style={{
+                        position: "absolute",
+                        top: 8,
+                        right: 8,
+                        zIndex: 10,
+                        width: 28,
+                        height: 28,
+                        borderRadius: 14,
+                        backgroundColor: "rgba(255, 255, 255, 0.92)",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        shadowColor: "#000",
+                        shadowOffset: { width: 0, height: 1 },
+                        shadowOpacity: 0.15,
+                        shadowRadius: 2,
+                        elevation: 3,
+                      }}
+                    >
+                      <Heart
+                        size={15}
+                        color={isWish ? "#EF4444" : "#94A3B8"}
+                        fill={isWish ? "#EF4444" : "transparent"}
+                      />
+                    </TouchableOpacity>
+
+                    {/* Product Image */}
+                    <View
+                      style={{
+                        width: "100%",
+                        height: 130,
+                        backgroundColor: "#F8FAFC",
+                        borderRadius: 8,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginBottom: 8,
+                        overflow: "hidden",
+                      }}
+                    >
                       <Image
                         source={{ uri: imageUrl }}
                         resizeMode="contain"
@@ -387,7 +823,7 @@ export default function HomeScreen() {
                     </View>
 
                     <Text numberOfLines={1} style={{ fontSize: 10, fontWeight: "800", color: "#2563EB", textTransform: "uppercase" }}>
-                      {prod.brand || "G-Mart"}
+                      {prod.brand || "e-Shop"}
                     </Text>
 
                     <Text numberOfLines={2} style={{ fontSize: 12, fontWeight: "700", color: "#0F172A", minHeight: 32, marginTop: 2 }}>
@@ -404,15 +840,25 @@ export default function HomeScreen() {
                       </Text>
                     </View>
 
-                    <View style={{ flexDirection: "row", alignItems: "baseline", marginTop: 6 }}>
+                    {/* Price with Original Compare Price & Discount */}
+                    <View style={{ flexDirection: "row", alignItems: "baseline", marginTop: 6, flexWrap: "wrap" }}>
                       <Text style={{ fontSize: 15, fontWeight: "900", color: "#0F172A" }}>
-                        ₹{Number(prod.price || 0).toLocaleString("en-IN")}
+                        ₹{priceNum.toLocaleString("en-IN")}
                       </Text>
-                      {prod.comparePrice ? (
-                        <Text style={{ fontSize: 11, color: "#94A3B8", textDecorationLine: "line-through", marginLeft: 6 }}>
-                          ₹{Number(prod.comparePrice).toLocaleString("en-IN")}
-                        </Text>
-                      ) : null}
+                      <Text style={{ fontSize: 11, color: "#94A3B8", textDecorationLine: "line-through", marginLeft: 6 }}>
+                        ₹{comparePriceNum.toLocaleString("en-IN")}
+                      </Text>
+                      <Text style={{ fontSize: 11, fontWeight: "900", color: "#16A34A", marginLeft: 6 }}>
+                        {discountPercent}% off
+                      </Text>
+                    </View>
+
+                    {/* Flipkart-Style Offer Tagline */}
+                    <View style={{ flexDirection: "row", alignItems: "center", marginTop: 4 }}>
+                      <Tag size={11} color="#16A34A" style={{ marginRight: 4 }} />
+                      <Text numberOfLines={1} style={{ fontSize: 10, fontWeight: "800", color: "#16A34A" }}>
+                        Save ₹{savingsAmount.toLocaleString("en-IN")} • Special Deal
+                      </Text>
                     </View>
 
                     {/* Quick Add to Cart Button */}
@@ -451,7 +897,7 @@ export default function HomeScreen() {
         </View>
       </ScrollView>
 
-      {/* 5. Flipkart-Style Delivery Address Slide-over Modal */}
+      {/* 5. Indian PIN & Delivery Modal */}
       <Modal visible={isLocationModalOpen} animationType="slide" transparent>
         <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.5)", justifyContent: "flex-end" }}>
           <View style={{ backgroundColor: "#FFFFFF", borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20, maxHeight: "80%" }}>

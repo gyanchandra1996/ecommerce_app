@@ -65,10 +65,10 @@ export default function LoginScreen() {
         <View style={{ alignItems: "center", marginBottom: 24, marginTop: 10 }}>
           <View style={{ flexDirection: "row", alignItems: "baseline" }}>
             <Text style={{ fontSize: 28, fontWeight: "900", color: "#0F172A", letterSpacing: -0.5 }}>
-              G-
+              e-
             </Text>
             <Text style={{ fontSize: 28, fontWeight: "900", color: "#2563EB", letterSpacing: -0.5 }}>
-              Mart
+              Shop
             </Text>
           </View>
           <Text style={{ fontSize: 13, color: "#64748B", marginTop: 4 }}>
@@ -172,7 +172,7 @@ export default function LoginScreen() {
 
         <View style={{ marginTop: 24, alignItems: "center" }}>
           <Text style={{ fontSize: 12, color: "#64748B" }}>
-            New to G-Mart?{" "}
+            New to e-Shop?{" "}
             <Text onPress={() => router.push("/(auth)/register")} style={{ fontWeight: "800", color: "#2563EB" }}>
               Create an Account
             </Text>

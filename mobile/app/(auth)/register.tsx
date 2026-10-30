@@ -66,7 +66,7 @@ export default function RegisterScreen() {
           <View style={{ width: 56, height: 56, borderRadius: 28, backgroundColor: "#2563EB", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
             <UserPlus size={28} color="#FFFFFF" />
           </View>
-          <Text style={{ fontSize: 24, fontWeight: "900", color: "#0F172A" }}>Join G-Mart</Text>
+          <Text style={{ fontSize: 24, fontWeight: "900", color: "#0F172A" }}>Join e-Shop</Text>
           <Text style={{ fontSize: 13, color: "#64748B", marginTop: 4 }}>
             Enjoy exclusive discounts and express tracking
           </Text>

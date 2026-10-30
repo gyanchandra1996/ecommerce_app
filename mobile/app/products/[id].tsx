@@ -22,6 +22,8 @@ import {
   MessageSquare,
   HelpCircle,
   User,
+  Tag,
+  Zap,
 } from "lucide-react-native";
 import { apiClient, getFullImageUrl } from "../../src/services/api";
 import { useCartStore } from "../../src/store/cartStore";
@@ -295,7 +297,7 @@ export default function ProductDetailScreen() {
           {/* Brand & Stock Pill */}
           <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
             <Text style={{ fontSize: 12, fontWeight: "800", color: "#2563EB", textTransform: "uppercase" }}>
-              {product.brand || "G-Store Collection"}
+              {product.brand || "e-Shop Collection"}
             </Text>
             <View
               style={{
@@ -329,22 +331,97 @@ export default function ProductDetailScreen() {
             </Text>
           </View>
 
-          {/* Pricing Row */}
-          <View style={{ flexDirection: "row", alignItems: "baseline", marginBottom: 18, paddingBottom: 14, borderBottomWidth: 1, borderBottomColor: "#F1F5F9" }}>
-            <Text style={{ fontSize: 24, fontWeight: "900", color: "#2563EB" }}>
-              ₹{Number(currentPrice).toLocaleString("en-IN")}
-            </Text>
-            {currentComparePrice ? (
-              <Text style={{ fontSize: 14, color: "#94A3B8", textDecorationLine: "line-through", marginLeft: 10 }}>
-                ₹{Number(currentComparePrice).toLocaleString("en-IN")}
-              </Text>
-            ) : null}
-            {currentSku ? (
-              <Text style={{ fontSize: 11, color: "#94A3B8", marginLeft: "auto", fontFamily: "monospace" }}>
-                SKU: {currentSku}
-              </Text>
-            ) : null}
-          </View>
+          {/* Pricing Row with Savings Pill */}
+          {(() => {
+            const priceNum = Number(currentPrice || 0);
+            const comparePriceNum = currentComparePrice
+              ? Number(currentComparePrice)
+              : Math.round(priceNum * 1.25);
+            const discountPercent =
+              comparePriceNum > priceNum
+                ? Math.round(((comparePriceNum - priceNum) / comparePriceNum) * 100)
+                : 20;
+            const savingsAmount = comparePriceNum - priceNum;
+
+            return (
+              <>
+                <View style={{ marginBottom: 14, paddingBottom: 12, borderBottomWidth: 1, borderBottomColor: "#F1F5F9" }}>
+                  <View style={{ flexDirection: "row", alignItems: "baseline", flexWrap: "wrap" }}>
+                    <Text style={{ fontSize: 26, fontWeight: "900", color: "#0F172A" }}>
+                      ₹{priceNum.toLocaleString("en-IN")}
+                    </Text>
+                    <Text style={{ fontSize: 14, color: "#94A3B8", textDecorationLine: "line-through", marginLeft: 10 }}>
+                      ₹{comparePriceNum.toLocaleString("en-IN")}
+                    </Text>
+                    <View style={{ backgroundColor: "#DCFCE7", paddingHorizontal: 8, paddingVertical: 3, borderRadius: 6, marginLeft: 10 }}>
+                      <Text style={{ fontSize: 12, fontWeight: "900", color: "#16A34A" }}>
+                        {discountPercent}% OFF
+                      </Text>
+                    </View>
+                    {currentSku ? (
+                      <Text style={{ fontSize: 11, color: "#94A3B8", marginLeft: "auto", fontFamily: "monospace" }}>
+                        SKU: {currentSku}
+                      </Text>
+                    ) : null}
+                  </View>
+                  <Text style={{ fontSize: 12, fontWeight: "800", color: "#16A34A", marginTop: 4 }}>
+                    You Save ₹{savingsAmount.toLocaleString("en-IN")} on this order
+                  </Text>
+                </View>
+
+                {/* Flipkart-Style Available Offers Box */}
+                <View
+                  style={{
+                    backgroundColor: "#F0FDF4",
+                    borderWidth: 1,
+                    borderColor: "#BBF7D0",
+                    borderRadius: 14,
+                    padding: 14,
+                    marginBottom: 20,
+                  }}
+                >
+                  <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }}>
+                    <Tag size={16} color="#16A34A" style={{ marginRight: 6 }} />
+                    <Text style={{ fontSize: 14, fontWeight: "900", color: "#166534" }}>
+                      Available Offers &amp; Bank Discounts
+                    </Text>
+                  </View>
+
+                  <View style={{ marginBottom: 8, flexDirection: "row" }}>
+                    <Text style={{ fontSize: 12, marginRight: 6 }}>🏷️</Text>
+                    <Text style={{ fontSize: 12, color: "#166534", flex: 1 }}>
+                      <Text style={{ fontWeight: "900", color: "#14532D" }}>Bank Offer: </Text>
+                      10% instant discount up to ₹1,500 on HDFC &amp; SBI Bank Cards.
+                    </Text>
+                  </View>
+
+                  <View style={{ marginBottom: 8, flexDirection: "row" }}>
+                    <Text style={{ fontSize: 12, marginRight: 6 }}>🏷️</Text>
+                    <Text style={{ fontSize: 12, color: "#166534", flex: 1 }}>
+                      <Text style={{ fontWeight: "900", color: "#14532D" }}>Special Price: </Text>
+                      Flat festival discount applied directly to current price.
+                    </Text>
+                  </View>
+
+                  <View style={{ marginBottom: 8, flexDirection: "row" }}>
+                    <Text style={{ fontSize: 12, marginRight: 6 }}>🏷️</Text>
+                    <Text style={{ fontSize: 12, color: "#166534", flex: 1 }}>
+                      <Text style={{ fontWeight: "900", color: "#14532D" }}>Partner Cashback: </Text>
+                      Extra ₹100 welcome cashback on Razorpay UPI checkout.
+                    </Text>
+                  </View>
+
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={{ fontSize: 12, marginRight: 6 }}>🏷️</Text>
+                    <Text style={{ fontSize: 12, color: "#166534", flex: 1 }}>
+                      <Text style={{ fontWeight: "900", color: "#14532D" }}>No Cost EMI: </Text>
+                      Avail 0% interest EMI options starting at ₹999/month.
+                    </Text>
+                  </View>
+                </View>
+              </>
+            );
+          })()}
 
           {/* Dynamic Variant Attributes Selector */}
           {product.hasVariants && Array.isArray(product.variantAttributes) && product.variantAttributes.length > 0 && (

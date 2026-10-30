@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Star, ArrowLeft, ShoppingCart, Check } from "lucide-react-native";
+import { Star, ArrowLeft, ShoppingCart, Check, Tag } from "lucide-react-native";
 import { apiClient, getFullImageUrl } from "../../src/services/api";
 import { useCartStore } from "../../src/store/cartStore";
 
@@ -205,6 +205,16 @@ export default function CategoryProductsScreen() {
             const isAdding = addingId === item.id;
             const isAdded = addedId === item.id;
 
+            const priceNum = Number(item.price || 0);
+            const comparePriceNum = item.comparePrice
+              ? Number(item.comparePrice)
+              : Math.round(priceNum * 1.25);
+            const discountPercent =
+              comparePriceNum > priceNum
+                ? Math.round(((comparePriceNum - priceNum) / comparePriceNum) * 100)
+                : 20;
+            const savingsAmount = comparePriceNum - priceNum;
+
             return (
               <TouchableOpacity
                 activeOpacity={0.85}
@@ -222,8 +232,32 @@ export default function CategoryProductsScreen() {
                   shadowOpacity: 0.04,
                   shadowRadius: 3,
                   elevation: 2,
+                  position: "relative",
                 }}
               >
+                {/* Offer Discount Badge */}
+                <View
+                  style={{
+                    position: "absolute",
+                    top: 8,
+                    left: 8,
+                    zIndex: 10,
+                    backgroundColor: "#16A34A",
+                    paddingHorizontal: 6,
+                    paddingVertical: 3,
+                    borderRadius: 6,
+                    shadowColor: "#000",
+                    shadowOffset: { width: 0, height: 1 },
+                    shadowOpacity: 0.15,
+                    shadowRadius: 2,
+                    elevation: 2,
+                  }}
+                >
+                  <Text style={{ color: "#FFFFFF", fontSize: 10, fontWeight: "900" }}>
+                    {discountPercent}% OFF
+                  </Text>
+                </View>
+
                 <View style={{ width: "100%", height: 135, backgroundColor: "#F8FAFC", borderRadius: 10, alignItems: "center", justifyContent: "center", marginBottom: 8, overflow: "hidden" }}>
                   <Image
                     source={{ uri: imageUrl }}
@@ -233,7 +267,7 @@ export default function CategoryProductsScreen() {
                 </View>
 
                 <Text numberOfLines={1} style={{ fontSize: 10, fontWeight: "800", color: "#2563EB", textTransform: "uppercase" }}>
-                  {item.brand || "G-Mart"}
+                  {item.brand || "e-Shop"}
                 </Text>
 
                 <Text numberOfLines={2} style={{ fontSize: 12, fontWeight: "700", color: "#0F172A", minHeight: 32, marginTop: 2 }}>
@@ -250,15 +284,23 @@ export default function CategoryProductsScreen() {
                   </Text>
                 </View>
 
-                <View style={{ flexDirection: "row", alignItems: "baseline", marginTop: 6 }}>
+                <View style={{ flexDirection: "row", alignItems: "baseline", marginTop: 6, flexWrap: "wrap" }}>
                   <Text style={{ fontSize: 15, fontWeight: "900", color: "#0F172A" }}>
-                    ₹{Number(item.price || 0).toLocaleString("en-IN")}
+                    ₹{priceNum.toLocaleString("en-IN")}
                   </Text>
-                  {item.comparePrice ? (
-                    <Text style={{ fontSize: 11, color: "#94A3B8", textDecorationLine: "line-through", marginLeft: 6 }}>
-                      ₹{Number(item.comparePrice).toLocaleString("en-IN")}
-                    </Text>
-                  ) : null}
+                  <Text style={{ fontSize: 11, color: "#94A3B8", textDecorationLine: "line-through", marginLeft: 6 }}>
+                    ₹{comparePriceNum.toLocaleString("en-IN")}
+                  </Text>
+                  <Text style={{ fontSize: 11, fontWeight: "900", color: "#16A34A", marginLeft: 6 }}>
+                    {discountPercent}% off
+                  </Text>
+                </View>
+
+                <View style={{ flexDirection: "row", alignItems: "center", marginTop: 4 }}>
+                  <Tag size={11} color="#16A34A" style={{ marginRight: 4 }} />
+                  <Text numberOfLines={1} style={{ fontSize: 10, fontWeight: "800", color: "#16A34A" }}>
+                    Save ₹{savingsAmount.toLocaleString("en-IN")} • Special Deal
+                  </Text>
                 </View>
 
                 <TouchableOpacity

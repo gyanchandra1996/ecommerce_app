@@ -97,10 +97,12 @@ export default function MyOrdersScreen() {
             const itemsCount = item.items ? item.items.length : 1;
 
             return (
-              <View
+              <TouchableOpacity
+                activeOpacity={0.85}
+                onPress={() => router.push(`/orders/${item.orderNumber || item.id}`)}
                 style={{
                   backgroundColor: "#F8FAFC",
-                  borderRadius: 14,
+                  borderRadius: 16,
                   borderWidth: 1,
                   borderColor: "#E2E8F0",
                   padding: 14,
@@ -139,15 +141,29 @@ export default function MyOrdersScreen() {
 
                 <View style={{ height: 1, backgroundColor: "#E2E8F0", marginVertical: 6 }} />
 
-                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "baseline" }}>
+                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                   <Text style={{ fontSize: 11, color: "#94A3B8" }}>
                     {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : "Recent"}
                   </Text>
-                  <Text style={{ fontSize: 15, fontWeight: "900", color: "#2563EB" }}>
-                    ₹{Number(item.totalPrice || item.totalAmount || 0).toLocaleString("en-IN")}
-                  </Text>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text style={{ fontSize: 15, fontWeight: "900", color: "#2563EB", marginRight: 12 }}>
+                      ₹{Number(item.totalPrice || item.totalAmount || 0).toLocaleString("en-IN")}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "#7C3AED",
+                        paddingHorizontal: 10,
+                        paddingVertical: 5,
+                        borderRadius: 8,
+                      }}
+                    >
+                      <Text style={{ fontSize: 10, fontWeight: "800", color: "#FFFFFF" }}>
+                        Track Live &rarr;
+                      </Text>
+                    </View>
+                  </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             );
           }}
         />

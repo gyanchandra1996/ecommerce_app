@@ -4,16 +4,19 @@ import { StatusBar } from "expo-status-bar";
 import { useAuthStore } from "../src/store/authStore";
 import { useLocationStore } from "../src/store/locationStore";
 import { useCartStore } from "../src/store/cartStore";
+import { useWishlistStore } from "../src/store/wishlistStore";
 
 export default function RootLayout() {
   const loadStoredSession = useAuthStore((s) => s.loadStoredSession);
   const loadStoredLocation = useLocationStore((s) => s.loadStoredLocation);
   const fetchCart = useCartStore((s) => s.fetchCart);
+  const loadWishlist = useWishlistStore((s) => s.loadWishlist);
 
   useEffect(() => {
     loadStoredSession();
     loadStoredLocation();
     fetchCart();
+    loadWishlist();
   }, []);
 
   return (
@@ -43,6 +46,10 @@ export default function RootLayout() {
         />
         <Stack.Screen
           name="orders/index"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="orders/[id]"
           options={{ headerShown: false }}
         />
         <Stack.Screen

@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "G-Mart",
-    "slug": "g-mart",
-    "scheme": "gmart",
+    "name": "e-Shop",
+    "slug": "e-shop",
+    "scheme": "eshop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,6 +11,14 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.eshop.mobile",
+      "usesCleartextTraffic": true,
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ],
       "adaptiveIcon": {
         "backgroundColor": "#2563EB",
         "foregroundImage": "./assets/android-icon-foreground.png",

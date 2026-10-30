@@ -55,7 +55,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const { customer, guestSessionId, newGuestCookie } = await getAuthContext(req);
-    const { cart } = await DatabaseStore.getOrCreateCart(customer?.id, guestSessionId);
+    const { cart } = await DatabaseStore.getOrCreateCart(customer?.id, guestSessionId, true);
 
     const body = await req.json();
     const { productId, variantId, quantity = 1, selectedAttributes } = body;
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
       selectedAttributes,
     });
 
-    const refreshed = await DatabaseStore.getOrCreateCart(customer?.id, guestSessionId);
+    const refreshed = await DatabaseStore.getOrCreateCart(customer?.id, guestSessionId, true);
 
     const response = NextResponse.json({
       success: true,

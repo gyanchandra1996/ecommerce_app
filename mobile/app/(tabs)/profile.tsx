@@ -12,7 +12,7 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       <View style={{ paddingHorizontal: 16, paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: "#F1F5F9" }}>
-        <Text style={{ fontSize: 20, fontWeight: "900", color: "#0F172A" }}>G-Mart Account</Text>
+        <Text style={{ fontSize: 20, fontWeight: "900", color: "#0F172A" }}>e-Shop Account</Text>
       </View>
 
       <ScrollView contentContainerStyle={{ padding: 16 }}>

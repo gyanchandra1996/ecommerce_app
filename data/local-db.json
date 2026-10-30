@@ -248,6 +248,36 @@
       "phoneVerified": true,
       "createdAt": "2026-10-29T17:56:36.367Z",
       "updatedAt": "2026-10-29T17:56:36.367Z"
+    },
+    {
+      "id": "usr_bml05dvn4",
+      "name": "mobile.google.user",
+      "email": "mobile.google.user@example.com",
+      "password": "OAuthGoogle_jlespqxrhn_1793382907036",
+      "role": "CUSTOMER",
+      "type": "customer",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "",
+      "phone": "",
+      "countryCode": "+1",
+      "country": "",
+      "state": "",
+      "city": "",
+      "postalCode": "",
+      "streetAddress": "",
+      "apartment": "",
+      "address": "",
+      "shippingAddress": "",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-30T17:55:07.039Z",
+      "updatedAt": "2026-10-30T17:55:07.039Z"
     }
   ],
   "assets": [
@@ -6081,10 +6111,10 @@
         "ast_prod_wide_leg_trousers_2"
       ],
       "mainImage": "/uploads/prod_widepants_1.webp",
-      "rating": 4.8,
-      "reviewsCount": 120,
+      "rating": 5,
+      "reviewsCount": 0,
       "createdAt": "2026-10-28T18:49:58.863Z",
-      "updatedAt": "2026-10-28T18:49:58.863Z",
+      "updatedAt": "2026-10-30T17:55:49.009Z",
       "hasVariants": true,
       "variantAttributes": [
         {
@@ -9888,6 +9918,20 @@
       "updatedAt": "2026-10-28T19:02:44.327Z"
     },
     {
+      "id": "sl_hero_running_sale_banner",
+      "title": "SALE UP TO 50% OFF",
+      "subtitle": "Puma Nitro Pro Velocity",
+      "description": "High-cushion responsive running gear",
+      "imageUrl": "/uploads/hero_running_sale_banner.webp",
+      "position": "side",
+      "buttonText": "Shop now",
+      "buttonLink": "#deals",
+      "isActive": true,
+      "displayOrder": 1,
+      "createdAt": "2026-10-28T19:00:43.579Z",
+      "updatedAt": "2026-10-28T19:02:44.323Z"
+    },
+    {
       "id": "slider_hero_2",
       "title": "Samsung Galaxy S24 Ultra",
       "subtitle": "Titanium Evolution with Galaxy AI",
@@ -9920,6 +9964,21 @@
       "isActive": true,
       "createdAt": "2026-10-25T09:31:13.437Z",
       "updatedAt": "2026-10-28T19:02:44.418Z"
+    },
+    {
+      "id": "slider_hero_macbook",
+      "title": "MacBook Pro M4 Pro",
+      "subtitle": "Liquid Retina XDR • Up to 24-hr Battery",
+      "description": "Supercharged for Apple Intelligence & Creative Pros",
+      "tag": "NEW LAUNCH • FLAT ₹10,000 CASHBACK",
+      "buttonText": "Explore Mac",
+      "buttonLink": "/category/electronics",
+      "imageUrl": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80",
+      "position": "main",
+      "displayOrder": 2,
+      "isActive": true,
+      "createdAt": "2026-10-30T17:57:11.790Z",
+      "updatedAt": "2026-10-30T17:57:11.804Z"
     },
     {
       "id": "slider_hero_3",
@@ -9975,18 +10034,49 @@
       "updatedAt": "2026-10-25T15:19:06.700Z"
     },
     {
-      "id": "sl_hero_running_sale_banner",
-      "title": "SALE UP TO 50% OFF",
-      "subtitle": "Puma Nitro Pro Velocity",
-      "description": "High-cushion responsive running gear",
-      "imageUrl": "/uploads/hero_running_sale_banner.webp",
-      "position": "side",
-      "buttonText": "Shop now",
-      "buttonLink": "#deals",
+      "id": "slider_hero_nike",
+      "title": "Nike Air Max Pulse & Sneaker Fest",
+      "subtitle": "UP TO 50% OFF • Premium Streetwear",
+      "description": "Engineered cushioning for peak performance and style",
+      "tag": "EXCLUSIVE SNEAKER DROP",
+      "buttonText": "Shop Footwear",
+      "buttonLink": "/category/sportshoes",
+      "imageUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
+      "position": "main",
+      "displayOrder": 4,
       "isActive": true,
-      "displayOrder": 1,
-      "createdAt": "2026-10-28T19:00:43.579Z",
-      "updatedAt": "2026-10-28T19:02:44.323Z"
+      "createdAt": "2026-10-30T17:57:11.804Z",
+      "updatedAt": "2026-10-30T17:57:11.804Z"
+    },
+    {
+      "id": "slider_hero_winter",
+      "title": "Winter Luxury Trench & Knitwear",
+      "subtitle": "Cozy Cashmere & Puffer Jackets",
+      "description": "Premium cold-weather collections up to 60% OFF",
+      "tag": "WINTER FASHION EDIT",
+      "buttonText": "Shop Apparel",
+      "buttonLink": "/category/fashion",
+      "imageUrl": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&q=80",
+      "position": "main",
+      "displayOrder": 6,
+      "isActive": true,
+      "createdAt": "2026-10-30T17:57:11.805Z",
+      "updatedAt": "2026-10-30T17:57:11.805Z"
+    },
+    {
+      "id": "slider_hero_watch",
+      "title": "Apple Watch Ultra 2 & Smart Gear",
+      "subtitle": "Rugged & Capable • Precision Dual-Frequency GPS",
+      "description": "Built for extreme endurance, fitness tracking & diving",
+      "tag": "BESTSELLER • EXTRA 10% OFF",
+      "buttonText": "Shop Wearables",
+      "buttonLink": "/category/electronics",
+      "imageUrl": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80",
+      "position": "main",
+      "displayOrder": 7,
+      "isActive": true,
+      "createdAt": "2026-10-30T17:57:11.805Z",
+      "updatedAt": "2026-10-30T17:57:11.805Z"
     }
   ],
   "menuItems": [
@@ -10095,10 +10185,10 @@
   ],
   "settings": {
     "id": "site_settings_main",
-    "themeName": "G-store",
-    "siteTitle": "G-store | Online Shopping for Electronics, Fashion, Deals & More in India",
+    "themeName": "e-Shop",
+    "siteTitle": "e-Shop | Online Shopping",
     "tagline": "Express delivery across India",
-    "uniqueTitle": "G-STORE",
+    "uniqueTitle": "e-Shop",
     "alternateTitle": "EMOX1",
     "orderPrefix": "tags",
     "defaultCurrency": "INR",
@@ -10257,7 +10347,7 @@
     "autoCancelDays": 7,
     "handlingCharge": 5,
     "freeShippingThreshold": 200,
-    "updatedAt": "2026-10-28T18:19:52.600Z"
+    "updatedAt": "2026-10-30T18:27:27.828Z"
   },
   "manufacturers": [
     {
@@ -10422,6 +10512,1140 @@
     }
   ],
   "orders": [
+    {
+      "id": "ord_n0f76km",
+      "orderNumber": "cod_4332",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T19:29:18.892Z",
+      "gateway": "Cash on Delivery",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Pending",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_ymun2_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-0",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:29:18.892Z",
+          "action": "CREATE",
+          "performedBy": "Customer",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-30T19:29:18.893Z",
+      "updatedAt": "2026-10-30T19:29:18.893Z"
+    },
+    {
+      "id": "ord_g4q2mle",
+      "orderNumber": "tags1914",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T19:29:18.328Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_bilw0_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-1",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuEeUarjuv9sKu",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:29:18.329Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Mobile Test User",
+          "notes": "Razorpay order created with ID: order_TuEeUarjuv9sKu. Amount: ₹12499.00"
+        },
+        {
+          "timestamp": "2026-10-30T19:29:18.607Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_test_verified_99"
+        }
+      ],
+      "createdAt": "2026-10-30T19:29:18.329Z",
+      "updatedAt": "2026-10-30T19:29:18.607Z",
+      "paymentTransactionId": "pay_test_verified_99",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuEeUarjuv9sKu",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T19:29:18.606Z"
+      },
+      "paidAt": "2026-10-30T19:29:18.606Z"
+    },
+    {
+      "id": "ord_eysn2az",
+      "orderNumber": "tags7885",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T19:27:29.823Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 45,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 45,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_1xay1_0",
+          "orderId": "",
+          "productId": "prod_nike_jordan_hoodie",
+          "variantId": "var_prod_nike_jordan_hoodie_s_cla",
+          "itemNo": "SKU-1",
+          "name": "Nike Jordan Brooklyn Fleece Men's Pullover Hoodie",
+          "price": 45,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuEca2mWOJGhNr",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:27:29.823Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "mobile.google.user",
+          "notes": "Razorpay order created with ID: order_TuEca2mWOJGhNr. Amount: ₹45.00"
+        },
+        {
+          "timestamp": "2026-10-30T19:27:38.213Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_mob_cfpomsf3"
+        }
+      ],
+      "createdAt": "2026-10-30T19:27:29.824Z",
+      "updatedAt": "2026-10-30T19:27:38.213Z",
+      "paymentTransactionId": "pay_mob_cfpomsf3",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuEca2mWOJGhNr",
+        "razorpay_payment_id": "pay_mob_cfpomsf3",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T19:27:38.212Z"
+      },
+      "paidAt": "2026-10-30T19:27:38.212Z"
+    },
+    {
+      "id": "ord_8ioo69i",
+      "orderNumber": "tags8497",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T19:26:10.567Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 3499,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 3499,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_e9m33_0",
+          "orderId": "",
+          "productId": "prod_macbook_pro_16",
+          "variantId": "var_prod_macbook_pro_16_36g_spa",
+          "itemNo": "SKU-1",
+          "name": "Apple MacBook Pro 16-inch M3 Max Space Black",
+          "price": 3499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuEbBei8wkM0Wg",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:26:10.567Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "mobile.google.user",
+          "notes": "Razorpay order created with ID: order_TuEbBei8wkM0Wg. Amount: ₹3499.00"
+        },
+        {
+          "timestamp": "2026-10-30T19:26:13.573Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_mob_xo4hlxpj"
+        }
+      ],
+      "createdAt": "2026-10-30T19:26:10.569Z",
+      "updatedAt": "2026-10-30T19:26:13.573Z",
+      "paymentTransactionId": "pay_mob_xo4hlxpj",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuEbBei8wkM0Wg",
+        "razorpay_payment_id": "pay_mob_xo4hlxpj",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T19:26:13.572Z"
+      },
+      "paidAt": "2026-10-30T19:26:13.572Z"
+    },
+    {
+      "id": "ord_qb8pdyu",
+      "orderNumber": "tags5474",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T19:25:05.502Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 285,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 285,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_3svt7_0",
+          "orderId": "",
+          "productId": "prod_mulberry_silk_scarf",
+          "itemNo": "SKU-1",
+          "name": "Pure Mulberry Jacquard Silk Monogram Embroidered Scarf",
+          "price": 285,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuEa2EFbzVIfMf",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:25:05.502Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "mobile.google.user",
+          "notes": "Razorpay order created with ID: order_TuEa2EFbzVIfMf. Amount: ₹285.00"
+        },
+        {
+          "timestamp": "2026-10-30T19:25:17.708Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_mob_fs3edphf"
+        }
+      ],
+      "createdAt": "2026-10-30T19:25:05.502Z",
+      "updatedAt": "2026-10-30T19:25:17.708Z",
+      "paymentTransactionId": "pay_mob_fs3edphf",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuEa2EFbzVIfMf",
+        "razorpay_payment_id": "pay_mob_fs3edphf",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T19:25:17.706Z"
+      },
+      "paidAt": "2026-10-30T19:25:17.705Z"
+    },
+    {
+      "id": "ord_y7htbic",
+      "orderNumber": "tags3677",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T19:23:50.204Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 285,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 285,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_x3sl3_0",
+          "orderId": "",
+          "productId": "prod_mulberry_silk_scarf",
+          "itemNo": "SKU-1",
+          "name": "Pure Mulberry Jacquard Silk Monogram Embroidered Scarf",
+          "price": 285,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuEYiMrg1cU21h",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:23:50.204Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "mobile.google.user",
+          "notes": "Razorpay order created with ID: order_TuEYiMrg1cU21h. Amount: ₹285.00"
+        }
+      ],
+      "createdAt": "2026-10-30T19:23:50.205Z",
+      "updatedAt": "2026-10-30T19:23:50.205Z"
+    },
+    {
+      "id": "ord_yttl7y0",
+      "orderNumber": "tags3547",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T19:23:36.735Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 285,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 285,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_vxzp0_0",
+          "orderId": "",
+          "productId": "prod_mulberry_silk_scarf",
+          "itemNo": "SKU-1",
+          "name": "Pure Mulberry Jacquard Silk Monogram Embroidered Scarf",
+          "price": 285,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuEYTitEUWe7RM",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:23:36.735Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "mobile.google.user",
+          "notes": "Razorpay order created with ID: order_TuEYTitEUWe7RM. Amount: ₹285.00"
+        }
+      ],
+      "createdAt": "2026-10-30T19:23:36.739Z",
+      "updatedAt": "2026-10-30T19:23:36.739Z"
+    },
+    {
+      "id": "ord_uefy6p4",
+      "orderNumber": "tags9758",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T19:11:08.664Z",
+      "gateway": "Cash On Delivery (COD)",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 579,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 579,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_ef45d_0",
+          "orderId": "",
+          "productId": "prod_18k_gold_necklace",
+          "variantId": "var_prod_18k_gold_necklace_950",
+          "itemNo": "SKU-0",
+          "name": "Diamond Stud Earrings (1/3 ct. t.w.) in 14K White Gold",
+          "price": 579,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:11:08.664Z",
+          "action": "CREATE",
+          "performedBy": "mobile.google.user",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-30T19:11:08.665Z",
+      "updatedAt": "2026-10-30T19:11:08.665Z"
+    },
+    {
+      "id": "ord_gn1p9t3",
+      "orderNumber": "tags3646",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T18:56:41.148Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 85,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 85,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_x2c9x_0",
+          "orderId": "",
+          "productId": "prod_chino_pants",
+          "variantId": "var_prod_chino_pants_s_cla",
+          "itemNo": "SKU-1",
+          "name": "Tailored Fit Wool Blend Chino Trousers Charcoal",
+          "price": 85,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuE61uIwe5cBiV",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T18:56:41.149Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "mobile.google.user",
+          "notes": "Razorpay order created with ID: order_TuE61uIwe5cBiV. Amount: ₹85.00"
+        },
+        {
+          "timestamp": "2026-10-30T18:56:47.420Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_mob_kfzwgm33"
+        }
+      ],
+      "createdAt": "2026-10-30T18:56:41.149Z",
+      "updatedAt": "2026-10-30T18:56:47.420Z",
+      "paymentTransactionId": "pay_mob_kfzwgm33",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuE61uIwe5cBiV",
+        "razorpay_payment_id": "pay_mob_kfzwgm33",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T18:56:47.419Z"
+      },
+      "paidAt": "2026-10-30T18:56:47.419Z"
+    },
+    {
+      "id": "ord_ttvk9aq",
+      "orderNumber": "cod_3821",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T18:56:13.491Z",
+      "gateway": "Cash on Delivery",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Pending",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_hfmk7_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-0",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T18:56:13.491Z",
+          "action": "CREATE",
+          "performedBy": "Customer",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-30T18:56:13.492Z",
+      "updatedAt": "2026-10-30T18:56:13.492Z"
+    },
+    {
+      "id": "ord_iq2qz6y",
+      "orderNumber": "tags9787",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T18:56:12.973Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_qxtj0_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-1",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuE5XaQJV3VODU",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T18:56:12.973Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Mobile Test User",
+          "notes": "Razorpay order created with ID: order_TuE5XaQJV3VODU. Amount: ₹12499.00"
+        },
+        {
+          "timestamp": "2026-10-30T18:56:13.213Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_test_verified_99"
+        }
+      ],
+      "createdAt": "2026-10-30T18:56:12.973Z",
+      "updatedAt": "2026-10-30T18:56:13.213Z",
+      "paymentTransactionId": "pay_test_verified_99",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuE5XaQJV3VODU",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T18:56:13.212Z"
+      },
+      "paidAt": "2026-10-30T18:56:13.212Z"
+    },
+    {
+      "id": "ord_5jgrmnz",
+      "orderNumber": "cod_9592",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T18:51:08.322Z",
+      "gateway": "Cash on Delivery",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Pending",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_fhqyk_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-0",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T18:51:08.322Z",
+          "action": "CREATE",
+          "performedBy": "Customer",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-30T18:51:08.324Z",
+      "updatedAt": "2026-10-30T18:51:08.324Z"
+    },
+    {
+      "id": "ord_3ghfe9p",
+      "orderNumber": "tags9842",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T18:51:07.579Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_p67pe_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-1",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuE0ABN5NdAbC9",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T18:51:07.579Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Mobile Test User",
+          "notes": "Razorpay order created with ID: order_TuE0ABN5NdAbC9. Amount: ₹12499.00"
+        },
+        {
+          "timestamp": "2026-10-30T18:51:07.927Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_test_verified_99"
+        }
+      ],
+      "createdAt": "2026-10-30T18:51:07.580Z",
+      "updatedAt": "2026-10-30T18:51:07.927Z",
+      "paymentTransactionId": "pay_test_verified_99",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuE0ABN5NdAbC9",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T18:51:07.926Z"
+      },
+      "paidAt": "2026-10-30T18:51:07.926Z"
+    },
+    {
+      "id": "ord_3wkipjg",
+      "orderNumber": "cod_8999",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T18:50:14.129Z",
+      "gateway": "Cash on Delivery",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Pending",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_ur0sg_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-0",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T18:50:14.129Z",
+          "action": "CREATE",
+          "performedBy": "Customer",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-30T18:50:14.130Z",
+      "updatedAt": "2026-10-30T18:50:14.130Z"
+    },
+    {
+      "id": "ord_7hqbxks",
+      "orderNumber": "tags6808",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T18:50:11.784Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_pwlzs_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-1",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuDzBGOlfCMdNZ",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T18:50:11.784Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Mobile Test User",
+          "notes": "Razorpay order created with ID: order_TuDzBGOlfCMdNZ. Amount: ₹12499.00"
+        },
+        {
+          "timestamp": "2026-10-30T18:50:12.077Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_test_verified_99"
+        }
+      ],
+      "createdAt": "2026-10-30T18:50:11.785Z",
+      "updatedAt": "2026-10-30T18:50:12.077Z",
+      "paymentTransactionId": "pay_test_verified_99",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuDzBGOlfCMdNZ",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T18:50:12.077Z"
+      },
+      "paidAt": "2026-10-30T18:50:12.077Z"
+    },
+    {
+      "id": "ord_nhfa0yf",
+      "orderNumber": "tags5730",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T18:19:47.543Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 285,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 285,
+      "shippingAddress": "Flat 402, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_sgrom_0",
+          "orderId": "",
+          "productId": "prod_mulberry_silk_scarf",
+          "variantId": "var_prod_mulberry_silk_scarf_cog",
+          "itemNo": "SKU-1",
+          "name": "Pure Mulberry Jacquard Silk Monogram Embroidered Scarf",
+          "price": 285,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuDT49gKbVwDt9",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T18:19:47.543Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "mobile.google.user",
+          "notes": "Razorpay order created with ID: order_TuDT49gKbVwDt9. Amount: ₹285.00"
+        },
+        {
+          "timestamp": "2026-10-30T18:20:06.910Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_mob_7b587xfb"
+        }
+      ],
+      "createdAt": "2026-10-30T18:19:47.549Z",
+      "updatedAt": "2026-10-30T18:20:06.910Z",
+      "paymentTransactionId": "pay_mob_7b587xfb",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuDT49gKbVwDt9",
+        "razorpay_payment_id": "pay_mob_7b587xfb",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T18:20:06.909Z"
+      },
+      "paidAt": "2026-10-30T18:20:06.909Z"
+    },
+    {
+      "id": "ord_5hmy2i9",
+      "orderNumber": "tags2728",
+      "customerName": "Customer",
+      "customerEmail": "customer@example.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T17:53:23.409Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 90,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 90,
+      "shippingAddress": "Flat 402, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_jn1op_0",
+          "orderId": "",
+          "productId": "prod_nike_jordan_hoodie",
+          "itemNo": "SKU-1",
+          "name": "Nike Jordan Brooklyn Fleece Men's Pullover Hoodie",
+          "price": 45,
+          "quantity": 1,
+          "imageUrl": ""
+        },
+        {
+          "id": "item_avpm2_1",
+          "orderId": "",
+          "productId": "prod_nike_jordan_hoodie",
+          "variantId": "var_prod_nike_jordan_hoodie_s_cla",
+          "itemNo": "SKU-2",
+          "name": "Nike Jordan Brooklyn Fleece Men's Pullover Hoodie",
+          "price": 45,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuD1AunuT1r3SL",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T17:53:23.409Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Customer",
+          "notes": "Razorpay order created with ID: order_TuD1AunuT1r3SL. Amount: ₹90.00"
+        },
+        {
+          "timestamp": "2026-10-30T17:53:39.506Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_mob_vzooxfik"
+        }
+      ],
+      "createdAt": "2026-10-30T17:53:23.411Z",
+      "updatedAt": "2026-10-30T17:53:39.506Z",
+      "paymentTransactionId": "pay_mob_vzooxfik",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuD1AunuT1r3SL",
+        "razorpay_payment_id": "pay_mob_vzooxfik",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T17:53:39.504Z"
+      },
+      "paidAt": "2026-10-30T17:53:39.504Z"
+    },
+    {
+      "id": "ord_4mgio9v",
+      "orderNumber": "tags1234",
+      "customerName": "Customer",
+      "customerEmail": "customer@example.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T17:48:42.074Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 500,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 500,
+      "shippingAddress": "Flat 402, Mumbai",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_9zxp4_0",
+          "orderId": "",
+          "productId": "prod_1",
+          "itemNo": "SKU-1",
+          "name": "Test",
+          "price": 500,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuCwDyg597Ujy7",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T17:48:42.074Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Customer",
+          "notes": "Razorpay order created with ID: order_TuCwDyg597Ujy7. Amount: ₹500.00"
+        }
+      ],
+      "createdAt": "2026-10-30T17:48:42.076Z",
+      "updatedAt": "2026-10-30T17:48:42.076Z"
+    },
+    {
+      "id": "ord_nt7eprj",
+      "orderNumber": "tags7286",
+      "customerName": "Gyan Chandra",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T17:33:20.898Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 135,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 121.5,
+      "shippingAddress": "Flat 402, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_nav4x_0",
+          "orderId": "",
+          "productId": "prod_nike_jordan_hoodie",
+          "itemNo": "SKU-1",
+          "name": "Nike Jordan Brooklyn Fleece Men's Pullover Hoodie",
+          "price": 45,
+          "quantity": 3,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuCg0QifRo3ONK",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T17:33:20.898Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Gyan Chandra",
+          "notes": "Razorpay order created with ID: order_TuCg0QifRo3ONK. Amount: ₹121.50"
+        },
+        {
+          "timestamp": "2026-10-30T17:33:31.389Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_mob_snej5apx"
+        }
+      ],
+      "createdAt": "2026-10-30T17:33:20.901Z",
+      "updatedAt": "2026-10-30T17:33:31.389Z",
+      "paymentTransactionId": "pay_mob_snej5apx",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuCg0QifRo3ONK",
+        "razorpay_payment_id": "pay_mob_snej5apx",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T17:33:31.388Z"
+      },
+      "paidAt": "2026-10-30T17:33:31.388Z"
+    },
+    {
+      "id": "ord_n8yuicc",
+      "orderNumber": "mob_cod_2305",
+      "customerName": "Pooja Patel",
+      "customerEmail": "pooja@example.com",
+      "customerPhone": "+91 9123456789",
+      "orderDate": "2026-10-30T17:20:37.306Z",
+      "gateway": "Cash On Delivery (COD)",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 699.99,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 699.99,
+      "shippingAddress": "Sector 14, Gurugram, Haryana 122001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_wqv9v_0",
+          "orderId": "",
+          "productId": "prod_l2150",
+          "itemNo": "SKU-0",
+          "name": "laptop-l2150",
+          "price": 699.99,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T17:20:37.306Z",
+          "action": "CREATE",
+          "performedBy": "Customer",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-30T17:20:37.306Z",
+      "updatedAt": "2026-10-30T17:20:37.306Z"
+    },
+    {
+      "id": "ord_80hf5ke",
+      "orderNumber": "mob_rzp_4713",
+      "customerName": "Aakash Verma",
+      "customerEmail": "aakash@example.com",
+      "customerPhone": "+91 9988776655",
+      "orderDate": "2026-10-30T17:20:36.722Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 2499,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 2499,
+      "shippingAddress": "Flat 101, Bandra West, Mumbai, Maharashtra 400050",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_i18lh_0",
+          "orderId": "",
+          "productId": "prod_mar2832023",
+          "itemNo": "SKU-1",
+          "name": "mar2832023",
+          "price": 2499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuCSYPGsVLgwAu",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T17:20:36.722Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Aakash Verma",
+          "notes": "Razorpay order created with ID: order_TuCSYPGsVLgwAu. Amount: ₹2499.00"
+        },
+        {
+          "timestamp": "2026-10-30T17:20:36.926Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_mob_test_53741"
+        }
+      ],
+      "createdAt": "2026-10-30T17:20:36.723Z",
+      "updatedAt": "2026-10-30T17:20:36.926Z",
+      "paymentTransactionId": "pay_mob_test_53741",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuCSYPGsVLgwAu",
+        "razorpay_payment_id": "pay_mob_test_53741",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T17:20:36.925Z"
+      },
+      "paidAt": "2026-10-30T17:20:36.925Z"
+    },
+    {
+      "id": "ord_daqwor9",
+      "orderNumber": "test_mob_ord_1",
+      "customerName": "Rohan Sharma",
+      "customerEmail": "rohan@example.com",
+      "customerPhone": "+91 9876543210",
+      "orderDate": "2026-10-30T17:14:56.324Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 1499,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 1499,
+      "shippingAddress": "",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_42sav_0",
+          "orderId": "",
+          "productId": "prod_t210",
+          "itemNo": "SKU-1",
+          "name": "tablet-t210",
+          "price": 1499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuCMYrKpjl9p7I",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T17:14:56.324Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Rohan Sharma",
+          "notes": "Razorpay order created with ID: order_TuCMYrKpjl9p7I. Amount: ₹1499.00"
+        },
+        {
+          "timestamp": "2026-10-30T17:14:56.806Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_mob_test_98765"
+        }
+      ],
+      "createdAt": "2026-10-30T17:14:56.329Z",
+      "updatedAt": "2026-10-30T17:14:56.806Z",
+      "paymentTransactionId": "pay_mob_test_98765",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuCMYrKpjl9p7I",
+        "razorpay_payment_id": "pay_mob_test_98765",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T17:14:56.805Z"
+      },
+      "paidAt": "2026-10-30T17:14:56.805Z"
+    },
     {
       "id": "ord_fxugqde",
       "orderNumber": "tags105",
@@ -12372,6 +13596,412 @@
   ],
   "payments": [
     {
+      "id": "pay_pyr7ce7",
+      "orderId": "ord_n0f76km",
+      "orderNumber": "cod_4332",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "paymentGateway": "Cash on Delivery",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T19:29:18.893Z",
+      "updatedAt": "2026-10-30T19:29:18.893Z"
+    },
+    {
+      "id": "pay_2b731ua",
+      "orderId": "ord_g4q2mle",
+      "orderNumber": "tags1914",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuEeUarjuv9sKu",
+      "transactionId": "pay_test_verified_99",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T19:29:18.606Z",
+      "createdAt": "2026-10-30T19:29:18.329Z",
+      "updatedAt": "2026-10-30T19:29:18.607Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuEeUarjuv9sKu",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T19:29:18.606Z"
+      }
+    },
+    {
+      "id": "pay_ikrexbm",
+      "orderId": "ord_eysn2az",
+      "orderNumber": "tags7885",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuEca2mWOJGhNr",
+      "transactionId": "pay_mob_cfpomsf3",
+      "amount": 45,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T19:27:38.212Z",
+      "createdAt": "2026-10-30T19:27:29.824Z",
+      "updatedAt": "2026-10-30T19:27:38.213Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuEca2mWOJGhNr",
+        "razorpay_payment_id": "pay_mob_cfpomsf3",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T19:27:38.212Z"
+      }
+    },
+    {
+      "id": "pay_o1cpp8q",
+      "orderId": "ord_8ioo69i",
+      "orderNumber": "tags8497",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuEbBei8wkM0Wg",
+      "transactionId": "pay_mob_xo4hlxpj",
+      "amount": 3499,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T19:26:13.572Z",
+      "createdAt": "2026-10-30T19:26:10.569Z",
+      "updatedAt": "2026-10-30T19:26:13.573Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuEbBei8wkM0Wg",
+        "razorpay_payment_id": "pay_mob_xo4hlxpj",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T19:26:13.572Z"
+      }
+    },
+    {
+      "id": "pay_w1li3k5",
+      "orderId": "ord_qb8pdyu",
+      "orderNumber": "tags5474",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuEa2EFbzVIfMf",
+      "amount": 285,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "createdAt": "2026-10-30T19:25:05.502Z",
+      "updatedAt": "2026-10-30T19:25:17.708Z",
+      "transactionId": "pay_mob_fs3edphf",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuEa2EFbzVIfMf",
+        "razorpay_payment_id": "pay_mob_fs3edphf",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T19:25:17.706Z"
+      },
+      "paidAt": "2026-10-30T19:25:17.705Z"
+    },
+    {
+      "id": "pay_9i4f5uc",
+      "orderId": "ord_y7htbic",
+      "orderNumber": "tags3677",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuEYiMrg1cU21h",
+      "amount": 285,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T19:23:50.205Z",
+      "updatedAt": "2026-10-30T19:23:50.205Z"
+    },
+    {
+      "id": "pay_jnj251s",
+      "orderId": "ord_yttl7y0",
+      "orderNumber": "tags3547",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuEYTitEUWe7RM",
+      "amount": 285,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T19:23:36.739Z",
+      "updatedAt": "2026-10-30T19:23:36.739Z"
+    },
+    {
+      "id": "pay_e6cryya",
+      "orderId": "ord_uefy6p4",
+      "orderNumber": "tags9758",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "paymentGateway": "Cash On Delivery (COD)",
+      "amount": 579,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T19:11:08.665Z",
+      "updatedAt": "2026-10-30T19:11:08.665Z"
+    },
+    {
+      "id": "pay_7esk414",
+      "orderId": "ord_gn1p9t3",
+      "orderNumber": "tags3646",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuE61uIwe5cBiV",
+      "transactionId": "pay_mob_kfzwgm33",
+      "amount": 85,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T18:56:47.419Z",
+      "createdAt": "2026-10-30T18:56:41.149Z",
+      "updatedAt": "2026-10-30T18:56:47.420Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuE61uIwe5cBiV",
+        "razorpay_payment_id": "pay_mob_kfzwgm33",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T18:56:47.419Z"
+      }
+    },
+    {
+      "id": "pay_s26t3qe",
+      "orderId": "ord_ttvk9aq",
+      "orderNumber": "cod_3821",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "paymentGateway": "Cash on Delivery",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T18:56:13.492Z",
+      "updatedAt": "2026-10-30T18:56:13.492Z"
+    },
+    {
+      "id": "pay_3ny7wg5",
+      "orderId": "ord_iq2qz6y",
+      "orderNumber": "tags9787",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuE5XaQJV3VODU",
+      "transactionId": "pay_test_verified_99",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T18:56:13.212Z",
+      "createdAt": "2026-10-30T18:56:12.973Z",
+      "updatedAt": "2026-10-30T18:56:13.213Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuE5XaQJV3VODU",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T18:56:13.212Z"
+      }
+    },
+    {
+      "id": "pay_lrwxu3l",
+      "orderId": "ord_5jgrmnz",
+      "orderNumber": "cod_9592",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "paymentGateway": "Cash on Delivery",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T18:51:08.324Z",
+      "updatedAt": "2026-10-30T18:51:08.324Z"
+    },
+    {
+      "id": "pay_3p2i1tb",
+      "orderId": "ord_3ghfe9p",
+      "orderNumber": "tags9842",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuE0ABN5NdAbC9",
+      "transactionId": "pay_test_verified_99",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T18:51:07.926Z",
+      "createdAt": "2026-10-30T18:51:07.580Z",
+      "updatedAt": "2026-10-30T18:51:07.927Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuE0ABN5NdAbC9",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T18:51:07.926Z"
+      }
+    },
+    {
+      "id": "pay_nn4asd0",
+      "orderId": "ord_3wkipjg",
+      "orderNumber": "cod_8999",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "paymentGateway": "Cash on Delivery",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T18:50:14.130Z",
+      "updatedAt": "2026-10-30T18:50:14.130Z"
+    },
+    {
+      "id": "pay_r10m5an",
+      "orderId": "ord_7hqbxks",
+      "orderNumber": "tags6808",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuDzBGOlfCMdNZ",
+      "transactionId": "pay_test_verified_99",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T18:50:12.077Z",
+      "createdAt": "2026-10-30T18:50:11.785Z",
+      "updatedAt": "2026-10-30T18:50:12.077Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuDzBGOlfCMdNZ",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T18:50:12.077Z"
+      }
+    },
+    {
+      "id": "pay_k6bdgda",
+      "orderId": "ord_nhfa0yf",
+      "orderNumber": "tags5730",
+      "customerName": "mobile.google.user",
+      "customerEmail": "mobile.google.user@example.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuDT49gKbVwDt9",
+      "transactionId": "pay_mob_7b587xfb",
+      "amount": 285,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T18:20:06.909Z",
+      "createdAt": "2026-10-30T18:19:47.549Z",
+      "updatedAt": "2026-10-30T18:20:06.910Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuDT49gKbVwDt9",
+        "razorpay_payment_id": "pay_mob_7b587xfb",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T18:20:06.909Z"
+      }
+    },
+    {
+      "id": "pay_aeo135c",
+      "orderId": "ord_5hmy2i9",
+      "orderNumber": "tags2728",
+      "customerName": "Customer",
+      "customerEmail": "customer@example.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuD1AunuT1r3SL",
+      "transactionId": "pay_mob_vzooxfik",
+      "amount": 90,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T17:53:39.504Z",
+      "createdAt": "2026-10-30T17:53:23.411Z",
+      "updatedAt": "2026-10-30T17:53:39.506Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuD1AunuT1r3SL",
+        "razorpay_payment_id": "pay_mob_vzooxfik",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T17:53:39.504Z"
+      }
+    },
+    {
+      "id": "pay_c250tzz",
+      "orderId": "ord_4mgio9v",
+      "orderNumber": "tags1234",
+      "customerName": "Customer",
+      "customerEmail": "customer@example.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuCwDyg597Ujy7",
+      "amount": 500,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T17:48:42.076Z",
+      "updatedAt": "2026-10-30T17:48:42.076Z"
+    },
+    {
+      "id": "pay_54vev54",
+      "orderId": "ord_nt7eprj",
+      "orderNumber": "tags7286",
+      "customerName": "Gyan Chandra",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuCg0QifRo3ONK",
+      "transactionId": "pay_mob_snej5apx",
+      "amount": 121.5,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T17:33:31.388Z",
+      "createdAt": "2026-10-30T17:33:20.901Z",
+      "updatedAt": "2026-10-30T17:33:31.389Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuCg0QifRo3ONK",
+        "razorpay_payment_id": "pay_mob_snej5apx",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T17:33:31.388Z"
+      }
+    },
+    {
+      "id": "pay_0gt58dj",
+      "orderId": "ord_n8yuicc",
+      "orderNumber": "mob_cod_2305",
+      "customerName": "Pooja Patel",
+      "customerEmail": "pooja@example.com",
+      "paymentGateway": "Cash On Delivery (COD)",
+      "amount": 699.99,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T17:20:37.306Z",
+      "updatedAt": "2026-10-30T17:20:37.306Z"
+    },
+    {
+      "id": "pay_cmc4hr4",
+      "orderId": "ord_80hf5ke",
+      "orderNumber": "mob_rzp_4713",
+      "customerName": "Aakash Verma",
+      "customerEmail": "aakash@example.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuCSYPGsVLgwAu",
+      "transactionId": "pay_mob_test_53741",
+      "amount": 2499,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T17:20:36.925Z",
+      "createdAt": "2026-10-30T17:20:36.723Z",
+      "updatedAt": "2026-10-30T17:20:36.926Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuCSYPGsVLgwAu",
+        "razorpay_payment_id": "pay_mob_test_53741",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T17:20:36.925Z"
+      }
+    },
+    {
+      "id": "pay_u6pje1q",
+      "orderId": "ord_daqwor9",
+      "orderNumber": "test_mob_ord_1",
+      "customerName": "Rohan Sharma",
+      "customerEmail": "rohan@example.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuCMYrKpjl9p7I",
+      "transactionId": "pay_mob_test_98765",
+      "amount": 1499,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T17:14:56.805Z",
+      "createdAt": "2026-10-30T17:14:56.329Z",
+      "updatedAt": "2026-10-30T17:14:56.806Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuCMYrKpjl9p7I",
+        "razorpay_payment_id": "pay_mob_test_98765",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T17:14:56.805Z"
+      }
+    },
+    {
       "id": "pay_635onob",
       "orderId": "ord_fxugqde",
       "orderNumber": "tags105",
@@ -12661,7 +14291,7 @@
       "userId": "usr_cust_gyanchandra",
       "status": "active",
       "createdAt": "2026-10-29T16:11:57.991Z",
-      "updatedAt": "2026-10-29T19:17:16.355Z"
+      "updatedAt": "2026-10-30T17:53:39.793Z"
     },
     {
       "id": "cart_ktairxg",
@@ -12690,6 +14320,55 @@
       "status": "merged",
       "createdAt": "2026-10-29T18:49:08.303Z",
       "updatedAt": "2026-10-29T19:02:03.160Z"
+    },
+    {
+      "id": "cart_et7fq2t",
+      "sessionId": "gst_7x5701xw7r",
+      "status": "active",
+      "createdAt": "2026-10-30T17:28:40.489Z",
+      "updatedAt": "2026-10-30T17:28:40.489Z"
+    },
+    {
+      "id": "cart_r5sp68o",
+      "sessionId": "gst_u9ec3xh8zq",
+      "status": "merged",
+      "createdAt": "2026-10-30T17:28:44.133Z",
+      "updatedAt": "2026-10-30T18:21:34.152Z"
+    },
+    {
+      "id": "cart_x0ek43m",
+      "userId": "usr_bml05dvn4",
+      "status": "active",
+      "createdAt": "2026-10-30T17:56:10.049Z",
+      "updatedAt": "2026-10-30T19:27:39.890Z"
+    },
+    {
+      "id": "cart_gstm6ce5so6zf",
+      "sessionId": "gst_m6ce5so6zf",
+      "status": "active",
+      "createdAt": "2026-10-30T18:50:10.727Z",
+      "updatedAt": "2026-10-30T18:50:10.727Z"
+    },
+    {
+      "id": "cart_gstyrbkmghji1",
+      "sessionId": "gst_yrbkmghji1",
+      "status": "active",
+      "createdAt": "2026-10-30T18:51:06.911Z",
+      "updatedAt": "2026-10-30T18:51:06.911Z"
+    },
+    {
+      "id": "cart_gst85mawgzyk2",
+      "sessionId": "gst_85mawgzyk2",
+      "status": "active",
+      "createdAt": "2026-10-30T18:56:11.767Z",
+      "updatedAt": "2026-10-30T18:56:11.767Z"
+    },
+    {
+      "id": "cart_gsthwroxgupuz",
+      "sessionId": "gst_hwroxgupuz",
+      "status": "active",
+      "createdAt": "2026-10-30T19:29:16.398Z",
+      "updatedAt": "2026-10-30T19:29:16.398Z"
     }
   ],
   "cartItems": [
@@ -12700,6 +14379,38 @@
       "quantity": 2,
       "createdAt": "2026-10-27T18:46:39.490Z",
       "updatedAt": "2026-10-27T18:46:39.490Z"
+    },
+    {
+      "id": "ci_rwq5f52",
+      "cartId": "cart_gstm6ce5so6zf",
+      "productId": "prod_af1_1",
+      "quantity": 1,
+      "createdAt": "2026-10-30T18:50:10.742Z",
+      "updatedAt": "2026-10-30T18:50:10.742Z"
+    },
+    {
+      "id": "ci_j23mnhy",
+      "cartId": "cart_gstyrbkmghji1",
+      "productId": "prod_af1_1",
+      "quantity": 1,
+      "createdAt": "2026-10-30T18:51:06.929Z",
+      "updatedAt": "2026-10-30T18:51:06.929Z"
+    },
+    {
+      "id": "ci_gemy1ic",
+      "cartId": "cart_gst85mawgzyk2",
+      "productId": "prod_af1_1",
+      "quantity": 1,
+      "createdAt": "2026-10-30T18:56:11.782Z",
+      "updatedAt": "2026-10-30T18:56:11.782Z"
+    },
+    {
+      "id": "ci_ymvv1mn",
+      "cartId": "cart_gsthwroxgupuz",
+      "productId": "prod_af1_1",
+      "quantity": 1,
+      "createdAt": "2026-10-30T19:29:16.434Z",
+      "updatedAt": "2026-10-30T19:29:16.434Z"
     }
   ],
   "pricingSettings": {
@@ -12711,6 +14422,23 @@
     "updatedAt": "2026-10-25T09:31:13.440Z"
   },
   "reviews": [
+    {
+      "id": "rev_tpji737",
+      "productId": "prod_wide_leg_trousers",
+      "itemNo": "WMN-HIGH-PANTS-BEG",
+      "productName": "High-Waist Wide-Leg Pleated Tailored Trousers",
+      "userName": "mobile.google.user",
+      "userEmail": "mobile.google.user@example.com",
+      "rating": 5,
+      "review": "Hii",
+      "media": [],
+      "comments": [],
+      "commentCount": 0,
+      "status": "Pending",
+      "postedOn": "2026-10-30",
+      "createdAt": "2026-10-30T17:55:49.009Z",
+      "updatedAt": "2026-10-30T17:55:49.009Z"
+    },
     {
       "id": "rev_3475xst",
       "productId": "prod_toddler_canvas_sneakers",
@@ -14147,11 +15875,11 @@
       "productName": "18K Solid Yellow Gold Beveled Cable Chain Necklace (5mm)",
       "productSku": "LUX-18KG-GOLD-CHAI",
       "warehouseName": "Samsung Silicon Valley Center",
-      "availableQuantity": 12,
-      "reservedQuantity": 0,
+      "availableQuantity": 11,
+      "reservedQuantity": 1,
       "reorderLevel": 5,
       "createdAt": "2026-10-28T18:50:07.905Z",
-      "updatedAt": "2026-10-28T18:50:07.905Z"
+      "updatedAt": "2026-10-30T19:11:08.684Z"
     },
     {
       "id": "winv_prod_titanium_sunglasses_wh_avery_1",
@@ -14181,6 +15909,22 @@
     }
   ],
   "inventoryMovements": [
+    {
+      "id": "mov_95hgtdw",
+      "productId": "prod_18k_gold_necklace",
+      "warehouseId": "wh_samsung_1",
+      "productName": "18K Solid Yellow Gold Beveled Cable Chain Necklace (5mm)",
+      "warehouseName": "Samsung Silicon Valley Center",
+      "type": "RESERVATION",
+      "quantity": 1,
+      "previousAvailable": 12,
+      "newAvailable": 11,
+      "previousReserved": 0,
+      "newReserved": 1,
+      "referenceId": "ord_uefy6p4",
+      "notes": "Stock reserved for order #ord_uefy6p4",
+      "createdAt": "2026-10-30T19:11:08.684Z"
+    },
     {
       "id": "mov_bgdg6qh",
       "productId": "prod_toddler_canvas_sneakers",
@@ -14804,7 +16548,7 @@
             "bgColor": "#1e293b",
             "textColor": "#ffffff"
           },
-          "storeName": "G-store",
+          "storeName": "E-Shop",
           "storeTagline": "Express delivery across India"
         },
         "sections": {
@@ -14833,7 +16577,7 @@
         "customCss": ""
       },
       "createdAt": "2026-10-25T09:31:13.441Z",
-      "updatedAt": "2026-10-28T18:19:52.532Z"
+      "updatedAt": "2026-10-30T18:27:27.774Z"
     },
     {
       "id": "thm_unishop1",

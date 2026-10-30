@@ -1,9 +1,11 @@
 import { Tabs } from "expo-router";
-import { Home, LayoutGrid, Flame, ShoppingCart, User } from "lucide-react-native";
+import { Home, LayoutGrid, Heart, ShoppingBag, User } from "lucide-react-native";
 import { useCartStore } from "../../src/store/cartStore";
+import { useWishlistStore } from "../../src/store/wishlistStore";
 
 export default function TabLayout() {
   const totalItems = useCartStore((s) => s.totalItems);
+  const wishlistCount = useWishlistStore((s) => s.items.length);
 
   return (
     <Tabs
@@ -14,13 +16,13 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: "#FFFFFF",
           borderTopColor: "#F1F5F9",
-          height: 60,
+          height: 62,
           paddingBottom: 8,
-          paddingTop: 8,
+          paddingTop: 6,
         },
         tabBarLabelStyle: {
-          fontSize: 11,
-          fontWeight: "600",
+          fontSize: 10.5,
+          fontWeight: "700",
         },
       }}
     >
@@ -28,21 +30,23 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color, size }) => <Home color={color} size={size - 2} />,
+          tabBarIcon: ({ color, size }) => <Home color={color} size={22} />,
         }}
       />
       <Tabs.Screen
         name="categories"
         options={{
-          title: "Categories",
-          tabBarIcon: ({ color, size }) => <LayoutGrid color={color} size={size - 2} />,
+          title: "Explore",
+          tabBarIcon: ({ color, size }) => <LayoutGrid color={color} size={22} />,
         }}
       />
       <Tabs.Screen
-        name="deals"
+        name="wishlist"
         options={{
-          title: "Deals",
-          tabBarIcon: ({ color, size }) => <Flame color={color} size={size - 2} />,
+          title: "Wishlist",
+          tabBarBadge: wishlistCount > 0 ? wishlistCount : undefined,
+          tabBarBadgeStyle: { backgroundColor: "#8B5CF6", fontSize: 9 },
+          tabBarIcon: ({ color, size }) => <Heart color={color} size={22} />,
         }}
       />
       <Tabs.Screen
@@ -50,15 +54,21 @@ export default function TabLayout() {
         options={{
           title: "Cart",
           tabBarBadge: totalItems > 0 ? totalItems : undefined,
-          tabBarBadgeStyle: { backgroundColor: "#EF4444", fontSize: 10 },
-          tabBarIcon: ({ color, size }) => <ShoppingCart color={color} size={size - 2} />,
+          tabBarBadgeStyle: { backgroundColor: "#EF4444", fontSize: 9 },
+          tabBarIcon: ({ color, size }) => <ShoppingBag color={color} size={22} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: "Account",
-          tabBarIcon: ({ color, size }) => <User color={color} size={size - 2} />,
+          tabBarIcon: ({ color, size }) => <User color={color} size={22} />,
+        }}
+      />
+      <Tabs.Screen
+        name="deals"
+        options={{
+          href: null, // Hidden tab, accessible directly from Home & Categories
         }}
       />
     </Tabs>

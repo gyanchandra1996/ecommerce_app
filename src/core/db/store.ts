@@ -2705,18 +2705,18 @@ export class DatabaseStore {
   public static getDefaultSettings(): SiteSettingsRecord {
     return {
       id: "site_settings_main",
-      themeName: "G-store",
-      siteTitle: "G-store | Online Shopping for Electronics, Fashion, Deals & More in India",
-      tagline: "Express delivery across India",
-      uniqueTitle: "G-STORE",
-      alternateTitle: "G-STORE1",
+      themeName: "e-Shop",
+      siteTitle: "e-Shop | Online Shopping for Electronics, Fashion, Deals & More in India",
+      tagline: "Superstore • Express Delivery across India",
+      uniqueTitle: "e-Shop",
+      alternateTitle: "e-Shop",
       orderPrefix: "tags",
       defaultCurrency: "INR",
       deliveryLocation: "Delivering to India",
       timeZone: "Asia/Kolkata",
-      supportEmail: "support@g-store.in",
+      supportEmail: "support@e-shop.in",
       supportPhone: "+91 1800 123 4567",
-      footerCopyrightText: "© 2026 G-store India Pvt Ltd. All rights reserved.",
+      footerCopyrightText: "© 2026 e-Shop India Pvt Ltd. All rights reserved.",
       footerAboutText: "Your one-stop destination for authentic electronics, top fashion labels, and household essentials across India with 100% buyer protection.",
       footerLinks: [
         { id: "fl_1", label: "Today's Best Deals", url: "/#deals", displayOrder: 1, isActive: true, section: "shop" },
@@ -3715,7 +3715,8 @@ export class DatabaseStore {
   // ================= CARTS & CART ITEMS =================
   public static async getOrCreateCart(
     userId?: string,
-    sessionId?: string
+    sessionId?: string,
+    persistNewCart: boolean = false
   ): Promise<{ cart: CartRecord; items: (CartItemRecord & { product: any; variant?: any })[] }> {
     await this.seedInitialData();
     const db = await this.readLocalDb();
@@ -3732,15 +3733,17 @@ export class DatabaseStore {
 
     if (!cart) {
       cart = {
-        id: "cart_" + Math.random().toString(36).substring(2, 9),
+        id: "cart_" + (sessionId ? sessionId.replace(/[^a-zA-Z0-9]/g, "") : Math.random().toString(36).substring(2, 9)),
         userId,
         sessionId,
         status: "active",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
-      db.carts.push(cart);
-      await this.writeLocalDb(db);
+      if (persistNewCart) {
+        db.carts.push(cart);
+        await this.writeLocalDb(db);
+      }
     }
 
     const rawItems = db.cartItems.filter((i) => i.cartId === cart!.id);
@@ -5686,12 +5689,12 @@ export class DatabaseStore {
         {
           id: "slider_hero_1",
           title: "iPhone 16 Pro Max",
-          subtitle: "From $ 50,769*",
-          description: "A18 chip, Superfast, Supersmart History, Biggest Price Drop",
+          subtitle: "From ₹ 50,769*",
+          description: "A18 Pro chip, Superfast, Supersmart, Biggest Price Drop",
           tag: "*Incl. All Offers",
           buttonText: "Shop Now",
-          buttonLink: "/#deals",
-          imageUrl: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=800&q=80",
+          buttonLink: "/category/electronics",
+          imageUrl: "/uploads/hero_iphone16_banner.webp",
           bgGradient: "from-[#091124] via-[#1a233d] to-[#0c142b]",
           textColor: "text-white",
           position: "main",

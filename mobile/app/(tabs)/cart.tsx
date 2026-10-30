@@ -36,7 +36,7 @@ export default function CartScreen() {
     <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       <View style={{ paddingHorizontal: 16, paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: "#F1F5F9", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <View>
-          <Text style={{ fontSize: 20, fontWeight: "900", color: "#0F172A" }}>G-Mart Cart</Text>
+          <Text style={{ fontSize: 20, fontWeight: "900", color: "#0F172A" }}>e-Shop Cart</Text>
           <Text style={{ fontSize: 12, color: "#64748B", marginTop: 2 }}>{totalItems} items in cart</Text>
         </View>
         {items.length > 0 && (
