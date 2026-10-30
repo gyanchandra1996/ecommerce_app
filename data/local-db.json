@@ -20831,7 +20831,7 @@
       "imageUrl": "https://images.unsplash.com/photo-1511707171634-5f897ff02560?w=300",
       "actionUrl": "/(tabs)/deals",
       "actionText": "View Deals",
-      "createdAt": "2026-10-30T21:19:52.896Z",
+      "createdAt": "2026-10-30T21:20:18.705Z",
       "isRead": false
     },
     {
@@ -20844,7 +20844,7 @@
       "imageUrl": "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=300",
       "actionUrl": "/(tabs)/cart",
       "actionText": "Shop Now",
-      "createdAt": "2026-10-30T20:19:52.896Z",
+      "createdAt": "2026-10-30T20:20:18.705Z",
       "isRead": false
     },
     {
@@ -20857,7 +20857,7 @@
       "imageUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300",
       "actionUrl": "/products/prod_nike_af1",
       "actionText": "Grab Deal",
-      "createdAt": "2026-10-30T19:19:52.896Z",
+      "createdAt": "2026-10-30T19:20:18.705Z",
       "isRead": false
     },
     {
@@ -20869,7 +20869,7 @@
       "icon": "📦",
       "actionUrl": "/(tabs)",
       "actionText": "Explore Products",
-      "createdAt": "2026-10-30T17:19:52.896Z",
+      "createdAt": "2026-10-30T17:20:18.705Z",
       "isRead": true
     }
   ]
