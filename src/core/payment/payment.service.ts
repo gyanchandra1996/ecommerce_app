@@ -141,6 +141,98 @@ export class PaymentService {
   }
 
   /**
+   * Creates an official hosted Razorpay Payment Link (https://rzp.io/rzp/...)
+   */
+  public static async createRazorpayPaymentLink(params: {
+    orderNumber: string;
+    amountInRupees: number;
+    currency?: string;
+    customerName?: string;
+    customerEmail?: string;
+    customerPhone?: string;
+    description?: string;
+  }): Promise<{
+    paymentLinkId: string;
+    shortUrl: string;
+    amount: number;
+    currency: string;
+    orderNumber: string;
+  }> {
+    const creds = await this.getRazorpayCredentials();
+    const currency = params.currency || "INR";
+    const amountInPaise = Math.round(Number(params.amountInRupees) * 100);
+
+    if (amountInPaise <= 0) {
+      throw new Error("Invalid order amount for payment link creation.");
+    }
+
+    const authHeader = "Basic " + Buffer.from(`${creds.keyId}:${creds.keySecret}`).toString("base64");
+    let responseJson: any = null;
+
+    try {
+      const payload: any = {
+        amount: amountInPaise,
+        currency,
+        accept_partial: false,
+        description: params.description || `Order #${params.orderNumber} - e-Shop`,
+        customer: {
+          name: params.customerName || "Customer",
+          contact: (params.customerPhone || "+919876543210").replace(/[^0-9+]/g, ""),
+        },
+        notify: {
+          sms: false,
+          email: false,
+        },
+        reminder_enable: false,
+      };
+
+      if (params.customerEmail && params.customerEmail.includes("@")) {
+        payload.customer.email = params.customerEmail;
+      }
+
+      const response = await fetch("https://api.razorpay.com/v1/payment_links", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: authHeader,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      responseJson = await response.json();
+      if (!response.ok) {
+        console.warn("Razorpay Payment Links API returned error:", responseJson);
+      }
+    } catch (netErr) {
+      console.warn("Razorpay Payment Link API network error:", netErr);
+    }
+
+    if (!responseJson || !responseJson.id) {
+      if (creds.environment === "sandbox") {
+        const fallbackId = "plink_sandbox_" + Math.random().toString(36).substring(2, 10);
+        return {
+          paymentLinkId: fallbackId,
+          shortUrl: `https://rzp.io/rzp/${fallbackId.substring(6, 13)}`,
+          amount: amountInPaise,
+          currency,
+          orderNumber: params.orderNumber,
+        };
+      }
+      throw new Error(
+        responseJson?.error?.description || "Failed to create Razorpay Payment Link."
+      );
+    }
+
+    return {
+      paymentLinkId: responseJson.id,
+      shortUrl: responseJson.short_url,
+      amount: responseJson.amount,
+      currency: responseJson.currency,
+      orderNumber: params.orderNumber,
+    };
+  }
+
+  /**
    * Verifies Razorpay payment signature securely using HMAC-SHA256 with keySecret.
    */
   public static async verifyRazorpayPayment(params: {

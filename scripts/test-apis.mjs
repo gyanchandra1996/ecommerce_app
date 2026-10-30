@@ -82,6 +82,13 @@ async function runAllTests() {
     razorpay_signature: "mobile_checkout_verified",
   }));
 
+  // 6.b Razorpay Hosted Payment Link API
+  results.push(await testEndpoint("Create Razorpay Payment Link", "POST", "/api/payments/razorpay/payment-link", {
+    totalPrice: 161.10,
+    customerName: "Gyan Tester",
+    customerPhone: "+91 98765 43211",
+  }));
+
   // 7. Orders APIs
   results.push(await testEndpoint("Create COD Order", "POST", "/api/orders", {
     orderNumber: "cod_" + Math.floor(1000 + Math.random() * 9000),

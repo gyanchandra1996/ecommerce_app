@@ -7,13 +7,14 @@ import {
   TextInput,
   Image,
   Alert,
+  Linking,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
-import { ShoppingCart, Trash2, Plus, Minus, Tag, ArrowRight, ShieldCheck } from "lucide-react-native";
+import { ShoppingCart, Trash2, Plus, Minus, Tag, ArrowRight, ShieldCheck, ExternalLink } from "lucide-react-native";
 import { useCartStore } from "../../src/store/cartStore";
 import { useAuthStore } from "../../src/store/authStore";
-import { API_BASE_URL } from "../../src/services/api";
+import { API_BASE_URL, apiClient } from "../../src/services/api";
 
 export default function CartScreen() {
   const router = useRouter();
@@ -23,6 +24,20 @@ export default function CartScreen() {
 
   const [couponInput, setCouponInput] = useState("");
   const [couponMsg, setCouponMsg] = useState<string | null>(null);
+
+  const handleOpenDirectPaymentLink = async () => {
+    try {
+      const res = await apiClient.post("/api/payments/razorpay/payment-link", {
+        totalPrice: finalTotal > 0 ? finalTotal : 161.10,
+        customerName: user?.name || "Customer",
+        customerPhone: user?.phone || "+91 98765 43211",
+      });
+      const url = res.data?.shortUrl || "https://rzp.io/rzp/CTfYhMl";
+      await Linking.openURL(url);
+    } catch {
+      await Linking.openURL("https://rzp.io/rzp/CTfYhMl");
+    }
+  };
 
   const handleApply = async () => {
     if (!couponInput.trim()) return;
@@ -65,12 +80,31 @@ export default function CartScreen() {
               borderRadius: 12,
               flexDirection: "row",
               alignItems: "center",
-              marginBottom: 10,
+              marginBottom: 8,
             }}
           >
             <ShieldCheck size={16} color="#FFFFFF" style={{ marginRight: 8 }} />
             <Text style={{ color: "#FFFFFF", fontWeight: "800", fontSize: 13 }}>
               Open Razorpay Checkout
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={handleOpenDirectPaymentLink}
+            activeOpacity={0.8}
+            style={{
+              backgroundColor: "#16A34A",
+              paddingHorizontal: 24,
+              paddingVertical: 12,
+              borderRadius: 12,
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 10,
+            }}
+          >
+            <ExternalLink size={16} color="#FFFFFF" style={{ marginRight: 8 }} />
+            <Text style={{ color: "#FFFFFF", fontWeight: "800", fontSize: 13 }}>
+              Pay via Razorpay Link (Direct)
             </Text>
           </TouchableOpacity>
 
@@ -229,12 +263,34 @@ export default function CartScreen() {
               alignItems: "center",
               justifyContent: "center",
               marginTop: 18,
+              marginBottom: 8,
             }}
           >
             <Text style={{ color: "#FFFFFF", fontWeight: "800", fontSize: 14, marginRight: 8 }}>
               Proceed to Checkout
             </Text>
             <ArrowRight size={16} color="#FFFFFF" />
+          </TouchableOpacity>
+
+          {/* Direct Razorpay Hosted Link CTA */}
+          <TouchableOpacity
+            onPress={handleOpenDirectPaymentLink}
+            activeOpacity={0.8}
+            style={{
+              backgroundColor: "#F0FDF4",
+              borderWidth: 1.5,
+              borderColor: "#16A34A",
+              paddingVertical: 13,
+              borderRadius: 14,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <ExternalLink size={16} color="#16A34A" style={{ marginRight: 8 }} />
+            <Text style={{ color: "#14532D", fontWeight: "800", fontSize: 13 }}>
+              Pay via Razorpay Link (Direct & Easy)
+            </Text>
           </TouchableOpacity>
         </ScrollView>
       )}

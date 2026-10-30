@@ -95,6 +95,19 @@ async function runCrashSuite() {
       },
     },
     {
+      name: "Checkout: Create Razorpay Payment Link",
+      url: "/api/payments/razorpay/payment-link",
+      options: {
+        method: "POST",
+        body: JSON.stringify({
+          orderNumber: "mob_link_test_103",
+          customerName: "Crash Test User",
+          customerPhone: "+91 98765 43211",
+          totalPrice: 161.10,
+        }),
+      },
+    },
+    {
       name: "Checkout: Create COD Order Fallback",
       url: "/api/orders",
       options: {
