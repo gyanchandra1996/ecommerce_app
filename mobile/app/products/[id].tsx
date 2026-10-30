@@ -756,36 +756,63 @@ export default function ProductDetailScreen() {
           </Text>
         </View>
 
-        <TouchableOpacity
-          onPress={handleAddToCart}
-          disabled={isAdding || currentStock <= 0}
-          activeOpacity={0.8}
-          style={{
-            backgroundColor: addSuccess ? "#16A34A" : "#2563EB",
-            paddingHorizontal: 28,
-            paddingVertical: 12,
-            borderRadius: 12,
-            flexDirection: "row",
-            alignItems: "center",
-            opacity: currentStock <= 0 ? 0.6 : 1,
-          }}
-        >
-          {isAdding ? (
-            <ActivityIndicator size="small" color="#FFFFFF" />
-          ) : addSuccess ? (
-            <>
-              <Check size={16} color="#FFFFFF" style={{ marginRight: 6 }} />
-              <Text style={{ color: "#FFFFFF", fontWeight: "800", fontSize: 13 }}>Added!</Text>
-            </>
-          ) : (
-            <>
-              <ShoppingCart size={16} color="#FFFFFF" style={{ marginRight: 6 }} />
-              <Text style={{ color: "#FFFFFF", fontWeight: "800", fontSize: 13 }}>
-                {currentStock > 0 ? "Add to Cart" : "Out of Stock"}
-              </Text>
-            </>
-          )}
-        </TouchableOpacity>
+        <View style={{ flexDirection: "row", gap: 8 }}>
+          <TouchableOpacity
+            onPress={handleAddToCart}
+            disabled={isAdding || currentStock <= 0}
+            activeOpacity={0.8}
+            style={{
+              backgroundColor: addSuccess ? "#16A34A" : "#F1F5F9",
+              paddingHorizontal: 16,
+              paddingVertical: 12,
+              borderRadius: 12,
+              flexDirection: "row",
+              alignItems: "center",
+              borderWidth: 1,
+              borderColor: "#E2E8F0",
+              opacity: currentStock <= 0 ? 0.6 : 1,
+            }}
+          >
+            {isAdding ? (
+              <ActivityIndicator size="small" color="#2563EB" />
+            ) : addSuccess ? (
+              <>
+                <Check size={16} color="#FFFFFF" style={{ marginRight: 4 }} />
+                <Text style={{ color: "#FFFFFF", fontWeight: "800", fontSize: 12 }}>Added!</Text>
+              </>
+            ) : (
+              <>
+                <ShoppingCart size={15} color="#0F172A" style={{ marginRight: 4 }} />
+                <Text style={{ color: "#0F172A", fontWeight: "800", fontSize: 12 }}>Cart</Text>
+              </>
+            )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={async () => {
+              if (currentStock > 0) {
+                await addToCart(product.id, activeVariant?.id, 1);
+                router.push("/checkout");
+              }
+            }}
+            disabled={currentStock <= 0}
+            activeOpacity={0.85}
+            style={{
+              backgroundColor: "#2563EB",
+              paddingHorizontal: 22,
+              paddingVertical: 12,
+              borderRadius: 12,
+              flexDirection: "row",
+              alignItems: "center",
+              opacity: currentStock <= 0 ? 0.6 : 1,
+            }}
+          >
+            <Zap size={15} color="#FFFFFF" style={{ marginRight: 5 }} />
+            <Text style={{ color: "#FFFFFF", fontWeight: "900", fontSize: 13 }}>
+              Buy Now
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );

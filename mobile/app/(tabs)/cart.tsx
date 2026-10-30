@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
-import { ShoppingCart, Trash2, Plus, Minus, Tag, ArrowRight } from "lucide-react-native";
+import { ShoppingCart, Trash2, Plus, Minus, Tag, ArrowRight, ShieldCheck } from "lucide-react-native";
 import { useCartStore } from "../../src/store/cartStore";
 import { useAuthStore } from "../../src/store/authStore";
 import { API_BASE_URL } from "../../src/services/api";
@@ -56,11 +56,30 @@ export default function CartScreen() {
             Discover flagship smartphones, fashion labels, and household essentials.
           </Text>
           <TouchableOpacity
+            onPress={() => router.push("/checkout")}
+            activeOpacity={0.8}
+            style={{
+              backgroundColor: "#2563EB",
+              paddingHorizontal: 24,
+              paddingVertical: 12,
+              borderRadius: 12,
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 10,
+            }}
+          >
+            <ShieldCheck size={16} color="#FFFFFF" style={{ marginRight: 8 }} />
+            <Text style={{ color: "#FFFFFF", fontWeight: "800", fontSize: 13 }}>
+              Open Razorpay Checkout
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
             onPress={() => router.push("/(tabs)")}
             activeOpacity={0.8}
-            style={{ backgroundColor: "#2563EB", paddingHorizontal: 24, paddingVertical: 12, borderRadius: 12 }}
+            style={{ backgroundColor: "#F1F5F9", paddingHorizontal: 24, paddingVertical: 12, borderRadius: 12 }}
           >
-            <Text style={{ color: "#FFFFFF", fontWeight: "700", fontSize: 13 }}>Start Shopping</Text>
+            <Text style={{ color: "#0F172A", fontWeight: "700", fontSize: 13 }}>Start Shopping</Text>
           </TouchableOpacity>
         </View>
       ) : (
