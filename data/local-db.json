@@ -8429,10 +8429,10 @@
         "ast_prod_omega3_fish_oil_2"
       ],
       "mainImage": "/uploads/prod_omega_2.webp",
-      "rating": 4.8,
-      "reviewsCount": 120,
+      "rating": 5,
+      "reviewsCount": 0,
       "createdAt": "2026-10-28T18:50:04.643Z",
-      "updatedAt": "2026-10-28T18:50:04.643Z",
+      "updatedAt": "2026-10-30T21:50:02.070Z",
       "hasVariants": true,
       "variantAttributes": [
         {
@@ -17869,6 +17869,23 @@
       "quantity": 1,
       "createdAt": "2026-10-30T21:46:41.629Z",
       "updatedAt": "2026-10-30T21:46:41.629Z"
+    },
+    {
+      "id": "ci_ee224mf",
+      "cartId": "cart_ucgg8om",
+      "productId": "prod_mineral_sunscreen_spf50",
+      "quantity": 1,
+      "createdAt": "2026-10-30T21:48:42.361Z",
+      "updatedAt": "2026-10-30T21:48:42.361Z"
+    },
+    {
+      "id": "ci_quenrhl",
+      "cartId": "cart_ucgg8om",
+      "productId": "prod_omega3_fish_oil",
+      "variantId": "var_prod_omega3_fish_oil_single",
+      "quantity": 1,
+      "createdAt": "2026-10-30T21:50:53.364Z",
+      "updatedAt": "2026-10-30T21:51:29.447Z"
     }
   ],
   "pricingSettings": {
@@ -17880,6 +17897,23 @@
     "updatedAt": "2026-10-25T09:31:13.440Z"
   },
   "reviews": [
+    {
+      "id": "rev_eslhkg1",
+      "productId": "prod_omega3_fish_oil",
+      "itemNo": "PHR-OMGA-FISH-120",
+      "productName": "Triple Strength Wild Alaskan Omega-3 Fish Oil Softgels",
+      "userName": "Satendra",
+      "userEmail": "satendrasingh@gmail.com",
+      "rating": 3,
+      "review": "Nice product",
+      "media": [],
+      "comments": [],
+      "commentCount": 0,
+      "status": "Pending",
+      "postedOn": "2026-10-30",
+      "createdAt": "2026-10-30T21:50:02.070Z",
+      "updatedAt": "2026-10-30T21:50:02.070Z"
+    },
     {
       "id": "rev_pq37wge",
       "productId": "prod_denim_jacket",
@@ -21336,72 +21370,6 @@
       "productId": "prod_mulberry_silk_scarf",
       "assetId": "ast_prod_mulberry_silk_scarf_2",
       "isPrimary": false
-    }
-  ],
-  "notifications": [
-    {
-      "id": "notif_r3yg8vx",
-      "title": "🔥 Top Deal: 50% OFF Diwali Special",
-      "body": "Huge savings on flagship smartphones and sneakers.",
-      "category": "deal",
-      "badge": "50% OFF",
-      "icon": "🔥",
-      "imageUrl": "",
-      "actionUrl": "/(tabs)/deals",
-      "actionText": "View Deal",
-      "createdAt": "2026-10-30T21:46:46.672Z",
-      "isRead": true
-    },
-    {
-      "id": "notif_deal_1",
-      "title": "🔥 Flash Deal: Flagship Mobiles Up to 40% OFF",
-      "body": "Limited time festive offer on iPhone 16 Pro & Top Smartphones. Grab yours before stocks run out!",
-      "category": "deal",
-      "badge": "40% OFF",
-      "icon": "🔥",
-      "imageUrl": "https://images.unsplash.com/photo-1511707171634-5f897ff02560?w=300",
-      "actionUrl": "/(tabs)/deals",
-      "actionText": "View Deals",
-      "createdAt": "2026-10-30T21:46:46.485Z",
-      "isRead": true
-    },
-    {
-      "id": "notif_offer_2",
-      "title": "🎁 Mega Offer: Flat ₹200 OFF on First Order",
-      "body": "Use promo coupon code WELCOME200 at checkout to claim instant flat discount.",
-      "category": "offer",
-      "badge": "FLAT ₹200",
-      "icon": "🎁",
-      "imageUrl": "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=300",
-      "actionUrl": "/(tabs)/cart",
-      "actionText": "Shop Now",
-      "createdAt": "2026-10-30T20:46:46.485Z",
-      "isRead": true
-    },
-    {
-      "id": "notif_deal_3",
-      "title": "⚡ Lightning Deal: Nike Air Max 270 React Sneakers",
-      "body": "Premium running shoes back in stock with exclusive festive price drop. Free shipping included!",
-      "category": "deal",
-      "badge": "POPULAR",
-      "icon": "⚡",
-      "imageUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300",
-      "actionUrl": "/products/prod_nike_af1",
-      "actionText": "Grab Deal",
-      "createdAt": "2026-10-30T19:46:46.485Z",
-      "isRead": true
-    },
-    {
-      "id": "notif_sys_4",
-      "title": "📦 Express Delivery Free Across India",
-      "body": "Get free guaranteed delivery on all orders this week. Verified by Razorpay Secure Payments.",
-      "category": "system",
-      "badge": "FREE SHIPPING",
-      "icon": "📦",
-      "actionUrl": "/(tabs)",
-      "actionText": "Explore Products",
-      "createdAt": "2026-10-30T17:46:46.485Z",
-      "isRead": true
     }
   ]
 }
