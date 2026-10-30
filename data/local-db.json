@@ -10555,6 +10555,138 @@
   ],
   "orders": [
     {
+      "id": "ord_h509l5i",
+      "orderNumber": "cod_4224",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T21:37:57.666Z",
+      "gateway": "Cash on Delivery",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Pending",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_v9hj3_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-0",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T21:37:57.666Z",
+          "action": "CREATE",
+          "performedBy": "Customer",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-30T21:37:57.668Z",
+      "updatedAt": "2026-10-30T21:37:57.668Z"
+    },
+    {
+      "id": "ord_netibjr",
+      "orderNumber": "ORD-1793396276256-450",
+      "customerName": "Gyan Tester",
+      "customerEmail": "customer@eshop.com",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T21:37:57.357Z",
+      "gateway": "Razorpay Payment Link",
+      "gatewayCode": "razorpay_link",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 161.1,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 161.1,
+      "shippingAddress": "Customer Delivery Address",
+      "billingAddress": "Customer Billing Address",
+      "items": [
+        {
+          "id": "item_sample_1",
+          "orderId": "",
+          "name": "e-Shop Order Item",
+          "price": 161.1,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "plink_TuGqNTDhaNQLZg",
+      "createdAt": "2026-10-30T21:37:57.358Z",
+      "updatedAt": "2026-10-30T21:37:57.358Z"
+    },
+    {
+      "id": "ord_1oupc06",
+      "orderNumber": "tags9252",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T21:37:55.629Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_mo30u_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-1",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuGqLzhvDfiUDY",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T21:37:55.629Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Mobile Test User",
+          "notes": "Razorpay order created with ID: order_TuGqLzhvDfiUDY. Amount: ₹12499.00"
+        },
+        {
+          "timestamp": "2026-10-30T21:37:55.958Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_test_verified_99"
+        }
+      ],
+      "createdAt": "2026-10-30T21:37:55.631Z",
+      "updatedAt": "2026-10-30T21:37:55.958Z",
+      "paymentTransactionId": "pay_test_verified_99",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuGqLzhvDfiUDY",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T21:37:55.957Z"
+      },
+      "paidAt": "2026-10-30T21:37:55.957Z"
+    },
+    {
       "id": "ord_bwgf89k",
       "orderNumber": "tags3556",
       "customerName": "Gyan Chandra",
@@ -10658,6 +10790,138 @@
         "verifiedAt": "2026-10-30T21:29:33.009Z"
       },
       "paidAt": "2026-10-30T21:29:33.009Z"
+    },
+    {
+      "id": "ord_4effr4t",
+      "orderNumber": "mob_cod_test_102",
+      "customerName": "Crash Test User",
+      "customerEmail": "crashtest@eshop.in",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T21:38:08.212Z",
+      "gateway": "Cash On Delivery (COD)",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 161.1,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 161.1,
+      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_j6dc0_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-0",
+          "name": "Air Max 270",
+          "price": 161.1,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T21:38:08.212Z",
+          "action": "CREATE",
+          "performedBy": "Customer",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-30T19:59:25.708Z",
+      "updatedAt": "2026-10-30T21:38:08.220Z"
+    },
+    {
+      "id": "ord_4t9c0nx",
+      "orderNumber": "mob_link_test_103",
+      "customerName": "Crash Test User",
+      "customerEmail": "customer@eshop.com",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T21:38:07.882Z",
+      "gateway": "Razorpay Payment Link",
+      "gatewayCode": "razorpay_link",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 161.1,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 161.1,
+      "shippingAddress": "Customer Delivery Address",
+      "billingAddress": "Customer Billing Address",
+      "items": [
+        {
+          "id": "item_sample_1",
+          "orderId": "",
+          "name": "e-Shop Order Item",
+          "price": 161.1,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "plink_TuGqZIHQpxe41L",
+      "createdAt": "2026-10-30T20:40:31.889Z",
+      "updatedAt": "2026-10-30T21:38:07.883Z"
+    },
+    {
+      "id": "ord_id0qsch",
+      "orderNumber": "mob_crash_test_101",
+      "customerName": "Crash Test User",
+      "customerEmail": "crashtest@eshop.in",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T21:38:05.799Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 161.1,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 161.1,
+      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_cvv4i_0",
+          "orderId": "",
+          "productId": "prod_nike_af1",
+          "itemNo": "SKU-1",
+          "name": "Nike Air Max",
+          "price": 161.1,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuGqWfgB8Uqzrf",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T21:38:05.799Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Crash Test User",
+          "notes": "Razorpay order created with ID: order_TuGqWfgB8Uqzrf. Amount: ₹161.10"
+        },
+        {
+          "timestamp": "2026-10-30T21:38:06.745Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_test_mock_1"
+        }
+      ],
+      "createdAt": "2026-10-30T19:59:25.094Z",
+      "updatedAt": "2026-10-30T21:38:06.745Z",
+      "paymentTransactionId": "pay_test_mock_1",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuGqWfgB8Uqzrf",
+        "razorpay_payment_id": "pay_test_mock_1",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T21:38:06.744Z"
+      },
+      "paidAt": "2026-10-30T21:38:06.744Z"
     },
     {
       "id": "ord_92ehkv0",
@@ -10854,138 +11118,6 @@
       "gatewayOrderId": "plink_TuGGVqsoQNVP5E",
       "createdAt": "2026-10-30T21:03:59.775Z",
       "updatedAt": "2026-10-30T21:03:59.775Z"
-    },
-    {
-      "id": "ord_4effr4t",
-      "orderNumber": "mob_cod_test_102",
-      "customerName": "Crash Test User",
-      "customerEmail": "crashtest@eshop.in",
-      "customerPhone": "+91 98765 43211",
-      "orderDate": "2026-10-30T21:19:54.571Z",
-      "gateway": "Cash On Delivery (COD)",
-      "gatewayCode": "cod",
-      "paymentStatus": "Pending",
-      "orderStatus": "Processing",
-      "subtotal": 161.1,
-      "shippingCost": 0,
-      "handlingCharge": 0,
-      "adjustmentPrice": 0,
-      "taxAmount": 0,
-      "couponDiscount": 0,
-      "totalPrice": 161.1,
-      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
-      "billingAddress": "",
-      "items": [
-        {
-          "id": "item_ap21z_0",
-          "orderId": "",
-          "productId": "prod_af1_1",
-          "itemNo": "SKU-0",
-          "name": "Air Max 270",
-          "price": 161.1,
-          "quantity": 1,
-          "imageUrl": ""
-        }
-      ],
-      "orderHistory": [
-        {
-          "timestamp": "2026-10-30T21:19:54.571Z",
-          "action": "CREATE",
-          "performedBy": "Customer",
-          "notes": "Order created"
-        }
-      ],
-      "shipmentStatus": "Pending",
-      "createdAt": "2026-10-30T19:59:25.708Z",
-      "updatedAt": "2026-10-30T21:19:54.604Z"
-    },
-    {
-      "id": "ord_4t9c0nx",
-      "orderNumber": "mob_link_test_103",
-      "customerName": "Crash Test User",
-      "customerEmail": "customer@eshop.com",
-      "customerPhone": "+91 98765 43211",
-      "orderDate": "2026-10-30T21:19:53.953Z",
-      "gateway": "Razorpay Payment Link",
-      "gatewayCode": "razorpay_link",
-      "paymentStatus": "Pending",
-      "orderStatus": "Processing",
-      "subtotal": 161.1,
-      "shippingCost": 0,
-      "taxAmount": 0,
-      "couponDiscount": 0,
-      "totalPrice": 161.1,
-      "shippingAddress": "Customer Delivery Address",
-      "billingAddress": "Customer Billing Address",
-      "items": [
-        {
-          "id": "item_sample_1",
-          "orderId": "",
-          "name": "e-Shop Order Item",
-          "price": 161.1,
-          "quantity": 1,
-          "imageUrl": ""
-        }
-      ],
-      "gatewayOrderId": "plink_TuGXJOlSaCJcl8",
-      "createdAt": "2026-10-30T20:40:31.889Z",
-      "updatedAt": "2026-10-30T21:19:53.954Z"
-    },
-    {
-      "id": "ord_id0qsch",
-      "orderNumber": "mob_crash_test_101",
-      "customerName": "Crash Test User",
-      "customerEmail": "crashtest@eshop.in",
-      "customerPhone": "+91 98765 43211",
-      "orderDate": "2026-10-30T21:19:51.095Z",
-      "gateway": "Razorpay",
-      "gatewayCode": "razorpay",
-      "paymentStatus": "Paid",
-      "orderStatus": "Processing",
-      "subtotal": 161.1,
-      "shippingCost": 0,
-      "taxAmount": 0,
-      "couponDiscount": 0,
-      "totalPrice": 161.1,
-      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
-      "billingAddress": "",
-      "items": [
-        {
-          "id": "item_jpipa_0",
-          "orderId": "",
-          "productId": "prod_nike_af1",
-          "itemNo": "SKU-1",
-          "name": "Nike Air Max",
-          "price": 161.1,
-          "quantity": 1,
-          "imageUrl": ""
-        }
-      ],
-      "gatewayOrderId": "order_TuGXGBuXgMT0qQ",
-      "orderHistory": [
-        {
-          "timestamp": "2026-10-30T21:19:51.095Z",
-          "action": "PAYMENT_INITIATED",
-          "performedBy": "Crash Test User",
-          "notes": "Razorpay order created with ID: order_TuGXGBuXgMT0qQ. Amount: ₹161.10"
-        },
-        {
-          "timestamp": "2026-10-30T21:19:53.014Z",
-          "action": "PAYMENT_PAID",
-          "performedBy": "PaymentGateway",
-          "notes": "Razorpay payment verified successfully. Payment ID: pay_test_mock_1"
-        }
-      ],
-      "createdAt": "2026-10-30T19:59:25.094Z",
-      "updatedAt": "2026-10-30T21:19:53.014Z",
-      "paymentTransactionId": "pay_test_mock_1",
-      "paymentDetails": {
-        "razorpay_order_id": "order_TuGXGBuXgMT0qQ",
-        "razorpay_payment_id": "pay_test_mock_1",
-        "razorpay_signature": "mobile_checkout_verified",
-        "verifiedAt": "2026-10-30T21:19:53.003Z"
-      },
-      "paidAt": "2026-10-30T21:19:53.003Z"
     },
     {
       "id": "ord_uyrucvq",
@@ -15800,6 +15932,55 @@
   ],
   "payments": [
     {
+      "id": "pay_5svk8dl",
+      "orderId": "ord_h509l5i",
+      "orderNumber": "cod_4224",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "paymentGateway": "Cash on Delivery",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T21:37:57.668Z",
+      "updatedAt": "2026-10-30T21:37:57.668Z"
+    },
+    {
+      "id": "pay_ttsv0qd",
+      "orderId": "ord_netibjr",
+      "orderNumber": "ORD-1793396276256-450",
+      "customerName": "Gyan Tester",
+      "customerEmail": "customer@eshop.com",
+      "paymentGateway": "Razorpay Payment Link",
+      "gatewayOrderId": "plink_TuGqNTDhaNQLZg",
+      "amount": 161.1,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T21:37:57.358Z",
+      "updatedAt": "2026-10-30T21:37:57.358Z"
+    },
+    {
+      "id": "pay_h1wxjj8",
+      "orderId": "ord_1oupc06",
+      "orderNumber": "tags9252",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuGqLzhvDfiUDY",
+      "transactionId": "pay_test_verified_99",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T21:37:55.957Z",
+      "createdAt": "2026-10-30T21:37:55.631Z",
+      "updatedAt": "2026-10-30T21:37:55.958Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuGqLzhvDfiUDY",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T21:37:55.957Z"
+      }
+    },
+    {
       "id": "pay_zxtr4u0",
       "orderId": "ord_bwgf89k",
       "orderNumber": "tags3556",
@@ -16406,19 +16587,19 @@
       "customerName": "Crash Test User",
       "customerEmail": "crashtest@eshop.in",
       "paymentGateway": "Razorpay",
-      "gatewayOrderId": "order_TuGXGBuXgMT0qQ",
+      "gatewayOrderId": "order_TuGqWfgB8Uqzrf",
       "transactionId": "pay_test_mock_1",
       "amount": 161.1,
       "currency": "INR",
       "paymentStatus": "Paid",
-      "paidAt": "2026-10-30T21:19:53.003Z",
+      "paidAt": "2026-10-30T21:38:06.744Z",
       "createdAt": "2026-10-30T19:59:25.094Z",
-      "updatedAt": "2026-10-30T21:19:53.014Z",
+      "updatedAt": "2026-10-30T21:38:06.745Z",
       "gatewayResponse": {
-        "razorpay_order_id": "order_TuGXGBuXgMT0qQ",
+        "razorpay_order_id": "order_TuGqWfgB8Uqzrf",
         "razorpay_payment_id": "pay_test_mock_1",
         "razorpay_signature": "mobile_checkout_verified",
-        "verifiedAt": "2026-10-30T21:19:53.003Z"
+        "verifiedAt": "2026-10-30T21:38:06.744Z"
       }
     },
     {
@@ -17386,6 +17567,13 @@
       "status": "active",
       "createdAt": "2026-10-30T21:19:25.659Z",
       "updatedAt": "2026-10-30T21:19:25.659Z"
+    },
+    {
+      "id": "cart_gsttlnqb3ljhl",
+      "sessionId": "gst_tlnqb3ljhl",
+      "status": "active",
+      "createdAt": "2026-10-30T21:37:54.030Z",
+      "updatedAt": "2026-10-30T21:37:54.030Z"
     }
   ],
   "cartItems": [
@@ -17477,6 +17665,14 @@
       "quantity": 1,
       "createdAt": "2026-10-30T21:00:37.677Z",
       "updatedAt": "2026-10-30T21:00:37.677Z"
+    },
+    {
+      "id": "ci_txqui0r",
+      "cartId": "cart_gsttlnqb3ljhl",
+      "productId": "prod_af1_1",
+      "quantity": 1,
+      "createdAt": "2026-10-30T21:37:54.056Z",
+      "updatedAt": "2026-10-30T21:37:54.056Z"
     }
   ],
   "pricingSettings": {
@@ -20947,6 +21143,19 @@
     }
   ],
   "notifications": [
+    {
+      "id": "notif_6g8pw46",
+      "title": "🔥 Top Deal: 50% OFF Diwali Special",
+      "body": "Huge savings on flagship smartphones and sneakers.",
+      "category": "deal",
+      "badge": "50% OFF",
+      "icon": "🔥",
+      "imageUrl": "",
+      "actionUrl": "/(tabs)/deals",
+      "actionText": "View Deal",
+      "createdAt": "2026-10-30T21:37:58.577Z",
+      "isRead": true
+    },
     {
       "id": "notif_deal_1",
       "title": "🔥 Flash Deal: Flagship Mobiles Up to 40% OFF",

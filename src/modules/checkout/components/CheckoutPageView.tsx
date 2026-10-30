@@ -626,7 +626,7 @@ export function CheckoutPageView() {
           key: rzpData.keyId,
           amount: rzpData.amount, // in paise
           currency: rzpData.currency || "INR",
-          name: "emox India",
+          name: "e-Shop",
           description: `Order #${rzpData.orderNumber}`,
           order_id: rzpData.orderId,
           prefill: {
@@ -1557,7 +1557,7 @@ export function CheckoutPageView() {
                 </button>
 
                 <p className="text-[10px] text-center text-slate-400 leading-tight">
-                  By clicking &quot;Place Order&quot;, you agree to emox Terms of Service and Privacy Policy.
+                  By clicking &quot;Place Order&quot;, you agree to e-Shop Terms of Service and Privacy Policy.
                 </p>
               </div>
 
