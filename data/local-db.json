@@ -3532,7 +3532,7 @@
       "slug": "nike-air-force-1-07-white",
       "sku": "NKE-AF1-07-WHT",
       "description": "Nike Air Force 1 '07 Leather Sneakers White with premium build, authentic warranty, and express fulfillment.",
-      "price": 190,
+      "price": 120,
       "comparePrice": 240,
       "costPrice": 70,
       "currentStock": 80,
@@ -3559,7 +3559,7 @@
       "rating": 4.2,
       "reviewsCount": 157,
       "createdAt": "2026-10-28T18:49:57.362Z",
-      "updatedAt": "2026-10-28T18:49:57.362Z",
+      "updatedAt": "2026-10-30T21:26:06.240Z",
       "hasVariants": true,
       "variantAttributes": [
         {
@@ -10505,6 +10505,18 @@
   ],
   "discounts": [
     {
+      "id": "disc_z6mbnef",
+      "itemNo": "NKE-AF1-07-WHT",
+      "productName": "Nike Invincible 3 Premium Running Sneaker",
+      "discountType": "%",
+      "discountValue": 50,
+      "startDate": "2026-10-30",
+      "endDate": "2026-11-29",
+      "isActive": true,
+      "createdAt": "2026-10-30T21:26:06.240Z",
+      "updatedAt": "2026-10-30T21:26:06.240Z"
+    },
+    {
       "id": "disc_1",
       "itemNo": "z2216",
       "productName": "wireless-earbuds-z2216",
@@ -10542,6 +10554,111 @@
     }
   ],
   "orders": [
+    {
+      "id": "ord_bwgf89k",
+      "orderNumber": "tags3556",
+      "customerName": "Gyan Chandra",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "customerPhone": "+91 9876543211",
+      "orderDate": "2026-10-30T21:28:33.191Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 260,
+      "shippingCost": 49,
+      "taxAmount": 46.8,
+      "couponDiscount": 0,
+      "totalPrice": 355.8,
+      "shippingAddress": "Village And Post Niyauj, No, Mumbai, Uttar Pradesh, 400001, India",
+      "billingAddress": "Village And Post Niyauj, No, Mumbai, Uttar Pradesh, 400001, India",
+      "shippingAddressDetail": {
+        "name": "Gyan Chandra",
+        "company": "gtech",
+        "country": "India",
+        "state": "Uttar Pradesh",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village And Post Niyauj",
+        "apartment": "No",
+        "phone": "+91 9876543211",
+        "type": "shipping"
+      },
+      "billingAddressDetail": {
+        "name": "Gyan Chandra",
+        "company": "gtech",
+        "country": "India",
+        "state": "Uttar Pradesh",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village And Post Niyauj",
+        "apartment": "No",
+        "phone": "+91 9876543211",
+        "type": "billing"
+      },
+      "items": [
+        {
+          "id": "item_bj8ry_0",
+          "orderId": "",
+          "productId": "prod_floral_wrap_dress",
+          "variantId": "var_prod_floral_wrap_dress_s_cla",
+          "variantAttributes": {
+            "Size": "S",
+            "Color": "Classic Navy"
+          },
+          "itemNo": "WMN-FLR-WRAP-DRES-S-CLA",
+          "name": "Women's Floral Print Wrap Maxi Dress in Emerald",
+          "price": 95,
+          "quantity": 1,
+          "imageUrl": "/uploads/prod_floral_1.webp"
+        },
+        {
+          "id": "item_ruhdx_1",
+          "orderId": "",
+          "productId": "prod_nike_jordan_hoodie",
+          "itemNo": "SKU-PROD_N",
+          "name": "Nike Jordan Brooklyn Fleece Men's Pullover Hoodie",
+          "price": 45,
+          "quantity": 1,
+          "imageUrl": "/uploads/prod_blue_hoodie_deal.webp"
+        },
+        {
+          "id": "item_5awlz_2",
+          "orderId": "",
+          "productId": "prod_nike_af1",
+          "itemNo": "SKU-PROD_N",
+          "name": "Nike Invincible 3 Premium Running Sneaker",
+          "price": 120,
+          "quantity": 1,
+          "imageUrl": "/uploads/prod_running_shoe_deal.webp"
+        }
+      ],
+      "gatewayOrderId": "order_TuGgS1GVg1rk5o",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T21:28:33.191Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Gyan Chandra",
+          "notes": "Razorpay order created with ID: order_TuGgS1GVg1rk5o. Amount: ₹355.80"
+        },
+        {
+          "timestamp": "2026-10-30T21:29:33.010Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_TuGh4Y9kHi8J3j"
+        }
+      ],
+      "createdAt": "2026-10-30T21:28:33.193Z",
+      "updatedAt": "2026-10-30T21:29:33.010Z",
+      "paymentTransactionId": "pay_TuGh4Y9kHi8J3j",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuGgS1GVg1rk5o",
+        "razorpay_payment_id": "pay_TuGh4Y9kHi8J3j",
+        "razorpay_signature": "fe9cc92ecc7cf4ad2f2ff716389f10d8bb769e50b5450e5a441907e74c169490",
+        "verifiedAt": "2026-10-30T21:29:33.009Z"
+      },
+      "paidAt": "2026-10-30T21:29:33.009Z"
+    },
     {
       "id": "ord_92ehkv0",
       "orderNumber": "cod_2711",
@@ -15683,6 +15800,28 @@
   ],
   "payments": [
     {
+      "id": "pay_zxtr4u0",
+      "orderId": "ord_bwgf89k",
+      "orderNumber": "tags3556",
+      "customerName": "Gyan Chandra",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuGgS1GVg1rk5o",
+      "transactionId": "pay_TuGh4Y9kHi8J3j",
+      "amount": 355.8,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T21:29:33.009Z",
+      "createdAt": "2026-10-30T21:28:33.193Z",
+      "updatedAt": "2026-10-30T21:29:33.010Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuGgS1GVg1rk5o",
+        "razorpay_payment_id": "pay_TuGh4Y9kHi8J3j",
+        "razorpay_signature": "fe9cc92ecc7cf4ad2f2ff716389f10d8bb769e50b5450e5a441907e74c169490",
+        "verifiedAt": "2026-10-30T21:29:33.009Z"
+      }
+    },
+    {
       "id": "pay_ri2p3gw",
       "orderId": "ord_92ehkv0",
       "orderNumber": "cod_2711",
@@ -17113,7 +17252,7 @@
       "userId": "usr_cust_gyanchandra",
       "status": "active",
       "createdAt": "2026-10-29T16:11:57.991Z",
-      "updatedAt": "2026-10-30T17:53:39.793Z"
+      "updatedAt": "2026-10-30T21:29:39.090Z"
     },
     {
       "id": "cart_ktairxg",
@@ -17289,19 +17428,6 @@
       "quantity": 1,
       "createdAt": "2026-10-30T19:29:16.434Z",
       "updatedAt": "2026-10-30T19:29:16.434Z"
-    },
-    {
-      "id": "ci_v2brxhy",
-      "cartId": "cart_3wgflgl",
-      "productId": "prod_floral_wrap_dress",
-      "variantId": "var_prod_floral_wrap_dress_s_cla",
-      "quantity": 1,
-      "selectedAttributes": {
-        "Size": "S",
-        "Color": "Classic Navy"
-      },
-      "createdAt": "2026-10-30T19:37:26.673Z",
-      "updatedAt": "2026-10-30T19:37:26.673Z"
     },
     {
       "id": "ci_e0tu2jx",
@@ -20832,7 +20958,7 @@
       "actionUrl": "/(tabs)/deals",
       "actionText": "View Deals",
       "createdAt": "2026-10-30T21:20:18.705Z",
-      "isRead": false
+      "isRead": true
     },
     {
       "id": "notif_offer_2",
@@ -20845,7 +20971,7 @@
       "actionUrl": "/(tabs)/cart",
       "actionText": "Shop Now",
       "createdAt": "2026-10-30T20:20:18.705Z",
-      "isRead": false
+      "isRead": true
     },
     {
       "id": "notif_deal_3",
@@ -20858,7 +20984,7 @@
       "actionUrl": "/products/prod_nike_af1",
       "actionText": "Grab Deal",
       "createdAt": "2026-10-30T19:20:18.705Z",
-      "isRead": false
+      "isRead": true
     },
     {
       "id": "notif_sys_4",
