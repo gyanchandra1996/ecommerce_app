@@ -189,6 +189,8 @@ export default function CheckoutScreen() {
       const message = JSON.parse(event.nativeEvent.data);
       if (message.event === "SUCCESS") {
         const paymentData = message.data || {};
+        setIsLoading(true);
+
         // Record payment in backend
         await apiClient
           .post("/api/payments/razorpay/verify", {
@@ -200,17 +202,9 @@ export default function CheckoutScreen() {
           .catch(() => {});
 
         await clearCart();
-        setPlacedOrder({
-          orderNumber,
-          totalPrice: effectiveAmount,
-          customerName: finalRecipient,
-          customerPhone: finalPhone,
-          shippingAddress: `${finalStreet}, ${city}, ${state} - ${pincode}`,
-          gateway: "Razorpay Web UI",
-          paymentStatus: "Paid",
-          orderStatus: "Processing",
-          createdAt: new Date().toISOString(),
-        });
+
+        // Redirect immediately to "My Orders" screen in mobile app
+        router.replace("/orders");
       } else if (message.event === "CANCELLED" || message.event === "CLOSE") {
         Alert.alert(
           "Payment Cancelled",

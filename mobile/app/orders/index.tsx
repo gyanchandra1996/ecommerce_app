@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -7,8 +7,8 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
-import { ArrowLeft, Package, Clock, CheckCircle2, Truck, XCircle } from "lucide-react-native";
+import { useRouter, useFocusEffect } from "expo-router";
+import { ArrowLeft, Package, Clock, CheckCircle2, Truck, XCircle, RefreshCw } from "lucide-react-native";
 import { apiClient } from "../../src/services/api";
 import { useAuthStore } from "../../src/store/authStore";
 import { OrderCardSkeleton } from "../../src/components/SkeletonLoader";
@@ -21,26 +21,40 @@ export default function MyOrdersScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    loadOrders();
-  }, []);
-
   const loadOrders = async () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await apiClient.get("/api/customer/orders");
-      if (res.data?.success && Array.isArray(res.data?.data)) {
-        setOrders(res.data.data);
-      } else {
-        setOrders([]);
+      let list: any[] = [];
+      try {
+        const res = await apiClient.get("/api/customer/orders");
+        if (res.data?.success && Array.isArray(res.data?.data) && res.data.data.length > 0) {
+          list = res.data.data;
+        }
+      } catch (e) {
+        // Continue to fallback
       }
+
+      if (list.length === 0) {
+        const fallbackRes = await apiClient.get("/api/orders");
+        if (fallbackRes.data?.success && Array.isArray(fallbackRes.data?.data)) {
+          list = fallbackRes.data.data;
+        }
+      }
+
+      setOrders(list);
     } catch (err: any) {
       setError(err.message || "Failed to load orders");
     } finally {
       setLoading(false);
     }
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      loadOrders();
+    }, [])
+  );
 
   const getStatusBadge = (status = "PROCESSING") => {
     const s = status.toUpperCase();
