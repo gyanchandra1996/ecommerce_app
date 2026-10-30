@@ -11,6 +11,7 @@ import { useRouter } from "expo-router";
 import { ArrowLeft, Package, Clock, CheckCircle2, Truck, XCircle } from "lucide-react-native";
 import { apiClient } from "../../src/services/api";
 import { useAuthStore } from "../../src/store/authStore";
+import { OrderCardSkeleton } from "../../src/components/SkeletonLoader";
 
 export default function MyOrdersScreen() {
   const router = useRouter();
@@ -68,9 +69,10 @@ export default function MyOrdersScreen() {
       </View>
 
       {loading ? (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-          <ActivityIndicator size="large" color="#2563EB" />
-          <Text style={{ marginTop: 10, fontSize: 12, color: "#64748B" }}>Loading orders...</Text>
+        <View style={{ padding: 16 }}>
+          <OrderCardSkeleton />
+          <OrderCardSkeleton />
+          <OrderCardSkeleton />
         </View>
       ) : orders.length === 0 ? (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center", padding: 24 }}>

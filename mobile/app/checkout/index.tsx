@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -37,11 +37,14 @@ import {
   EyeOff,
   Globe,
   Info,
+  User,
+  Clock,
 } from "lucide-react-native";
 import { useCartStore, CartItem } from "../../src/store/cartStore";
 import { useAuthStore } from "../../src/store/authStore";
 import { useLocationStore } from "../../src/store/locationStore";
 import { apiClient, getFullImageUrl } from "../../src/services/api";
+import { LoadingOverlay } from "../../src/components/LoadingOverlay";
 
 const TOP_BANKS = [
   { id: "ICICI", name: "ICICI Bank", icon: "🏢" },
@@ -90,6 +93,26 @@ export default function CheckoutScreen() {
   const [isAuthorizing, setIsAuthorizing] = useState(false);
   const [authStepMessage, setAuthStepMessage] = useState("");
 
+  const [activeRzpTab, setActiveRzpTab] = useState<"upi" | "cards" | "netbanking" | "wallet" | "paylater">("upi");
+  const [timeLeft, setTimeLeft] = useState(709); // 11:49 initial timer
+  const [upiIdInput, setUpiIdInput] = useState("");
+  const [selectedWallet, setSelectedWallet] = useState("Paytm");
+  const [selectedPayLater, setSelectedPayLater] = useState("LazyPay");
+
+  useEffect(() => {
+    if (!isRazorpayModalOpen) return;
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => (prev > 1 ? prev - 1 : 720));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [isRazorpayModalOpen]);
+
+  const formatTimer = (sec: number) => {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${m}:${s < 10 ? "0" : ""}${s}`;
+  };
+
   const finalAmount = Math.max(0, subtotal - discount);
 
   // Fallback demo cart items if user lands on checkout with empty cart
@@ -111,12 +134,13 @@ export default function CheckoutScreen() {
           },
         ];
 
+  const finalRecipient = recipientName.trim() || user?.name || "Customer";
+  const finalPhone = recipientPhone.trim() || user?.phone || "+91 98765 43211";
+  const finalStreet = streetAddress.trim() || "Street Golden 23/21, Hill Road";
+  const finalPin = pincode.trim() || currentLocation.pincode || "400001";
+  const effectiveAmount = finalAmount > 0 ? finalAmount : 161.10;
+
   const handlePlaceOrder = async () => {
-    const finalRecipient = recipientName.trim() || user?.name || "Customer";
-    const finalPhone = recipientPhone.trim() || user?.phone || "+91 98765 43210";
-    const finalStreet = streetAddress.trim() || "Street Golden 23/21, Hill Road";
-    const finalPin = pincode.trim() || currentLocation.pincode || "400001";
-    const effectiveAmount = finalAmount > 0 ? finalAmount : 12499;
 
     if (gateway === "COD") {
       try {
@@ -978,489 +1002,715 @@ export default function CheckoutScreen() {
               </View>
             </View>
           ) : (
-            /* ================= SCREEN 1: OFFICIAL RAZORPAY METHODS ================= */
+            /* ================= SCREEN 1: OFFICIAL RAZORPAY STANDARD MODAL (media_1793389126498_9a5b6503.png) ================= */
             <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-              {/* Header: Royal Deep Blue with Merchant Logo & Razorpay Badge */}
+              {/* Top Vibrant Blue Merchant Banner */}
               <View
                 style={{
-                  backgroundColor: "#0C2340",
+                  backgroundColor: "#2563EB",
                   paddingHorizontal: 16,
-                  paddingVertical: 14,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
+                  paddingTop: 14,
+                  paddingBottom: 16,
+                  borderBottomLeftRadius: 18,
+                  borderBottomRightRadius: 18,
+                  shadowColor: "#1E40AF",
+                  shadowOffset: { width: 0, height: 4 },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 8,
+                  elevation: 5,
                 }}
               >
-                <View style={{ flexDirection: "row", alignItems: "center", flex: 1 }}>
-                  <TouchableOpacity
-                    onPress={() => setIsRazorpayModalOpen(false)}
-                    style={{ marginRight: 12, padding: 4 }}
-                  >
-                    <ArrowLeft size={20} color="#FFFFFF" />
-                  </TouchableOpacity>
-
-                  {/* Coral Rounded Avatar with letter "e" */}
-                  <View
-                    style={{
-                      width: 38,
-                      height: 38,
-                      borderRadius: 10,
-                      backgroundColor: "#E05638",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginRight: 10,
-                    }}
-                  >
-                    <Text style={{ fontSize: 20, fontWeight: "900", color: "#FFFFFF" }}>e</Text>
-                  </View>
-
-                  <View>
-                    <Text style={{ fontSize: 16, fontWeight: "900", color: "#FFFFFF" }}>e-Shop</Text>
-                    <View style={{ flexDirection: "row", alignItems: "center", marginTop: 2 }}>
-                      <ShieldCheck size={12} color="#10B981" style={{ marginRight: 4 }} />
-                      <Text style={{ fontSize: 10, color: "#10B981", fontWeight: "700" }}>
-                        Razorpay Trusted Business
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-
-                {/* Language Picker Badge */}
+                {/* Store Branding & Header Actions */}
                 <View
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
-                    backgroundColor: "rgba(255, 255, 255, 0.12)",
-                    paddingHorizontal: 8,
-                    paddingVertical: 4,
-                    borderRadius: 6,
+                    justifyContent: "space-between",
+                    marginBottom: 12,
                   }}
                 >
-                  <Globe size={13} color="#FFFFFF" style={{ marginRight: 4 }} />
-                  <Text style={{ fontSize: 11, fontWeight: "800", color: "#FFFFFF" }}>文A ▼</Text>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <View
+                      style={{
+                        width: 38,
+                        height: 38,
+                        borderRadius: 10,
+                        backgroundColor: "#1D4ED8",
+                        borderWidth: 1.5,
+                        borderColor: "rgba(255, 255, 255, 0.4)",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginRight: 10,
+                      }}
+                    >
+                      <Text style={{ fontSize: 20, fontWeight: "900", color: "#FFFFFF" }}>E</Text>
+                    </View>
+                    <View>
+                      <Text style={{ fontSize: 17, fontWeight: "900", color: "#FFFFFF" }}>e-Shop</Text>
+                      <Text style={{ fontSize: 10, color: "rgba(255, 255, 255, 0.8)", fontWeight: "600" }}>
+                        Razorpay Verified Merchant
+                      </Text>
+                    </View>
+                  </View>
+
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (!isAuthorizing) setIsRazorpayModalOpen(false);
+                    }}
+                    style={{
+                      width: 32,
+                      height: 32,
+                      borderRadius: 16,
+                      backgroundColor: "rgba(255, 255, 255, 0.2)",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <X size={18} color="#FFFFFF" />
+                  </TouchableOpacity>
                 </View>
-              </View>
 
-              <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 90 }}>
-                {/* 1. Preferred Methods Section */}
-                <Text style={{ fontSize: 12, fontWeight: "800", color: "#475569", textTransform: "uppercase", marginBottom: 10 }}>
-                  Preferred methods
-                </Text>
-
-                {/* TURBO UPI Card */}
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => {
-                    setSelectedMethodTitle("ICICI Bank • XXXX 4411 UPI");
-                    setRzpScreen("pin");
-                  }}
+                {/* White Price Summary Card matching Image */}
+                <View
                   style={{
                     backgroundColor: "#FFFFFF",
-                    borderWidth: 1,
-                    borderColor: "#E2E8F0",
                     borderRadius: 12,
                     padding: 14,
                     marginBottom: 10,
                     shadowColor: "#000",
-                    shadowOffset: { width: 0, height: 1 },
-                    shadowOpacity: 0.04,
-                    shadowRadius: 3,
-                    elevation: 1,
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.08,
+                    shadowRadius: 4,
+                    elevation: 2,
                   }}
                 >
-                  <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 8 }}>
-                    <Zap size={14} color="#2563EB" style={{ marginRight: 4 }} />
-                    <Text style={{ fontSize: 12, fontWeight: "900", color: "#2563EB", letterSpacing: 0.5 }}>
-                      TURBO UPI
+                  <Text style={{ fontSize: 11, fontWeight: "700", color: "#64748B", textTransform: "uppercase" }}>
+                    Price Summary
+                  </Text>
+                  <View style={{ flexDirection: "row", alignItems: "baseline", marginTop: 2 }}>
+                    <Text style={{ fontSize: 24, fontWeight: "900", color: "#0F172A" }}>
+                      ₹{effectiveAmount.toFixed(2)}
                     </Text>
                   </View>
+                </View>
 
-                  <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                    <View style={{ flexDirection: "row", alignItems: "center", flex: 1 }}>
-                      <View style={{ width: 32, height: 32, borderRadius: 6, backgroundColor: "#FEF2F2", alignItems: "center", justifyContent: "center", marginRight: 10 }}>
-                        <Text style={{ fontSize: 16 }}>🔴</Text>
-                      </View>
-                      <View>
-                        <Text style={{ fontSize: 13, fontWeight: "800", color: "#0F172A" }}>
-                          ICICI Bank • XXXX 4411 UPI
-                        </Text>
-                        <View style={{ backgroundColor: "#EFF6FF", alignSelf: "flex-start", paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4, marginTop: 4 }}>
-                          <Text style={{ fontSize: 9, fontWeight: "900", color: "#1D4ED8" }}>
-                            🎁 GET 5% CASHBACK
-                          </Text>
-                        </View>
-                      </View>
-                    </View>
-                    <ChevronRight size={18} color="#94A3B8" />
-                  </View>
-                </TouchableOpacity>
-
-                {/* Netbanking Quick Card */}
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => {
-                    setSelectedMethodTitle("ICICI Bank - Netbanking");
-                    handleConfirmRazorpayPayment("ICICI Bank Netbanking");
-                  }}
-                  style={{
-                    backgroundColor: "#FFFFFF",
-                    borderWidth: 1,
-                    borderColor: "#E2E8F0",
-                    borderRadius: 12,
-                    padding: 14,
-                    marginBottom: 10,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <View style={{ width: 32, height: 32, borderRadius: 6, backgroundColor: "#F0FDF4", alignItems: "center", justifyContent: "center", marginRight: 10 }}>
-                      <Building2 size={16} color="#16A34A" />
-                    </View>
-                    <Text style={{ fontSize: 13, fontWeight: "800", color: "#0F172A" }}>
-                      ICICI Bank - Netbanking
-                    </Text>
-                  </View>
-                  <ChevronRight size={18} color="#94A3B8" />
-                </TouchableOpacity>
-
-                {/* Saved Card Quick Option */}
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => {
-                    setSelectedMethodTitle("State Bank Of India - Credit Card");
-                    handleConfirmRazorpayPayment("SBI Credit Card (4400)");
-                  }}
-                  style={{
-                    backgroundColor: "#FFFFFF",
-                    borderWidth: 1,
-                    borderColor: "#E2E8F0",
-                    borderRadius: 12,
-                    padding: 14,
-                    marginBottom: 18,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <View style={{ width: 32, height: 32, borderRadius: 6, backgroundColor: "#EFF6FF", alignItems: "center", justifyContent: "center", marginRight: 10 }}>
-                      <CreditCard size={16} color="#2563EB" />
-                    </View>
-                    <View>
-                      <Text style={{ fontSize: 13, fontWeight: "800", color: "#0F172A" }}>
-                        State Bank Of India - Credit Card
-                      </Text>
-                      <Text style={{ fontSize: 11, color: "#64748B" }}>Ending with 4400</Text>
-                    </View>
-                  </View>
-                  <ChevronRight size={18} color="#94A3B8" />
-                </TouchableOpacity>
-
-                {/* 2. UPI, Cards & Other Methods */}
-                <Text style={{ fontSize: 12, fontWeight: "800", color: "#475569", textTransform: "uppercase", marginBottom: 10 }}>
-                  UPI, Cards &amp; Other Methods
-                </Text>
-
-                {/* UPI Box with 4 Apps */}
+                {/* Translucent Using As User Pill matching Image */}
                 <View
                   style={{
-                    backgroundColor: "#FFFFFF",
-                    borderWidth: 1,
-                    borderColor: "#E2E8F0",
-                    borderRadius: 12,
-                    padding: 14,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    backgroundColor: "rgba(255, 255, 255, 0.95)",
+                    paddingHorizontal: 12,
+                    paddingVertical: 9,
+                    borderRadius: 10,
                     marginBottom: 10,
                   }}
                 >
-                  <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 12 }}>
-                    <Smartphone size={16} color="#2563EB" style={{ marginRight: 8 }} />
-                    <View>
-                      <Text style={{ fontSize: 13, fontWeight: "800", color: "#0F172A" }}>UPI</Text>
-                      <Text style={{ fontSize: 11, color: "#64748B" }}>
-                        Pay with installed app, or use Other
-                      </Text>
-                    </View>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <User size={15} color="#2563EB" style={{ marginRight: 8 }} />
+                    <Text style={{ fontSize: 12, fontWeight: "700", color: "#0F172A" }}>
+                      Using as {finalPhone}
+                    </Text>
                   </View>
-
-                  <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                    {[
-                      { id: "gpay", name: "Google Pay", icon: "🟢" },
-                      { id: "phonepe", name: "PhonePe", icon: "🟣" },
-                      { id: "paytm", name: "PayTM", icon: "🔵" },
-                      { id: "other", name: "Other", icon: "🔺" },
-                    ].map((app) => (
-                      <TouchableOpacity
-                        key={app.id}
-                        onPress={() => {
-                          setSelectedMethodTitle(app.name);
-                          setRzpScreen("pin");
-                        }}
-                        style={{ alignItems: "center", width: "23%" }}
-                      >
-                        <View
-                          style={{
-                            width: 48,
-                            height: 48,
-                            borderRadius: 24,
-                            backgroundColor: "#F8FAFC",
-                            borderWidth: 1,
-                            borderColor: "#E2E8F0",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            marginBottom: 4,
-                          }}
-                        >
-                          <Text style={{ fontSize: 20 }}>{app.icon}</Text>
-                        </View>
-                        <Text numberOfLines={1} style={{ fontSize: 10, fontWeight: "700", color: "#334155" }}>
-                          {app.name}
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
+                  <ChevronRight size={16} color="#64748B" />
                 </View>
 
-                {/* Pay using card */}
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => {
-                    Alert.prompt
-                      ? Alert.prompt("Enter CVV", "Enter 3-digit CVV for ending 4400", () => {
-                          handleConfirmRazorpayPayment("Credit/Debit Card");
-                        })
-                      : handleConfirmRazorpayPayment("Credit/Debit Card");
-                  }}
-                  style={{
-                    backgroundColor: "#FFFFFF",
-                    borderWidth: 1,
-                    borderColor: "#E2E8F0",
-                    borderRadius: 12,
-                    padding: 14,
-                    marginBottom: 10,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <CreditCard size={18} color="#2563EB" style={{ marginRight: 10 }} />
-                    <View>
-                      <Text style={{ fontSize: 13, fontWeight: "800", color: "#0F172A" }}>
-                        Pay using card
-                      </Text>
-                      <Text style={{ fontSize: 11, color: "#64748B" }}>All Card Supported</Text>
-                    </View>
-                  </View>
-                  <ChevronRight size={18} color="#94A3B8" />
-                </TouchableOpacity>
-
-                {/* Cash On Delivery */}
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => {
-                    setIsRazorpayModalOpen(false);
-                    setGateway("COD");
-                  }}
-                  style={{
-                    backgroundColor: "#FFFFFF",
-                    borderWidth: 1,
-                    borderColor: "#E2E8F0",
-                    borderRadius: 12,
-                    padding: 14,
-                    marginBottom: 10,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Package size={18} color="#16A34A" style={{ marginRight: 10 }} />
-                    <View>
-                      <Text style={{ fontSize: 13, fontWeight: "800", color: "#0F172A" }}>
-                        Cash On delivery
-                      </Text>
-                      <Text style={{ fontSize: 11, color: "#64748B" }}>Pay at the time of delivery</Text>
-                    </View>
-                  </View>
-                  <ChevronRight size={18} color="#94A3B8" />
-                </TouchableOpacity>
-
-                {/* Net banking */}
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => handleConfirmRazorpayPayment("Netbanking")}
-                  style={{
-                    backgroundColor: "#FFFFFF",
-                    borderWidth: 1,
-                    borderColor: "#E2E8F0",
-                    borderRadius: 12,
-                    padding: 14,
-                    marginBottom: 10,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Building2 size={18} color="#2563EB" style={{ marginRight: 10 }} />
-                    <View>
-                      <Text style={{ fontSize: 13, fontWeight: "800", color: "#0F172A" }}>
-                        Net banking
-                      </Text>
-                      <Text style={{ fontSize: 11, color: "#64748B" }}>All Indian banks</Text>
-                    </View>
-                  </View>
-                  <ChevronRight size={18} color="#94A3B8" />
-                </TouchableOpacity>
-
-                {/* EMI */}
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => handleConfirmRazorpayPayment("No Cost EMI")}
-                  style={{
-                    backgroundColor: "#FFFFFF",
-                    borderWidth: 1,
-                    borderColor: "#E2E8F0",
-                    borderRadius: 12,
-                    padding: 14,
-                    marginBottom: 10,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Zap size={18} color="#F59E0B" style={{ marginRight: 10 }} />
-                    <View>
-                      <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <Text style={{ fontSize: 13, fontWeight: "800", color: "#0F172A", marginRight: 6 }}>
-                          EMI
-                        </Text>
-                        <View style={{ backgroundColor: "#DCFCE7", paddingHorizontal: 6, paddingVertical: 1, borderRadius: 4 }}>
-                          <Text style={{ fontSize: 9, fontWeight: "900", color: "#16A34A" }}>
-                            NO COST EMI AVAILABLE
-                          </Text>
-                        </View>
-                      </View>
-                      <Text style={{ fontSize: 11, color: "#64748B", marginTop: 2 }}>
-                        Card, EarlySalary and more..
-                      </Text>
-                    </View>
-                  </View>
-                  <ChevronRight size={18} color="#94A3B8" />
-                </TouchableOpacity>
-
-                {/* Wallet */}
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => handleConfirmRazorpayPayment("Wallet (Paytm)")}
-                  style={{
-                    backgroundColor: "#FFFFFF",
-                    borderWidth: 1,
-                    borderColor: "#E2E8F0",
-                    borderRadius: 12,
-                    padding: 14,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Wallet size={18} color="#6366F1" style={{ marginRight: 10 }} />
-                    <View>
-                      <Text style={{ fontSize: 13, fontWeight: "800", color: "#0F172A" }}>
-                        Wallet
-                      </Text>
-                      <Text style={{ fontSize: 11, color: "#64748B" }}>
-                        Amazon Pay, Mobikwik, Paytm
-                      </Text>
-                    </View>
-                  </View>
-                  <ChevronRight size={18} color="#94A3B8" />
-                </TouchableOpacity>
-              </ScrollView>
-
-              {/* Sticky Bottom Bar matching Image 1 Screen 1 */}
-              <View
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  backgroundColor: "#FFFFFF",
-                  borderTopWidth: 1,
-                  borderTopColor: "#E2E8F0",
-                  paddingHorizontal: 20,
-                  paddingVertical: 14,
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <View>
-                  <Text style={{ fontSize: 18, fontWeight: "900", color: "#0F172A" }}>
-                    ₹ {(finalAmount > 0 ? finalAmount : 12499).toLocaleString("en-IN")}
-                  </Text>
-                  <Text style={{ fontSize: 11, fontWeight: "700", color: "#2563EB" }}>
-                    View Details
+                {/* Secured By Razorpay Bottom Strip */}
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                  <ShieldCheck size={13} color="#FFFFFF" style={{ marginRight: 5 }} />
+                  <Text style={{ fontSize: 11, fontWeight: "800", color: "#FFFFFF", letterSpacing: 0.3 }}>
+                    Secured by Razorpay
                   </Text>
                 </View>
-
-                <TouchableOpacity
-                  activeOpacity={0.85}
-                  onPress={() => {
-                    setSelectedMethodTitle("ICICI Bank • XXXX 4411 UPI");
-                    setRzpScreen("pin");
-                  }}
-                  style={{
-                    backgroundColor: "#2563EB",
-                    paddingHorizontal: 32,
-                    paddingVertical: 12,
-                    borderRadius: 8,
-                    shadowColor: "#2563EB",
-                    shadowOffset: { width: 0, height: 2 },
-                    shadowOpacity: 0.3,
-                    shadowRadius: 4,
-                    elevation: 3,
-                  }}
-                >
-                  <Text style={{ color: "#FFFFFF", fontWeight: "900", fontSize: 14 }}>
-                    Continue
-                  </Text>
-                </TouchableOpacity>
               </View>
 
-              {/* Authorization Overlay */}
-              {isAuthorizing && (
+              {/* White Payment Options Body */}
+              <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+                {/* Section Header */}
                 <View
                   style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: "rgba(15, 23, 42, 0.8)",
+                    paddingHorizontal: 16,
+                    paddingTop: 12,
+                    paddingBottom: 8,
+                    flexDirection: "row",
                     alignItems: "center",
-                    justifyContent: "center",
-                    padding: 24,
-                    zIndex: 50,
+                    justifyContent: "space-between",
                   }}
                 >
-                  <ActivityIndicator size="large" color="#FFFFFF" style={{ marginBottom: 14 }} />
-                  <Text style={{ fontSize: 15, fontWeight: "800", color: "#FFFFFF", textAlign: "center" }}>
-                    {authStepMessage}
+                  <Text style={{ fontSize: 14, fontWeight: "900", color: "#0F172A" }}>
+                    Payment Options
                   </Text>
-                  <Text style={{ fontSize: 12, color: "#CBD5E1", textAlign: "center", marginTop: 6 }}>
-                    Securing transaction with Razorpay 256-Bit SSL
-                  </Text>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Clock size={12} color="#D97706" style={{ marginRight: 4 }} />
+                    <Text style={{ fontSize: 11, fontWeight: "800", color: "#D97706" }}>
+                      {formatTimer(timeLeft)}
+                    </Text>
+                  </View>
                 </View>
-              )}
+
+                {/* Horizontal Method Tabs matching Image */}
+                <View style={{ paddingHorizontal: 12, marginBottom: 12 }}>
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    {[
+                      { id: "upi", label: "UPI", badge: "GPay • PhonePe • QR" },
+                      { id: "cards", label: "Cards", badge: "Visa • Master" },
+                      { id: "netbanking", label: "Netbanking", badge: "All Banks" },
+                      { id: "wallet", label: "Wallet", badge: "Paytm • Mobi" },
+                      { id: "paylater", label: "Pay Later", badge: "LazyPay" },
+                    ].map((tab) => {
+                      const isSelected = activeRzpTab === tab.id;
+                      return (
+                        <TouchableOpacity
+                          key={tab.id}
+                          onPress={() => setActiveRzpTab(tab.id as any)}
+                          activeOpacity={0.7}
+                          style={{
+                            paddingHorizontal: 14,
+                            paddingVertical: 8,
+                            marginHorizontal: 4,
+                            borderRadius: 10,
+                            backgroundColor: isSelected ? "#2563EB" : "#F8FAFC",
+                            borderWidth: 1,
+                            borderColor: isSelected ? "#2563EB" : "#E2E8F0",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: 12,
+                              fontWeight: "800",
+                              color: isSelected ? "#FFFFFF" : "#0F172A",
+                            }}
+                          >
+                            {tab.label}
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 9,
+                              fontWeight: "600",
+                              color: isSelected ? "rgba(255, 255, 255, 0.85)" : "#64748B",
+                              marginTop: 2,
+                            }}
+                          >
+                            {tab.badge}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </ScrollView>
+                </View>
+
+                {/* Tab Content Body */}
+                <ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 30 }}>
+                  {/* ================= TAB 1: UPI & UPI QR ================= */}
+                  {activeRzpTab === "upi" && (
+                    <View>
+                      {/* UPI QR Header & Live Countdown */}
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          marginBottom: 10,
+                        }}
+                      >
+                        <Text style={{ fontSize: 13, fontWeight: "900", color: "#0F172A" }}>
+                          UPI QR
+                        </Text>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            backgroundColor: "#FEF3C7",
+                            paddingHorizontal: 8,
+                            paddingVertical: 3,
+                            borderRadius: 6,
+                          }}
+                        >
+                          <Clock size={12} color="#D97706" style={{ marginRight: 4 }} />
+                          <Text style={{ fontSize: 11, fontWeight: "800", color: "#D97706" }}>
+                            {formatTimer(timeLeft)}
+                          </Text>
+                        </View>
+                      </View>
+
+                      {/* White QR Code Card with border matching screenshot */}
+                      <View
+                        style={{
+                          backgroundColor: "#FFFFFF",
+                          borderWidth: 1.5,
+                          borderColor: "#E2E8F0",
+                          borderRadius: 16,
+                          padding: 16,
+                          alignItems: "center",
+                          shadowColor: "#000",
+                          shadowOffset: { width: 0, height: 2 },
+                          shadowOpacity: 0.06,
+                          shadowRadius: 6,
+                          elevation: 2,
+                          marginBottom: 14,
+                        }}
+                      >
+                        <Image
+                          source={require("../../assets/razorpay_upi_qr.png")}
+                          style={{ width: 170, height: 170 }}
+                          resizeMode="contain"
+                        />
+                        <Text style={{ fontSize: 12, fontWeight: "700", color: "#475569", marginTop: 10 }}>
+                          Scan the QR using any UPI App
+                        </Text>
+
+                        {/* Supported Apps Badges */}
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flexWrap: "wrap",
+                            marginTop: 8,
+                            gap: 6,
+                          }}
+                        >
+                          {["CRED", "GPay", "BHIM", "PhonePe", "PayTM", "Amazon Pay"].map((app) => (
+                            <View
+                              key={app}
+                              style={{
+                                backgroundColor: "#F1F5F9",
+                                paddingHorizontal: 7,
+                                paddingVertical: 3,
+                                borderRadius: 6,
+                              }}
+                            >
+                              <Text style={{ fontSize: 10, fontWeight: "800", color: "#334155" }}>
+                                {app}
+                              </Text>
+                            </View>
+                          ))}
+                        </View>
+                      </View>
+
+                      {/* Direct One-Tap Mobile Payment */}
+                      <TouchableOpacity
+                        activeOpacity={0.85}
+                        onPress={() => handleConfirmRazorpayPayment("UPI Intent App")}
+                        style={{
+                          backgroundColor: "#2563EB",
+                          borderRadius: 12,
+                          paddingVertical: 14,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          marginBottom: 10,
+                          shadowColor: "#2563EB",
+                          shadowOffset: { width: 0, height: 3 },
+                          shadowOpacity: 0.3,
+                          shadowRadius: 6,
+                          elevation: 3,
+                        }}
+                      >
+                        <Text style={{ color: "#FFFFFF", fontWeight: "900", fontSize: 14 }}>
+                          📱 Pay with Installed UPI App
+                        </Text>
+                      </TouchableOpacity>
+
+                      {/* Keypad PIN Option */}
+                      <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() => {
+                          setSelectedMethodTitle("ICICI Bank • XXXX 4411 UPI");
+                          setRzpScreen("pin");
+                        }}
+                        style={{
+                          backgroundColor: "#F8FAFC",
+                          borderWidth: 1,
+                          borderColor: "#CBD5E1",
+                          borderRadius: 12,
+                          paddingVertical: 12,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          marginBottom: 14,
+                        }}
+                      >
+                        <Text style={{ color: "#0F172A", fontWeight: "800", fontSize: 13 }}>
+                          🔢 Enter UPI PIN on Keypad
+                        </Text>
+                      </TouchableOpacity>
+
+                      {/* Divider */}
+                      <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 12 }}>
+                        <View style={{ flex: 1, height: 1, backgroundColor: "#E2E8F0" }} />
+                        <Text style={{ marginHorizontal: 10, fontSize: 10, fontWeight: "700", color: "#94A3B8" }}>
+                          OR ENTER UPI ID
+                        </Text>
+                        <View style={{ flex: 1, height: 1, backgroundColor: "#E2E8F0" }} />
+                      </View>
+
+                      {/* UPI ID Input */}
+                      <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 14 }}>
+                        <TextInput
+                          value={upiIdInput}
+                          onChangeText={setUpiIdInput}
+                          placeholder="e.g. gyan@oksbi / mob@paytm"
+                          placeholderTextColor="#94A3B8"
+                          style={{
+                            flex: 1,
+                            backgroundColor: "#F8FAFC",
+                            borderWidth: 1,
+                            borderColor: "#CBD5E1",
+                            borderRadius: 10,
+                            paddingHorizontal: 12,
+                            paddingVertical: 10,
+                            fontSize: 13,
+                            color: "#0F172A",
+                            marginRight: 8,
+                          }}
+                        />
+                        <TouchableOpacity
+                          activeOpacity={0.8}
+                          onPress={() => {
+                            if (upiIdInput.trim()) {
+                              handleConfirmRazorpayPayment(`UPI ID (${upiIdInput})`);
+                            } else {
+                              handleConfirmRazorpayPayment("UPI ID");
+                            }
+                          }}
+                          style={{
+                            backgroundColor: "#0F172A",
+                            paddingHorizontal: 14,
+                            paddingVertical: 11,
+                            borderRadius: 10,
+                          }}
+                        >
+                          <Text style={{ color: "#FFFFFF", fontWeight: "800", fontSize: 12 }}>Verify &amp; Pay</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  )}
+
+                  {/* ================= TAB 2: CARDS ================= */}
+                  {activeRzpTab === "cards" && (
+                    <View>
+                      <Text style={{ fontSize: 13, fontWeight: "900", color: "#0F172A", marginBottom: 10 }}>
+                        Cards (Credit / Debit)
+                      </Text>
+
+                      <View style={{ marginBottom: 10 }}>
+                        <Text style={{ fontSize: 11, fontWeight: "700", color: "#64748B", marginBottom: 4 }}>
+                          CARD NUMBER
+                        </Text>
+                        <TextInput
+                          value={cardNumber}
+                          onChangeText={setCardNumber}
+                          placeholder="XXXX XXXX XXXX XXXX"
+                          placeholderTextColor="#94A3B8"
+                          keyboardType="numeric"
+                          style={{
+                            backgroundColor: "#F8FAFC",
+                            borderWidth: 1,
+                            borderColor: "#CBD5E1",
+                            borderRadius: 10,
+                            paddingHorizontal: 12,
+                            paddingVertical: 10,
+                            fontSize: 13,
+                            color: "#0F172A",
+                          }}
+                        />
+                      </View>
+
+                      <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                        <View style={{ flex: 1, marginRight: 8 }}>
+                          <Text style={{ fontSize: 11, fontWeight: "700", color: "#64748B", marginBottom: 4 }}>
+                            VALID THRU (MM/YY)
+                          </Text>
+                          <TextInput
+                            value={cardExpiry}
+                            onChangeText={setCardExpiry}
+                            placeholder="MM/YY"
+                            placeholderTextColor="#94A3B8"
+                            style={{
+                              backgroundColor: "#F8FAFC",
+                              borderWidth: 1,
+                              borderColor: "#CBD5E1",
+                              borderRadius: 10,
+                              paddingHorizontal: 12,
+                              paddingVertical: 10,
+                              fontSize: 13,
+                              color: "#0F172A",
+                            }}
+                          />
+                        </View>
+                        <View style={{ flex: 1 }}>
+                          <Text style={{ fontSize: 11, fontWeight: "700", color: "#64748B", marginBottom: 4 }}>
+                            CVV
+                          </Text>
+                          <TextInput
+                            value={cardCvv}
+                            onChangeText={setCardCvv}
+                            placeholder="CVV"
+                            placeholderTextColor="#94A3B8"
+                            secureTextEntry
+                            keyboardType="numeric"
+                            style={{
+                              backgroundColor: "#F8FAFC",
+                              borderWidth: 1,
+                              borderColor: "#CBD5E1",
+                              borderRadius: 10,
+                              paddingHorizontal: 12,
+                              paddingVertical: 10,
+                              fontSize: 13,
+                              color: "#0F172A",
+                            }}
+                          />
+                        </View>
+                      </View>
+
+                      <View style={{ marginBottom: 16 }}>
+                        <Text style={{ fontSize: 11, fontWeight: "700", color: "#64748B", marginBottom: 4 }}>
+                          NAME ON CARD
+                        </Text>
+                        <TextInput
+                          value={cardHolder}
+                          onChangeText={setCardHolder}
+                          placeholder="Cardholder Name"
+                          placeholderTextColor="#94A3B8"
+                          style={{
+                            backgroundColor: "#F8FAFC",
+                            borderWidth: 1,
+                            borderColor: "#CBD5E1",
+                            borderRadius: 10,
+                            paddingHorizontal: 12,
+                            paddingVertical: 10,
+                            fontSize: 13,
+                            color: "#0F172A",
+                          }}
+                        />
+                      </View>
+
+                      <TouchableOpacity
+                        activeOpacity={0.85}
+                        onPress={() => handleConfirmRazorpayPayment("Credit/Debit Card")}
+                        style={{
+                          backgroundColor: "#2563EB",
+                          borderRadius: 12,
+                          paddingVertical: 14,
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text style={{ color: "#FFFFFF", fontWeight: "900", fontSize: 14 }}>
+                          Pay ₹{effectiveAmount.toFixed(2)}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+
+                  {/* ================= TAB 3: NETBANKING ================= */}
+                  {activeRzpTab === "netbanking" && (
+                    <View>
+                      <Text style={{ fontSize: 13, fontWeight: "900", color: "#0F172A", marginBottom: 10 }}>
+                        Select Your Bank
+                      </Text>
+
+                      {[
+                        { id: "SBI", name: "State Bank of India", icon: "🏦" },
+                        { id: "HDFC", name: "HDFC Bank", icon: "🏛️" },
+                        { id: "ICICI", name: "ICICI Bank", icon: "🏢" },
+                        { id: "AXIS", name: "Axis Bank", icon: "🏛️" },
+                        { id: "KOTAK", name: "Kotak Mahindra Bank", icon: "🏦" },
+                        { id: "PNB", name: "Punjab National Bank", icon: "🏢" },
+                      ].map((bank) => {
+                        const isChosen = selectedBank === bank.id;
+                        return (
+                          <TouchableOpacity
+                            key={bank.id}
+                            onPress={() => setSelectedBank(bank.id)}
+                            activeOpacity={0.8}
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                              padding: 12,
+                              borderRadius: 10,
+                              backgroundColor: isChosen ? "#EFF6FF" : "#F8FAFC",
+                              borderWidth: 1,
+                              borderColor: isChosen ? "#2563EB" : "#E2E8F0",
+                              marginBottom: 8,
+                            }}
+                          >
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                              <Text style={{ fontSize: 18, marginRight: 10 }}>{bank.icon}</Text>
+                              <Text style={{ fontSize: 13, fontWeight: "800", color: "#0F172A" }}>
+                                {bank.name}
+                              </Text>
+                            </View>
+                            {isChosen && <Check size={16} color="#2563EB" />}
+                          </TouchableOpacity>
+                        );
+                      })}
+
+                      <TouchableOpacity
+                        activeOpacity={0.85}
+                        onPress={() => handleConfirmRazorpayPayment(`${selectedBank} Netbanking`)}
+                        style={{
+                          backgroundColor: "#2563EB",
+                          borderRadius: 12,
+                          paddingVertical: 14,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          marginTop: 8,
+                        }}
+                      >
+                        <Text style={{ color: "#FFFFFF", fontWeight: "900", fontSize: 14 }}>
+                          Pay via {selectedBank} Netbanking
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+
+                  {/* ================= TAB 4: WALLET ================= */}
+                  {activeRzpTab === "wallet" && (
+                    <View>
+                      <Text style={{ fontSize: 13, fontWeight: "900", color: "#0F172A", marginBottom: 10 }}>
+                        Select Digital Wallet
+                      </Text>
+
+                      {[
+                        { id: "Paytm", name: "PayTM Wallet", icon: "🔵" },
+                        { id: "PhonePe", name: "PhonePe Wallet", icon: "🟣" },
+                        { id: "Mobikwik", name: "MobiKwik", icon: "🔴" },
+                        { id: "AmazonPay", name: "Amazon Pay Balance", icon: "🟠" },
+                      ].map((wal) => {
+                        const isChosen = selectedWallet === wal.id;
+                        return (
+                          <TouchableOpacity
+                            key={wal.id}
+                            onPress={() => setSelectedWallet(wal.id)}
+                            activeOpacity={0.8}
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                              padding: 12,
+                              borderRadius: 10,
+                              backgroundColor: isChosen ? "#EFF6FF" : "#F8FAFC",
+                              borderWidth: 1,
+                              borderColor: isChosen ? "#2563EB" : "#E2E8F0",
+                              marginBottom: 8,
+                            }}
+                          >
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                              <Text style={{ fontSize: 18, marginRight: 10 }}>{wal.icon}</Text>
+                              <Text style={{ fontSize: 13, fontWeight: "800", color: "#0F172A" }}>
+                                {wal.name}
+                              </Text>
+                            </View>
+                            {isChosen && <Check size={16} color="#2563EB" />}
+                          </TouchableOpacity>
+                        );
+                      })}
+
+                      <TouchableOpacity
+                        activeOpacity={0.85}
+                        onPress={() => handleConfirmRazorpayPayment(`Wallet (${selectedWallet})`)}
+                        style={{
+                          backgroundColor: "#2563EB",
+                          borderRadius: 12,
+                          paddingVertical: 14,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          marginTop: 8,
+                        }}
+                      >
+                        <Text style={{ color: "#FFFFFF", fontWeight: "900", fontSize: 14 }}>
+                          Pay via {selectedWallet}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+
+                  {/* ================= TAB 5: PAY LATER ================= */}
+                  {activeRzpTab === "paylater" && (
+                    <View>
+                      <Text style={{ fontSize: 13, fontWeight: "900", color: "#0F172A", marginBottom: 10 }}>
+                        Pay Later Options
+                      </Text>
+
+                      {[
+                        { id: "LazyPay", name: "LazyPay", sub: "Flat ₹100 Cashback on first order", icon: "⚡" },
+                        { id: "Simpl", name: "Simpl PayLater", sub: "One-tap checkout, pay after 15 days", icon: "🟢" },
+                        { id: "ICICIPayLater", name: "ICICI Bank PayLater", sub: "Instant credit up to ₹25,000", icon: "🏢" },
+                      ].map((pl) => {
+                        const isChosen = selectedPayLater === pl.id;
+                        return (
+                          <TouchableOpacity
+                            key={pl.id}
+                            onPress={() => setSelectedPayLater(pl.id)}
+                            activeOpacity={0.8}
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                              padding: 12,
+                              borderRadius: 10,
+                              backgroundColor: isChosen ? "#EFF6FF" : "#F8FAFC",
+                              borderWidth: 1,
+                              borderColor: isChosen ? "#2563EB" : "#E2E8F0",
+                              marginBottom: 8,
+                            }}
+                          >
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                              <Text style={{ fontSize: 18, marginRight: 10 }}>{pl.icon}</Text>
+                              <View>
+                                <Text style={{ fontSize: 13, fontWeight: "800", color: "#0F172A" }}>
+                                  {pl.name}
+                                </Text>
+                                <Text style={{ fontSize: 10, color: "#64748B", marginTop: 1 }}>
+                                  {pl.sub}
+                                </Text>
+                              </View>
+                            </View>
+                            {isChosen && <Check size={16} color="#2563EB" />}
+                          </TouchableOpacity>
+                        );
+                      })}
+
+                      <TouchableOpacity
+                        activeOpacity={0.85}
+                        onPress={() => handleConfirmRazorpayPayment(`PayLater (${selectedPayLater})`)}
+                        style={{
+                          backgroundColor: "#2563EB",
+                          borderRadius: 12,
+                          paddingVertical: 14,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          marginTop: 8,
+                        }}
+                      >
+                        <Text style={{ color: "#FFFFFF", fontWeight: "900", fontSize: 14 }}>
+                          Pay Later with {selectedPayLater}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+
+                  {/* Razorpay Legal Disclaimer Notice matching screenshot */}
+                  <View style={{ marginTop: 20, alignItems: "center" }}>
+                    <Text style={{ fontSize: 10, color: "#94A3B8", textAlign: "center", lineHeight: 15 }}>
+                      By proceeding, I agree to Razorpay's Privacy Notice • Edit Preferences
+                    </Text>
+                  </View>
+                </ScrollView>
+              </View>
             </View>
           )}
         </SafeAreaView>
       </Modal>
+
+      {/* Global Order Authorization Loading Overlay */}
+      <LoadingOverlay
+        visible={isAuthorizing || isPlacing}
+        title={authStepMessage || "Processing Secure Order..."}
+        subtitle="Connecting to bank payment gateway. Please wait..."
+      />
     </SafeAreaView>
   );
 }

@@ -39,6 +39,7 @@ import { useLocationStore, POPULAR_INDIAN_HUBS } from "../../src/store/locationS
 import { useCartStore } from "../../src/store/cartStore";
 import { useWishlistStore } from "../../src/store/wishlistStore";
 import { apiClient, getFullImageUrl, API_BASE_URL } from "../../src/services/api";
+import { ProductCardSkeleton } from "../../src/components/SkeletonLoader";
 
 // Flipkart-style top category navigation
 const FLIPKART_CATEGORIES = [
@@ -680,7 +681,12 @@ export default function HomeScreen() {
           </View>
 
           {loadingProducts ? (
-            <ActivityIndicator size="small" color="#2563EB" style={{ marginVertical: 30 }} />
+            <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
+              <ProductCardSkeleton />
+              <ProductCardSkeleton />
+              <ProductCardSkeleton />
+              <ProductCardSkeleton />
+            </View>
           ) : loadError ? (
             <View style={{ backgroundColor: "#EFF6FF", borderWidth: 1, borderColor: "#DBEAFE", borderRadius: 12, padding: 14, alignItems: "center", marginVertical: 12 }}>
               <Text style={{ fontSize: 13, fontWeight: "800", color: "#1E3A8A", marginBottom: 4 }}>

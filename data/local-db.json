@@ -278,6 +278,36 @@
       "phoneVerified": true,
       "createdAt": "2026-10-30T17:55:07.039Z",
       "updatedAt": "2026-10-30T17:55:07.039Z"
+    },
+    {
+      "id": "usr_x11c0d8vq",
+      "name": "Satendra",
+      "email": "satendrasingh@gmail.com",
+      "password": "$2b$10$yaHztbs0JZ9j.4R.py9D/.EMS6x8zSPmfpDgpUuURymTkET2qNTfW",
+      "role": "CUSTOMER",
+      "type": "customer",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "",
+      "phone": "",
+      "countryCode": "+1",
+      "country": "",
+      "state": "",
+      "city": "",
+      "postalCode": "",
+      "streetAddress": "",
+      "apartment": "",
+      "address": "",
+      "shippingAddress": "",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-30T19:52:02.752Z",
+      "updatedAt": "2026-10-30T19:52:02.752Z"
     }
   ],
   "assets": [
@@ -4811,10 +4841,10 @@
         "ast_prod_denim_jacket_2"
       ],
       "mainImage": "/uploads/prod_denim_1.webp",
-      "rating": 4.8,
-      "reviewsCount": 120,
+      "rating": 5,
+      "reviewsCount": 0,
       "createdAt": "2026-10-28T18:49:57.225Z",
-      "updatedAt": "2026-10-28T18:49:57.225Z",
+      "updatedAt": "2026-10-30T19:40:06.007Z",
       "hasVariants": true,
       "variantAttributes": [
         {
@@ -10513,6 +10543,726 @@
   ],
   "orders": [
     {
+      "id": "ord_z8omf7o",
+      "orderNumber": "cod_5280",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T20:02:28.052Z",
+      "gateway": "Cash on Delivery",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Pending",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_tv6w1_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-0",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T20:02:28.052Z",
+          "action": "CREATE",
+          "performedBy": "Customer",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-30T20:02:28.053Z",
+      "updatedAt": "2026-10-30T20:02:28.053Z"
+    },
+    {
+      "id": "ord_ry9njnu",
+      "orderNumber": "tags3543",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T20:02:27.492Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_4iwi0_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-1",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuFDVkbhHqVcCz",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T20:02:27.492Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Mobile Test User",
+          "notes": "Razorpay order created with ID: order_TuFDVkbhHqVcCz. Amount: ₹12499.00"
+        },
+        {
+          "timestamp": "2026-10-30T20:02:27.785Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_test_verified_99"
+        }
+      ],
+      "createdAt": "2026-10-30T20:02:27.493Z",
+      "updatedAt": "2026-10-30T20:02:27.785Z",
+      "paymentTransactionId": "pay_test_verified_99",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuFDVkbhHqVcCz",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T20:02:27.784Z"
+      },
+      "paidAt": "2026-10-30T20:02:27.784Z"
+    },
+    {
+      "id": "ord_t5y4njl",
+      "orderNumber": "tags6829",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T20:01:04.503Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 55,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 55,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_qyt90_0",
+          "orderId": "",
+          "productId": "prod_oxford_shirt",
+          "variantId": "var_prod_oxford_shirt_s_cla",
+          "itemNo": "SKU-1",
+          "name": "Men's Slim Fit Stretch Cotton Oxford Button-Down Shirt",
+          "price": 55,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuFC3DEB2WM0NN",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T20:01:04.503Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Satendra",
+          "notes": "Razorpay order created with ID: order_TuFC3DEB2WM0NN. Amount: ₹55.00"
+        },
+        {
+          "timestamp": "2026-10-30T20:01:22.764Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_mob_ev19r5ps"
+        }
+      ],
+      "createdAt": "2026-10-30T20:01:04.504Z",
+      "updatedAt": "2026-10-30T20:01:22.764Z",
+      "paymentTransactionId": "pay_mob_ev19r5ps",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuFC3DEB2WM0NN",
+        "razorpay_payment_id": "pay_mob_ev19r5ps",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T20:01:22.764Z"
+      },
+      "paidAt": "2026-10-30T20:01:22.764Z"
+    },
+    {
+      "id": "ord_4effr4t",
+      "orderNumber": "mob_cod_test_102",
+      "customerName": "Crash Test User",
+      "customerEmail": "crashtest@eshop.in",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T20:02:14.119Z",
+      "gateway": "Cash On Delivery (COD)",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 161.1,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 161.1,
+      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_gwz2u_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-0",
+          "name": "Air Max 270",
+          "price": 161.1,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T20:02:14.119Z",
+          "action": "CREATE",
+          "performedBy": "Customer",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-30T19:59:25.708Z",
+      "updatedAt": "2026-10-30T20:02:14.122Z"
+    },
+    {
+      "id": "ord_id0qsch",
+      "orderNumber": "mob_crash_test_101",
+      "customerName": "Crash Test User",
+      "customerEmail": "crashtest@eshop.in",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T20:02:12.977Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 161.1,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 161.1,
+      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_2o8zj_0",
+          "orderId": "",
+          "productId": "prod_nike_af1",
+          "itemNo": "SKU-1",
+          "name": "Nike Air Max",
+          "price": 161.1,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuFDEtTGOOnb4Q",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T20:02:12.977Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Crash Test User",
+          "notes": "Razorpay order created with ID: order_TuFDEtTGOOnb4Q. Amount: ₹161.10"
+        },
+        {
+          "timestamp": "2026-10-30T20:02:13.822Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_test_mock_1"
+        }
+      ],
+      "createdAt": "2026-10-30T19:59:25.094Z",
+      "updatedAt": "2026-10-30T20:02:13.822Z",
+      "paymentTransactionId": "pay_test_mock_1",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuFDEtTGOOnb4Q",
+        "razorpay_payment_id": "pay_test_mock_1",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T20:02:13.821Z"
+      },
+      "paidAt": "2026-10-30T20:02:13.821Z"
+    },
+    {
+      "id": "ord_yqptwm6",
+      "orderNumber": "tags4724",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T19:57:35.807Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 110,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 110,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_3fuih_0",
+          "orderId": "",
+          "productId": "prod_denim_jacket",
+          "variantId": "var_prod_denim_jacket_s_cla",
+          "itemNo": "SKU-1",
+          "name": "Classic Denim Trucker Jacket in Vintage Washed Blue",
+          "price": 110,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuF8NPpNp3UDjE",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:57:35.807Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Satendra",
+          "notes": "Razorpay order created with ID: order_TuF8NPpNp3UDjE. Amount: ₹110.00"
+        },
+        {
+          "timestamp": "2026-10-30T19:57:41.078Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_mob_b3b23kf6"
+        }
+      ],
+      "createdAt": "2026-10-30T19:57:35.807Z",
+      "updatedAt": "2026-10-30T19:57:41.078Z",
+      "paymentTransactionId": "pay_mob_b3b23kf6",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuF8NPpNp3UDjE",
+        "razorpay_payment_id": "pay_mob_b3b23kf6",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T19:57:41.077Z"
+      },
+      "paidAt": "2026-10-30T19:57:41.077Z"
+    },
+    {
+      "id": "ord_r9troc8",
+      "orderNumber": "tags9569",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T19:57:28.105Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 110,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 110,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_ijv6y_0",
+          "orderId": "",
+          "productId": "prod_denim_jacket",
+          "variantId": "var_prod_denim_jacket_s_cla",
+          "itemNo": "SKU-1",
+          "name": "Classic Denim Trucker Jacket in Vintage Washed Blue",
+          "price": 110,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuF8EyvBWMwsuM",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:57:28.105Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Satendra",
+          "notes": "Razorpay order created with ID: order_TuF8EyvBWMwsuM. Amount: ₹110.00"
+        }
+      ],
+      "createdAt": "2026-10-30T19:57:28.106Z",
+      "updatedAt": "2026-10-30T19:57:28.106Z"
+    },
+    {
+      "id": "ord_ro2jnhc",
+      "orderNumber": "tags5459",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T19:57:27.821Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 110,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 110,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_ad8b7_0",
+          "orderId": "",
+          "productId": "prod_denim_jacket",
+          "variantId": "var_prod_denim_jacket_s_cla",
+          "itemNo": "SKU-1",
+          "name": "Classic Denim Trucker Jacket in Vintage Washed Blue",
+          "price": 110,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuF8Egu1dI97n1",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:57:27.821Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Satendra",
+          "notes": "Razorpay order created with ID: order_TuF8Egu1dI97n1. Amount: ₹110.00"
+        }
+      ],
+      "createdAt": "2026-10-30T19:57:27.822Z",
+      "updatedAt": "2026-10-30T19:57:27.822Z"
+    },
+    {
+      "id": "ord_oor4tyz",
+      "orderNumber": "tags7143",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T19:57:17.350Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 110,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 110,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_kxz5d_0",
+          "orderId": "",
+          "productId": "prod_denim_jacket",
+          "variantId": "var_prod_denim_jacket_s_cla",
+          "itemNo": "SKU-1",
+          "name": "Classic Denim Trucker Jacket in Vintage Washed Blue",
+          "price": 110,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuF83HhnuqJ6RG",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:57:17.350Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Satendra",
+          "notes": "Razorpay order created with ID: order_TuF83HhnuqJ6RG. Amount: ₹110.00"
+        }
+      ],
+      "createdAt": "2026-10-30T19:57:17.351Z",
+      "updatedAt": "2026-10-30T19:57:17.351Z"
+    },
+    {
+      "id": "ord_eeawsyc",
+      "orderNumber": "tags9793",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T19:55:34.322Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 2443,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 2443,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_lonst_0",
+          "orderId": "",
+          "productId": "prod_nike_jordan_hoodie",
+          "itemNo": "SKU-1",
+          "name": "Nike Jordan Brooklyn Fleece Men's Pullover Hoodie",
+          "price": 45,
+          "quantity": 1,
+          "imageUrl": ""
+        },
+        {
+          "id": "item_vasji_1",
+          "orderId": "",
+          "productId": "prod_iphone_15_pro",
+          "itemNo": "SKU-2",
+          "name": "Apple iPhone 15 Pro Max Titanium Natural (256GB)",
+          "price": 1199,
+          "quantity": 1,
+          "imageUrl": ""
+        },
+        {
+          "id": "item_c84gk_2",
+          "orderId": "",
+          "productId": "prod_iphone_15_pro",
+          "variantId": "var_prod_iphone_15_pro_256gb_gra",
+          "itemNo": "SKU-3",
+          "name": "Apple iPhone 15 Pro Max Titanium Natural (256GB)",
+          "price": 1199,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuF6EoGHyKy7OS",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:55:34.322Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Satendra",
+          "notes": "Razorpay order created with ID: order_TuF6EoGHyKy7OS. Amount: ₹2443.00"
+        },
+        {
+          "timestamp": "2026-10-30T19:55:43.163Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_mob_xgsfbi7q"
+        }
+      ],
+      "createdAt": "2026-10-30T19:55:34.323Z",
+      "updatedAt": "2026-10-30T19:55:43.163Z",
+      "paymentTransactionId": "pay_mob_xgsfbi7q",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuF6EoGHyKy7OS",
+        "razorpay_payment_id": "pay_mob_xgsfbi7q",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T19:55:43.162Z"
+      },
+      "paidAt": "2026-10-30T19:55:43.162Z"
+    },
+    {
+      "id": "ord_bimnivg",
+      "orderNumber": "tags9986",
+      "customerName": "Customer",
+      "customerEmail": "customer@example.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T19:49:28.386Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 90,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 90,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_16f1s_0",
+          "orderId": "",
+          "productId": "prod_kids_denim_dungarees",
+          "itemNo": "SKU-1",
+          "name": "Kids' Classic Denim Dungarees Adjustable Overalls",
+          "price": 45,
+          "quantity": 1,
+          "imageUrl": ""
+        },
+        {
+          "id": "item_ei0h7_1",
+          "orderId": "",
+          "productId": "prod_kids_denim_dungarees",
+          "variantId": "var_prod_kids_denim_dungarees_s_cla",
+          "itemNo": "SKU-2",
+          "name": "Kids' Classic Denim Dungarees Adjustable Overalls",
+          "price": 45,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuEznLnDXX1qBU",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:49:28.386Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Customer",
+          "notes": "Razorpay order created with ID: order_TuEznLnDXX1qBU. Amount: ₹90.00"
+        },
+        {
+          "timestamp": "2026-10-30T19:49:33.083Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_mob_c59j8o71"
+        }
+      ],
+      "createdAt": "2026-10-30T19:49:28.391Z",
+      "updatedAt": "2026-10-30T19:49:33.083Z",
+      "paymentTransactionId": "pay_mob_c59j8o71",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuEznLnDXX1qBU",
+        "razorpay_payment_id": "pay_mob_c59j8o71",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T19:49:33.082Z"
+      },
+      "paidAt": "2026-10-30T19:49:33.082Z"
+    },
+    {
+      "id": "ord_cpy2c85",
+      "orderNumber": "tags6061",
+      "customerName": "Customer",
+      "customerEmail": "customer@example.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T19:43:39.191Z",
+      "gateway": "Cash On Delivery (COD)",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 1124.99,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 1124.99,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_1wbsw_0",
+          "orderId": "",
+          "productId": "prod_mulberry_silk_blouse",
+          "variantId": "var_prod_mulberry_silk_blouse_s_cla",
+          "itemNo": "SKU-0",
+          "name": "Pure Mulberry Silk Button-Down Long Sleeve Blouse",
+          "price": 125,
+          "quantity": 1,
+          "imageUrl": ""
+        },
+        {
+          "id": "item_xa6vp_1",
+          "orderId": "",
+          "productId": "prod_s24_ultra",
+          "variantId": "var_prod_s24_ultra_256gb_gra",
+          "itemNo": "SKU-1",
+          "name": "Samsung Galaxy S24 Ultra 12+GB Titanium Gray",
+          "price": 999.99,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:43:39.191Z",
+          "action": "CREATE",
+          "performedBy": "Customer",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-30T19:43:39.194Z",
+      "updatedAt": "2026-10-30T19:43:39.194Z"
+    },
+    {
+      "id": "ord_0v23yea",
+      "orderNumber": "tags5655",
+      "customerName": "Gyan Chandra",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "customerPhone": "+91 9876543211",
+      "orderDate": "2026-10-30T19:37:33.066Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Cancelled",
+      "orderStatus": "Cancelled By System",
+      "subtotal": 95,
+      "shippingCost": 49,
+      "taxAmount": 17.1,
+      "couponDiscount": 0,
+      "totalPrice": 161.1,
+      "shippingAddress": "Village And Post Niyauj, No, Mumbai, Uttar Pradesh, 400001, India",
+      "billingAddress": "Village And Post Niyauj, No, Mumbai, Uttar Pradesh, 400001, India",
+      "shippingAddressDetail": {
+        "name": "Gyan Chandra",
+        "company": "gtech",
+        "country": "India",
+        "state": "Uttar Pradesh",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village And Post Niyauj",
+        "apartment": "No",
+        "phone": "+91 9876543211",
+        "type": "shipping"
+      },
+      "billingAddressDetail": {
+        "name": "Gyan Chandra",
+        "company": "gtech",
+        "country": "India",
+        "state": "Uttar Pradesh",
+        "city": "Mumbai",
+        "postalCode": "400001",
+        "streetAddress": "Village And Post Niyauj",
+        "apartment": "No",
+        "phone": "+91 9876543211",
+        "type": "billing"
+      },
+      "items": [
+        {
+          "id": "item_g8xol_0",
+          "orderId": "",
+          "productId": "prod_floral_wrap_dress",
+          "variantId": "var_prod_floral_wrap_dress_s_cla",
+          "variantAttributes": {
+            "Size": "S",
+            "Color": "Classic Navy"
+          },
+          "itemNo": "WMN-FLR-WRAP-DRES-S-CLA",
+          "name": "Women's Floral Print Wrap Maxi Dress in Emerald",
+          "price": 95,
+          "quantity": 1,
+          "imageUrl": "/uploads/prod_floral_1.webp"
+        }
+      ],
+      "gatewayOrderId": "order_TuEnCamgxbYO7N",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T19:37:33.066Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Gyan Chandra",
+          "notes": "Razorpay order created with ID: order_TuEnCamgxbYO7N. Amount: ₹161.10"
+        },
+        {
+          "timestamp": "2026-10-30T19:41:14.894Z",
+          "action": "PAYMENT_CANCELLED",
+          "performedBy": "Customer",
+          "notes": "Customer cancelled payment checkout on Razorpay. Reason: Payment window was closed before completion."
+        }
+      ],
+      "createdAt": "2026-10-30T19:37:33.072Z",
+      "updatedAt": "2026-10-30T19:41:14.894Z"
+    },
+    {
       "id": "ord_n0f76km",
       "orderNumber": "cod_4332",
       "customerName": "COD Customer",
@@ -13596,6 +14346,233 @@
   ],
   "payments": [
     {
+      "id": "pay_5nnlp02",
+      "orderId": "ord_z8omf7o",
+      "orderNumber": "cod_5280",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "paymentGateway": "Cash on Delivery",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T20:02:28.053Z",
+      "updatedAt": "2026-10-30T20:02:28.053Z"
+    },
+    {
+      "id": "pay_xo9umei",
+      "orderId": "ord_ry9njnu",
+      "orderNumber": "tags3543",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuFDVkbhHqVcCz",
+      "transactionId": "pay_test_verified_99",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T20:02:27.784Z",
+      "createdAt": "2026-10-30T20:02:27.493Z",
+      "updatedAt": "2026-10-30T20:02:27.785Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuFDVkbhHqVcCz",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T20:02:27.784Z"
+      }
+    },
+    {
+      "id": "pay_vuv0iif",
+      "orderId": "ord_t5y4njl",
+      "orderNumber": "tags6829",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuFC3DEB2WM0NN",
+      "transactionId": "pay_mob_ev19r5ps",
+      "amount": 55,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T20:01:22.764Z",
+      "createdAt": "2026-10-30T20:01:04.504Z",
+      "updatedAt": "2026-10-30T20:01:22.764Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuFC3DEB2WM0NN",
+        "razorpay_payment_id": "pay_mob_ev19r5ps",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T20:01:22.764Z"
+      }
+    },
+    {
+      "id": "pay_tn3puge",
+      "orderId": "ord_4effr4t",
+      "orderNumber": "mob_cod_test_102",
+      "customerName": "Crash Test User",
+      "customerEmail": "crashtest@eshop.in",
+      "paymentGateway": "Cash On Delivery (COD)",
+      "amount": 161.1,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T19:59:25.708Z",
+      "updatedAt": "2026-10-30T19:59:25.708Z"
+    },
+    {
+      "id": "pay_65i5ao6",
+      "orderId": "ord_id0qsch",
+      "orderNumber": "mob_crash_test_101",
+      "customerName": "Crash Test User",
+      "customerEmail": "crashtest@eshop.in",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuFDEtTGOOnb4Q",
+      "transactionId": "pay_test_mock_1",
+      "amount": 161.1,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T20:02:13.821Z",
+      "createdAt": "2026-10-30T19:59:25.094Z",
+      "updatedAt": "2026-10-30T20:02:13.822Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuFDEtTGOOnb4Q",
+        "razorpay_payment_id": "pay_test_mock_1",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T20:02:13.821Z"
+      }
+    },
+    {
+      "id": "pay_lvnw1hx",
+      "orderId": "ord_yqptwm6",
+      "orderNumber": "tags4724",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuF8NPpNp3UDjE",
+      "transactionId": "pay_mob_b3b23kf6",
+      "amount": 110,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T19:57:41.077Z",
+      "createdAt": "2026-10-30T19:57:35.807Z",
+      "updatedAt": "2026-10-30T19:57:41.078Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuF8NPpNp3UDjE",
+        "razorpay_payment_id": "pay_mob_b3b23kf6",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T19:57:41.077Z"
+      }
+    },
+    {
+      "id": "pay_kx0shbr",
+      "orderId": "ord_r9troc8",
+      "orderNumber": "tags9569",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuF8EyvBWMwsuM",
+      "amount": 110,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T19:57:28.106Z",
+      "updatedAt": "2026-10-30T19:57:28.106Z"
+    },
+    {
+      "id": "pay_suxf2x8",
+      "orderId": "ord_ro2jnhc",
+      "orderNumber": "tags5459",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuF8Egu1dI97n1",
+      "amount": 110,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T19:57:27.822Z",
+      "updatedAt": "2026-10-30T19:57:27.822Z"
+    },
+    {
+      "id": "pay_utpgnz1",
+      "orderId": "ord_oor4tyz",
+      "orderNumber": "tags7143",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuF83HhnuqJ6RG",
+      "amount": 110,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T19:57:17.351Z",
+      "updatedAt": "2026-10-30T19:57:17.351Z"
+    },
+    {
+      "id": "pay_eb2urt9",
+      "orderId": "ord_eeawsyc",
+      "orderNumber": "tags9793",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuF6EoGHyKy7OS",
+      "transactionId": "pay_mob_xgsfbi7q",
+      "amount": 2443,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T19:55:43.162Z",
+      "createdAt": "2026-10-30T19:55:34.323Z",
+      "updatedAt": "2026-10-30T19:55:43.163Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuF6EoGHyKy7OS",
+        "razorpay_payment_id": "pay_mob_xgsfbi7q",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T19:55:43.162Z"
+      }
+    },
+    {
+      "id": "pay_h795uay",
+      "orderId": "ord_bimnivg",
+      "orderNumber": "tags9986",
+      "customerName": "Customer",
+      "customerEmail": "customer@example.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuEznLnDXX1qBU",
+      "transactionId": "pay_mob_c59j8o71",
+      "amount": 90,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T19:49:33.082Z",
+      "createdAt": "2026-10-30T19:49:28.391Z",
+      "updatedAt": "2026-10-30T19:49:33.083Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuEznLnDXX1qBU",
+        "razorpay_payment_id": "pay_mob_c59j8o71",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T19:49:33.082Z"
+      }
+    },
+    {
+      "id": "pay_c8s42tl",
+      "orderId": "ord_cpy2c85",
+      "orderNumber": "tags6061",
+      "customerName": "Customer",
+      "customerEmail": "customer@example.com",
+      "paymentGateway": "Cash On Delivery (COD)",
+      "amount": 1124.99,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T19:43:39.194Z",
+      "updatedAt": "2026-10-30T19:43:39.194Z"
+    },
+    {
+      "id": "pay_ufolq6n",
+      "orderId": "ord_0v23yea",
+      "orderNumber": "tags5655",
+      "customerName": "Gyan Chandra",
+      "customerEmail": "gyanchandranist@gmail.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuEnCamgxbYO7N",
+      "amount": 161.1,
+      "currency": "INR",
+      "paymentStatus": "Cancelled",
+      "createdAt": "2026-10-30T19:37:33.072Z",
+      "updatedAt": "2026-10-30T19:41:14.894Z"
+    },
+    {
       "id": "pay_pyr7ce7",
       "orderId": "ord_n0f76km",
       "orderNumber": "cod_4332",
@@ -14340,7 +15317,7 @@
       "userId": "usr_bml05dvn4",
       "status": "active",
       "createdAt": "2026-10-30T17:56:10.049Z",
-      "updatedAt": "2026-10-30T19:27:39.890Z"
+      "updatedAt": "2026-10-30T19:31:40.106Z"
     },
     {
       "id": "cart_gstm6ce5so6zf",
@@ -14369,6 +15346,27 @@
       "status": "active",
       "createdAt": "2026-10-30T19:29:16.398Z",
       "updatedAt": "2026-10-30T19:29:16.398Z"
+    },
+    {
+      "id": "cart_gstu2e1p8f67b",
+      "sessionId": "gst_u2e1p8f67b",
+      "status": "merged",
+      "createdAt": "2026-10-30T19:42:23.896Z",
+      "updatedAt": "2026-10-30T19:50:37.472Z"
+    },
+    {
+      "id": "cart_ucgg8om",
+      "userId": "usr_x11c0d8vq",
+      "status": "active",
+      "createdAt": "2026-10-30T19:53:41.501Z",
+      "updatedAt": "2026-10-30T20:01:24.556Z"
+    },
+    {
+      "id": "cart_gst1gz9e8v88r",
+      "sessionId": "gst_1gz9e8v88r",
+      "status": "active",
+      "createdAt": "2026-10-30T20:02:25.981Z",
+      "updatedAt": "2026-10-30T20:02:25.981Z"
     }
   ],
   "cartItems": [
@@ -14411,6 +15409,36 @@
       "quantity": 1,
       "createdAt": "2026-10-30T19:29:16.434Z",
       "updatedAt": "2026-10-30T19:29:16.434Z"
+    },
+    {
+      "id": "ci_v2brxhy",
+      "cartId": "cart_3wgflgl",
+      "productId": "prod_floral_wrap_dress",
+      "variantId": "var_prod_floral_wrap_dress_s_cla",
+      "quantity": 1,
+      "selectedAttributes": {
+        "Size": "S",
+        "Color": "Classic Navy"
+      },
+      "createdAt": "2026-10-30T19:37:26.673Z",
+      "updatedAt": "2026-10-30T19:37:26.673Z"
+    },
+    {
+      "id": "ci_e0tu2jx",
+      "cartId": "cart_x0ek43m",
+      "productId": "prod_denim_jacket",
+      "variantId": "var_prod_denim_jacket_s_cla",
+      "quantity": 1,
+      "createdAt": "2026-10-30T19:39:32.412Z",
+      "updatedAt": "2026-10-30T19:39:32.412Z"
+    },
+    {
+      "id": "ci_mih420c",
+      "cartId": "cart_gst1gz9e8v88r",
+      "productId": "prod_af1_1",
+      "quantity": 1,
+      "createdAt": "2026-10-30T20:02:25.998Z",
+      "updatedAt": "2026-10-30T20:02:25.998Z"
     }
   ],
   "pricingSettings": {
@@ -14422,6 +15450,23 @@
     "updatedAt": "2026-10-25T09:31:13.440Z"
   },
   "reviews": [
+    {
+      "id": "rev_pq37wge",
+      "productId": "prod_denim_jacket",
+      "itemNo": "FSH-DNM-JCKT-BLU",
+      "productName": "Classic Denim Trucker Jacket in Vintage Washed Blue",
+      "userName": "mobile.google.user",
+      "userEmail": "mobile.google.user@example.com",
+      "rating": 5,
+      "review": "Hhhhh",
+      "media": [],
+      "comments": [],
+      "commentCount": 0,
+      "status": "Pending",
+      "postedOn": "2026-10-30",
+      "createdAt": "2026-10-30T19:40:06.007Z",
+      "updatedAt": "2026-10-30T19:40:06.007Z"
+    },
     {
       "id": "rev_tpji737",
       "productId": "prod_wide_leg_trousers",
@@ -15381,11 +16426,11 @@
       "productName": "Samsung Galaxy S24 Ultra 12+GB Titanium Gray",
       "productSku": "SAM-S24U-TI",
       "warehouseName": "Avery Dennison",
-      "availableQuantity": 44,
-      "reservedQuantity": 0,
+      "availableQuantity": 43,
+      "reservedQuantity": 1,
       "reorderLevel": 5,
       "createdAt": "2026-10-28T16:45:55.245Z",
-      "updatedAt": "2026-10-28T16:45:55.245Z"
+      "updatedAt": "2026-10-30T19:43:39.207Z"
     },
     {
       "id": "winv_prod_s24_ultra_wh_samsung_1",
@@ -15576,11 +16621,11 @@
       "productName": "Pure Mulberry Silk Button-Down Long Sleeve Blouse",
       "productSku": "WMN-SILK-BLOUSE-IVR",
       "warehouseName": "Avery Dennison",
-      "availableQuantity": 31,
-      "reservedQuantity": 1,
+      "availableQuantity": 30,
+      "reservedQuantity": 2,
       "reorderLevel": 5,
       "createdAt": "2026-10-28T18:50:07.904Z",
-      "updatedAt": "2026-10-29T19:07:32.900Z"
+      "updatedAt": "2026-10-30T19:43:39.207Z"
     },
     {
       "id": "winv_prod_kids_hoodie_tracksuit_wh_nike_1",
@@ -15909,6 +16954,38 @@
     }
   ],
   "inventoryMovements": [
+    {
+      "id": "mov_39n9kcm",
+      "productId": "prod_s24_ultra",
+      "warehouseId": "wh_avery_1",
+      "productName": "Samsung Galaxy S24 Ultra 12+GB Titanium Gray",
+      "warehouseName": "Avery Dennison",
+      "type": "RESERVATION",
+      "quantity": 1,
+      "previousAvailable": 44,
+      "newAvailable": 43,
+      "previousReserved": 0,
+      "newReserved": 1,
+      "referenceId": "ord_cpy2c85",
+      "notes": "Stock reserved for order #ord_cpy2c85",
+      "createdAt": "2026-10-30T19:43:39.207Z"
+    },
+    {
+      "id": "mov_qp3fec4",
+      "productId": "prod_mulberry_silk_blouse",
+      "warehouseId": "wh_avery_1",
+      "productName": "Pure Mulberry Silk Button-Down Long Sleeve Blouse",
+      "warehouseName": "Avery Dennison",
+      "type": "RESERVATION",
+      "quantity": 1,
+      "previousAvailable": 31,
+      "newAvailable": 30,
+      "previousReserved": 1,
+      "newReserved": 2,
+      "referenceId": "ord_cpy2c85",
+      "notes": "Stock reserved for order #ord_cpy2c85",
+      "createdAt": "2026-10-30T19:43:39.207Z"
+    },
     {
       "id": "mov_95hgtdw",
       "productId": "prod_18k_gold_necklace",

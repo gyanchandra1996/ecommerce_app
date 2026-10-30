@@ -5,6 +5,7 @@ import { useAuthStore } from "../src/store/authStore";
 import { useLocationStore } from "../src/store/locationStore";
 import { useCartStore } from "../src/store/cartStore";
 import { useWishlistStore } from "../src/store/wishlistStore";
+import { ErrorBoundary } from "../src/components/ErrorBoundary";
 
 export default function RootLayout() {
   const loadStoredSession = useAuthStore((s) => s.loadStoredSession);
@@ -13,14 +14,18 @@ export default function RootLayout() {
   const loadWishlist = useWishlistStore((s) => s.loadWishlist);
 
   useEffect(() => {
-    loadStoredSession();
-    loadStoredLocation();
-    fetchCart();
-    loadWishlist();
+    try {
+      loadStoredSession();
+      loadStoredLocation();
+      fetchCart();
+      loadWishlist();
+    } catch (e) {
+      console.warn("Init session load error:", e);
+    }
   }, []);
 
   return (
-    <>
+    <ErrorBoundary>
       <StatusBar style="dark" />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -57,6 +62,6 @@ export default function RootLayout() {
           options={{ headerShown: false }}
         />
       </Stack>
-    </>
+    </ErrorBoundary>
   );
 }

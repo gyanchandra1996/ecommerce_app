@@ -28,6 +28,7 @@ import {
 import { apiClient, getFullImageUrl } from "../../src/services/api";
 import { useCartStore } from "../../src/store/cartStore";
 import { useAuthStore } from "../../src/store/authStore";
+import { Skeleton } from "../../src/components/SkeletonLoader";
 
 export default function ProductDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -214,9 +215,19 @@ export default function ProductDetailScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF", justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="#2563EB" />
-        <Text style={{ marginTop: 12, fontSize: 13, color: "#64748B" }}>Loading product specifications...</Text>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+        <View style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: "#F1F5F9", flexDirection: "row", alignItems: "center" }}>
+          <Skeleton width={36} height={36} borderRadius={18} style={{ marginRight: 12 }} />
+          <Skeleton width={180} height={18} borderRadius={4} />
+        </View>
+        <ScrollView style={{ padding: 16 }}>
+          <Skeleton width="100%" height={280} borderRadius={16} style={{ marginBottom: 16 }} />
+          <Skeleton width="40%" height={14} borderRadius={4} style={{ marginBottom: 8 }} />
+          <Skeleton width="90%" height={22} borderRadius={6} style={{ marginBottom: 12 }} />
+          <Skeleton width="50%" height={28} borderRadius={6} style={{ marginBottom: 20 }} />
+          <Skeleton width="100%" height={80} borderRadius={12} style={{ marginBottom: 20 }} />
+          <Skeleton width="100%" height={48} borderRadius={12} />
+        </ScrollView>
       </SafeAreaView>
     );
   }
