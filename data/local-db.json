@@ -10543,12 +10543,56 @@
   ],
   "orders": [
     {
-      "id": "ord_4t9c0nx",
-      "orderNumber": "mob_link_test_103",
-      "customerName": "Crash Test User",
+      "id": "ord_sa2rrq6",
+      "orderNumber": "cod_3650",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T20:51:50.043Z",
+      "gateway": "Cash on Delivery",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Pending",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_8edbt_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-0",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T20:51:50.043Z",
+          "action": "CREATE",
+          "performedBy": "Customer",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-30T20:51:50.043Z",
+      "updatedAt": "2026-10-30T20:51:50.043Z"
+    },
+    {
+      "id": "ord_xoh8gk0",
+      "orderNumber": "ORD-1793393509151-553",
+      "customerName": "Gyan Tester",
       "customerEmail": "customer@eshop.com",
       "customerPhone": "+91 98765 43211",
-      "orderDate": "2026-10-30T20:40:31.888Z",
+      "orderDate": "2026-10-30T20:51:49.739Z",
       "gateway": "Razorpay Payment Link",
       "gatewayCode": "razorpay_link",
       "paymentStatus": "Pending",
@@ -10570,9 +10614,446 @@
           "imageUrl": ""
         }
       ],
-      "gatewayOrderId": "plink_TuFrj70xbgaVsX",
+      "gatewayOrderId": "plink_TuG3f39PzUcX5S",
+      "createdAt": "2026-10-30T20:51:49.740Z",
+      "updatedAt": "2026-10-30T20:51:49.740Z"
+    },
+    {
+      "id": "ord_6puvdki",
+      "orderNumber": "tags2465",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T20:51:48.513Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_jip4o_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-1",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuG3dA5foity2y",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T20:51:48.513Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Mobile Test User",
+          "notes": "Razorpay order created with ID: order_TuG3dA5foity2y. Amount: ₹12499.00"
+        },
+        {
+          "timestamp": "2026-10-30T20:51:48.908Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_test_verified_99"
+        }
+      ],
+      "createdAt": "2026-10-30T20:51:48.514Z",
+      "updatedAt": "2026-10-30T20:51:48.908Z",
+      "paymentTransactionId": "pay_test_verified_99",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuG3dA5foity2y",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T20:51:48.907Z"
+      },
+      "paidAt": "2026-10-30T20:51:48.907Z"
+    },
+    {
+      "id": "ord_87mv9tm",
+      "orderNumber": "tags2322",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T20:51:16.660Z",
+      "gateway": "Cash On Delivery (COD)",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 311.3,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 311.3,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_mbi3s_0",
+          "orderId": "",
+          "productId": "prod_cashmere_trench_coat",
+          "itemNo": "SKU-0",
+          "name": "Oversized Cashmere Blend Double-Breasted Trench Coat",
+          "price": 245,
+          "quantity": 1,
+          "imageUrl": ""
+        },
+        {
+          "id": "item_18fd5_1",
+          "orderId": "",
+          "productId": "prod_family_firstaid_kit",
+          "itemNo": "SKU-1",
+          "name": "All-in-One Family Emergency Medical First Aid Box (120 Pcs)",
+          "price": 66.3,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T20:51:16.660Z",
+          "action": "CREATE",
+          "performedBy": "Satendra",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-30T20:51:16.663Z",
+      "updatedAt": "2026-10-30T20:51:16.663Z"
+    },
+    {
+      "id": "ord_jin5h8k",
+      "orderNumber": "ORD-1793393142948-112",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T20:45:44.303Z",
+      "gateway": "Razorpay Payment Link",
+      "gatewayCode": "razorpay_link",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 161.1,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 161.1,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra - 400001",
+      "billingAddress": "Customer Billing Address",
+      "items": [
+        {
+          "id": "item_hj20k_0",
+          "orderId": "",
+          "productId": "prod_nike_af1",
+          "itemNo": "SKU-1",
+          "name": "Air Max 270 React Sneakers",
+          "price": 161.1,
+          "quantity": 1,
+          "imageUrl": "/uploads/prod_af1_1.webp"
+        }
+      ],
+      "gatewayOrderId": "plink_TuFxE68LlyjEQf",
+      "createdAt": "2026-10-30T20:45:44.305Z",
+      "updatedAt": "2026-10-30T20:45:44.305Z"
+    },
+    {
+      "id": "ord_4vhdqeq",
+      "orderNumber": "tags2510",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T20:44:52.948Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 245,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 245,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_04siz_0",
+          "orderId": "",
+          "productId": "prod_cashmere_trench_coat",
+          "itemNo": "SKU-1",
+          "name": "Oversized Cashmere Blend Double-Breasted Trench Coat",
+          "price": 245,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_rzp_e3a3wnix7s",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T20:44:52.948Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Satendra",
+          "notes": "Razorpay order created with ID: order_TuFwKA18lJGtgj. Amount: ₹245.00"
+        },
+        {
+          "timestamp": "2026-10-30T20:44:54.219Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_mob_p2ansf3n"
+        }
+      ],
+      "createdAt": "2026-10-30T20:44:52.949Z",
+      "updatedAt": "2026-10-30T20:44:54.219Z",
+      "paymentTransactionId": "pay_mob_p2ansf3n",
+      "paymentDetails": {
+        "razorpay_order_id": "order_rzp_e3a3wnix7s",
+        "razorpay_payment_id": "pay_mob_p2ansf3n",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T20:44:54.218Z"
+      },
+      "paidAt": "2026-10-30T20:44:54.218Z"
+    },
+    {
+      "id": "ord_ujvp06m",
+      "orderNumber": "ORD-1793393029422-156",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T20:43:51.005Z",
+      "gateway": "Razorpay Payment Link",
+      "gatewayCode": "razorpay_link",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 245,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 245,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra - 400001",
+      "billingAddress": "Customer Billing Address",
+      "items": [
+        {
+          "id": "item_7s7uw_0",
+          "orderId": "",
+          "productId": "prod_cashmere_trench_coat",
+          "variantId": "var_prod_cashmere_trench_coat_s_cla",
+          "itemNo": "SKU-1",
+          "name": "Oversized Cashmere Blend Double-Breasted Trench Coat",
+          "price": 245,
+          "quantity": 1,
+          "imageUrl": "/uploads/prod_trench_2.webp"
+        }
+      ],
+      "gatewayOrderId": "plink_TuFvEWbDS3LIUM",
+      "createdAt": "2026-10-30T20:43:51.005Z",
+      "updatedAt": "2026-10-30T20:43:51.005Z"
+    },
+    {
+      "id": "ord_7n64hz7",
+      "orderNumber": "ORD-1793392977082-558",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T20:42:58.435Z",
+      "gateway": "Razorpay Payment Link",
+      "gatewayCode": "razorpay_link",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 245,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 245,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra - 400001",
+      "billingAddress": "Customer Billing Address",
+      "items": [
+        {
+          "id": "item_8bz24_0",
+          "orderId": "",
+          "productId": "prod_cashmere_trench_coat",
+          "variantId": "var_prod_cashmere_trench_coat_s_cla",
+          "itemNo": "SKU-1",
+          "name": "Oversized Cashmere Blend Double-Breasted Trench Coat",
+          "price": 245,
+          "quantity": 1,
+          "imageUrl": "/uploads/prod_trench_2.webp"
+        }
+      ],
+      "gatewayOrderId": "plink_TuFuJ83oQtUonT",
+      "createdAt": "2026-10-30T20:42:58.436Z",
+      "updatedAt": "2026-10-30T20:42:58.436Z"
+    },
+    {
+      "id": "ord_hxrtp08",
+      "orderNumber": "ORD-1793392920606-579",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T20:42:02.888Z",
+      "gateway": "Razorpay Payment Link",
+      "gatewayCode": "razorpay_link",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 245,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 245,
+      "shippingAddress": "Street Golden 23/21, Hill Road, Mumbai, Maharashtra - 400001",
+      "billingAddress": "Customer Billing Address",
+      "items": [
+        {
+          "id": "item_bdrt9_0",
+          "orderId": "",
+          "productId": "prod_cashmere_trench_coat",
+          "variantId": "var_prod_cashmere_trench_coat_s_cla",
+          "itemNo": "SKU-1",
+          "name": "Oversized Cashmere Blend Double-Breasted Trench Coat",
+          "price": 245,
+          "quantity": 1,
+          "imageUrl": "/uploads/prod_trench_2.webp"
+        }
+      ],
+      "gatewayOrderId": "plink_TuFtK9rjpZgJul",
+      "createdAt": "2026-10-30T20:42:02.890Z",
+      "updatedAt": "2026-10-30T20:42:02.890Z"
+    },
+    {
+      "id": "ord_4effr4t",
+      "orderNumber": "mob_cod_test_102",
+      "customerName": "Crash Test User",
+      "customerEmail": "crashtest@eshop.in",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T20:51:58.901Z",
+      "gateway": "Cash On Delivery (COD)",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 161.1,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 161.1,
+      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_nlfup_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-0",
+          "name": "Air Max 270",
+          "price": 161.1,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T20:51:58.901Z",
+          "action": "CREATE",
+          "performedBy": "Customer",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-30T19:59:25.708Z",
+      "updatedAt": "2026-10-30T20:51:58.902Z"
+    },
+    {
+      "id": "ord_4t9c0nx",
+      "orderNumber": "mob_link_test_103",
+      "customerName": "Crash Test User",
+      "customerEmail": "customer@eshop.com",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T20:51:58.615Z",
+      "gateway": "Razorpay Payment Link",
+      "gatewayCode": "razorpay_link",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 161.1,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 161.1,
+      "shippingAddress": "Customer Delivery Address",
+      "billingAddress": "Customer Billing Address",
+      "items": [
+        {
+          "id": "item_sample_1",
+          "orderId": "",
+          "name": "e-Shop Order Item",
+          "price": 161.1,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "plink_TuG3ok1bfHUEgL",
       "createdAt": "2026-10-30T20:40:31.889Z",
-      "updatedAt": "2026-10-30T20:40:31.889Z"
+      "updatedAt": "2026-10-30T20:51:58.616Z"
+    },
+    {
+      "id": "ord_id0qsch",
+      "orderNumber": "mob_crash_test_101",
+      "customerName": "Crash Test User",
+      "customerEmail": "crashtest@eshop.in",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T20:51:57.025Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 161.1,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 161.1,
+      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_ld9ny_0",
+          "orderId": "",
+          "productId": "prod_nike_af1",
+          "itemNo": "SKU-1",
+          "name": "Nike Air Max",
+          "price": 161.1,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuG3n1CEZ9TirU",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T20:51:57.025Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Crash Test User",
+          "notes": "Razorpay order created with ID: order_TuG3n1CEZ9TirU. Amount: ₹161.10"
+        },
+        {
+          "timestamp": "2026-10-30T20:51:57.726Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_test_mock_1"
+        }
+      ],
+      "createdAt": "2026-10-30T19:59:25.094Z",
+      "updatedAt": "2026-10-30T20:51:57.726Z",
+      "paymentTransactionId": "pay_test_mock_1",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuG3n1CEZ9TirU",
+        "razorpay_payment_id": "pay_test_mock_1",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T20:51:57.726Z"
+      },
+      "paidAt": "2026-10-30T20:51:57.725Z"
     },
     {
       "id": "ord_pm8er5y",
@@ -10925,106 +11406,6 @@
         "verifiedAt": "2026-10-30T20:19:21.215Z"
       },
       "paidAt": "2026-10-30T20:19:21.215Z"
-    },
-    {
-      "id": "ord_4effr4t",
-      "orderNumber": "mob_cod_test_102",
-      "customerName": "Crash Test User",
-      "customerEmail": "crashtest@eshop.in",
-      "customerPhone": "+91 98765 43211",
-      "orderDate": "2026-10-30T20:40:33.063Z",
-      "gateway": "Cash On Delivery (COD)",
-      "gatewayCode": "cod",
-      "paymentStatus": "Pending",
-      "orderStatus": "Processing",
-      "subtotal": 161.1,
-      "shippingCost": 0,
-      "handlingCharge": 0,
-      "adjustmentPrice": 0,
-      "taxAmount": 0,
-      "couponDiscount": 0,
-      "totalPrice": 161.1,
-      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
-      "billingAddress": "",
-      "items": [
-        {
-          "id": "item_m8ehr_0",
-          "orderId": "",
-          "productId": "prod_af1_1",
-          "itemNo": "SKU-0",
-          "name": "Air Max 270",
-          "price": 161.1,
-          "quantity": 1,
-          "imageUrl": ""
-        }
-      ],
-      "orderHistory": [
-        {
-          "timestamp": "2026-10-30T20:40:33.063Z",
-          "action": "CREATE",
-          "performedBy": "Customer",
-          "notes": "Order created"
-        }
-      ],
-      "shipmentStatus": "Pending",
-      "createdAt": "2026-10-30T19:59:25.708Z",
-      "updatedAt": "2026-10-30T20:40:33.064Z"
-    },
-    {
-      "id": "ord_id0qsch",
-      "orderNumber": "mob_crash_test_101",
-      "customerName": "Crash Test User",
-      "customerEmail": "crashtest@eshop.in",
-      "customerPhone": "+91 98765 43211",
-      "orderDate": "2026-10-30T20:40:27.402Z",
-      "gateway": "Razorpay",
-      "gatewayCode": "razorpay",
-      "paymentStatus": "Paid",
-      "orderStatus": "Processing",
-      "subtotal": 161.1,
-      "shippingCost": 0,
-      "taxAmount": 0,
-      "couponDiscount": 0,
-      "totalPrice": 161.1,
-      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
-      "billingAddress": "",
-      "items": [
-        {
-          "id": "item_i1hyx_0",
-          "orderId": "",
-          "productId": "prod_nike_af1",
-          "itemNo": "SKU-1",
-          "name": "Nike Air Max",
-          "price": 161.1,
-          "quantity": 1,
-          "imageUrl": ""
-        }
-      ],
-      "gatewayOrderId": "order_TuFreJtTvSYrvn",
-      "orderHistory": [
-        {
-          "timestamp": "2026-10-30T20:40:27.402Z",
-          "action": "PAYMENT_INITIATED",
-          "performedBy": "Crash Test User",
-          "notes": "Razorpay order created with ID: order_TuFreJtTvSYrvn. Amount: ₹161.10"
-        },
-        {
-          "timestamp": "2026-10-30T20:40:30.509Z",
-          "action": "PAYMENT_PAID",
-          "performedBy": "PaymentGateway",
-          "notes": "Razorpay payment verified successfully. Payment ID: pay_test_mock_1"
-        }
-      ],
-      "createdAt": "2026-10-30T19:59:25.094Z",
-      "updatedAt": "2026-10-30T20:40:30.509Z",
-      "paymentTransactionId": "pay_test_mock_1",
-      "paymentDetails": {
-        "razorpay_order_id": "order_TuFreJtTvSYrvn",
-        "razorpay_payment_id": "pay_test_mock_1",
-        "razorpay_signature": "mobile_checkout_verified",
-        "verifiedAt": "2026-10-30T20:40:30.509Z"
-      },
-      "paidAt": "2026-10-30T20:40:30.509Z"
     },
     {
       "id": "ord_35xj4mw",
@@ -14942,6 +15323,146 @@
   ],
   "payments": [
     {
+      "id": "pay_gmgxi5z",
+      "orderId": "ord_sa2rrq6",
+      "orderNumber": "cod_3650",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "paymentGateway": "Cash on Delivery",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T20:51:50.043Z",
+      "updatedAt": "2026-10-30T20:51:50.043Z"
+    },
+    {
+      "id": "pay_wbtfhrf",
+      "orderId": "ord_xoh8gk0",
+      "orderNumber": "ORD-1793393509151-553",
+      "customerName": "Gyan Tester",
+      "customerEmail": "customer@eshop.com",
+      "paymentGateway": "Razorpay Payment Link",
+      "gatewayOrderId": "plink_TuG3f39PzUcX5S",
+      "amount": 161.1,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T20:51:49.740Z",
+      "updatedAt": "2026-10-30T20:51:49.740Z"
+    },
+    {
+      "id": "pay_u63kgzy",
+      "orderId": "ord_6puvdki",
+      "orderNumber": "tags2465",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuG3dA5foity2y",
+      "transactionId": "pay_test_verified_99",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T20:51:48.907Z",
+      "createdAt": "2026-10-30T20:51:48.514Z",
+      "updatedAt": "2026-10-30T20:51:48.908Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuG3dA5foity2y",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T20:51:48.907Z"
+      }
+    },
+    {
+      "id": "pay_daapfbz",
+      "orderId": "ord_87mv9tm",
+      "orderNumber": "tags2322",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "paymentGateway": "Cash On Delivery (COD)",
+      "amount": 311.3,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T20:51:16.663Z",
+      "updatedAt": "2026-10-30T20:51:16.663Z"
+    },
+    {
+      "id": "pay_wpz4i5w",
+      "orderId": "ord_jin5h8k",
+      "orderNumber": "ORD-1793393142948-112",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "paymentGateway": "Razorpay Payment Link",
+      "gatewayOrderId": "plink_TuFxE68LlyjEQf",
+      "amount": 161.1,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T20:45:44.305Z",
+      "updatedAt": "2026-10-30T20:45:44.305Z"
+    },
+    {
+      "id": "pay_xtymaks",
+      "orderId": "ord_4vhdqeq",
+      "orderNumber": "tags2510",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_rzp_e3a3wnix7s",
+      "transactionId": "pay_mob_p2ansf3n",
+      "amount": 245,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "paidAt": "2026-10-30T20:44:54.218Z",
+      "createdAt": "2026-10-30T20:44:52.949Z",
+      "updatedAt": "2026-10-30T20:44:54.219Z",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_rzp_e3a3wnix7s",
+        "razorpay_payment_id": "pay_mob_p2ansf3n",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T20:44:54.218Z"
+      }
+    },
+    {
+      "id": "pay_0aribh5",
+      "orderId": "ord_ujvp06m",
+      "orderNumber": "ORD-1793393029422-156",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "paymentGateway": "Razorpay Payment Link",
+      "gatewayOrderId": "plink_TuFvEWbDS3LIUM",
+      "amount": 245,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T20:43:51.005Z",
+      "updatedAt": "2026-10-30T20:43:51.005Z"
+    },
+    {
+      "id": "pay_jhtcrpc",
+      "orderId": "ord_7n64hz7",
+      "orderNumber": "ORD-1793392977082-558",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "paymentGateway": "Razorpay Payment Link",
+      "gatewayOrderId": "plink_TuFuJ83oQtUonT",
+      "amount": 245,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T20:42:58.436Z",
+      "updatedAt": "2026-10-30T20:42:58.436Z"
+    },
+    {
+      "id": "pay_fdslcjk",
+      "orderId": "ord_hxrtp08",
+      "orderNumber": "ORD-1793392920606-579",
+      "customerName": "Satendra",
+      "customerEmail": "satendrasingh@gmail.com",
+      "paymentGateway": "Razorpay Payment Link",
+      "gatewayOrderId": "plink_TuFtK9rjpZgJul",
+      "amount": 245,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T20:42:02.890Z",
+      "updatedAt": "2026-10-30T20:42:02.890Z"
+    },
+    {
       "id": "pay_bmxctdz",
       "orderId": "ord_4t9c0nx",
       "orderNumber": "mob_link_test_103",
@@ -15246,19 +15767,19 @@
       "customerName": "Crash Test User",
       "customerEmail": "crashtest@eshop.in",
       "paymentGateway": "Razorpay",
-      "gatewayOrderId": "order_TuFreJtTvSYrvn",
+      "gatewayOrderId": "order_TuG3n1CEZ9TirU",
       "transactionId": "pay_test_mock_1",
       "amount": 161.1,
       "currency": "INR",
       "paymentStatus": "Paid",
-      "paidAt": "2026-10-30T20:40:30.509Z",
+      "paidAt": "2026-10-30T20:51:57.725Z",
       "createdAt": "2026-10-30T19:59:25.094Z",
-      "updatedAt": "2026-10-30T20:40:30.509Z",
+      "updatedAt": "2026-10-30T20:51:57.726Z",
       "gatewayResponse": {
-        "razorpay_order_id": "order_TuFreJtTvSYrvn",
+        "razorpay_order_id": "order_TuG3n1CEZ9TirU",
         "razorpay_payment_id": "pay_test_mock_1",
         "razorpay_signature": "mobile_checkout_verified",
-        "verifiedAt": "2026-10-30T20:40:30.509Z"
+        "verifiedAt": "2026-10-30T20:51:57.726Z"
       }
     },
     {
@@ -16183,7 +16704,7 @@
       "userId": "usr_x11c0d8vq",
       "status": "active",
       "createdAt": "2026-10-30T19:53:41.501Z",
-      "updatedAt": "2026-10-30T20:20:49.180Z"
+      "updatedAt": "2026-10-30T20:51:18.704Z"
     },
     {
       "id": "cart_gst1gz9e8v88r",
@@ -16205,6 +16726,13 @@
       "status": "active",
       "createdAt": "2026-10-30T20:40:14.240Z",
       "updatedAt": "2026-10-30T20:40:14.240Z"
+    },
+    {
+      "id": "cart_gstpygnvop0s0",
+      "sessionId": "gst_pygnvop0s0",
+      "status": "active",
+      "createdAt": "2026-10-30T20:51:45.356Z",
+      "updatedAt": "2026-10-30T20:51:45.356Z"
     }
   ],
   "cartItems": [
@@ -16293,6 +16821,14 @@
       "quantity": 1,
       "createdAt": "2026-10-30T20:40:14.264Z",
       "updatedAt": "2026-10-30T20:40:14.264Z"
+    },
+    {
+      "id": "ci_liuo13e",
+      "cartId": "cart_gstpygnvop0s0",
+      "productId": "prod_af1_1",
+      "quantity": 1,
+      "createdAt": "2026-10-30T20:51:45.372Z",
+      "updatedAt": "2026-10-30T20:51:45.372Z"
     }
   ],
   "pricingSettings": {
@@ -17436,11 +17972,11 @@
       "productName": "Oversized Cashmere Blend Double-Breasted Trench Coat",
       "productSku": "WMN-TRNCH-COAT-CAM",
       "warehouseName": "Nike Oregon Hub",
-      "availableQuantity": 22,
-      "reservedQuantity": 0,
+      "availableQuantity": 21,
+      "reservedQuantity": 1,
       "reorderLevel": 5,
       "createdAt": "2026-10-28T18:50:07.904Z",
-      "updatedAt": "2026-10-28T18:50:07.904Z"
+      "updatedAt": "2026-10-30T20:51:16.678Z"
     },
     {
       "id": "winv_prod_wide_leg_trousers_wh_avery_1",
@@ -17657,11 +18193,11 @@
       "productName": "All-in-One Family Emergency Medical First Aid Box (120 Pcs)",
       "productSku": "PHR-FRST-AID-120P",
       "warehouseName": "Avery Dennison",
-      "availableQuantity": 65,
-      "reservedQuantity": 0,
+      "availableQuantity": 64,
+      "reservedQuantity": 1,
       "reorderLevel": 5,
       "createdAt": "2026-10-28T18:50:07.905Z",
-      "updatedAt": "2026-10-28T18:50:07.905Z"
+      "updatedAt": "2026-10-30T20:51:16.678Z"
     },
     {
       "id": "winv_prod_vitaminc_effervescent_wh_avery_1",
@@ -17808,6 +18344,38 @@
     }
   ],
   "inventoryMovements": [
+    {
+      "id": "mov_6ztkjhe",
+      "productId": "prod_family_firstaid_kit",
+      "warehouseId": "wh_avery_1",
+      "productName": "All-in-One Family Emergency Medical First Aid Box (120 Pcs)",
+      "warehouseName": "Avery Dennison",
+      "type": "RESERVATION",
+      "quantity": 1,
+      "previousAvailable": 65,
+      "newAvailable": 64,
+      "previousReserved": 0,
+      "newReserved": 1,
+      "referenceId": "ord_87mv9tm",
+      "notes": "Stock reserved for order #ord_87mv9tm",
+      "createdAt": "2026-10-30T20:51:16.678Z"
+    },
+    {
+      "id": "mov_btk3vzl",
+      "productId": "prod_cashmere_trench_coat",
+      "warehouseId": "wh_nike_1",
+      "productName": "Oversized Cashmere Blend Double-Breasted Trench Coat",
+      "warehouseName": "Nike Oregon Hub",
+      "type": "RESERVATION",
+      "quantity": 1,
+      "previousAvailable": 22,
+      "newAvailable": 21,
+      "previousReserved": 0,
+      "newReserved": 1,
+      "referenceId": "ord_87mv9tm",
+      "notes": "Stock reserved for order #ord_87mv9tm",
+      "createdAt": "2026-10-30T20:51:16.678Z"
+    },
     {
       "id": "mov_39n9kcm",
       "productId": "prod_s24_ultra",
