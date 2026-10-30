@@ -10555,6 +10555,138 @@
   ],
   "orders": [
     {
+      "id": "ord_dqby0rw",
+      "orderNumber": "cod_1510",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T21:46:45.007Z",
+      "gateway": "Cash on Delivery",
+      "gatewayCode": "cod",
+      "paymentStatus": "Pending",
+      "orderStatus": "Pending",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "handlingCharge": 0,
+      "adjustmentPrice": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "Street Golden 23/21, Mumbai 400001",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_ai2i6_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-0",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T21:46:45.007Z",
+          "action": "CREATE",
+          "performedBy": "Customer",
+          "notes": "Order created"
+        }
+      ],
+      "shipmentStatus": "Pending",
+      "createdAt": "2026-10-30T21:46:45.033Z",
+      "updatedAt": "2026-10-30T21:46:45.033Z"
+    },
+    {
+      "id": "ord_zdcuake",
+      "orderNumber": "ORD-1793396803747-383",
+      "customerName": "Gyan Tester",
+      "customerEmail": "customer@eshop.com",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-30T21:46:44.653Z",
+      "gateway": "Razorpay Payment Link",
+      "gatewayCode": "razorpay_link",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 161.1,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 161.1,
+      "shippingAddress": "Customer Delivery Address",
+      "billingAddress": "Customer Billing Address",
+      "items": [
+        {
+          "id": "item_sample_1",
+          "orderId": "",
+          "name": "e-Shop Order Item",
+          "price": 161.1,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "plink_TuGzfU7ZBhAdrh",
+      "createdAt": "2026-10-30T21:46:44.654Z",
+      "updatedAt": "2026-10-30T21:46:44.654Z"
+    },
+    {
+      "id": "ord_19g6fhj",
+      "orderNumber": "tags8843",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "customerPhone": "+91 98765 43210",
+      "orderDate": "2026-10-30T21:46:42.755Z",
+      "gateway": "Razorpay",
+      "gatewayCode": "razorpay",
+      "paymentStatus": "Paid",
+      "orderStatus": "Processing",
+      "subtotal": 12499,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 12499,
+      "shippingAddress": "",
+      "billingAddress": "",
+      "items": [
+        {
+          "id": "item_q2u2z_0",
+          "orderId": "",
+          "productId": "prod_af1_1",
+          "itemNo": "SKU-1",
+          "name": "Air Max 270 React",
+          "price": 12499,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "order_TuGzdMKD1JKIRA",
+      "orderHistory": [
+        {
+          "timestamp": "2026-10-30T21:46:42.755Z",
+          "action": "PAYMENT_INITIATED",
+          "performedBy": "Mobile Test User",
+          "notes": "Razorpay order created with ID: order_TuGzdMKD1JKIRA. Amount: ₹12499.00"
+        },
+        {
+          "timestamp": "2026-10-30T21:46:43.386Z",
+          "action": "PAYMENT_PAID",
+          "performedBy": "PaymentGateway",
+          "notes": "Razorpay payment verified successfully. Payment ID: pay_test_verified_99"
+        }
+      ],
+      "createdAt": "2026-10-30T21:46:42.757Z",
+      "updatedAt": "2026-10-30T21:46:43.386Z",
+      "paymentTransactionId": "pay_test_verified_99",
+      "paymentDetails": {
+        "razorpay_order_id": "order_TuGzdMKD1JKIRA",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T21:46:43.385Z"
+      },
+      "paidAt": "2026-10-30T21:46:43.385Z"
+    },
+    {
       "id": "ord_h509l5i",
       "orderNumber": "cod_4224",
       "customerName": "COD Customer",
@@ -15932,6 +16064,55 @@
   ],
   "payments": [
     {
+      "id": "pay_wvap7lt",
+      "orderId": "ord_dqby0rw",
+      "orderNumber": "cod_1510",
+      "customerName": "COD Customer",
+      "customerEmail": "customer@eshop.com",
+      "paymentGateway": "Cash on Delivery",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T21:46:45.033Z",
+      "updatedAt": "2026-10-30T21:46:45.033Z"
+    },
+    {
+      "id": "pay_468l5f4",
+      "orderId": "ord_zdcuake",
+      "orderNumber": "ORD-1793396803747-383",
+      "customerName": "Gyan Tester",
+      "customerEmail": "customer@eshop.com",
+      "paymentGateway": "Razorpay Payment Link",
+      "gatewayOrderId": "plink_TuGzfU7ZBhAdrh",
+      "amount": 161.1,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-30T21:46:44.654Z",
+      "updatedAt": "2026-10-30T21:46:44.654Z"
+    },
+    {
+      "id": "pay_dbhe9eg",
+      "orderId": "ord_19g6fhj",
+      "orderNumber": "tags8843",
+      "customerName": "Mobile Test User",
+      "customerEmail": "user@eshop.com",
+      "paymentGateway": "Razorpay",
+      "gatewayOrderId": "order_TuGzdMKD1JKIRA",
+      "amount": 12499,
+      "currency": "INR",
+      "paymentStatus": "Paid",
+      "createdAt": "2026-10-30T21:46:42.757Z",
+      "updatedAt": "2026-10-30T21:46:43.386Z",
+      "transactionId": "pay_test_verified_99",
+      "gatewayResponse": {
+        "razorpay_order_id": "order_TuGzdMKD1JKIRA",
+        "razorpay_payment_id": "pay_test_verified_99",
+        "razorpay_signature": "mobile_checkout_verified",
+        "verifiedAt": "2026-10-30T21:46:43.385Z"
+      },
+      "paidAt": "2026-10-30T21:46:43.385Z"
+    },
+    {
       "id": "pay_5svk8dl",
       "orderId": "ord_h509l5i",
       "orderNumber": "cod_4224",
@@ -17574,6 +17755,13 @@
       "status": "active",
       "createdAt": "2026-10-30T21:37:54.030Z",
       "updatedAt": "2026-10-30T21:37:54.030Z"
+    },
+    {
+      "id": "cart_gstpp78zthop5",
+      "sessionId": "gst_pp78zthop5",
+      "status": "active",
+      "createdAt": "2026-10-30T21:46:41.610Z",
+      "updatedAt": "2026-10-30T21:46:41.610Z"
     }
   ],
   "cartItems": [
@@ -17673,6 +17861,14 @@
       "quantity": 1,
       "createdAt": "2026-10-30T21:37:54.056Z",
       "updatedAt": "2026-10-30T21:37:54.056Z"
+    },
+    {
+      "id": "ci_ano1q3o",
+      "cartId": "cart_gstpp78zthop5",
+      "productId": "prod_af1_1",
+      "quantity": 1,
+      "createdAt": "2026-10-30T21:46:41.629Z",
+      "updatedAt": "2026-10-30T21:46:41.629Z"
     }
   ],
   "pricingSettings": {
@@ -21144,7 +21340,7 @@
   ],
   "notifications": [
     {
-      "id": "notif_6g8pw46",
+      "id": "notif_r3yg8vx",
       "title": "🔥 Top Deal: 50% OFF Diwali Special",
       "body": "Huge savings on flagship smartphones and sneakers.",
       "category": "deal",
@@ -21153,7 +21349,7 @@
       "imageUrl": "",
       "actionUrl": "/(tabs)/deals",
       "actionText": "View Deal",
-      "createdAt": "2026-10-30T21:37:58.577Z",
+      "createdAt": "2026-10-30T21:46:46.672Z",
       "isRead": true
     },
     {
@@ -21166,7 +21362,7 @@
       "imageUrl": "https://images.unsplash.com/photo-1511707171634-5f897ff02560?w=300",
       "actionUrl": "/(tabs)/deals",
       "actionText": "View Deals",
-      "createdAt": "2026-10-30T21:20:18.705Z",
+      "createdAt": "2026-10-30T21:46:46.485Z",
       "isRead": true
     },
     {
@@ -21179,7 +21375,7 @@
       "imageUrl": "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=300",
       "actionUrl": "/(tabs)/cart",
       "actionText": "Shop Now",
-      "createdAt": "2026-10-30T20:20:18.705Z",
+      "createdAt": "2026-10-30T20:46:46.485Z",
       "isRead": true
     },
     {
@@ -21192,7 +21388,7 @@
       "imageUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300",
       "actionUrl": "/products/prod_nike_af1",
       "actionText": "Grab Deal",
-      "createdAt": "2026-10-30T19:20:18.705Z",
+      "createdAt": "2026-10-30T19:46:46.485Z",
       "isRead": true
     },
     {
@@ -21204,7 +21400,7 @@
       "icon": "📦",
       "actionUrl": "/(tabs)",
       "actionText": "Explore Products",
-      "createdAt": "2026-10-30T17:20:18.705Z",
+      "createdAt": "2026-10-30T17:46:46.485Z",
       "isRead": true
     }
   ]

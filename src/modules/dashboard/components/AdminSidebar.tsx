@@ -224,6 +224,7 @@ export function AdminSidebar({
         { title: "Sliders & Banners", href: "/admin/sliders", moduleId: "sliders" },
         { title: "Navigation Menu", href: "/admin/menu", moduleId: "menu" },
         { title: "Coupons", href: "/admin/coupons", moduleId: "coupons" },
+        { title: "Push Notifications", href: "/admin/marketing/notifications", moduleId: "marketing" },
         { title: "Manage Emails", href: "/admin/marketing/emails", moduleId: "marketing" },
       ],
     },

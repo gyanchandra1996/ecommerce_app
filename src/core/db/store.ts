@@ -522,6 +522,13 @@ export interface NotificationRecord {
   isRead?: boolean;
 }
 
+export interface PushTokenRecord {
+  token: string;
+  platform: string;
+  customerId?: string;
+  updatedAt: string;
+}
+
 
 export interface ShippingProviderRecord {
   id: string;
@@ -874,6 +881,7 @@ interface LocalDatabaseSchema {
   coupons?: CouponRecord[];
   gateways?: PaymentGatewayRecord[];
   notifications?: NotificationRecord[];
+  pushTokens?: PushTokenRecord[];
   shippingProviders?: ShippingProviderRecord[];
   shipments?: ShipmentRecord[];
   shippingSettings?: ShippingSettingsRecord;
@@ -8229,5 +8237,33 @@ export class DatabaseStore {
     });
     if (found) await this.writeLocalDb(db);
     return found;
+  }
+
+  public static async registerPushToken(
+    token: string,
+    platform = "android",
+    customerId?: string
+  ): Promise<boolean> {
+    const db = await this.readLocalDb();
+    if (!db.pushTokens) db.pushTokens = [];
+    const existingIndex = db.pushTokens.findIndex((t: any) => t.token === token);
+    const record: PushTokenRecord = {
+      token,
+      platform,
+      customerId,
+      updatedAt: new Date().toISOString(),
+    };
+    if (existingIndex >= 0) {
+      db.pushTokens[existingIndex] = record;
+    } else {
+      db.pushTokens.push(record);
+    }
+    await this.writeLocalDb(db);
+    return true;
+  }
+
+  public static async getPushTokens(): Promise<PushTokenRecord[]> {
+    const db = await this.readLocalDb();
+    return db.pushTokens || [];
   }
 }

@@ -45,9 +45,46 @@ export async function POST(req: Request) {
       actionText: actionText || "View Deal",
     });
 
+    // Broadcast push notification to registered devices via Expo Push Service
+    let pushSentCount = 0;
+    try {
+      const tokens = await DatabaseStore.getPushTokens();
+      const validExpoTokens = tokens.filter(
+        (t) => t.token && (t.token.startsWith("ExponentPushToken") || t.token.startsWith("ExpoPushToken"))
+      );
+
+      if (validExpoTokens.length > 0) {
+        const pushPayload = validExpoTokens.map((t) => ({
+          to: t.token,
+          sound: "default",
+          title,
+          body: notifBody || "New update from e-Shop",
+          data: {
+            notificationId: created.id,
+            actionUrl: actionUrl || "/(tabs)/deals",
+            category: category || "deal",
+          },
+        }));
+
+        await fetch("https://exp.host/--/api/v2/push/send", {
+          method: "POST",
+          headers: {
+            "Accept": "application/json",
+            "Accept-Encoding": "gzip, deflate",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(pushPayload),
+        });
+        pushSentCount = validExpoTokens.length;
+      }
+    } catch (pushErr) {
+      console.warn("Expo Push Notification broadcast error:", pushErr);
+    }
+
     return NextResponse.json({
       success: true,
       data: created,
+      pushSentCount,
       message: "Notification created & broadcasted successfully.",
     });
   } catch (error: any) {

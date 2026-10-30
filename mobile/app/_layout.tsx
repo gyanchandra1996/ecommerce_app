@@ -8,6 +8,10 @@ import { useWishlistStore } from "../src/store/wishlistStore";
 import { useNotificationStore } from "../src/store/notificationStore";
 import { ErrorBoundary } from "../src/components/ErrorBoundary";
 import { NotificationBanner } from "../src/components/NotificationBanner";
+import {
+  registerForPushNotifications,
+  setupNotificationListeners,
+} from "../src/services/notificationService";
 
 export default function RootLayout() {
   const loadStoredSession = useAuthStore((s) => s.loadStoredSession);
@@ -15,6 +19,7 @@ export default function RootLayout() {
   const fetchCart = useCartStore((s) => s.fetchCart);
   const loadWishlist = useWishlistStore((s) => s.loadWishlist);
   const fetchNotifications = useNotificationStore((s) => s.fetchNotifications);
+  const showBanner = useNotificationStore((s) => s.showBanner);
 
   useEffect(() => {
     try {
@@ -23,6 +28,23 @@ export default function RootLayout() {
       fetchCart();
       loadWishlist();
       fetchNotifications();
+      registerForPushNotifications();
+      const cleanupListeners = setupNotificationListeners((content) => {
+        // When notification arrives in foreground, also display our custom floating banner
+        if (content?.title) {
+          showBanner({
+            id: "push_" + Date.now(),
+            title: content.title,
+            body: content.body || "",
+            category: (content.data?.category as any) || "deal",
+            badge: "NEW",
+            icon: "🔔",
+            actionUrl: content.data?.actionUrl as string,
+            createdAt: new Date().toISOString(),
+          });
+        }
+      });
+      return cleanupListeners;
     } catch (e) {
       console.warn("Init session load error:", e);
     }
