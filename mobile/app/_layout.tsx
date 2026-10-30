@@ -5,13 +5,16 @@ import { useAuthStore } from "../src/store/authStore";
 import { useLocationStore } from "../src/store/locationStore";
 import { useCartStore } from "../src/store/cartStore";
 import { useWishlistStore } from "../src/store/wishlistStore";
+import { useNotificationStore } from "../src/store/notificationStore";
 import { ErrorBoundary } from "../src/components/ErrorBoundary";
+import { NotificationBanner } from "../src/components/NotificationBanner";
 
 export default function RootLayout() {
   const loadStoredSession = useAuthStore((s) => s.loadStoredSession);
   const loadStoredLocation = useLocationStore((s) => s.loadStoredLocation);
   const fetchCart = useCartStore((s) => s.fetchCart);
   const loadWishlist = useWishlistStore((s) => s.loadWishlist);
+  const fetchNotifications = useNotificationStore((s) => s.fetchNotifications);
 
   useEffect(() => {
     try {
@@ -19,6 +22,7 @@ export default function RootLayout() {
       loadStoredLocation();
       fetchCart();
       loadWishlist();
+      fetchNotifications();
     } catch (e) {
       console.warn("Init session load error:", e);
     }
@@ -61,7 +65,12 @@ export default function RootLayout() {
           name="addresses/index"
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="notifications/index"
+          options={{ headerShown: false }}
+        />
       </Stack>
+      <NotificationBanner />
     </ErrorBoundary>
   );
 }

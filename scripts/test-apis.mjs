@@ -120,6 +120,18 @@ async function runAllTests() {
     subtotal: 1000,
   }));
 
+  // 10. Notification APIs (Deals, Offers & Alerts)
+  results.push(await testEndpoint("Get Notifications List", "GET", "/api/notifications"));
+  results.push(await testEndpoint("Create Deal Notification", "POST", "/api/notifications", {
+    title: "🔥 Top Deal: 50% OFF Diwali Special",
+    body: "Huge savings on flagship smartphones and sneakers.",
+    category: "deal",
+    badge: "50% OFF",
+  }));
+  results.push(await testEndpoint("Mark Notifications Read", "PATCH", "/api/notifications", {
+    id: "ALL",
+  }));
+
   console.log("\n=== TEST SUMMARY ===");
   const passed = results.filter(r => r.isSuccess).length;
   const failed = results.filter(r => !r.isSuccess).length;

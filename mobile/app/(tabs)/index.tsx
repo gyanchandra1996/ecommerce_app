@@ -23,6 +23,7 @@ import {
   Star,
   Check,
   ShoppingCart,
+  Bell,
   Sparkles,
   Tag,
   Zap,
@@ -38,6 +39,7 @@ import {
 import { useLocationStore, POPULAR_INDIAN_HUBS } from "../../src/store/locationStore";
 import { useCartStore } from "../../src/store/cartStore";
 import { useWishlistStore } from "../../src/store/wishlistStore";
+import { useNotificationStore } from "../../src/store/notificationStore";
 import { apiClient, getFullImageUrl, API_BASE_URL } from "../../src/services/api";
 import { ProductCardSkeleton } from "../../src/components/SkeletonLoader";
 
@@ -138,6 +140,7 @@ export default function HomeScreen() {
   const { currentLocation, selectLocation, detectGPSLocation, isDetecting } = useLocationStore();
   const { addToCart, totalItems } = useCartStore();
   const { toggleWishlist, isInWishlist } = useWishlistStore();
+  const unreadNotifCount = useNotificationStore((s) => s.unreadCount);
 
   const [selectedCategoryTab, setSelectedCategoryTab] = useState("all");
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
@@ -363,42 +366,83 @@ export default function HomeScreen() {
             </View>
           </View>
 
-          {/* Cart Icon with Live Badge */}
-          <TouchableOpacity
-            onPress={() => router.push("/(tabs)/cart")}
-            activeOpacity={0.7}
-            style={{
-              position: "relative",
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              backgroundColor: "#F8FAFC",
-              borderWidth: 1,
-              borderColor: "#E2E8F0",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <ShoppingCart size={19} color="#0F172A" />
-            {totalItems > 0 && (
-              <View
-                style={{
-                  position: "absolute",
-                  top: -2,
-                  right: -2,
-                  backgroundColor: "#2563EB",
-                  minWidth: 18,
-                  height: 18,
-                  borderRadius: 9,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  paddingHorizontal: 4,
-                }}
-              >
-                <Text style={{ color: "#FFFFFF", fontSize: 10, fontWeight: "900" }}>{totalItems}</Text>
-              </View>
-            )}
-          </TouchableOpacity>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+            {/* Notification Bell with Live Unread Badge */}
+            <TouchableOpacity
+              onPress={() => router.push("/notifications")}
+              activeOpacity={0.7}
+              style={{
+                position: "relative",
+                width: 38,
+                height: 38,
+                borderRadius: 19,
+                backgroundColor: "#F8FAFC",
+                borderWidth: 1,
+                borderColor: "#E2E8F0",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Bell size={18} color="#0F172A" />
+              {unreadNotifCount > 0 && (
+                <View
+                  style={{
+                    position: "absolute",
+                    top: -2,
+                    right: -2,
+                    backgroundColor: "#EF4444",
+                    minWidth: 18,
+                    height: 18,
+                    borderRadius: 9,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingHorizontal: 4,
+                  }}
+                >
+                  <Text style={{ color: "#FFFFFF", fontSize: 10, fontWeight: "900" }}>
+                    {unreadNotifCount}
+                  </Text>
+                </View>
+              )}
+            </TouchableOpacity>
+
+            {/* Cart Icon with Live Badge */}
+            <TouchableOpacity
+              onPress={() => router.push("/(tabs)/cart")}
+              activeOpacity={0.7}
+              style={{
+                position: "relative",
+                width: 38,
+                height: 38,
+                borderRadius: 19,
+                backgroundColor: "#F8FAFC",
+                borderWidth: 1,
+                borderColor: "#E2E8F0",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <ShoppingCart size={18} color="#0F172A" />
+              {totalItems > 0 && (
+                <View
+                  style={{
+                    position: "absolute",
+                    top: -2,
+                    right: -2,
+                    backgroundColor: "#2563EB",
+                    minWidth: 18,
+                    height: 18,
+                    borderRadius: 9,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingHorizontal: 4,
+                  }}
+                >
+                  <Text style={{ color: "#FFFFFF", fontSize: 10, fontWeight: "900" }}>{totalItems}</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* Location Pill */}

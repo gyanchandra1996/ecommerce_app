@@ -508,6 +508,20 @@ export interface PaymentGatewayRecord {
   updatedAt: string;
 }
 
+export interface NotificationRecord {
+  id: string;
+  title: string;
+  body: string;
+  category: "deal" | "offer" | "order" | "system";
+  badge?: string;
+  icon?: string;
+  imageUrl?: string;
+  actionUrl?: string;
+  actionText?: string;
+  createdAt: string;
+  isRead?: boolean;
+}
+
 
 export interface ShippingProviderRecord {
   id: string;
@@ -859,6 +873,7 @@ interface LocalDatabaseSchema {
   wishlist?: WishlistRecord[];
   coupons?: CouponRecord[];
   gateways?: PaymentGatewayRecord[];
+  notifications?: NotificationRecord[];
   shippingProviders?: ShippingProviderRecord[];
   shipments?: ShipmentRecord[];
   shippingSettings?: ShippingSettingsRecord;
@@ -8115,4 +8130,104 @@ export class DatabaseStore {
     return true;
   }
 
+  public static async findNotifications(filter?: { category?: string }): Promise<NotificationRecord[]> {
+    const db = await this.readLocalDb();
+    if (!db.notifications || db.notifications.length === 0) {
+      db.notifications = [
+        {
+          id: "notif_deal_1",
+          title: "🔥 Flash Deal: Flagship Mobiles Up to 40% OFF",
+          body: "Limited time festive offer on iPhone 16 Pro & Top Smartphones. Grab yours before stocks run out!",
+          category: "deal",
+          badge: "40% OFF",
+          icon: "🔥",
+          imageUrl: "https://images.unsplash.com/photo-1511707171634-5f897ff02560?w=300",
+          actionUrl: "/(tabs)/deals",
+          actionText: "View Deals",
+          createdAt: new Date().toISOString(),
+          isRead: false,
+        },
+        {
+          id: "notif_offer_2",
+          title: "🎁 Mega Offer: Flat ₹200 OFF on First Order",
+          body: "Use promo coupon code WELCOME200 at checkout to claim instant flat discount.",
+          category: "offer",
+          badge: "FLAT ₹200",
+          icon: "🎁",
+          imageUrl: "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=300",
+          actionUrl: "/(tabs)/cart",
+          actionText: "Shop Now",
+          createdAt: new Date(Date.now() - 3600000).toISOString(),
+          isRead: false,
+        },
+        {
+          id: "notif_deal_3",
+          title: "⚡ Lightning Deal: Nike Air Max 270 React Sneakers",
+          body: "Premium running shoes back in stock with exclusive festive price drop. Free shipping included!",
+          category: "deal",
+          badge: "POPULAR",
+          icon: "⚡",
+          imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300",
+          actionUrl: "/products/prod_nike_af1",
+          actionText: "Grab Deal",
+          createdAt: new Date(Date.now() - 7200000).toISOString(),
+          isRead: false,
+        },
+        {
+          id: "notif_sys_4",
+          title: "📦 Express Delivery Free Across India",
+          body: "Get free guaranteed delivery on all orders this week. Verified by Razorpay Secure Payments.",
+          category: "system",
+          badge: "FREE SHIPPING",
+          icon: "📦",
+          actionUrl: "/(tabs)",
+          actionText: "Explore Products",
+          createdAt: new Date(Date.now() - 14400000).toISOString(),
+          isRead: true,
+        },
+      ];
+      await this.writeLocalDb(db);
+    }
+
+    if (filter?.category && filter.category !== "all") {
+      return db.notifications.filter((n: any) => n.category === filter.category);
+    }
+    return db.notifications;
+  }
+
+  public static async createNotification(data: Partial<NotificationRecord>): Promise<NotificationRecord> {
+    const db = await this.readLocalDb();
+    if (!db.notifications) db.notifications = [];
+    const newNotif: NotificationRecord = {
+      id: "notif_" + Math.random().toString(36).substring(2, 9),
+      title: data.title || "Special Offer Announcement",
+      body: data.body || "New top deals and discounts available now!",
+      category: data.category || "deal",
+      badge: data.badge || "NEW",
+      icon: data.icon || (data.category === "offer" ? "🎁" : "🔥"),
+      imageUrl: data.imageUrl || "",
+      actionUrl: data.actionUrl || "/(tabs)/deals",
+      actionText: data.actionText || "View Now",
+      createdAt: new Date().toISOString(),
+      isRead: false,
+    };
+    db.notifications.unshift(newNotif);
+    await this.writeLocalDb(db);
+    return newNotif;
+  }
+
+  public static async markNotificationRead(id: string): Promise<boolean> {
+    const db = await this.readLocalDb();
+    if (!db.notifications) return false;
+    let found = false;
+    db.notifications = db.notifications.map((n: any) => {
+      if (n.id === id || id === "ALL") {
+        found = true;
+        return { ...n, isRead: true };
+      }
+      return n;
+    });
+    if (found) await this.writeLocalDb(db);
+    return found;
+  }
 }

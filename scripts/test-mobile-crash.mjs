@@ -81,6 +81,7 @@ async function runCrashSuite() {
     { name: "ProductDetail: Reviews", url: "/api/reviews?productId=prod_nike_af1" },
     { name: "ProductDetail: Q&A", url: "/api/qna?productId=prod_nike_af1" },
     { name: "Cart: Get Cart Items", url: "/api/cart" },
+    { name: "Notifications: Get Deals & Offers", url: "/api/notifications" },
     {
       name: "Checkout: Verify Razorpay Payment",
       url: "/api/payments/razorpay/verify",
