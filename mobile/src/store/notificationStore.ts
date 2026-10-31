@@ -45,7 +45,7 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
   fetchNotifications: async (category?: string) => {
     try {
       set({ isLoading: true });
-      const query = category && category !== "all" ? `?category=${category}` : "";
+      const query = category && category !== "all" ? `?category=${category}&activeOnly=true` : "?activeOnly=true";
       const res = await apiClient.get(`/api/notifications${query}`);
       if (res.data?.success && Array.isArray(res.data?.data)) {
         const items: NotificationItem[] = res.data.data;

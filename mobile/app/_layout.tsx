@@ -94,6 +94,7 @@ export default function RootLayout() {
         />
       </Stack>
       <NotificationBanner />
+      <ActionToast />
     </ErrorBoundary>
   );
 }

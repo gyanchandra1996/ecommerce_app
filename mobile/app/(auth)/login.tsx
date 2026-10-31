@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
-import { X, Mail, Lock, LogIn, ArrowRight } from "lucide-react-native";
+import { X, Mail, Lock, LogIn, ArrowRight, Check } from "lucide-react-native";
 import { useAuthStore } from "../../src/store/authStore";
 import { apiClient } from "../../src/services/api";
 
@@ -22,6 +22,8 @@ export default function LoginScreen() {
   const [validationError, setValidationError] = useState<string | null>(null);
   const [googleEnabled, setGoogleEnabled] = useState(true);
   const [googleLoading, setGoogleLoading] = useState(false);
+
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     // Check dynamic setting table
@@ -48,11 +50,14 @@ export default function LoginScreen() {
 
     const ok = await login(email.trim(), password);
     if (ok) {
-      if (router.canGoBack()) {
-        router.back();
-      } else {
-        router.replace("/(tabs)/profile");
-      }
+      setIsSuccess(true);
+      setTimeout(() => {
+        if (router.canGoBack()) {
+          router.back();
+        } else {
+          router.replace("/(tabs)/profile");
+        }
+      }, 1000);
     }
   };
 
@@ -63,11 +68,14 @@ export default function LoginScreen() {
     const ok = await loginWithGoogle(targetEmail, targetEmail.split("@")[0]);
     setGoogleLoading(false);
     if (ok) {
-      if (router.canGoBack()) {
-        router.back();
-      } else {
-        router.replace("/(tabs)/profile");
-      }
+      setIsSuccess(true);
+      setTimeout(() => {
+        if (router.canGoBack()) {
+          router.back();
+        } else {
+          router.replace("/(tabs)/profile");
+        }
+      }, 1000);
     }
   };
 
@@ -134,15 +142,33 @@ export default function LoginScreen() {
           />
         </View>
 
-        {/* Sign In Button */}
+        {/* Sign In Button with Loading & Success Animation */}
         <TouchableOpacity
           onPress={handleLogin}
-          disabled={isLoading}
+          disabled={isLoading || isSuccess}
           activeOpacity={0.8}
-          style={{ backgroundColor: "#2563EB", paddingVertical: 14, borderRadius: 12, alignItems: "center", justifyContent: "center" }}
+          style={{
+            backgroundColor: isSuccess ? "#16A34A" : "#2563EB",
+            paddingVertical: 14,
+            borderRadius: 12,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
-          {isLoading ? (
-            <ActivityIndicator size="small" color="#FFFFFF" />
+          {isSuccess ? (
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Check size={18} color="#FFFFFF" style={{ marginRight: 8 }} />
+              <Text style={{ color: "#FFFFFF", fontWeight: "900", fontSize: 14 }}>
+                Signed In! Welcome back ✓
+              </Text>
+            </View>
+          ) : isLoading ? (
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <ActivityIndicator size="small" color="#FFFFFF" style={{ marginRight: 8 }} />
+              <Text style={{ color: "#FFFFFF", fontWeight: "800", fontSize: 14 }}>
+                Signing in...
+              </Text>
+            </View>
           ) : (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={{ color: "#FFFFFF", fontWeight: "800", fontSize: 14, marginRight: 6 }}>Sign In</Text>

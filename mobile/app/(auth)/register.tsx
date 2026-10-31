@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
-import { X, User, Mail, Lock, UserPlus, ArrowRight } from "lucide-react-native";
+import { X, User, Mail, Lock, UserPlus, ArrowRight, Check } from "lucide-react-native";
 import { useAuthStore } from "../../src/store/authStore";
 import { apiClient } from "../../src/services/api";
 
@@ -23,6 +23,7 @@ export default function RegisterScreen() {
   const [validationError, setValidationError] = useState<string | null>(null);
   const [googleEnabled, setGoogleEnabled] = useState(true);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     apiClient
@@ -52,11 +53,14 @@ export default function RegisterScreen() {
 
     const ok = await register(name.trim(), email.trim(), password);
     if (ok) {
-      if (router.canGoBack()) {
-        router.back();
-      } else {
-        router.replace("/(tabs)/profile");
-      }
+      setIsSuccess(true);
+      setTimeout(() => {
+        if (router.canGoBack()) {
+          router.back();
+        } else {
+          router.replace("/(tabs)/profile");
+        }
+      }, 1200);
     }
   };
 
@@ -67,11 +71,14 @@ export default function RegisterScreen() {
     const ok = await loginWithGoogle(targetEmail, name.trim() || targetEmail.split("@")[0]);
     setGoogleLoading(false);
     if (ok) {
-      if (router.canGoBack()) {
-        router.back();
-      } else {
-        router.replace("/(tabs)/profile");
-      }
+      setIsSuccess(true);
+      setTimeout(() => {
+        if (router.canGoBack()) {
+          router.back();
+        } else {
+          router.replace("/(tabs)/profile");
+        }
+      }, 1000);
     }
   };
 
@@ -149,15 +156,33 @@ export default function RegisterScreen() {
           />
         </View>
 
-        {/* Register Button */}
+        {/* Register Button with Loading & Success Animation */}
         <TouchableOpacity
           onPress={handleRegister}
-          disabled={isLoading}
+          disabled={isLoading || isSuccess}
           activeOpacity={0.8}
-          style={{ backgroundColor: "#2563EB", paddingVertical: 14, borderRadius: 12, alignItems: "center", justifyContent: "center" }}
+          style={{
+            backgroundColor: isSuccess ? "#16A34A" : "#2563EB",
+            paddingVertical: 14,
+            borderRadius: 12,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
-          {isLoading ? (
-            <ActivityIndicator size="small" color="#FFFFFF" />
+          {isSuccess ? (
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Check size={18} color="#FFFFFF" style={{ marginRight: 8 }} />
+              <Text style={{ color: "#FFFFFF", fontWeight: "900", fontSize: 14 }}>
+                Account Created! Welcome 🎉
+              </Text>
+            </View>
+          ) : isLoading ? (
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <ActivityIndicator size="small" color="#FFFFFF" style={{ marginRight: 8 }} />
+              <Text style={{ color: "#FFFFFF", fontWeight: "800", fontSize: 14 }}>
+                Creating account...
+              </Text>
+            </View>
           ) : (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={{ color: "#FFFFFF", fontWeight: "800", fontSize: 14, marginRight: 6 }}>

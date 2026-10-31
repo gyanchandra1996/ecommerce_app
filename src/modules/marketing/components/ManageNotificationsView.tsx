@@ -1,24 +1,26 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Bell,
   Send,
   Sparkles,
   Smartphone,
-  Tag,
   CheckCircle2,
   Clock,
-  Layers,
-  Flame,
-  Gift,
-  Package,
   AlertTriangle,
   RefreshCw,
   Radio,
-  Share2,
   CheckSquare,
   Square,
+  Plus,
+  Trash2,
+  Power,
+  ToggleLeft,
+  ToggleRight,
+  ShieldAlert,
+  ArrowDown,
+  Layers,
 } from "lucide-react";
 
 interface NotificationItem {
@@ -32,6 +34,16 @@ interface NotificationItem {
   actionText?: string;
   createdAt: string;
   isRead?: boolean;
+  isActive?: boolean;
+}
+
+interface NotificationSettings {
+  notificationsEnabled: boolean;
+  allowDeals: boolean;
+  allowOffers: boolean;
+  allowOrders: boolean;
+  allowSystem: boolean;
+  updatedAt: string;
 }
 
 const PRESET_TEMPLATES = [
@@ -75,13 +87,26 @@ const PRESET_TEMPLATES = [
 
 export function ManageNotificationsView() {
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  const [settings, setSettings] = useState<NotificationSettings>({
+    notificationsEnabled: true,
+    allowDeals: true,
+    allowOffers: true,
+    allowOrders: true,
+    allowSystem: true,
+    updatedAt: new Date().toISOString(),
+  });
   const [loading, setLoading] = useState(true);
   const [isSending, setIsSending] = useState(false);
   const [isPushingAll, setIsPushingAll] = useState(false);
+  const [isTogglingMaster, setIsTogglingMaster] = useState(false);
   const [pushingRowId, setPushingRowId] = useState<string | null>(null);
+  const [togglingRowId, setTogglingRowId] = useState<string | null>(null);
+  const [deletingRowId, setDeletingRowId] = useState<string | null>(null);
   const [registeredDevices, setRegisteredDevices] = useState(0);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [statusMessage, setStatusMessage] = useState<{ success: boolean; text: string } | null>(null);
+
+  const composerRef = useRef<HTMLDivElement>(null);
 
   // Form State
   const [title, setTitle] = useState("🔥 Flash Deal: 50% OFF Festive Mega Sale");
@@ -91,6 +116,7 @@ export function ManageNotificationsView() {
   const [icon, setIcon] = useState("🔥");
   const [actionUrl, setActionUrl] = useState("/(tabs)/deals");
   const [actionText, setActionText] = useState("View Deal");
+  const [formIsActive, setFormIsActive] = useState(true);
 
   const fetchNotifications = async () => {
     try {
@@ -99,6 +125,9 @@ export function ManageNotificationsView() {
       const json = await res.json();
       if (json.success && Array.isArray(json.data)) {
         setNotifications(json.data);
+      }
+      if (json.settings) {
+        setSettings(json.settings);
       }
 
       // Fetch active device count
@@ -127,9 +156,107 @@ export function ManageNotificationsView() {
     setActionUrl(t.actionUrl);
   };
 
-  // 1. Send Single New Notification
-  const handleSendNotification = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const scrollToComposer = () => {
+    if (composerRef.current) {
+      composerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  // 1. Toggle Master Push Notifications ON / OFF (Backend global switch)
+  const handleToggleMasterNotifications = async () => {
+    try {
+      setIsTogglingMaster(true);
+      setStatusMessage(null);
+      const nextState = !settings.notificationsEnabled;
+
+      const res = await fetch("/api/notifications/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ notificationsEnabled: nextState }),
+      });
+
+      const json = await res.json();
+      if (json.success && json.data) {
+        setSettings(json.data);
+        setStatusMessage({
+          success: true,
+          text: nextState
+            ? "✅ Push Notifications turned ON globally! Mobile devices will receive alerts."
+            : "⏸️ Push Notifications turned OFF globally! Push alerts are now paused across the backend.",
+        });
+      } else {
+        setStatusMessage({ success: false, text: json.error || "Failed to update notification settings." });
+      }
+    } catch (err: any) {
+      setStatusMessage({ success: false, text: err.message || "Failed to toggle master switch." });
+    } finally {
+      setIsTogglingMaster(false);
+    }
+  };
+
+  // 2. Toggle Individual Notification ON / OFF (Row switch)
+  const handleToggleNotificationStatus = async (notif: NotificationItem) => {
+    try {
+      setTogglingRowId(notif.id);
+      setStatusMessage(null);
+      const nextActive = notif.isActive === false ? true : false;
+
+      const res = await fetch("/api/notifications", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: notif.id,
+          isActive: nextActive,
+        }),
+      });
+
+      const json = await res.json();
+      if (json.success) {
+        setNotifications((prev) =>
+          prev.map((item) => (item.id === notif.id ? { ...item, isActive: nextActive } : item))
+        );
+        setStatusMessage({
+          success: true,
+          text: `Notification "${notif.title.substring(0, 25)}..." is now turned ${nextActive ? "ON (Active)" : "OFF (Inactive)"}.`,
+        });
+      } else {
+        setStatusMessage({ success: false, text: json.error || "Failed to toggle status." });
+      }
+    } catch (err: any) {
+      setStatusMessage({ success: false, text: err.message || "Failed to update notification." });
+    } finally {
+      setTogglingRowId(null);
+    }
+  };
+
+  // 3. Delete Notification
+  const handleDeleteNotification = async (notifId: string) => {
+    if (!window.confirm("Are you sure you want to remove this notification?")) return;
+    try {
+      setDeletingRowId(notifId);
+      setStatusMessage(null);
+
+      const res = await fetch(`/api/notifications?id=${encodeURIComponent(notifId)}`, {
+        method: "DELETE",
+      });
+
+      const json = await res.json();
+      if (json.success) {
+        setNotifications((prev) => prev.filter((item) => item.id !== notifId));
+        setSelectedIds((prev) => prev.filter((id) => id !== notifId));
+        setStatusMessage({ success: true, text: "Notification deleted successfully." });
+      } else {
+        setStatusMessage({ success: false, text: json.error || "Failed to delete notification." });
+      }
+    } catch (err: any) {
+      setStatusMessage({ success: false, text: err.message || "Failed to delete notification." });
+    } finally {
+      setDeletingRowId(null);
+    }
+  };
+
+  // 4. Send or Save New Notification
+  const handleCreateNotification = async (broadcastPush: boolean) => {
     if (!title.trim()) {
       setStatusMessage({ success: false, text: "Notification title is required." });
       return;
@@ -150,6 +277,8 @@ export function ManageNotificationsView() {
           icon,
           actionUrl,
           actionText,
+          isActive: formIsActive,
+          broadcastPush,
         }),
       });
 
@@ -157,21 +286,29 @@ export function ManageNotificationsView() {
       if (json.success) {
         setStatusMessage({
           success: true,
-          text: `Notification dispatched successfully! (Push broadcasted to ${json.pushSentCount || 0} active devices)`,
+          text: json.message || "Notification created successfully!",
         });
         fetchNotifications();
       } else {
-        setStatusMessage({ success: false, text: json.error || "Failed to send notification." });
+        setStatusMessage({ success: false, text: json.error || "Failed to create notification." });
       }
     } catch (err: any) {
-      setStatusMessage({ success: false, text: err.message || "Network error while sending notification." });
+      setStatusMessage({ success: false, text: err.message || "Network error while saving notification." });
     } finally {
       setIsSending(false);
     }
   };
 
-  // 2. Broadcast ALL Notifications at Once (Bulk Push)
+  // 5. Broadcast All Active Notifications
   const handlePushAllNotifications = async () => {
+    if (!settings.notificationsEnabled) {
+      setStatusMessage({
+        success: false,
+        text: "Cannot broadcast: Push notifications are currently turned OFF globally. Turn Master Switch ON first.",
+      });
+      return;
+    }
+
     try {
       setIsPushingAll(true);
       setStatusMessage(null);
@@ -186,11 +323,11 @@ export function ManageNotificationsView() {
       if (json.success) {
         setStatusMessage({
           success: true,
-          text: `✅ ${json.message || `All ${json.broadcastCount} notifications pushed to mobile devices!`}`,
+          text: `✅ ${json.message || `All active notifications pushed to mobile devices!`}`,
         });
         fetchNotifications();
       } else {
-        setStatusMessage({ success: false, text: json.error || "Failed to broadcast all notifications." });
+        setStatusMessage({ success: false, text: json.error || "Failed to broadcast notifications." });
       }
     } catch (err: any) {
       setStatusMessage({ success: false, text: err.message || "Error broadcasting notifications." });
@@ -199,7 +336,7 @@ export function ManageNotificationsView() {
     }
   };
 
-  // 3. Push Selected Notifications
+  // 6. Push Selected Notifications
   const handlePushSelected = async () => {
     if (selectedIds.length === 0) return;
     try {
@@ -209,7 +346,7 @@ export function ManageNotificationsView() {
       const res = await fetch("/api/notifications/broadcast-all", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ notificationIds: selectedIds }),
+        body: JSON.stringify({ notificationIds: selectedIds, force: true }),
       });
 
       const json = await res.json();
@@ -230,7 +367,7 @@ export function ManageNotificationsView() {
     }
   };
 
-  // 4. Re-push a single notification row
+  // 7. Re-push Single Notification
   const handlePushSingleRow = async (notifId: string) => {
     try {
       setPushingRowId(notifId);
@@ -239,20 +376,20 @@ export function ManageNotificationsView() {
       const res = await fetch("/api/notifications/broadcast-all", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ notificationIds: [notifId] }),
+        body: JSON.stringify({ notificationIds: [notifId], force: true }),
       });
 
       const json = await res.json();
       if (json.success) {
         setStatusMessage({
           success: true,
-          text: "Notification re-pushed to mobile successfully!",
+          text: "Notification pushed to mobile app successfully!",
         });
       } else {
-        setStatusMessage({ success: false, text: json.error || "Failed to re-push notification." });
+        setStatusMessage({ success: false, text: json.error || "Failed to push notification." });
       }
     } catch (err: any) {
-      setStatusMessage({ success: false, text: err.message || "Error re-pushing notification." });
+      setStatusMessage({ success: false, text: err.message || "Error pushing notification." });
     } finally {
       setPushingRowId(null);
     }
@@ -274,44 +411,98 @@ export function ManageNotificationsView() {
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">
-      {/* Top Banner with PUSH ALL button */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-900 p-6 rounded-2xl text-white shadow-xl shadow-blue-500/10">
+      {/* Top Banner with MASTER ON/OFF SWITCH & ADD NEW ACTION */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-900 p-6 rounded-2xl text-white shadow-xl shadow-blue-500/10">
         <div>
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
             <span className="p-1.5 bg-white/20 rounded-lg backdrop-blur-md">
               <Bell className="w-5 h-5 text-white" />
             </span>
             <span className="text-xs font-bold uppercase tracking-wider text-blue-200">
               Mobile App Push Center
             </span>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 flex items-center gap-1">
+
+            {/* Devices Pill */}
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               {registeredDevices} Mobile Devices Registered
             </span>
+
+            {/* Master Status Badge */}
+            <span
+              className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold border flex items-center gap-1.5 ${
+                settings.notificationsEnabled
+                  ? "bg-emerald-500/30 text-emerald-200 border-emerald-400/40"
+                  : "bg-amber-500/30 text-amber-200 border-amber-400/40"
+              }`}
+            >
+              <Power className="w-3 h-3" />
+              Backend Push Service: {settings.notificationsEnabled ? "ACTIVE (ON)" : "PAUSED (OFF)"}
+            </span>
           </div>
+
           <h1 className="text-2xl font-black">Mobile Push & In-App Notifications</h1>
           <p className="text-blue-100 text-xs mt-1 max-w-xl">
-            Broadcast flash deals, promo codes, and alerts to all mobile devices. Customers see floating banners and an active notification bell counter.
+            Broadcast flash deals, discount vouchers, and system notices. Turn push alerts ON or OFF globally, or toggle specific notifications anytime.
           </p>
         </div>
 
-        {/* Action Buttons: PUSH ALL NOTIFICATIONS */}
+        {/* Master Controls & Actions */}
         <div className="flex flex-wrap items-center gap-3">
+          {/* MASTER ON/OFF TOGGLE BUTTON */}
           <button
-            onClick={handlePushAllNotifications}
-            disabled={isPushingAll || notifications.length === 0}
-            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 active:scale-95 text-white font-extrabold rounded-xl text-xs transition-all shadow-lg shadow-emerald-500/30 disabled:opacity-60"
+            type="button"
+            onClick={handleToggleMasterNotifications}
+            disabled={isTogglingMaster}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all border shadow-lg ${
+              settings.notificationsEnabled
+                ? "bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-400/40 shadow-emerald-600/30"
+                : "bg-slate-800 hover:bg-slate-700 text-amber-300 border-amber-400/40 shadow-black/40"
+            }`}
+            title="Click to toggle push notifications ON or OFF globally"
           >
-            <Radio className={`w-4 h-4 ${isPushingAll ? "animate-spin" : "animate-pulse"}`} />
-            {isPushingAll ? "Pushing All to Mobile..." : `📢 Push All Notifications (${notifications.length})`}
+            {settings.notificationsEnabled ? (
+              <>
+                <ToggleRight className="w-5 h-5 text-emerald-200" />
+                <span>Push Service: ON</span>
+              </>
+            ) : (
+              <>
+                <ToggleLeft className="w-5 h-5 text-amber-400" />
+                <span>Push Service: OFF (Paused)</span>
+              </>
+            )}
           </button>
 
+          {/* Quick Scroll to Add New Notification */}
           <button
-            onClick={fetchNotifications}
-            className="flex items-center gap-1.5 px-3.5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl text-xs font-bold transition-all"
+            type="button"
+            onClick={scrollToComposer}
+            className="flex items-center gap-2 px-4 py-2.5 bg-white text-blue-900 hover:bg-blue-50 active:scale-95 font-extrabold rounded-xl text-xs transition-all shadow-lg"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
-            Refresh
+            <Plus className="w-4 h-4 text-blue-600 font-black" />
+            + Add New Notification
+          </button>
+
+          {/* Broadcast All */}
+          <button
+            type="button"
+            onClick={handlePushAllNotifications}
+            disabled={isPushingAll || notifications.length === 0}
+            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white font-extrabold rounded-xl text-xs transition-all shadow-lg shadow-teal-500/25 disabled:opacity-60"
+          >
+            <Radio className={`w-4 h-4 ${isPushingAll ? "animate-spin" : "animate-pulse"}`} />
+            {isPushingAll ? "Pushing..." : `📢 Broadcast All (${notifications.filter((n) => n.isActive !== false).length})`}
+          </button>
+
+          {/* Refresh */}
+          <button
+            type="button"
+            onClick={fetchNotifications}
+            className="p-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl text-white transition-all"
+            title="Refresh list"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
           </button>
         </div>
       </div>
@@ -342,23 +533,74 @@ export function ManageNotificationsView() {
         </div>
       )}
 
-      {/* Main Grid: Form + Phone Preview */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      {/* Notice if Master Switch is OFF */}
+      {!settings.notificationsEnabled && (
+        <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-semibold flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <ShieldAlert className="w-5 h-5 text-amber-600 shrink-0" />
+            <div>
+              <span className="font-bold">Push Notifications are currently PAUSED (OFF) globally.</span>
+              <p className="text-[11px] text-amber-700 mt-0.5">
+                Saved notifications remain in database, but loud mobile push alerts are suppressed. Click &quot;Push Service: OFF&quot; above to re-activate.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={handleToggleMasterNotifications}
+            disabled={isTogglingMaster}
+            className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold shrink-0 transition-all"
+          >
+            Turn ON
+          </button>
+        </div>
+      )}
+
+      {/* Main Grid: Add New Form + Phone Preview */}
+      <div ref={composerRef} className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Form (7 cols) */}
         <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+            <div className="flex items-center gap-2.5">
               <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
-                <Send className="w-4 h-4" />
+                <Plus className="w-5 h-5" />
               </div>
-              <h2 className="font-bold text-slate-800 text-base">Compose & Broadcast New Deal</h2>
+              <div>
+                <h2 className="font-extrabold text-slate-800 text-base">Add New Notification</h2>
+                <p className="text-xs text-slate-500">Create, customize, and broadcast a deal or system notice to mobile apps.</p>
+              </div>
+            </div>
+
+            {/* Form Status Toggle (ON / OFF for new item) */}
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-bold text-slate-500">Status:</span>
+              <button
+                type="button"
+                onClick={() => setFormIsActive(!formIsActive)}
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-extrabold transition-all border ${
+                  formIsActive
+                    ? "bg-emerald-50 text-emerald-700 border-emerald-300"
+                    : "bg-slate-100 text-slate-500 border-slate-300"
+                }`}
+              >
+                {formIsActive ? (
+                  <>
+                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                    Active (ON)
+                  </>
+                ) : (
+                  <>
+                    <span className="w-2 h-2 rounded-full bg-slate-400" />
+                    Draft (OFF)
+                  </>
+                )}
+              </button>
             </div>
           </div>
 
           {/* Quick Presets */}
           <div>
             <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-              Quick Deal Templates
+              Quick 1-Click Templates
             </label>
             <div className="flex flex-wrap gap-2">
               {PRESET_TEMPLATES.map((tmpl, idx) => (
@@ -375,7 +617,7 @@ export function ManageNotificationsView() {
             </div>
           </div>
 
-          <form onSubmit={handleSendNotification} className="space-y-4">
+          <div className="space-y-4">
             {/* Title */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">
@@ -434,14 +676,14 @@ export function ManageNotificationsView() {
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">Emoji Icon</label>
-                <div className="flex gap-1.5 items-center">
-                  {["🔥", "🎁", "⚡", "🏷️", "📦", "🔔"].map((em) => (
+                <div className="flex gap-1.5 items-center flex-wrap">
+                  {["🔥", "🎁", "⚡", "🏷️", "📦", "🔔", "🚀", "💎"].map((em) => (
                     <button
                       key={em}
                       type="button"
                       onClick={() => setIcon(em)}
-                      className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm border transition-all ${
-                        icon === em ? "border-blue-600 bg-blue-50 scale-105" : "border-slate-200 hover:bg-slate-50"
+                      className={`w-7 h-7 rounded-lg flex items-center justify-center text-sm border transition-all ${
+                        icon === em ? "border-blue-600 bg-blue-50 scale-110 shadow-sm" : "border-slate-200 hover:bg-slate-50"
                       }`}
                     >
                       {em}
@@ -454,7 +696,7 @@ export function ManageNotificationsView() {
             {/* Action URL & Action Text */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Mobile Action Link</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Mobile Action Link (Deep Link)</label>
                 <select
                   value={actionUrl}
                   onChange={(e) => setActionUrl(e.target.value)}
@@ -464,6 +706,8 @@ export function ManageNotificationsView() {
                   <option value="/(tabs)/cart">/(tabs)/cart - Customer Cart</option>
                   <option value="/(tabs)">/(tabs) - Home Storefront</option>
                   <option value="/orders">/orders - Customer Orders</option>
+                  <option value="/(tabs)/wishlist">/(tabs)/wishlist - Saved Items</option>
+                  <option value="/products/prod_s24_ultra">/products/prod_s24_ultra - Galaxy S24 Ultra</option>
                   <option value="/products/prod_nike_af1">/products/prod_nike_af1 - Air Max Shoe</option>
                 </select>
               </div>
@@ -480,16 +724,29 @@ export function ManageNotificationsView() {
               </div>
             </div>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={isSending}
-              className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-bold rounded-xl text-xs transition-all shadow-lg shadow-blue-500/25 flex items-center justify-center gap-2 disabled:opacity-60"
-            >
-              <Send className="w-4 h-4" />
-              {isSending ? "Broadcasting to Mobile App..." : "Send Broadcast Notification to Mobile"}
-            </button>
-          </form>
+            {/* Action Buttons: Broadcast Push OR Save In-App */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => handleCreateNotification(true)}
+                disabled={isSending}
+                className="py-3 px-4 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-extrabold rounded-xl text-xs transition-all shadow-lg shadow-blue-500/25 flex items-center justify-center gap-2 disabled:opacity-60"
+              >
+                <Send className="w-4 h-4" />
+                {isSending ? "Dispatching..." : "Send & Broadcast Push Alert"}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleCreateNotification(false)}
+                disabled={isSending}
+                className="py-3 px-4 bg-slate-50 hover:bg-slate-100 border border-slate-300 text-slate-700 font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-2 disabled:opacity-60"
+              >
+                <Layers className="w-4 h-4 text-slate-500" />
+                Save Without Loud Push
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Right Column: Live Smartphone Preview (5 cols) */}
@@ -552,21 +809,22 @@ export function ManageNotificationsView() {
         </div>
       </div>
 
-      {/* History Table with PUSH ALL & PUSH SELECTED */}
+      {/* History Table with Row-Level ON / OFF Switch */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-2">
             <Clock className="w-4 h-4 text-slate-500" />
-            <h3 className="font-bold text-slate-800 text-sm">Broadcast History</h3>
+            <h3 className="font-bold text-slate-800 text-sm">Manage & Broadcast Notifications</h3>
             <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600">
-              {notifications.length} Total
+              {notifications.length} Total ({notifications.filter((n) => n.isActive !== false).length} Active)
             </span>
           </div>
 
-          {/* Table Actions: Push Selected + Push All */}
+          {/* Table Actions: Push Selected + Add New */}
           <div className="flex items-center gap-2">
             {selectedIds.length > 0 && (
               <button
+                type="button"
                 onClick={handlePushSelected}
                 disabled={isPushingAll}
                 className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5"
@@ -577,12 +835,12 @@ export function ManageNotificationsView() {
             )}
 
             <button
-              onClick={handlePushAllNotifications}
-              disabled={isPushingAll || notifications.length === 0}
-              className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+              type="button"
+              onClick={scrollToComposer}
+              className="px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg text-xs font-bold transition-all flex items-center gap-1"
             >
-              <Radio className={`w-3.5 h-3.5 ${isPushingAll ? "animate-spin" : ""}`} />
-              Push All ({notifications.length})
+              <Plus className="w-3.5 h-3.5 font-bold" />
+              New
             </button>
           </div>
         </div>
@@ -605,23 +863,29 @@ export function ManageNotificationsView() {
                   </button>
                 </th>
                 <th className="py-2.5 px-3">Notification</th>
+                <th className="py-2.5 px-3 text-center">Status (ON/OFF)</th>
                 <th className="py-2.5 px-3">Category</th>
                 <th className="py-2.5 px-3">Badge</th>
                 <th className="py-2.5 px-3">Action Target</th>
-                <th className="py-2.5 px-3">Sent Time</th>
-                <th className="py-2.5 px-3 text-right">Action</th>
+                <th className="py-2.5 px-3">Created</th>
+                <th className="py-2.5 px-3 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-xs">
               {notifications.map((n) => {
                 const isSelected = selectedIds.includes(n.id);
+                const isActive = n.isActive !== false;
+                const isTogglingThis = togglingRowId === n.id;
+                const isDeletingThis = deletingRowId === n.id;
+
                 return (
                   <tr
                     key={n.id}
                     className={`hover:bg-slate-50/70 transition-colors ${
                       isSelected ? "bg-blue-50/40" : ""
-                    }`}
+                    } ${!isActive ? "opacity-60 bg-slate-50/50" : ""}`}
                   >
+                    {/* Checkbox */}
                     <td className="py-3 px-3">
                       <button
                         type="button"
@@ -635,20 +899,55 @@ export function ManageNotificationsView() {
                         )}
                       </button>
                     </td>
-                    <td className="py-3 px-3">
+
+                    {/* Notification Title & Body */}
+                    <td className="py-3 px-3 max-w-xs">
                       <div className="flex items-center gap-2">
                         <span className="text-base">{n.icon || "🔔"}</span>
-                        <div>
-                          <div className="font-bold text-slate-800">{n.title}</div>
+                        <div className="min-w-0">
+                          <div className="font-bold text-slate-800 truncate">{n.title}</div>
                           <div className="text-[11px] text-slate-500 line-clamp-1">{n.body}</div>
                         </div>
                       </div>
                     </td>
+
+                    {/* STATUS TOGGLE (ON / OFF SWITCH) */}
+                    <td className="py-3 px-3 text-center">
+                      <button
+                        type="button"
+                        onClick={() => handleToggleNotificationStatus(n)}
+                        disabled={isTogglingThis}
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold transition-all border ${
+                          isActive
+                            ? "bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100"
+                            : "bg-slate-100 text-slate-500 border-slate-300 hover:bg-slate-200"
+                        }`}
+                        title={isActive ? "Click to turn OFF (Mute this notification)" : "Click to turn ON (Activate)"}
+                      >
+                        {isTogglingThis ? (
+                          <RefreshCw className="w-3 h-3 animate-spin text-slate-400" />
+                        ) : isActive ? (
+                          <>
+                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                            ON
+                          </>
+                        ) : (
+                          <>
+                            <span className="w-2 h-2 rounded-full bg-slate-400" />
+                            OFF
+                          </>
+                        )}
+                      </button>
+                    </td>
+
+                    {/* Category */}
                     <td className="py-3 px-3">
                       <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700">
                         {n.category}
                       </span>
                     </td>
+
+                    {/* Badge */}
                     <td className="py-3 px-3">
                       {n.badge ? (
                         <span className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-blue-100 text-blue-700">
@@ -658,22 +957,42 @@ export function ManageNotificationsView() {
                         <span className="text-slate-300">-</span>
                       )}
                     </td>
+
+                    {/* Action Target */}
                     <td className="py-3 px-3">
                       <span className="font-mono text-[10px] text-slate-500">{n.actionUrl || "-"}</span>
                     </td>
+
+                    {/* Created Time */}
                     <td className="py-3 px-3 text-slate-400 text-[11px]">
                       {new Date(n.createdAt).toLocaleDateString()}{" "}
                       {new Date(n.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                     </td>
+
+                    {/* Actions: Re-Push + Delete */}
                     <td className="py-3 px-3 text-right">
-                      <button
-                        onClick={() => handlePushSingleRow(n.id)}
-                        disabled={pushingRowId === n.id}
-                        className="px-2.5 py-1 rounded-lg border border-slate-200 hover:border-blue-600 hover:bg-blue-50 text-[11px] font-bold text-slate-700 hover:text-blue-600 transition-all inline-flex items-center gap-1 disabled:opacity-50"
-                      >
-                        <Radio className={`w-3 h-3 ${pushingRowId === n.id ? "animate-spin" : ""}`} />
-                        {pushingRowId === n.id ? "Pushing..." : "Re-push"}
-                      </button>
+                      <div className="flex items-center justify-end gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => handlePushSingleRow(n.id)}
+                          disabled={pushingRowId === n.id}
+                          className="px-2.5 py-1 rounded-lg border border-slate-200 hover:border-blue-600 hover:bg-blue-50 text-[11px] font-bold text-slate-700 hover:text-blue-600 transition-all inline-flex items-center gap-1 disabled:opacity-50"
+                          title="Re-push to active mobile devices"
+                        >
+                          <Radio className={`w-3 h-3 ${pushingRowId === n.id ? "animate-spin" : ""}`} />
+                          {pushingRowId === n.id ? "Pushing..." : "Push"}
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteNotification(n.id)}
+                          disabled={isDeletingThis}
+                          className="p-1 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-all"
+                          title="Delete notification"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );

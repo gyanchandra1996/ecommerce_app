@@ -520,6 +520,16 @@ export interface NotificationRecord {
   actionText?: string;
   createdAt: string;
   isRead?: boolean;
+  isActive?: boolean;
+}
+
+export interface NotificationSettingsRecord {
+  notificationsEnabled: boolean;
+  allowDeals: boolean;
+  allowOffers: boolean;
+  allowOrders: boolean;
+  allowSystem: boolean;
+  updatedAt: string;
 }
 
 export interface PushTokenRecord {
@@ -881,6 +891,7 @@ interface LocalDatabaseSchema {
   coupons?: CouponRecord[];
   gateways?: PaymentGatewayRecord[];
   notifications?: NotificationRecord[];
+  notificationSettings?: NotificationSettingsRecord;
   pushTokens?: PushTokenRecord[];
   shippingProviders?: ShippingProviderRecord[];
   shipments?: ShipmentRecord[];
@@ -8203,6 +8214,43 @@ export class DatabaseStore {
     return db.notifications;
   }
 
+  public static async getNotificationSettings(): Promise<NotificationSettingsRecord> {
+    const db = await this.readLocalDb();
+    if (!db.notificationSettings) {
+      db.notificationSettings = {
+        notificationsEnabled: true,
+        allowDeals: true,
+        allowOffers: true,
+        allowOrders: true,
+        allowSystem: true,
+        updatedAt: new Date().toISOString(),
+      };
+      await this.writeLocalDb(db);
+    }
+    return db.notificationSettings;
+  }
+
+  public static async updateNotificationSettings(
+    updates: Partial<NotificationSettingsRecord>
+  ): Promise<NotificationSettingsRecord> {
+    const db = await this.readLocalDb();
+    const current = db.notificationSettings || {
+      notificationsEnabled: true,
+      allowDeals: true,
+      allowOffers: true,
+      allowOrders: true,
+      allowSystem: true,
+      updatedAt: new Date().toISOString(),
+    };
+    db.notificationSettings = {
+      ...current,
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
+    await this.writeLocalDb(db);
+    return db.notificationSettings;
+  }
+
   public static async createNotification(data: Partial<NotificationRecord>): Promise<NotificationRecord> {
     const db = await this.readLocalDb();
     if (!db.notifications) db.notifications = [];
@@ -8218,10 +8266,43 @@ export class DatabaseStore {
       actionText: data.actionText || "View Now",
       createdAt: new Date().toISOString(),
       isRead: false,
+      isActive: data.isActive !== false,
     };
     db.notifications.unshift(newNotif);
     await this.writeLocalDb(db);
     return newNotif;
+  }
+
+  public static async updateNotification(
+    id: string,
+    updates: Partial<NotificationRecord>
+  ): Promise<NotificationRecord | null> {
+    const db = await this.readLocalDb();
+    if (!db.notifications) return null;
+    let updatedItem: NotificationRecord | null = null;
+    db.notifications = db.notifications.map((n) => {
+      if (n.id === id) {
+        updatedItem = { ...n, ...updates };
+        return updatedItem;
+      }
+      return n;
+    });
+    if (updatedItem) {
+      await this.writeLocalDb(db);
+    }
+    return updatedItem;
+  }
+
+  public static async deleteNotification(id: string): Promise<boolean> {
+    const db = await this.readLocalDb();
+    if (!db.notifications) return false;
+    const initialLen = db.notifications.length;
+    db.notifications = db.notifications.filter((n) => n.id !== id);
+    if (db.notifications.length !== initialLen) {
+      await this.writeLocalDb(db);
+      return true;
+    }
+    return false;
   }
 
   public static async markNotificationRead(id: string): Promise<boolean> {

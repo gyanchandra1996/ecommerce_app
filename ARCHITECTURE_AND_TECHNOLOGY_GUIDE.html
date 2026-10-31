@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Complete E-Commerce Architecture & Technology Guide</title>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 16mm 18mm 16mm;
+    @bottom-right {
+      content: counter(page);
+      font-size: 9pt;
+      color: #64748b;
+    }
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1e293b;
+    line-height: 1.55;
+    font-size: 10pt;
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+  }
+
+  /* Cover / Title Header */
+  .header-cover {
+    border-bottom: 3px solid #2563eb;
+    padding-bottom: 24px;
+    margin-bottom: 28px;
+  }
+
+  .badge-tag {
+    display: inline-block;
+    background: #eff6ff;
+    color: #1d4ed8;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 8pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    border: 1px solid #bfdbfe;
+  }
+
+  h1 {
+    font-size: 24pt;
+    font-weight: 900;
+    color: #0f172a;
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: 11pt;
+    color: #475569;
+    margin: 0 0 16px 0;
+    font-weight: 500;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    background: #f8fafc;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    font-size: 8.5pt;
+  }
+
+  .meta-item strong {
+    display: block;
+    color: #64748b;
+    text-transform: uppercase;
+    font-size: 7pt;
+    letter-spacing: 0.5px;
+  }
+
+  /* Section Headings */
+  h2 {
+    font-size: 15pt;
+    font-weight: 800;
+    color: #0f172a;
+    border-bottom: 1.5px solid #e2e8f0;
+    padding-bottom: 6px;
+    margin-top: 28px;
+    margin-bottom: 12px;
+    page-break-after: avoid;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  h3 {
+    font-size: 11.5pt;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    page-break-after: avoid;
+  }
+
+  p {
+    margin: 0 0 10px 0;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 18px 0;
+    font-size: 8.5pt;
+    page-break-inside: auto;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  th {
+    background: #f1f5f9;
+    color: #0f172a;
+    font-weight: 800;
+    text-align: left;
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  td {
+    padding: 7px 10px;
+    border: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+
+  /* Callout Boxes */
+  .callout {
+    background: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0;
+    font-size: 9pt;
+  }
+
+  .callout-success {
+    background: #f0fdf4;
+    border-left-color: #22c55e;
+  }
+
+  .callout strong {
+    color: #1e3a8a;
+  }
+
+  /* Code & Pills */
+  code {
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    background: #f1f5f9;
+    color: #0f172a;
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-size: 8pt;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 7.5pt;
+    font-weight: 700;
+    margin-right: 4px;
+  }
+
+  .pill-blue { background: #dbeafe; color: #1e40af; }
+  .pill-green { background: #dcfce7; color: #166534; }
+  .pill-purple { background: #f3e8ff; color: #6b21a8; }
+  .pill-amber { background: #fef3c7; color: #92400e; }
+
+  /* Page Break Utilities */
+  .page-break {
+    page-break-before: always;
+  }
+
+  /* Workflow Steps */
+  .step-container {
+    margin: 12px 0;
+  }
+
+  .step-box {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    background: #ffffff;
+  }
+
+  .step-header {
+    font-weight: 800;
+    color: #1e40af;
+    font-size: 9.5pt;
+    margin-bottom: 4px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- COVER / HEADER -->
+  <div class="header-cover">
+    <div class="badge-tag">Complete System Architecture & Technology Guide</div>
+    <h1>E-Commerce Platform: Web, Backend & Mobile App</h1>
+    <div class="subtitle">Detailed Step-by-Step Technical Documentation, Module Analysis & Technology Stack</div>
+    
+    <div class="meta-grid">
+      <div class="meta-item">
+        <strong>Application</strong>
+        Next.js Fullstack + Expo Mobile
+      </div>
+      <div class="meta-item">
+        <strong>Runtime / Node</strong>
+        Node.js v20+ / React 19 / React Native 0.88
+      </div>
+      <div class="meta-item">
+        <strong>Database</strong>
+        PostgreSQL 16 + Prisma ORM 6.4
+      </div>
+      <div class="meta-item">
+        <strong>Status</strong>
+        Production Ready & Fully Tested
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: SYSTEM ARCHITECTURE OVERVIEW -->
+  <h2>1. System Architecture Overview (High-Level Design)</h2>
+  <p>
+    This project is an enterprise-grade, modern omnichannel e-commerce ecosystem consisting of a <strong>Web Storefront</strong>, an <strong>Advanced Admin Control Panel</strong>, a <strong>Next.js REST API Backend</strong>, and a <strong>Cross-Platform Mobile App (Android/iOS)</strong> built with React Native and Expo.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 20%;">Tier</th>
+        <th style="width: 30%;">Core Technology</th>
+        <th style="width: 50%;">Responsibilities & Key Components</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Web Frontend</strong></td>
+        <td>Next.js 16.4 (App Router)<br>React 19.3<br>Tailwind CSS v4<br>Lucide React Icons</td>
+        <td>Customer storefront, catalog browsing, cart, multi-step checkout, user dashboard, and full administrative panel.</td>
+      </tr>
+      <tr>
+        <td><strong>Mobile App</strong></td>
+        <td>React Native 0.88<br>Expo SDK 58 (Expo Router v4/v5)<br>Zustand v5<br>AsyncStorage + SecureStore</td>
+        <td>Native iOS & Android mobile shopping experience, push notifications, offline cart/wishlist sync, animated UI feedback, camera & location integration.</td>
+      </tr>
+      <tr>
+        <td><strong>Backend API</strong></td>
+        <td>Next.js Route Handlers (Edge & Node.js runtime)<br>Jose JWT & Bcryptjs<br>Nodemailer & S3 SDK</td>
+        <td>RESTful JSON APIs, authentication & RBAC, catalog management, inventory movements, payment gateway processing, push notification dispatch.</td>
+      </tr>
+      <tr>
+        <td><strong>Database & Storage</strong></td>
+        <td>PostgreSQL 16 (Docker)<br>Prisma ORM 6.4<br>Local JSON Store Fallback<br>AWS S3 / Local Media Assets</td>
+        <td>Relational data persistence, ACID transactions, relational indexing, media file storage, and automatic schema synchronization.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 2: FRONTEND TECHNOLOGIES -->
+  <h2>2. Frontend Technologies (Web Application)</h2>
+  <p>
+    The web client uses the latest Next.js 16 App Router architecture with React 19 Server Components (RSC) and Client Components for maximum performance, SEO, and interactivity.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Technology</th>
+        <th>Version</th>
+        <th>Usage in Project</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Next.js App Router</strong></td>
+        <td><code>16.4.2</code></td>
+        <td>Powers file-based routing (<code>src/app/</code>), Server-Side Rendering (SSR), Server Actions, dynamic routes (<code>[slug]</code>, <code>[id]</code>), and layout nesting.</td>
+      </tr>
+      <tr>
+        <td><strong>React</strong></td>
+        <td><code>19.3.0</code></td>
+        <td>Core UI component library utilizing modern hooks (<code>useState</code>, <code>useEffect</code>, <code>useRef</code>, <code>useMemo</code>), Concurrent rendering, and transitions.</td>
+      </tr>
+      <tr>
+        <td><strong>Tailwind CSS</strong></td>
+        <td><code>v4.0.0</code></td>
+        <td>Utility-first CSS engine with Turbopack integration (<code>@tailwindcss/turbopack</code>), modern CSS variables, responsive breakpoints, and dark mode support.</td>
+      </tr>
+      <tr>
+        <td><strong>Lucide React</strong></td>
+        <td><code>1.61.0</code></td>
+        <td>Modern, tree-shakeable SVG icon collection used across navigation bars, badges, actions, and administrative tables.</td>
+      </tr>
+      <tr>
+        <td><strong>Paytm Checksum</strong></td>
+        <td><code>1.5.1</code></td>
+        <td>Cryptographic signature verification and transaction hash generation for Indian payment gateway checkout flows.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- SECTION 3: BACKEND & API ARCHITECTURE -->
+  <h2>3. Backend & API Architecture (Next.js Server)</h2>
+  <p>
+    The backend runs directly inside the Next.js unified framework using Route Handlers located under <code>src/app/api/</code>. It connects to PostgreSQL via Prisma ORM with an integrated local database abstraction layer (<code>DatabaseStore</code>) for bulletproof failover.
+  </p>
+
+  <h3>Key Technologies & Libraries</h3>
+  <ul>
+    <li><strong>Next.js Route Handlers (HTTP Server)</strong>: Supports standard HTTP verbs (<code>GET</code>, <code>POST</code>, <code>PATCH</code>, <code>PUT</code>, <code>DELETE</code>) with structured streaming and JSON responses.</li>
+    <li><strong>Prisma ORM (v6.4.1)</strong>: Type-safe database client communicating with PostgreSQL on port 5432. Auto-generates TypeScript types matching schema models.</li>
+    <li><strong>Jose (v6.2.13) & Bcryptjs (v3.0.3)</strong>: Secure JWT generation, verification, and salted password hashing without native binary dependencies.</li>
+    <li><strong>Nodemailer (v10.2.1)</strong>: SMTP email delivery engine for account registration, order confirmation receipts, and low-stock administrative alerts.</li>
+    <li><strong>AWS SDK S3 Client (v3.1158.0)</strong>: Cloud object storage integration for product imagery, variant photos, and marketing banner assets.</li>
+    <li><strong>Expo Push API</strong>: HTTP/2 push notification dispatcher delivering real-time push alerts to mobile devices via <code>https://exp.host/--/api/v2/push/send</code>.</li>
+  </ul>
+
+  <h3>API Response Convention</h3>
+  <p>All endpoints utilize a strict, consistent JSON envelope format for predictability:</p>
+  <code>{ "success": true, "data": [...], "message": "Operation successful." }</code> (Success)<br>
+  <code>{ "success": false, "error": "Descriptive error message.", "status": 400 }</code> (Error)
+
+  <!-- SECTION 4: MOBILE APP ARCHITECTURE -->
+  <h2>4. Mobile App Architecture (React Native & Expo)</h2>
+  <p>
+    Located in the <code>mobile/</code> directory, the mobile app provides an ultra-fast, Flipkart/Amazon-style mobile commerce experience for iOS and Android.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Technology</th>
+        <th>Version</th>
+        <th>Purpose & Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>React Native</strong></td>
+        <td><code>0.88.1</code></td>
+        <td>Native cross-platform mobile component runtime compiling to real iOS UIKit and Android Views.</td>
+      </tr>
+      <tr>
+        <td><strong>Expo SDK</strong></td>
+        <td><code>~58.0.21</code></td>
+        <td>Managed native runtime, dev server (Metro bundler on port 8081), asset management, and native module bridges.</td>
+      </tr>
+      <tr>
+        <td><strong>Expo Router</strong></td>
+        <td><code>~58.0.28</code></td>
+        <td>File-based navigation mimicking Next.js conventions: <code>app/(tabs)/</code> for bottom navigation and <code>app/products/[id].tsx</code> for dynamic routes.</td>
+      </tr>
+      <tr>
+        <td><strong>Zustand</strong></td>
+        <td><code>^5.0.16</code></td>
+        <td>Lightweight, hook-based global state management powering:
+          <br>• <code>cartStore.ts</code> (Shopping cart state & badges)
+          <br>• <code>wishlistStore.ts</code> (Wishlist with self-healing image recovery)
+          <br>• <code>authStore.ts</code> (Customer authentication & token persistence)
+          <br>• <code>toastStore.ts</code> (Floating animated action notifications)
+          <br>• <code>notificationStore.ts</code> (Push & in-app alerts)
+        </td>
+      </tr>
+      <tr>
+        <td><strong>AsyncStorage & SecureStore</strong></td>
+        <td><code>v3.1.1 / v58.0.2</code></td>
+        <td>Encrypted storage for JWT session tokens (SecureStore) and persistent offline storage for cart and wishlist items (AsyncStorage).</td>
+      </tr>
+      <tr>
+        <td><strong>Expo Notifications</strong></td>
+        <td><code>~58.1.7</code></td>
+        <td>Handles device push token generation, foreground banners, and background notification tap navigation.</td>
+      </tr>
+      <tr>
+        <td><strong>Axios Client & Auto-Failover</strong></td>
+        <td><code>^1.21.0</code></td>
+        <td>Custom HTTP networking module with dynamic Wi-Fi LAN IP detection (<code>10.196.90.130</code>) and dual-port fallback (3001 & 3000).</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- SECTION 5: COMPLETE MODULE-BY-MODULE BREAKDOWN -->
+  <h2>5. Step-by-Step Module Breakdown (All 29 Modules)</h2>
+  <p>
+    The codebase is architected into modular domain units located in <code>src/modules/</code>. Below is the comprehensive technical breakdown of every module:
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 15%;">Module</th>
+        <th style="width: 25%;">Technologies</th>
+        <th style="width: 30%;">Database Models & Files</th>
+        <th style="width: 30%;">Functionality & Workflow</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Products</strong></td>
+        <td>Next.js, Prisma, S3 SDK, Lucide</td>
+        <td><code>Product</code>, <code>Variant</code>, <code>Asset</code><br><code>src/modules/products/</code></td>
+        <td>SKU/UPC management, multi-warehouse stock tracking, variant matrix (Color, Storage, Size), Google Merchant Center syndication.</td>
+      </tr>
+      <tr>
+        <td><strong>2. Categories</strong></td>
+        <td>React, Tailwind, Prisma</td>
+        <td><code>Category</code><br><code>src/modules/categories/</code></td>
+        <td>Multi-level category tree (parent-child), slug generation, navigation hierarchy, banner association.</td>
+      </tr>
+      <tr>
+        <td><strong>3. Cart</strong></td>
+        <td>Zustand, React 19, Lucide</td>
+        <td><code>CartItem</code>, LocalStorage<br><code>src/modules/cart/</code></td>
+        <td>Real-time price calculation, quantity adjustments (+/-), stock validation, guest cart to user cart migration upon login.</td>
+      </tr>
+      <tr>
+        <td><strong>4. Checkout</strong></td>
+        <td>Paytm, Razorpay, Tailwind</td>
+        <td><code>Order</code>, <code>Address</code><br><code>src/modules/checkout/</code></td>
+        <td>Shipping address selection, pin code serviceability check, delivery method, payment gateway redirection.</td>
+      </tr>
+      <tr>
+        <td><strong>5. Marketing & Push</strong></td>
+        <td>Expo Push API, Lucide, Tailwind</td>
+        <td><code>Notification</code>, <code>PushToken</code><br><code>src/modules/marketing/</code></td>
+        <td>Broadcast flash deals to mobile devices, master ON/OFF toggle switch, live smartphone mockup preview, deep link routing.</td>
+      </tr>
+      <tr>
+        <td><strong>6. Auth & RBAC</strong></td>
+        <td>Jose JWT, Bcryptjs, Prisma</td>
+        <td><code>User</code>, <code>Role</code>, <code>Permission</code><br><code>src/modules/auth/</code></td>
+        <td>Encrypted passwords, role permissions (Admin, Manager, Staff, Customer), JWT verification middleware.</td>
+      </tr>
+      <tr>
+        <td><strong>7. Orders</strong></td>
+        <td>Prisma, PDF generation, Lucide</td>
+        <td><code>Order</code>, <code>OrderItem</code>, <code>Shipment</code><br><code>src/modules/orders/</code></td>
+        <td>Order lifecycle state machine (Pending, Paid, Shipped, Delivered, Cancelled), customer order tracking, invoice print.</td>
+      </tr>
+      <tr>
+        <td><strong>8. Shipping</strong></td>
+        <td>Delhivery/BlueDart APIs</td>
+        <td><code>ShippingProvider</code>, <code>Zone</code><br><code>src/modules/shipping/</code></td>
+        <td>Pin-code based zone mapping (Local, Regional, National), COD extra fees, tracking URL generation.</td>
+      </tr>
+      <tr>
+        <td><strong>9. Inventory & Warehouses</strong></td>
+        <td>Prisma, Docker Postgres</td>
+        <td><code>Warehouse</code>, <code>InventoryMovement</code><br><code>src/modules/warehouses/</code></td>
+        <td>Multi-location warehouse stock, low-stock threshold triggers, inter-warehouse stock transfer logging.</td>
+      </tr>
+      <tr>
+        <td><strong>10. Reviews & Ratings</strong></td>
+        <td>React 19, Lucide, Prisma</td>
+        <td><code>Review</code><br><code>src/modules/reviews/</code></td>
+        <td>1 to 5 star rating system, verified buyer badge, review submission, admin approval toggle.</td>
+      </tr>
+      <tr>
+        <td><strong>11. Customer Q&A</strong></td>
+        <td>Next.js, Prisma</td>
+        <td><code>Question</code>, <code>Answer</code><br><code>src/modules/qna/</code></td>
+        <td>Customer product inquiry system, community & admin answers, answer moderation.</td>
+      </tr>
+      <tr>
+        <td><strong>12. Wishlist</strong></td>
+        <td>Zustand, AsyncStorage</td>
+        <td><code>WishlistItem</code><br><code>src/modules/wishlist/</code></td>
+        <td>Heart toggle, self-healing image recovery, move-to-cart automation, mobile-to-web sync.</td>
+      </tr>
+      <tr>
+        <td><strong>13. Coupons & Promos</strong></td>
+        <td>Prisma, Date-fns</td>
+        <td><code>Coupon</code><br><code>src/modules/coupons/</code></td>
+        <td>Percentage & flat discount codes, minimum spend validation, expiry checks, single-use rules.</td>
+      </tr>
+      <tr>
+        <td><strong>14. Sliders & Banners</strong></td>
+        <td>Image CDN, Touch Swiper</td>
+        <td><code>Slider</code>, <code>Banner</code><br><code>src/modules/sliders/</code></td>
+        <td>Responsive hero banners for desktop & mobile, auto-sliding carousel with pagination dots.</td>
+      </tr>
+      <tr>
+        <td><strong>15. Payments</strong></td>
+        <td>Razorpay, Paytm, COD</td>
+        <td><code>PaymentRecord</code>, <code>Refund</code><br><code>src/modules/payments/</code></td>
+        <td>Online transaction verification, webhook listeners, payment status reconciliation.</td>
+      </tr>
+      <tr>
+        <td><strong>16. Digital Assets</strong></td>
+        <td>AWS S3 SDK, Sharp</td>
+        <td><code>Asset</code><br><code>src/modules/assets/</code></td>
+        <td>Media library, image uploads, thumbnails generation, primary image assignment.</td>
+      </tr>
+      <tr>
+        <td><strong>17. Settings & Mail</strong></td>
+        <td>Nodemailer, SMTP</td>
+        <td><code>SettingItem</code>, <code>MailConfig</code><br><code>src/modules/settings/</code></td>
+        <td>Store profile settings, currency symbols, SMTP configuration, custom transactional emails.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- SECTION 6: DATA FLOW & END-TO-END WORKFLOWS -->
+  <h2>6. Step-by-Step Data Flow & Execution Workflows</h2>
+
+  <div class="step-container">
+    <div class="step-box">
+      <div class="step-header">A. Mobile Add to Cart & Checkout Flow</div>
+      <p>
+        <strong>1. User interaction</strong>: Customer views a product card or details page (<code>app/products/[id].tsx</code>) and taps <code>Add to Cart</code>.<br>
+        <strong>2. Store & Animation</strong>: <code>useCartStore.addToCart()</code> is triggered. Button enters a spinner loading state (<code>ActivityIndicator</code>).<br>
+        <strong>3. Toast Dispatch</strong>: <code>useToastStore.showToast()</code> displays a floating pill: <code>"Added to Cart! 🛍️"</code> with a <code>"View Cart →"</code> shortcut.<br>
+        <strong>4. API Synchronization</strong>: Axios dispatches <code>POST /api/cart</code> to Next.js on port 3001. Next.js verifies current stock in PostgreSQL and updates cart.<br>
+        <strong>5. Badge Sync</strong>: Root tab bar counter in <code>app/(tabs)/_layout.tsx</code> updates immediately without screen re-render.
+      </p>
+    </div>
+
+    <div class="step-box">
+      <div class="step-header">B. Push Notification Broadcast Flow</div>
+      <p>
+        <strong>1. Mobile Device Registration</strong>: When the mobile app starts, <code>registerForPushNotifications()</code> calls Expo Push Service to get an <code>ExponentPushToken</code> and sends it to <code>POST /api/notifications/register</code>.<br>
+        <strong>2. Admin Composition</strong>: Admin opens <code>/admin/marketing/notifications</code> in web browser, enters title/message, selects emoji and action link, and verifies the live phone preview.<br>
+        <strong>3. Master Switch Validation</strong>: System checks <code>settings.notificationsEnabled</code>. If ON, proceeds; if OFF, alerts admin that push is paused.<br>
+        <strong>4. Expo Dispatch</strong>: Backend compiles chunks of push tokens and posts to Expo push server (<code>https://exp.host/--/api/v2/push/send</code>).<br>
+        <strong>5. Native Reception</strong>: Customer device receives the notification, plays sound, displays top system alert, and when tapped opens the targeted deep link (e.g. <code>/(tabs)/deals</code>).
+      </p>
+    </div>
+
+    <div class="step-box">
+      <div class="step-header">C. Database Dual-Persistence (Postgres + Local Store)</div>
+      <p>
+        <strong>1. Primary Storage</strong>: PostgreSQL running in Docker (container: <code>ecommerce_postgres</code>, port: 5432) accessed via Prisma ORM.<br>
+        <strong>2. High Availability Layer</strong>: <code>DatabaseStore</code> in <code>src/core/db/store.ts</code> manages in-memory caching and persistent local JSON synchronization so the entire app operates smoothly even during database migrations or network restarts.
+      </p>
+    </div>
+  </div>
+
+  <!-- SECTION 7: RUNNING & DEPLOYING -->
+  <h2>7. Running, Building & Deploying the Project</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>Directory</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>npm run dev</code></td>
+        <td>Root (<code>/</code>)</td>
+        <td>Starts the Next.js Web Storefront & Backend API on <code>http://localhost:3001</code>.</td>
+      </tr>
+      <tr>
+        <td><code>npx expo start</code></td>
+        <td><code>mobile/</code></td>
+        <td>Starts the Expo Metro bundler on port <code>8081</code> for Android, iOS, or Expo Go testing.</td>
+      </tr>
+      <tr>
+        <td><code>npm run docker:up</code></td>
+        <td>Root (<code>/</code>)</td>
+        <td>Launches PostgreSQL and database services in background via Docker Compose.</td>
+      </tr>
+      <tr>
+        <td><code>npm run db:seed</code></td>
+        <td>Root (<code>/</code>)</td>
+        <td>Seeds master product catalog, categories, administrative accounts, and initial warehouses.</td>
+      </tr>
+      <tr>
+        <td><code>npx tsc --noEmit</code></td>
+        <td><code>mobile/</code> & Root</td>
+        <td>Validates TypeScript type safety and compiles code with zero warnings or errors.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- FOOTER -->
+  <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #e2e8f0; font-size: 8pt; color: #94a3b8; text-align: center;">
+    Generated for E-Commerce Project Technical Review • Comprehensive Architecture & Technology Guide • 2026
+  </div>
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { apiClient } from "../services/api";
+import { useToastStore } from "./toastStore";
 
 export interface CartItem {
   id: string;
@@ -73,6 +74,12 @@ export const useCartStore = create<CartState>((set, get) => ({
 
       if (res.data?.success) {
         await get().fetchCart();
+        useToastStore.getState().showToast({
+          message: "Added to Cart! 🛍️",
+          type: "cart",
+          actionText: "View Cart",
+          actionUrl: "/(tabs)/cart",
+        });
         return true;
       }
       return false;
@@ -97,6 +104,10 @@ export const useCartStore = create<CartState>((set, get) => ({
     try {
       await apiClient.delete(`/api/cart?productId=${productId}`);
       await get().fetchCart();
+      useToastStore.getState().showToast({
+        message: "Item removed from cart 🗑️",
+        type: "remove",
+      });
     } catch {}
   },
 

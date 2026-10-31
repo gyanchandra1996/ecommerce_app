@@ -24,9 +24,13 @@ import {
   User,
   Tag,
   Zap,
+  Heart,
+  Plus,
+  Sparkles,
 } from "lucide-react-native";
 import { apiClient, getFullImageUrl } from "../../src/services/api";
 import { useCartStore } from "../../src/store/cartStore";
+import { useWishlistStore } from "../../src/store/wishlistStore";
 import { useAuthStore } from "../../src/store/authStore";
 import { Skeleton } from "../../src/components/SkeletonLoader";
 
@@ -34,6 +38,7 @@ export default function ProductDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const { addToCart, totalItems } = useCartStore();
+  const { toggleWishlist, isInWishlist } = useWishlistStore();
   const authUser = useAuthStore((s) => s.user);
 
   const [product, setProduct] = useState<any>(null);
@@ -42,6 +47,12 @@ export default function ProductDetailScreen() {
   const [selectedAttributes, setSelectedAttributes] = useState<Record<string, string>>({});
   const [isAdding, setIsAdding] = useState(false);
   const [addSuccess, setAddSuccess] = useState(false);
+
+  // Related products state
+  const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
+  const [loadingRelated, setLoadingRelated] = useState(false);
+  const [quickAddingId, setQuickAddingId] = useState<string | null>(null);
+  const [quickAddedId, setQuickAddedId] = useState<string | null>(null);
 
   // Reviews & Q&A state
   const [reviews, setReviews] = useState<any[]>([]);
@@ -75,6 +86,7 @@ export default function ProductDetailScreen() {
       if (res.data?.success && res.data?.data) {
         const prod = res.data.data;
         setProduct(prod);
+        loadRelatedProducts(prod);
 
         // Pre-select first variant attributes if available
         if (prod.hasVariants && Array.isArray(prod.variants) && prod.variants.length > 0) {
@@ -90,6 +102,70 @@ export default function ProductDetailScreen() {
       setError(err.message || "Failed to load product details.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadRelatedProducts = async (currentProd: any) => {
+    try {
+      setLoadingRelated(true);
+      const res = await apiClient.get("/api/products?limit=30");
+      if (res.data?.success && Array.isArray(res.data?.data)) {
+        const all: any[] = res.data.data;
+        const others = all.filter(
+          (p) => String(p.id) !== String(currentProd.id) && String(p.slug) !== String(currentProd.slug)
+        );
+
+        const currentCatIds: string[] = Array.isArray(currentProd.categoryIds)
+          ? currentProd.categoryIds.map(String)
+          : [];
+        const currentCatNames: string[] = Array.isArray(currentProd.categoryNames)
+          ? currentProd.categoryNames.map((c: string) => String(c).toLowerCase().trim())
+          : [String(currentProd.categoryName || "").toLowerCase().trim()].filter(Boolean);
+        const currentBrand = String(currentProd.brand || "").toLowerCase().trim();
+
+        const scored = others.map((p) => {
+          let score = 0;
+          const pBrand = String(p.brand || "").toLowerCase().trim();
+          if (currentBrand && pBrand && (pBrand === currentBrand || pBrand.includes(currentBrand))) {
+            score += 6;
+          }
+
+          if (Array.isArray(p.categoryIds) && p.categoryIds.some((cid: string) => currentCatIds.includes(String(cid)))) {
+            score += 10;
+          }
+
+          const pCatNames: string[] = Array.isArray(p.categoryNames)
+            ? p.categoryNames.map((c: string) => String(c).toLowerCase().trim())
+            : [String(p.categoryName || "").toLowerCase().trim()].filter(Boolean);
+
+          if (pCatNames.some((c: string) => currentCatNames.includes(c))) {
+            score += 8;
+          }
+
+          return { product: p, score };
+        });
+
+        scored.sort((a, b) => b.score - a.score);
+        setRelatedProducts(scored.map((s) => s.product).slice(0, 8));
+      }
+    } catch (err) {
+      console.warn("Failed to load related products:", err);
+    } finally {
+      setLoadingRelated(false);
+    }
+  };
+
+  const handleQuickAddRelated = async (prodId: string) => {
+    try {
+      setQuickAddingId(prodId);
+      const ok = await addToCart(prodId, undefined, 1);
+      setQuickAddingId(null);
+      if (ok) {
+        setQuickAddedId(prodId);
+        setTimeout(() => setQuickAddedId(null), 2000);
+      }
+    } catch {
+      setQuickAddingId(null);
     }
   };
 
@@ -272,26 +348,40 @@ export default function ProductDetailScreen() {
           {product.name}
         </Text>
 
-        <TouchableOpacity onPress={() => router.push("/(tabs)/cart")} style={{ position: "relative", padding: 4 }}>
-          <ShoppingCart size={22} color="#0F172A" />
-          {totalItems > 0 && (
-            <View
-              style={{
-                position: "absolute",
-                top: 0,
-                right: 0,
-                backgroundColor: "#2563EB",
-                width: 16,
-                height: 16,
-                borderRadius: 8,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text style={{ color: "#FFFFFF", fontSize: 9, fontWeight: "900" }}>{totalItems}</Text>
-            </View>
-          )}
-        </TouchableOpacity>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <TouchableOpacity
+            onPress={() => product && toggleWishlist(product)}
+            activeOpacity={0.7}
+            style={{ padding: 4 }}
+          >
+            <Heart
+              size={20}
+              color={product && isInWishlist(product.id) ? "#EF4444" : "#0F172A"}
+              fill={product && isInWishlist(product.id) ? "#EF4444" : "transparent"}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => router.push("/(tabs)/cart")} style={{ position: "relative", padding: 4 }}>
+            <ShoppingCart size={22} color="#0F172A" />
+            {totalItems > 0 && (
+              <View
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  right: 0,
+                  backgroundColor: "#2563EB",
+                  width: 16,
+                  height: 16,
+                  borderRadius: 8,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Text style={{ color: "#FFFFFF", fontSize: 9, fontWeight: "900" }}>{totalItems}</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        </View>
       </View>
 
       <ScrollView contentContainerStyle={{ paddingBottom: 110 }}>
@@ -733,6 +823,207 @@ export default function ProductDetailScreen() {
               )}
             </View>
           )}
+
+          {/* SIMILAR / RELATED PRODUCTS SECTION */}
+          <View style={{ marginTop: 24, paddingTop: 18, borderTopWidth: 8, borderTopColor: "#F8FAFC", marginHorizontal: -18, paddingHorizontal: 18 }}>
+            <View style={{ marginBottom: 12 }}>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+                <Sparkles size={16} color="#2563EB" />
+                <Text style={{ fontSize: 16, fontWeight: "900", color: "#0F172A" }}>
+                  Similar Products
+                </Text>
+              </View>
+              <Text style={{ fontSize: 11, color: "#64748B", marginTop: 2 }}>
+                Customers also viewed these trending items
+              </Text>
+            </View>
+
+            {loadingRelated ? (
+              <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
+                {[1, 2, 3, 4].map((i) => (
+                  <View
+                    key={i}
+                    style={{
+                      width: "48.5%",
+                      backgroundColor: "#F8FAFC",
+                      borderRadius: 14,
+                      padding: 10,
+                      marginBottom: 14,
+                    }}
+                  >
+                    <Skeleton width="100%" height={120} borderRadius={10} style={{ marginBottom: 8 }} />
+                    <Skeleton width="60%" height={12} borderRadius={4} style={{ marginBottom: 6 }} />
+                    <Skeleton width="90%" height={14} borderRadius={4} style={{ marginBottom: 6 }} />
+                    <Skeleton width="40%" height={14} borderRadius={4} />
+                  </View>
+                ))}
+              </View>
+            ) : relatedProducts.length === 0 ? null : (
+              <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
+                {relatedProducts.map((rel) => {
+                  const relPrice = Number(rel.price) || 0;
+                  const relComparePrice = Number(rel.comparePrice) || Math.round(relPrice * 1.25);
+                  const relDiscount =
+                    relComparePrice > relPrice
+                      ? Math.round(((relComparePrice - relPrice) / relComparePrice) * 100)
+                      : 15;
+                  const isRelInWishlist = isInWishlist(rel.id);
+                  const isRelAdding = quickAddingId === rel.id;
+                  const isRelAdded = quickAddedId === rel.id;
+
+                  return (
+                    <TouchableOpacity
+                      key={rel.id}
+                      activeOpacity={0.88}
+                      onPress={() => router.push(`/products/${rel.id}`)}
+                      style={{
+                        width: "48.5%",
+                        backgroundColor: "#FFFFFF",
+                        borderRadius: 14,
+                        borderWidth: 1,
+                        borderColor: "#E2E8F0",
+                        padding: 10,
+                        marginBottom: 14,
+                        shadowColor: "#000",
+                        shadowOffset: { width: 0, height: 1 },
+                        shadowOpacity: 0.04,
+                        shadowRadius: 3,
+                        elevation: 2,
+                        position: "relative",
+                      }}
+                    >
+                      {/* Discount Badge */}
+                      <View
+                        style={{
+                          position: "absolute",
+                          top: 8,
+                          left: 8,
+                          zIndex: 10,
+                          backgroundColor: "#16A34A",
+                          paddingHorizontal: 6,
+                          paddingVertical: 2,
+                          borderRadius: 6,
+                        }}
+                      >
+                        <Text style={{ color: "#FFFFFF", fontSize: 9, fontWeight: "900" }}>
+                          {relDiscount}% OFF
+                        </Text>
+                      </View>
+
+                      {/* Wishlist Heart Button */}
+                      <TouchableOpacity
+                        onPress={(e) => {
+                          e.stopPropagation?.();
+                          toggleWishlist(rel);
+                        }}
+                        activeOpacity={0.7}
+                        style={{
+                          position: "absolute",
+                          top: 8,
+                          right: 8,
+                          zIndex: 10,
+                          width: 26,
+                          height: 26,
+                          borderRadius: 13,
+                          backgroundColor: "rgba(255, 255, 255, 0.92)",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          shadowColor: "#000",
+                          shadowOffset: { width: 0, height: 1 },
+                          shadowOpacity: 0.1,
+                          shadowRadius: 2,
+                          elevation: 2,
+                        }}
+                      >
+                        <Heart
+                          size={13}
+                          color={isRelInWishlist ? "#EF4444" : "#94A3B8"}
+                          fill={isRelInWishlist ? "#EF4444" : "transparent"}
+                        />
+                      </TouchableOpacity>
+
+                      {/* Image */}
+                      <View
+                        style={{
+                          height: 110,
+                          backgroundColor: "#F8FAFC",
+                          borderRadius: 10,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          marginBottom: 8,
+                          overflow: "hidden",
+                        }}
+                      >
+                        <Image
+                          source={{ uri: getFullImageUrl(rel.mainImage || rel.image) }}
+                          resizeMode="contain"
+                          style={{ width: "90%", height: "90%" }}
+                        />
+                      </View>
+
+                      {/* Brand */}
+                      <Text
+                        numberOfLines={1}
+                        style={{ fontSize: 9, fontWeight: "800", color: "#2563EB", textTransform: "uppercase" }}
+                      >
+                        {rel.brand || "e-Shop"}
+                      </Text>
+
+                      {/* Name */}
+                      <Text
+                        numberOfLines={2}
+                        style={{ fontSize: 11, fontWeight: "700", color: "#0F172A", minHeight: 30, marginTop: 2 }}
+                      >
+                        {rel.name}
+                      </Text>
+
+                      {/* Price */}
+                      <View style={{ flexDirection: "row", alignItems: "baseline", marginTop: 4, flexWrap: "wrap" }}>
+                        <Text style={{ fontSize: 13, fontWeight: "900", color: "#0F172A" }}>
+                          ₹{relPrice.toLocaleString("en-IN")}
+                        </Text>
+                        <Text style={{ fontSize: 10, color: "#94A3B8", textDecorationLine: "line-through", marginLeft: 4 }}>
+                          ₹{relComparePrice.toLocaleString("en-IN")}
+                        </Text>
+                      </View>
+
+                      {/* Quick Add Button */}
+                      <TouchableOpacity
+                        onPress={() => handleQuickAddRelated(rel.id)}
+                        disabled={isRelAdding}
+                        activeOpacity={0.8}
+                        style={{
+                          backgroundColor: isRelAdded ? "#16A34A" : "#EFF6FF",
+                          borderWidth: 1,
+                          borderColor: isRelAdded ? "#16A34A" : "#BFDBFE",
+                          paddingVertical: 6,
+                          borderRadius: 7,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          marginTop: 8,
+                          flexDirection: "row",
+                        }}
+                      >
+                        {isRelAdding ? (
+                          <ActivityIndicator size="small" color="#2563EB" />
+                        ) : isRelAdded ? (
+                          <>
+                            <Check size={12} color="#FFFFFF" style={{ marginRight: 3 }} />
+                            <Text style={{ color: "#FFFFFF", fontSize: 10, fontWeight: "900" }}>Added</Text>
+                          </>
+                        ) : (
+                          <>
+                            <Plus size={12} color="#2563EB" style={{ marginRight: 3 }} />
+                            <Text style={{ color: "#2563EB", fontSize: 10, fontWeight: "900" }}>Add to Cart</Text>
+                          </>
+                        )}
+                      </TouchableOpacity>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            )}
+          </View>
         </View>
       </ScrollView>
 

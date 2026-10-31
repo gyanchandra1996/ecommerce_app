@@ -398,6 +398,66 @@
       "phoneVerified": true,
       "createdAt": "2026-10-31T06:12:42.583Z",
       "updatedAt": "2026-10-31T06:12:42.583Z"
+    },
+    {
+      "id": "usr_p30ml5nh2",
+      "name": "Gyanu",
+      "email": "gyanwork1996@gmail.com",
+      "password": "$2b$10$r8h3osvx/EcFKKgg14QMN.JkLdKQhbphlSdsIIFnNBRvePWwSzNdS",
+      "role": "CUSTOMER",
+      "type": "customer",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "",
+      "phone": "",
+      "countryCode": "+1",
+      "country": "",
+      "state": "",
+      "city": "",
+      "postalCode": "",
+      "streetAddress": "",
+      "apartment": "",
+      "address": "",
+      "shippingAddress": "",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-31T06:19:45.029Z",
+      "updatedAt": "2026-10-31T06:19:45.029Z"
+    },
+    {
+      "id": "usr_k071td5c3",
+      "name": "Mobile Test User",
+      "email": "mob_test_1793428768464@example.com",
+      "password": "$2b$10$W1hKYYdK2CLzT0q1Hzu.pOT.6p6GoH2TTX28zcJjBUAMxmr6y2CIO",
+      "role": "CUSTOMER",
+      "type": "customer",
+      "avatar": null,
+      "accountType": "customer",
+      "customerType": "Customer",
+      "mobileNumber": "",
+      "phone": "",
+      "countryCode": "+1",
+      "country": "",
+      "state": "",
+      "city": "",
+      "postalCode": "",
+      "streetAddress": "",
+      "apartment": "",
+      "address": "",
+      "shippingAddress": "",
+      "credit": 0,
+      "status": "ACTIVE",
+      "ordersCount": 0,
+      "wishlistCount": 0,
+      "emailVerified": true,
+      "phoneVerified": true,
+      "createdAt": "2026-10-31T06:39:29.510Z",
+      "updatedAt": "2026-10-31T06:39:29.510Z"
     }
   ],
   "assets": [
@@ -10645,6 +10705,38 @@
   ],
   "orders": [
     {
+      "id": "ord_o6za8do",
+      "orderNumber": "ORD-1793427441650-176",
+      "customerName": "mobile.customer",
+      "customerEmail": "customer@eshop.com",
+      "customerPhone": "+91 98765 43211",
+      "orderDate": "2026-10-31T06:17:23.242Z",
+      "gateway": "Razorpay Payment Link",
+      "gatewayCode": "razorpay_link",
+      "paymentStatus": "Pending",
+      "orderStatus": "Processing",
+      "subtotal": 91.8,
+      "shippingCost": 0,
+      "taxAmount": 0,
+      "couponDiscount": 0,
+      "totalPrice": 91.8,
+      "shippingAddress": "Customer Delivery Address",
+      "billingAddress": "Customer Billing Address",
+      "items": [
+        {
+          "id": "item_sample_1",
+          "orderId": "",
+          "name": "e-Shop Order Item",
+          "price": 91.8,
+          "quantity": 1,
+          "imageUrl": ""
+        }
+      ],
+      "gatewayOrderId": "plink_TuPh5VeEZegPlt",
+      "createdAt": "2026-10-31T06:17:23.245Z",
+      "updatedAt": "2026-10-31T06:17:23.245Z"
+    },
+    {
       "id": "ord_xm792si",
       "orderNumber": "cod_5055",
       "customerName": "COD Customer",
@@ -16286,6 +16378,20 @@
   ],
   "payments": [
     {
+      "id": "pay_kqqjrdd",
+      "orderId": "ord_o6za8do",
+      "orderNumber": "ORD-1793427441650-176",
+      "customerName": "mobile.customer",
+      "customerEmail": "customer@eshop.com",
+      "paymentGateway": "Razorpay Payment Link",
+      "gatewayOrderId": "plink_TuPh5VeEZegPlt",
+      "amount": 91.8,
+      "currency": "INR",
+      "paymentStatus": "Pending",
+      "createdAt": "2026-10-31T06:17:23.245Z",
+      "updatedAt": "2026-10-31T06:17:23.245Z"
+    },
+    {
       "id": "pay_apxizy2",
       "orderId": "ord_xm792si",
       "orderNumber": "cod_5055",
@@ -18047,6 +18153,20 @@
       "status": "active",
       "createdAt": "2026-10-31T06:09:34.352Z",
       "updatedAt": "2026-10-31T06:09:34.352Z"
+    },
+    {
+      "id": "cart_rvsqzph",
+      "userId": "usr_p30ml5nh2",
+      "status": "active",
+      "createdAt": "2026-10-31T06:20:29.715Z",
+      "updatedAt": "2026-10-31T06:26:43.812Z"
+    },
+    {
+      "id": "cart_gst338236b3bc",
+      "sessionId": "gst_338236b3bc",
+      "status": "active",
+      "createdAt": "2026-10-31T06:39:30.520Z",
+      "updatedAt": "2026-10-31T06:39:30.520Z"
     }
   ],
   "cartItems": [
@@ -18172,21 +18292,12 @@
       "updatedAt": "2026-10-30T21:52:00.087Z"
     },
     {
-      "id": "ci_pedmp7o",
-      "cartId": "cart_buiuswm",
-      "productId": "prod_himalayan_honey",
-      "variantId": "var_prod_himalayan_honey_2kg",
+      "id": "ci_un3z4c5",
+      "cartId": "cart_gst338236b3bc",
+      "productId": "prod_s24_ultra",
       "quantity": 1,
-      "createdAt": "2026-10-31T06:09:34.364Z",
-      "updatedAt": "2026-10-31T06:09:40.747Z"
-    },
-    {
-      "id": "ci_zubfy5l",
-      "cartId": "cart_buiuswm",
-      "productId": "prod_nike_jordan_hoodie",
-      "quantity": 1,
-      "createdAt": "2026-10-31T06:12:06.730Z",
-      "updatedAt": "2026-10-31T06:12:06.730Z"
+      "createdAt": "2026-10-31T06:39:30.544Z",
+      "updatedAt": "2026-10-31T06:39:30.544Z"
     }
   ],
   "pricingSettings": {
@@ -21673,35 +21784,17 @@
       "isPrimary": false
     }
   ],
+  "notificationSettings": {
+    "notificationsEnabled": true,
+    "allowDeals": true,
+    "allowOffers": true,
+    "allowOrders": true,
+    "allowSystem": true,
+    "updatedAt": "2026-10-31T06:39:44.887Z"
+  },
   "notifications": [
     {
-      "id": "notif_ef26wtd",
-      "title": "📦 Free Express Delivery All Over India",
-      "body": "Enjoy ₹0 shipping charges on all orders today. Secured with Razorpay.",
-      "category": "system",
-      "badge": "FREE SHIPPING",
-      "icon": "📦",
-      "imageUrl": "",
-      "actionUrl": "/(tabs)",
-      "actionText": "View Deal",
-      "createdAt": "2026-10-31T06:03:14.906Z",
-      "isRead": false
-    },
-    {
-      "id": "notif_3th0b6b",
-      "title": "🔥 Flash Deal: 50% OFF Festive Mega Sale",
-      "body": "Limited time offer on smartphones and sneakers. Grab yours before stocks run out!",
-      "category": "offer",
-      "badge": "50% OFF",
-      "icon": "🔥",
-      "imageUrl": "",
-      "actionUrl": "/(tabs)/deals",
-      "actionText": "View Deal",
-      "createdAt": "2026-10-31T05:49:05.427Z",
-      "isRead": true
-    },
-    {
-      "id": "notif_fmwlffc",
+      "id": "notif_b5hgezb",
       "title": "🔥 Flash Deal: 50% OFF Festive Mega Sale",
       "body": "Limited time offer on smartphones and sneakers. Grab yours before stocks run out!",
       "category": "deal",
@@ -21710,21 +21803,9 @@
       "imageUrl": "",
       "actionUrl": "/(tabs)/deals",
       "actionText": "View Deal",
-      "createdAt": "2026-10-31T05:48:48.866Z",
-      "isRead": true
-    },
-    {
-      "id": "notif_4n7olnp",
-      "title": "🔥 Flash Deal: 50% OFF Festive Mega Sale",
-      "body": "Limited time offer on smartphones and sneakers. Grab yours before stocks run out!",
-      "category": "deal",
-      "badge": "50% OFF",
-      "icon": "🔥",
-      "imageUrl": "",
-      "actionUrl": "/products/prod_nike_af1",
-      "actionText": "View Deal",
-      "createdAt": "2026-10-31T05:46:11.124Z",
-      "isRead": true
+      "createdAt": "2026-10-31T06:44:16.624Z",
+      "isRead": false,
+      "isActive": false
     },
     {
       "id": "notif_deal_1",
@@ -21736,8 +21817,9 @@
       "imageUrl": "https://images.unsplash.com/photo-1511707171634-5f897ff02560?w=300",
       "actionUrl": "/(tabs)/deals",
       "actionText": "View Deals",
-      "createdAt": "2026-10-31T05:45:48.021Z",
-      "isRead": true
+      "createdAt": "2026-10-31T06:39:44.905Z",
+      "isRead": true,
+      "isActive": false
     },
     {
       "id": "notif_offer_2",
@@ -21749,8 +21831,9 @@
       "imageUrl": "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=300",
       "actionUrl": "/(tabs)/cart",
       "actionText": "Shop Now",
-      "createdAt": "2026-10-31T04:45:48.021Z",
-      "isRead": true
+      "createdAt": "2026-10-31T05:39:44.905Z",
+      "isRead": false,
+      "isActive": false
     },
     {
       "id": "notif_deal_3",
@@ -21762,20 +21845,9 @@
       "imageUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300",
       "actionUrl": "/products/prod_nike_af1",
       "actionText": "Grab Deal",
-      "createdAt": "2026-10-31T03:45:48.022Z",
-      "isRead": true
-    },
-    {
-      "id": "notif_sys_4",
-      "title": "📦 Express Delivery Free Across India",
-      "body": "Get free guaranteed delivery on all orders this week. Verified by Razorpay Secure Payments.",
-      "category": "system",
-      "badge": "FREE SHIPPING",
-      "icon": "📦",
-      "actionUrl": "/(tabs)",
-      "actionText": "Explore Products",
-      "createdAt": "2026-10-31T01:45:48.022Z",
-      "isRead": true
+      "createdAt": "2026-10-31T04:39:44.905Z",
+      "isRead": false,
+      "isActive": false
     }
   ]
 }

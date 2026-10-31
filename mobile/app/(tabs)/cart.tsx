@@ -8,6 +8,7 @@ import {
   Image,
   Alert,
   Linking,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
@@ -24,6 +25,19 @@ export default function CartScreen() {
 
   const [couponInput, setCouponInput] = useState("");
   const [couponMsg, setCouponMsg] = useState<string | null>(null);
+  const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
+
+  const handleUpdateQty = async (productId: string, qty: number) => {
+    setActionLoadingId(productId);
+    await updateQuantity(productId, qty);
+    setActionLoadingId(null);
+  };
+
+  const handleRemove = async (productId: string) => {
+    setActionLoadingId(productId);
+    await removeFromCart(productId);
+    setActionLoadingId(null);
+  };
 
   const handleOpenDirectPaymentLink = async () => {
     try {
@@ -152,29 +166,41 @@ export default function CartScreen() {
                     ₹{Number(it.product?.price || 0).toLocaleString("en-IN")}
                   </Text>
 
-                  {/* Quantity controls */}
+                  {/* Quantity controls & Loader */}
                   <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 8 }}>
-                    <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#FFFFFF", borderRadius: 8, borderWidth: 1, borderColor: "#E2E8F0" }}>
-                      <TouchableOpacity
-                        onPress={() => updateQuantity(it.productId, it.quantity - 1)}
-                        style={{ padding: 6 }}
-                      >
-                        <Minus size={14} color="#64748B" />
-                      </TouchableOpacity>
-                      <Text style={{ paddingHorizontal: 10, fontSize: 12, fontWeight: "800", color: "#0F172A" }}>
-                        {it.quantity}
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => updateQuantity(it.productId, it.quantity + 1)}
-                        style={{ padding: 6 }}
-                      >
-                        <Plus size={14} color="#64748B" />
-                      </TouchableOpacity>
-                    </View>
+                    {actionLoadingId === it.productId ? (
+                      <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#EFF6FF", paddingHorizontal: 10, paddingVertical: 5, borderRadius: 8 }}>
+                        <ActivityIndicator size="small" color="#2563EB" style={{ marginRight: 6 }} />
+                        <Text style={{ fontSize: 11, fontWeight: "700", color: "#2563EB" }}>Updating...</Text>
+                      </View>
+                    ) : (
+                      <>
+                        <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#FFFFFF", borderRadius: 8, borderWidth: 1, borderColor: "#E2E8F0" }}>
+                          <TouchableOpacity
+                            onPress={() => handleUpdateQty(it.productId, it.quantity - 1)}
+                            style={{ padding: 6 }}
+                          >
+                            <Minus size={14} color="#64748B" />
+                          </TouchableOpacity>
+                          <Text style={{ paddingHorizontal: 10, fontSize: 12, fontWeight: "800", color: "#0F172A" }}>
+                            {it.quantity}
+                          </Text>
+                          <TouchableOpacity
+                            onPress={() => handleUpdateQty(it.productId, it.quantity + 1)}
+                            style={{ padding: 6 }}
+                          >
+                            <Plus size={14} color="#64748B" />
+                          </TouchableOpacity>
+                        </View>
 
-                    <TouchableOpacity onPress={() => removeFromCart(it.productId)}>
-                      <Trash2 size={16} color="#EF4444" />
-                    </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => handleRemove(it.productId)}
+                          style={{ padding: 4 }}
+                        >
+                          <Trash2 size={16} color="#EF4444" />
+                        </TouchableOpacity>
+                      </>
+                    )}
                   </View>
                 </View>
               </View>

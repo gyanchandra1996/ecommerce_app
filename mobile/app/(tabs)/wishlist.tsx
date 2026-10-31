@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -16,10 +16,15 @@ import { getFullImageUrl } from "../../src/services/api";
 
 export default function WishlistScreen() {
   const router = useRouter();
-  const { items, removeItem, clearWishlist } = useWishlistStore();
+  const { items, removeItem, clearWishlist, loadWishlist } = useWishlistStore();
   const { addToCart } = useCartStore();
   const [movingId, setMovingId] = useState<string | null>(null);
   const [movedId, setMovedId] = useState<string | null>(null);
+  const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    loadWishlist();
+  }, []);
 
   const handleMoveToBag = async (item: WishlistItem) => {
     setMovingId(item.id);
@@ -248,11 +253,29 @@ export default function WishlistScreen() {
                       overflow: "hidden",
                     }}
                   >
-                    <Image
-                      source={{ uri: getFullImageUrl(item.image) }}
-                      resizeMode="contain"
-                      style={{ width: "88%", height: "88%" }}
-                    />
+                    {(() => {
+                      const rawImg =
+                        item.image ||
+                        item.mainImage ||
+                        (item as any).images?.[0] ||
+                        (item as any).assets?.[0]?.url;
+                      const displayUri = failedImages[item.id]
+                        ? "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"
+                        : getFullImageUrl(rawImg);
+
+                      return (
+                        <Image
+                          source={{ uri: displayUri }}
+                          resizeMode="contain"
+                          onError={() => {
+                            if (!failedImages[item.id]) {
+                              setFailedImages((prev) => ({ ...prev, [item.id]: true }));
+                            }
+                          }}
+                          style={{ width: "90%", height: "90%" }}
+                        />
+                      );
+                    })()}
                   </TouchableOpacity>
 
                   {/* Product Title & Brand */}

@@ -8,21 +8,35 @@ export async function POST(req: Request) {
       body = await req.json();
     } catch {}
 
-    const { category, notificationIds } = body || {};
+    const { category, notificationIds, force = false } = body || {};
+
+    // 0. Check Master Switch
+    const settings = await DatabaseStore.getNotificationSettings();
+    if (!settings.notificationsEnabled && !force) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Push notifications are currently turned OFF globally in Backend Settings. Please switch Master Notifications ON first.",
+        },
+        { status: 400 }
+      );
+    }
 
     // 1. Fetch notifications from database
     let notifications = await DatabaseStore.findNotifications({
       category: category && category !== "all" ? category : undefined,
     });
 
-    // If specific notificationIds provided, filter to those
-    if (Array.isArray(notificationIds) && notificationIds.length > 0) {
+    // Filter to active notifications only unless specific IDs are given
+    if (!Array.isArray(notificationIds) || notificationIds.length === 0) {
+      notifications = notifications.filter((n) => n.isActive !== false);
+    } else {
       notifications = notifications.filter((n) => notificationIds.includes(n.id));
     }
 
     if (notifications.length === 0) {
       return NextResponse.json(
-        { success: false, error: "No notifications found to broadcast." },
+        { success: false, error: "No active notifications found to broadcast." },
         { status: 404 }
       );
     }
@@ -81,12 +95,12 @@ export async function POST(req: Request) {
       broadcastCount: notifications.length,
       deviceCount: validExpoTokens.length,
       totalPushDispatched,
-      message: `Successfully pushed all ${notifications.length} notifications to ${validExpoTokens.length} active devices.`,
+      message: `Successfully pushed ${notifications.length} notification(s) to ${validExpoTokens.length} active device(s).`,
       notifications,
     });
   } catch (error: any) {
     return NextResponse.json(
-      { success: false, error: error.message || "Failed to broadcast all notifications." },
+      { success: false, error: error.message || "Failed to broadcast notifications." },
       { status: 500 }
     );
   }
