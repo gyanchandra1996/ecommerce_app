@@ -112,7 +112,7 @@ jobs:
 
             docker-compose version
 
-            echo "Building and starting containers..."
+            echo "Building and starting containers.."
 
             docker-compose up -d --build --remove-orphans
 
