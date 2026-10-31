@@ -1,15 +1,22 @@
-name: BugTracker CI/CD
+
+name: eShop CI/CD
 
 on:
   push:
     branches:
       - main
+
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: eshop-production
+  cancel-in-progress: false
+
 jobs:
+
   ci:
     name: Build Application
     runs-on: ubuntu-latest
@@ -27,56 +34,94 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Next.js
+      - name: Build application
         run: npm run build
 
   deploy:
-    name: Deploy to Server
+    name: Deploy to VPS
     runs-on: ubuntu-latest
     needs: ci
+
     if: github.ref == 'refs/heads/main'
 
     steps:
+
       - name: Validate deployment secrets
         env:
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+
         run: |
           set -eu
-          test -n "$SERVER_HOST" || { echo "SERVER_HOST is missing"; exit 1; }
-          test -n "$SERVER_USER" || { echo "SERVER_USER is missing"; exit 1; }
-          test -n "$SERVER_SSH_KEY" || { echo "SERVER_SSH_KEY is missing"; exit 1; }
+
+          test -n "$SERVER_HOST" || {
+            echo "SERVER_HOST is missing"
+            exit 1
+          }
+
+          test -n "$SERVER_USER" || {
+            echo "SERVER_USER is missing"
+            exit 1
+          }
+
+          test -n "$SERVER_SSH_KEY" || {
+            echo "SERVER_SSH_KEY is missing"
+            exit 1
+          }
 
       - name: Deploy over SSH
         uses: appleboy/ssh-action@v1
+
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_PORT || '22' }}
           command_timeout: 30m
+
           script: |
             set -eu
 
+            echo "================================"
+            echo "Starting eShop deployment"
+            echo "================================"
+
             cd /var/www/html/eshop
 
-            echo "Checking required commands..."
-            command -v git
-            command -v docker
-            docker-compose version
+            echo "Checking Git repository..."
+
+            if [ ! -d ".git" ]; then
+              echo "ERROR: Git repository not initialized."
+              exit 1
+            fi
+
+            echo "Checking Git..."
+
+            git --version
 
             echo "Updating application code..."
+
             git fetch origin main
+
             git reset --hard origin/main
 
+            echo "Checking Docker..."
+
+            docker --version
+
+            docker-compose version
+
             echo "Building and starting containers..."
+
             docker-compose up -d --build --remove-orphans
 
             echo "Checking container status..."
+
             docker-compose ps
 
             echo "Checking application response..."
+
             curl --retry 10 \
               --retry-delay 3 \
               --retry-connrefused \
@@ -86,4 +131,14 @@ jobs:
               http://127.0.0.1:80/ \
               -o /dev/null
 
-            echo "eshop deployment completed successfully"
+            echo "================================"
+            echo "eShop deployment successful!"
+            echo "================================"
+
+      - name: Deployment completed
+        if: success()
+        run: echo "eShop successfully deployed!"
+
+      - name: Deployment failed
+        if: failure()
+        run: echo "eShop deployment failed. Check the logs."
