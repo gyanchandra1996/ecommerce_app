@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
       phone: mobileNumber?.trim(),
     }).catch((e) => console.error("Failed to trigger registration email:", e));
 
-    return apiSuccess({ user }, "Registration successful!", 201);
+    return apiSuccess({ user, token }, "Registration successful!", 201);
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Failed to register user.";
     return apiError(message, 400);

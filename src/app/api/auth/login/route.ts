@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
       } catch {}
     }
 
-    return apiSuccess({ user, portal: targetPortal }, "Login successful!", 200);
+    return apiSuccess({ user, token, portal: targetPortal }, "Login successful!", 200);
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Authentication failed.";
     return apiError(message, 401);

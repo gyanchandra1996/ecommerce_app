@@ -20,6 +20,7 @@ export default function RegisterScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [validationError, setValidationError] = useState<string | null>(null);
   const [googleEnabled, setGoogleEnabled] = useState(true);
   const [googleLoading, setGoogleLoading] = useState(false);
 
@@ -35,20 +36,42 @@ export default function RegisterScreen() {
   }, []);
 
   const handleRegister = async () => {
-    if (!name || !email || !password) return;
-    const ok = await register(name, email, password);
+    setValidationError(null);
+    if (!name.trim()) {
+      setValidationError("Please enter your full name.");
+      return;
+    }
+    if (!email.trim() || !email.includes("@")) {
+      setValidationError("Please enter a valid email address.");
+      return;
+    }
+    if (!password || password.length < 6) {
+      setValidationError("Password must be at least 6 characters long.");
+      return;
+    }
+
+    const ok = await register(name.trim(), email.trim(), password);
     if (ok) {
-      router.back();
+      if (router.canGoBack()) {
+        router.back();
+      } else {
+        router.replace("/(tabs)/profile");
+      }
     }
   };
 
   const handleGoogle = async () => {
+    setValidationError(null);
     setGoogleLoading(true);
     const targetEmail = email.trim() || "mobile.customer@example.com";
     const ok = await loginWithGoogle(targetEmail, name.trim() || targetEmail.split("@")[0]);
     setGoogleLoading(false);
     if (ok) {
-      router.back();
+      if (router.canGoBack()) {
+        router.back();
+      } else {
+        router.replace("/(tabs)/profile");
+      }
     }
   };
 
@@ -72,9 +95,9 @@ export default function RegisterScreen() {
           </Text>
         </View>
 
-        {error && (
+        {(validationError || error) && (
           <View style={{ backgroundColor: "#FEF2F2", padding: 12, borderRadius: 10, borderWidth: 1, borderColor: "#FCA5A5", marginBottom: 14 }}>
-            <Text style={{ fontSize: 12, color: "#B91C1C", fontWeight: "600" }}>{error}</Text>
+            <Text style={{ fontSize: 12, color: "#B91C1C", fontWeight: "600" }}>{validationError || error}</Text>
           </View>
         )}
 

@@ -61,15 +61,17 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       set({ isLoading: true, error: null });
       const res = await apiClient.post("/api/auth/login", {
-        email,
+        email: email.trim().toLowerCase(),
         password,
         portal: "customer",
       });
 
-      if (res.data?.success && res.data?.data?.token) {
+      if (res.data?.success && res.data?.data) {
         const { token, user } = res.data.data;
-        await SecureStore.setItemAsync("gstore_auth_token", token);
-        set({ user, token, isLoading: false });
+        if (token) {
+          await SecureStore.setItemAsync("gstore_auth_token", token);
+        }
+        set({ user, token: token || null, isLoading: false, error: null });
 
         // Trigger cart merge on backend
         try {
@@ -78,7 +80,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
         return true;
       }
-      throw new Error(res.data?.error || "Login failed");
+      throw new Error(res.data?.error || res.data?.message || "Login failed");
     } catch (err: any) {
       set({ error: err.message, isLoading: false });
       return false;
@@ -89,18 +91,26 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       set({ isLoading: true, error: null });
       const res = await apiClient.post("/api/auth/register", {
-        name,
-        email,
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
         password,
       });
 
-      if (res.data?.success && res.data?.data?.token) {
+      if (res.data?.success && res.data?.data) {
         const { token, user } = res.data.data;
-        await SecureStore.setItemAsync("gstore_auth_token", token);
-        set({ user, token, isLoading: false });
+        if (token) {
+          await SecureStore.setItemAsync("gstore_auth_token", token);
+        }
+        set({ user, token: token || null, isLoading: false, error: null });
+
+        // Trigger cart merge on backend
+        try {
+          await apiClient.post("/api/cart/merge");
+        } catch {}
+
         return true;
       }
-      throw new Error(res.data?.error || "Registration failed");
+      throw new Error(res.data?.error || res.data?.message || "Registration failed");
     } catch (err: any) {
       set({ error: err.message, isLoading: false });
       return false;

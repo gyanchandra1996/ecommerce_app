@@ -8,6 +8,7 @@ import { useWishlistStore } from "../src/store/wishlistStore";
 import { useNotificationStore } from "../src/store/notificationStore";
 import { ErrorBoundary } from "../src/components/ErrorBoundary";
 import { NotificationBanner } from "../src/components/NotificationBanner";
+import { ActionToast } from "../src/components/ActionToast";
 import {
   registerForPushNotifications,
   setupNotificationListeners,

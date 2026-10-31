@@ -19,6 +19,7 @@ export default function LoginScreen() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [validationError, setValidationError] = useState<string | null>(null);
   const [googleEnabled, setGoogleEnabled] = useState(true);
   const [googleLoading, setGoogleLoading] = useState(false);
 
@@ -35,20 +36,38 @@ export default function LoginScreen() {
   }, []);
 
   const handleLogin = async () => {
-    if (!email || !password) return;
-    const ok = await login(email, password);
+    setValidationError(null);
+    if (!email.trim() || !email.includes("@")) {
+      setValidationError("Please enter a valid email address.");
+      return;
+    }
+    if (!password) {
+      setValidationError("Please enter your password.");
+      return;
+    }
+
+    const ok = await login(email.trim(), password);
     if (ok) {
-      router.back();
+      if (router.canGoBack()) {
+        router.back();
+      } else {
+        router.replace("/(tabs)/profile");
+      }
     }
   };
 
   const handleGoogle = async () => {
+    setValidationError(null);
     setGoogleLoading(true);
     const targetEmail = email.trim() || "mobile.google.user@example.com";
     const ok = await loginWithGoogle(targetEmail, targetEmail.split("@")[0]);
     setGoogleLoading(false);
     if (ok) {
-      router.back();
+      if (router.canGoBack()) {
+        router.back();
+      } else {
+        router.replace("/(tabs)/profile");
+      }
     }
   };
 
@@ -76,9 +95,9 @@ export default function LoginScreen() {
           </Text>
         </View>
 
-        {error && (
+        {(validationError || error) && (
           <View style={{ backgroundColor: "#FEF2F2", padding: 12, borderRadius: 10, borderWidth: 1, borderColor: "#FCA5A5", marginBottom: 14 }}>
-            <Text style={{ fontSize: 12, color: "#B91C1C", fontWeight: "600" }}>{error}</Text>
+            <Text style={{ fontSize: 12, color: "#B91C1C", fontWeight: "600" }}>{validationError || error}</Text>
           </View>
         )}
 
