@@ -1,0 +1,146 @@
+
+name: eShop CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: eshop-production
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build eShop
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Prepare deployment archive
+        run: |
+          tar -czf eshop-deploy.tar.gz \
+            --exclude='.git' \
+            --exclude='node_modules' \
+            --exclude='.next' \
+            --exclude='.env' \
+            --exclude='.env.*' \
+            --exclude='eshop-deploy.tar.gz' \
+            .
+
+      - name: Upload deployment archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: eshop-deployment
+          path: eshop-deploy.tar.gz
+          retention-days: 1
+
+  deploy:
+    name: Deploy to AWS EC2
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Download deployment archive
+        uses: actions/download-artifact@v4
+        with:
+          name: eshop-deployment
+          path: deployment
+
+      - name: Upload application to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: ${{ secrets.SERVER_PORT || '22' }}
+          source: "deployment/eshop-deploy.tar.gz"
+          target: "/tmp/"
+          strip_components: 1
+          overwrite: true
+
+      - name: Deploy application
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: ${{ secrets.SERVER_PORT || '22' }}
+          command_timeout: 30m
+
+          script: |
+            set -eu
+
+            APP_DIR="/var/www/html/eshop"
+            ARCHIVE="/tmp/eshop-deploy.tar.gz"
+
+            echo "================================"
+            echo "Starting eShop deployment"
+            echo "================================"
+
+            # Verify Docker
+            docker --version
+
+            # Check Docker Compose
+            if docker compose version >/dev/null 2>&1; then
+              COMPOSE="docker compose"
+            elif command -v docker-compose >/dev/null 2>&1; then
+              COMPOSE="docker-compose"
+            else
+              echo "Docker Compose is not installed"
+              exit 1
+            fi
+
+            # Prepare application directory
+            mkdir -p "$APP_DIR"
+
+            # Extract new application files
+            tar -xzf "$ARCHIVE" -C "$APP_DIR"
+
+            cd "$APP_DIR"
+
+            # Verify Docker Compose configuration
+            $COMPOSE config -q
+
+            # Build and start containers
+            $COMPOSE up -d --build --remove-orphans
+
+            # Show running containers
+            $COMPOSE ps
+
+            # Display application logs
+            $COMPOSE logs --tail=50
+
+            # Clean temporary archive
+            rm -f "$ARCHIVE"
+
+            echo "================================"
+            echo "eShop deployment completed"
+            echo "================================"
+
+      - name: Deployment status
+        if: success()
+        run: echo "eShop successfully deployed to AWS EC2"
+
+      - name: Deployment failure
+        if: failure()
+        run: echo "eShop deployment failed. Check the workflow logs."
