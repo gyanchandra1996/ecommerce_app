@@ -44,7 +44,11 @@ export default function CategoryProductsScreen() {
     try {
       setLoading(true);
       // Query backend with categoryId / slug directly
-      const res = await apiClient.get(`/api/products?categoryId=${slug}`);
+      let res = await apiClient.get(`/api/products?categoryId=${slug}`);
+      if (!res.data?.data?.length && slug && !slug.startsWith("cat_")) {
+        res = await apiClient.get(`/api/products?categoryId=cat_${slug}`);
+      }
+
       if (res.data?.success && Array.isArray(res.data?.data) && res.data.data.length > 0) {
         setProducts(res.data.data);
       } else {
@@ -53,23 +57,29 @@ export default function CategoryProductsScreen() {
         if (fallbackRes.data?.success && Array.isArray(fallbackRes.data?.data)) {
           const normSlug = (slug || "").toLowerCase().replace(/[^a-z0-9]/g, "");
           const filtered = fallbackRes.data.data.filter((p: any) => {
-            const catNames = Array.isArray(p.categoryNames)
-              ? p.categoryNames
-              : typeof p.categoryNames === "string"
-              ? [p.categoryNames]
-              : [];
-            const catIds = Array.isArray(p.categoryIds)
-              ? p.categoryIds
-              : typeof p.categoryIds === "string"
-              ? [p.categoryIds]
-              : [];
+            const catNames = (
+              Array.isArray(p.categoryNames)
+                ? p.categoryNames.join(" ")
+                : String(p.categoryNames || "")
+            ).toLowerCase().replace(/[^a-z0-9]/g, "");
+
+            const catIds = (
+              Array.isArray(p.categoryIds)
+                ? p.categoryIds.join(" ")
+                : String(p.categoryIds || "")
+            ).toLowerCase().replace(/[^a-z0-9]/g, "");
+
+            const pCat = `${catNames} ${catIds} ${p.categorySlug || ""} ${p.category?.slug || ""}`.toLowerCase();
+            const pName = (p.name || "").toLowerCase().replace(/[^a-z0-9]/g, "");
 
             return (
-              catNames.some((c: string) => String(c).toLowerCase().replace(/[^a-z0-9]/g, "").includes(normSlug)) ||
-              catIds.some((cid: string) => String(cid).toLowerCase().replace(/[^a-z0-9]/g, "").includes(normSlug))
+              pCat.includes(normSlug) ||
+              catNames.includes(normSlug) ||
+              catIds.includes(normSlug) ||
+              pName.includes(normSlug)
             );
           });
-          setProducts(filtered.length > 0 ? filtered : fallbackRes.data.data);
+          setProducts(filtered);
         }
       }
     } catch {

@@ -23,7 +23,16 @@ export const getDetectedServerIP = (): string => {
 };
 
 export const DEFAULT_HOST_IP = getDetectedServerIP();
-export const API_BASE_URL = `http://${DEFAULT_HOST_IP}:3000`;
+
+// Next.js dev server runs on port 3001 (or 3000 if 3000 is free)
+let currentActivePort = "3001";
+
+export const getActivePort = (): string => currentActivePort;
+export const setActivePort = (port: string) => {
+  currentActivePort = port;
+};
+
+export const API_BASE_URL = `http://${DEFAULT_HOST_IP}:${currentActivePort}`;
 export const MOBILE_DEV_API_KEY = "gstore_mob_live_98a72b64f";
 
 export const getActiveBaseUrl = async (): Promise<string> => {
@@ -33,18 +42,18 @@ export const getActiveBaseUrl = async (): Promise<string> => {
       return custom.trim().replace(/\/$/, "");
     }
   } catch {}
-  return `http://${getDetectedServerIP()}:3000`;
+  return `http://${getDetectedServerIP()}:${currentActivePort}`;
 };
 
 export const getFullImageUrl = (path?: string): string => {
   if (!path) return "https://images.unsplash.com/photo-1511707171634-5f897ff02560?w=300";
   if (path.startsWith("http://") || path.startsWith("https://")) return path;
-  const base = `http://${getDetectedServerIP()}:3000`;
+  const base = `http://${getDetectedServerIP()}:${currentActivePort}`;
   return `${base}${path.startsWith("/") ? "" : "/"}${path}`;
 };
 
 export const apiClient = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: `http://${DEFAULT_HOST_IP}:${currentActivePort}`,
   timeout: 15000,
   headers: {
     "Content-Type": "application/json",
@@ -77,10 +86,34 @@ apiClient.interceptors.request.use(async (config) => {
   return config;
 });
 
-// Response Interceptor: extract data cleanly
+// Response Interceptor: auto-switch between ports 3001 & 3000 if connection fails, and retry once
 apiClient.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
+    const originalRequest = error.config;
+    const isConnError =
+      error.code === "ECONNREFUSED" ||
+      error.code === "ERR_NETWORK" ||
+      (error.message && error.message.toLowerCase().includes("network error")) ||
+      (error.message && error.message.toLowerCase().includes("timeout"));
+
+    if (originalRequest && !originalRequest._retried && isConnError) {
+      originalRequest._retried = true;
+      const altPort = currentActivePort === "3001" ? "3000" : "3001";
+      currentActivePort = altPort;
+      const ip = getDetectedServerIP();
+      const newBase = `http://${ip}:${altPort}`;
+      originalRequest.baseURL = newBase;
+      if (typeof originalRequest.url === "string" && originalRequest.url.startsWith("http")) {
+        originalRequest.url = originalRequest.url.replace(/:300[01]/, `:${altPort}`);
+      }
+      try {
+        return await axios(originalRequest);
+      } catch (retryErr) {
+        // Fall back to original error
+      }
+    }
+
     const errorMsg =
       error.response?.data?.error ||
       error.response?.data?.message ||

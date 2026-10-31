@@ -142,6 +142,7 @@ export default function HomeScreen() {
   const { toggleWishlist, isInWishlist } = useWishlistStore();
   const unreadNotifCount = useNotificationStore((s) => s.unreadCount);
 
+  const [categoryTabs, setCategoryTabs] = useState<any[]>(FLIPKART_CATEGORIES);
   const [selectedCategoryTab, setSelectedCategoryTab] = useState("all");
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [pinSearch, setPinSearch] = useState("");
@@ -163,7 +164,40 @@ export default function HomeScreen() {
   useEffect(() => {
     loadFeaturedProducts();
     loadSliders();
+    loadCategories();
   }, []);
+
+  const loadCategories = async () => {
+    try {
+      const res = await apiClient.get("/api/categories");
+      if (res.data?.success && Array.isArray(res.data?.data) && res.data.data.length > 0) {
+        const iconMap: Record<string, string> = {
+          electronics: "📱",
+          fashion: "👕",
+          womens: "👗",
+          "kids-fashion": "🧸",
+          "health-beauty": "💄",
+          groceries: "🛒",
+          pharmacy: "💊",
+          "luxury-item": "💎",
+          sportshoes: "👟",
+        };
+        const dynamicTabs = [
+          { id: "all", name: "For You", slug: "all", icon: "✨", color: "#F59E0B" },
+          ...res.data.data.map((c: any) => ({
+            id: c.slug || c.id,
+            name: c.name,
+            slug: c.slug || c.id,
+            icon: iconMap[c.slug] || c.icon || "🛍️",
+            color: "#2563EB",
+          })),
+        ];
+        setCategoryTabs(dynamicTabs);
+      }
+    } catch {
+      // Retain FLIPKART_CATEGORIES on error
+    }
+  };
 
   const loadSliders = async () => {
     try {
@@ -248,78 +282,143 @@ export default function HomeScreen() {
     const matchesSearch =
       !searchQuery.trim() ||
       p.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.brand?.toLowerCase().includes(searchQuery.toLowerCase());
+      p.brand?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.description?.toLowerCase().includes(searchQuery.toLowerCase());
 
     if (!matchesSearch) return false;
     if (selectedCategoryTab === "all") return true;
 
-    const pCat = (p.categorySlug || p.category?.slug || p.categoryId || "").toLowerCase();
-    const pName = (p.name || "").toLowerCase();
+    // Collect all category identifiers from product
+    const catNames = (
+      Array.isArray(p.categoryNames)
+        ? p.categoryNames.join(" ")
+        : String(p.categoryNames || "")
+    ).toLowerCase();
 
-    if (selectedCategoryTab === "mobiles") {
+    const catIds = (
+      Array.isArray(p.categoryIds)
+        ? p.categoryIds.join(" ")
+        : String(p.categoryIds || "")
+    ).toLowerCase();
+
+    const pCat = `${catNames} ${catIds} ${p.categorySlug || ""} ${p.category?.slug || ""} ${p.categoryId || ""}`.toLowerCase();
+    const pName = (p.name || "").toLowerCase();
+    const tab = selectedCategoryTab.toLowerCase();
+
+    // Check direct slug or category match first
+    if (
+      pCat.includes(tab) ||
+      catNames.includes(tab) ||
+      catIds.includes(tab) ||
+      catIds.includes(`cat_${tab}`)
+    ) {
+      return true;
+    }
+
+    if (tab === "mobiles") {
       return (
         pCat.includes("electronic") ||
-        pName.includes("iphone") ||
-        pName.includes("samsung") ||
         pName.includes("phone") ||
+        pName.includes("samsung") ||
+        pName.includes("iphone") ||
         pName.includes("pixel")
       );
     }
-    if (selectedCategoryTab === "fashion") {
+    if (tab === "fashion") {
       return (
         pCat.includes("fashion") ||
+        pCat.includes("apparel") ||
+        pCat.includes("clothing") ||
         pName.includes("hoodie") ||
-        pName.includes("shirt") ||
         pName.includes("jacket") ||
-        pName.includes("trench")
+        pName.includes("shirt") ||
+        pName.includes("trouser") ||
+        pName.includes("chino")
       );
     }
-    if (selectedCategoryTab === "electronics") {
+    if (tab === "womens") {
+      return (
+        pCat.includes("women") ||
+        pName.includes("dress") ||
+        pName.includes("blouse") ||
+        pName.includes("trench") ||
+        pName.includes("handbag")
+      );
+    }
+    if (tab === "kids-fashion" || tab === "kids") {
+      return (
+        pCat.includes("kid") ||
+        pName.includes("kid") ||
+        pName.includes("toddler") ||
+        pName.includes("girl") ||
+        pName.includes("boy")
+      );
+    }
+    if (tab === "electronics") {
       return (
         pCat.includes("electronic") ||
         pName.includes("macbook") ||
         pName.includes("laptop") ||
         pName.includes("headphone") ||
+        pName.includes("monitor") ||
         pName.includes("sound") ||
-        pName.includes("watch")
+        pName.includes("watch") ||
+        pName.includes("earbud")
       );
     }
-    if (selectedCategoryTab === "beauty") {
+    if (tab === "beauty" || tab === "health-beauty") {
       return (
         pCat.includes("beauty") ||
         pCat.includes("health") ||
+        pCat.includes("skincare") ||
         pName.includes("cream") ||
-        pName.includes("argan") ||
-        pName.includes("perfume")
+        pName.includes("serum") ||
+        pName.includes("mucin") ||
+        pName.includes("oil") ||
+        pName.includes("sunscreen")
       );
     }
-    if (selectedCategoryTab === "groceries") {
+    if (tab === "groceries" || tab === "grocery") {
       return (
         pCat.includes("grocer") ||
-        pName.includes("almond") ||
+        pName.includes("honey") ||
+        pName.includes("olive") ||
         pName.includes("coffee") ||
-        pName.includes("tea")
+        pName.includes("date") ||
+        pName.includes("almond")
       );
     }
-    if (selectedCategoryTab === "shoes") {
+    if (tab === "shoes" || tab === "sportshoes") {
       return (
         pCat.includes("shoe") ||
         pCat.includes("sport") ||
-        pName.includes("nike") ||
-        pName.includes("puma") ||
-        pName.includes("react") ||
-        pName.includes("sneaker")
+        pName.includes("sneaker") ||
+        pName.includes("running") ||
+        pName.includes("nike")
       );
     }
-    if (selectedCategoryTab === "pharmacy") {
+    if (tab === "pharmacy") {
       return (
         pCat.includes("pharmacy") ||
         pName.includes("vitamin") ||
         pName.includes("tablet") ||
-        pName.includes("supplement")
+        pName.includes("supplement") ||
+        pName.includes("omega") ||
+        pName.includes("protein") ||
+        pName.includes("first aid")
       );
     }
-    return true;
+    if (tab === "luxury-item" || tab === "luxury") {
+      return (
+        pCat.includes("luxury") ||
+        pName.includes("watch") ||
+        pName.includes("diamond") ||
+        pName.includes("gold") ||
+        pName.includes("sunglass") ||
+        pName.includes("scarf")
+      );
+    }
+    return false;
   });
 
   return (
@@ -515,7 +614,7 @@ export default function HomeScreen() {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: 12 }}
           >
-            {FLIPKART_CATEGORIES.map((cat) => {
+            {categoryTabs.map((cat) => {
               const isSelected = selectedCategoryTab === cat.id;
               return (
                 <TouchableOpacity
@@ -715,7 +814,7 @@ export default function HomeScreen() {
                 {searchQuery
                   ? `Search Results (${displayProducts.length})`
                   : selectedCategoryTab !== "all"
-                  ? `${FLIPKART_CATEGORIES.find((c) => c.id === selectedCategoryTab)?.name || "Category"} (${displayProducts.length})`
+                  ? `${categoryTabs.find((c) => c.id === selectedCategoryTab)?.name || "Category"} (${displayProducts.length})`
                   : "Trending & Best Sellers • Mega Deals"}
               </Text>
             </View>

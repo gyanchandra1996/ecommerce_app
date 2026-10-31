@@ -305,11 +305,20 @@ export default function ProductDetailScreen() {
         </View>
 
         <View style={{ padding: 18 }}>
-          {/* Brand & Stock Pill */}
+          {/* Brand, Category & Stock Pill */}
           <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-            <Text style={{ fontSize: 12, fontWeight: "800", color: "#2563EB", textTransform: "uppercase" }}>
-              {product.brand || "e-Shop Collection"}
-            </Text>
+            <View style={{ flexDirection: "row", alignItems: "center", flexWrap: "wrap", gap: 6, flex: 1, marginRight: 8 }}>
+              <Text style={{ fontSize: 12, fontWeight: "800", color: "#2563EB", textTransform: "uppercase" }}>
+                {product.brand || "e-Shop Collection"}
+              </Text>
+              {(product.categoryNames?.[0] || product.categoryName) && (
+                <View style={{ backgroundColor: "#F1F5F9", paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4 }}>
+                  <Text style={{ fontSize: 10, fontWeight: "700", color: "#475569" }}>
+                    {Array.isArray(product.categoryNames) ? product.categoryNames[0] : product.categoryNames || product.categoryName}
+                  </Text>
+                </View>
+              )}
+            </View>
             <View
               style={{
                 backgroundColor: currentStock > 0 ? "#F0FDF4" : "#FEF2F2",

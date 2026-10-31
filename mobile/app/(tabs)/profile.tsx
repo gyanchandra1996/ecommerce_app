@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { User, Package, MapPin, Shield, LogOut, ChevronRight } from "lucide-react-native";
 import { useAuthStore } from "../../src/store/authStore";
+import { API_BASE_URL } from "../../src/services/api";
 
 export default function ProfileScreen() {
   const router = useRouter();
@@ -97,7 +98,7 @@ export default function ProfileScreen() {
             Backend API Server:
           </Text>
           <Text style={{ fontSize: 12, fontWeight: "700", color: "#2563EB", fontFamily: "monospace" }}>
-            http://10.196.90.130:3000
+            {API_BASE_URL}
           </Text>
           <Text style={{ fontSize: 11, color: "#94A3B8", marginTop: 4 }}>
             Connected over Wi-Fi with API Key and auto JWT session injection.
